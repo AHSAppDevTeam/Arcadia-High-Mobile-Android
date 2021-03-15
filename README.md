@@ -1,2 +1,2 @@
 # Arcadia-High-Mobile-Android
-Official Github Repository for the Android AHS Mobile App
+The official source code for Arcadia High Mobile (avaliable on Google Play). Includes source code for the Android version of the app. The purpose of AHS App Dev Team is to drive a culture where students can collaborate to produce application(s) that would revolutionize the way that the community stays connected.
