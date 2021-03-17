@@ -1,0 +1,91 @@
+{
+  "project_info": {
+    "project_number": "654225823864",
+    "firebase_url": "https://arcadia-high-mobile.firebaseio.com",
+    "project_id": "arcadia-high-mobile",
+    "storage_bucket": "arcadia-high-mobile.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:654225823864:android:561f07cea383679ab7758d",
+        "android_client_info": {
+          "package_name": "com.example.ahsapptest3"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "654225823864-rqd57a4aj8iorbmstm6r897q8k1ugdlp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.ahsapptest3",
+            "certificate_hash": "740e5ccbf8f4e61dbf2a4f9880ba2be79fdd8478"
+          }
+        },
+        {
+          "client_id": "654225823864-ah2hf8c55q6jg622f0fkgnh7o2v1omqd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBRBGC45zgZd6JtLKDq2nfwDnW5symCwX8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "654225823864-ah2hf8c55q6jg622f0fkgnh7o2v1omqd.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "654225823864-24u04uoao3geu9qpo71qtqn6965ks25t.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "hsappdev.AHS20"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:654225823864:android:79667fc6142c94cbb7758d",
+        "android_client_info": {
+          "package_name": "com.hsappdev.ahs"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "654225823864-ah2hf8c55q6jg622f0fkgnh7o2v1omqd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBRBGC45zgZd6JtLKDq2nfwDnW5symCwX8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "654225823864-ah2hf8c55q6jg622f0fkgnh7o2v1omqd.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "654225823864-24u04uoao3geu9qpo71qtqn6965ks25t.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "hsappdev.AHS20"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
