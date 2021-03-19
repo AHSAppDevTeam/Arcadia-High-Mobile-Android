@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Arcadia High Mobile</string>
+
+    <!-- Nav Bar Strings -->
+    <string name="navbar_title_home">Home</string>
+    <string name="navbar_title_bulletin">Bulletin</string>
+    <string name="navbar_title_saved">Saved</string>
+    <string name="navbar_title_profile">Profile</string>
+
 </resources>
