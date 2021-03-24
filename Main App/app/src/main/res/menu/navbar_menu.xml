@@ -9,17 +9,17 @@
 
     <item
         android:id="@+id/navigation_bulletin"
-        android:icon="@drawable/navbar_dashboard_selector"
+        android:icon="@drawable/navbar_bulletin_selector"
         android:title="@string/navbar_title_bulletin" />
 
     <item
         android:id="@+id/navigation_saved"
-        android:icon="@drawable/navbar_notifications_selector"
+        android:icon="@drawable/navbar_saved_selector"
         android:title="@string/navbar_title_saved" />
 
     <item
         android:id="@+id/navigation_profile"
-        android:icon="@drawable/navbar_notifications_selector"
+        android:icon="@drawable/navbar_saved_selector"
         android:title="@string/navbar_title_profile" />
 
 </menu>

@@ -7,24 +7,24 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.hsappdev.ahs.pages.HomeFragment"
+        android:name="com.hsappdev.ahs.UI.home.HomeFragment"
         android:label="@string/navbar_title_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/navigation_bulletin"
-        android:name="com.hsappdev.ahs.pages.HomeFragment"
+        android:name="com.hsappdev.ahs.UI.bulletin.BulletinFragment"
         android:label="@string/navbar_title_bulletin"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/navigation_saved"
-        android:name="com.hsappdev.ahs.pages.HomeFragment"
+        android:name="com.hsappdev.ahs.UI.saved.SavedFragment"
         android:label="@string/navbar_title_saved"
         tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/navigation_profile"
-        android:name="com.hsappdev.ahs.pages.HomeFragment"
+        android:name="com.hsappdev.ahs.UI.profile.ProfileFragment"
         android:label="@string/navbar_title_profile"
         tools:layout="@layout/fragment_home" />
 </navigation>

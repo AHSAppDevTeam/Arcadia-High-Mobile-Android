@@ -7,4 +7,7 @@
     <string name="navbar_title_saved">Saved</string>
     <string name="navbar_title_profile">Profile</string>
 
+    <string name="settings_file">settings</string>
+    <string name="theme_key">themeKey</string>
+
 </resources>

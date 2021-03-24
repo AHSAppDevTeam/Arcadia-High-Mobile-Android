@@ -9,11 +9,10 @@
                     <solid android:color="?attr/navBarIconColorAccent_active"/>
                 </shape>
             </item>
-            <item android:drawable="@drawable/navbar_home_ic_active"
+            <item android:drawable="@drawable/navbar_bulletin_ic_active"
                 android:width="24dp"
                 android:height="24dp"
-                android:gravity="center"
-                />
+                android:gravity="center"/>
         </layer-list>
     </item>
     <item>
@@ -25,7 +24,7 @@
 
                 </shape>
             </item>
-            <item android:drawable="@drawable/navbar_home_ic"
+            <item android:drawable="@drawable/navbar_bulletin_ic"
                 android:width="24dp"
                 android:height="24dp"
                 android:gravity="center"/>

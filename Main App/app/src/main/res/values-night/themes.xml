@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.ArcadiaHighMobile" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <style name="Theme.ArcadiaHighMobile" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_200</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
@@ -12,5 +12,10 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+        <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
+        <item name="bgColor">#272626</item>
+        <item name="navBarIconColor">@color/white50</item>
+        <item name="navBarIconColor_active">@color/white</item>
+        <item name="navBarIconColorAccent_active">@color/gray</item>
     </style>
 </resources>

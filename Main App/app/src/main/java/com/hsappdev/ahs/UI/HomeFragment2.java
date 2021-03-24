@@ -1,4 +1,4 @@
-package com.hsappdev.ahs.pages;
+package com.hsappdev.ahs.UI;
 
 import android.os.Bundle;
 
@@ -13,7 +13,7 @@ import com.hsappdev.ahs.R;
 /**
  * Fragment for the Home page of the app
  */
-public class HomeFragment extends Fragment {
+public class HomeFragment2 extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -24,7 +24,7 @@ public class HomeFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public HomeFragment() {
+    public HomeFragment2() {
         // Required empty public constructor
     }
 
@@ -37,8 +37,8 @@ public class HomeFragment extends Fragment {
      * @return A new instance of fragment HomeFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static HomeFragment newInstance(String param1, String param2) {
-        HomeFragment fragment = new HomeFragment();
+    public static HomeFragment2 newInstance(String param1, String param2) {
+        HomeFragment2 fragment = new HomeFragment2();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);

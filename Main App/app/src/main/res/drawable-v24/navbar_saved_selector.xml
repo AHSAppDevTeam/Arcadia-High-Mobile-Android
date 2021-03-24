@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:state_checked="true">
+    <item android:state_checked="true"
+        android:color="?attr/navBarIconColor_active">
         <layer-list>
+
             <item
                 android:width="30dp"
                 android:height="30dp">
@@ -9,10 +11,11 @@
                     <solid android:color="?attr/navBarIconColorAccent_active"/>
                 </shape>
             </item>
-            <item android:drawable="@drawable/navbar_home_ic_active"
+            <item android:drawable="@drawable/navbar_saved_ic_active"
                 android:width="24dp"
                 android:height="24dp"
                 android:gravity="center"
+
                 />
         </layer-list>
     </item>
@@ -25,10 +28,11 @@
 
                 </shape>
             </item>
-            <item android:drawable="@drawable/navbar_home_ic"
+            <item android:drawable="@drawable/navbar_saved_ic"
                 android:width="24dp"
                 android:height="24dp"
-                android:gravity="center"/>
+                android:gravity="center"
+                />
         </layer-list>
     </item>
 </selector>
