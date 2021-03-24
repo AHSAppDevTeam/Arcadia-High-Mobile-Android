@@ -15,7 +15,8 @@
     <color name="bgColor">#fff</color>
     <color name="bgColor_night">#272626</color>
 
-    <color name="brickRed">#7fa21313</color>
+    <color name="brickRed">#a21313</color>
+    <color name="brickRed50">#7fa21313</color>
     <color name="brickRedAccent">#7febd9d9</color>
 
     <color name="teal">#55a0ae</color>
