@@ -2,6 +2,7 @@ package com.hsappdev.ahs;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.view.WindowCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -13,7 +14,9 @@ import android.view.View;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements BottomNavigationViewAdapter{
+
+    private BottomNavigationView navView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +31,12 @@ public class MainActivity extends AppCompatActivity {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         setContentView(R.layout.activity_main);
 
-        BottomNavigationView navView = findViewById(R.id.nav_view);
+        navView = findViewById(R.id.nav_view);
+        /*CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams)
+                navView.getLayoutParams();
+        layoutParams.setBehavior(new BottomNavigationViewBehavior());*/
+        navView.setOnApplyWindowInsetsListener(null);
+
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
         NavController navController = navHostFragment.getNavController();
         NavigationUI.setupWithNavController(navView, navController);
@@ -65,5 +73,36 @@ public class MainActivity extends AppCompatActivity {
                         | View.SYSTEM_UI_FLAG_FULLSCREEN);
     }
 
+    @Override
+    public void slideUp(){
+        navView.animate().translationY(0).setDuration(500);
+            /*view.setVisibility(View.VISIBLE);
+            TranslateAnimation animate = new TranslateAnimation(
+                    0,                 // fromXDelta
+                    0,                 // toXDelta
+                    view.getHeight(),  // fromYDelta
+                    0);                // toYDelta
+            animate.setDuration(500);
+            animate.setFillAfter(true);
+            view.startAnimation(animate);*/
 
+
+    }
+
+
+    // slide the view from its current position to below itself
+    @Override
+    public void slideDown(){
+        navView.animate().translationY(navView.getHeight()).setDuration(500);
+            /*TranslateAnimation animate = new TranslateAnimation(
+                    0,                 // fromXDelta
+                    0,                 // toXDelta
+                    0,                 // fromYDelta
+                    view.getHeight()); // toYDelta
+            animate.setDuration(500);
+            animate.setFillAfter(true);
+            view.startAnimation(animate);*/
+
+
+    }
 }
