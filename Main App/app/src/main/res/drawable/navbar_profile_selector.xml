@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_checked="true">
+        <layer-list>
+            <item
+                android:width="30dp"
+                android:height="30dp">
+                <shape android:shape="oval">
+                    <solid android:color="?attr/navBarIconColorAccent_active"/>
+                </shape>
+            </item>
+            <item android:drawable="@drawable/navbar_profile_ic_active"
+                android:width="24dp"
+                android:height="24dp"
+                android:gravity="center"
+                />
+        </layer-list>
+    </item>
+    <item>
+        <layer-list>
+            <item
+                android:width="30dp"
+                android:height="30dp">
+                <shape>
+
+                </shape>
+            </item>
+            <item android:drawable="@drawable/navbar_profile_ic"
+                android:width="24dp"
+                android:height="24dp"
+                android:gravity="center"/>
+        </layer-list>
+    </item>
+</selector>

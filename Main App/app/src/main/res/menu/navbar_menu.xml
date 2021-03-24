@@ -19,7 +19,7 @@
 
     <item
         android:id="@+id/navigation_profile"
-        android:icon="@drawable/navbar_saved_selector"
+        android:icon="@drawable/navbar_profile_selector"
         android:title="@string/navbar_title_profile" />
 
 </menu>

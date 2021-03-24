@@ -14,7 +14,7 @@ import android.view.View;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class MainActivity extends AppCompatActivity implements BottomNavigationViewAdapter{
+public class MainActivity extends AppCompatActivity {
 
     private BottomNavigationView navView;
 
@@ -73,36 +73,36 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                         | View.SYSTEM_UI_FLAG_FULLSCREEN);
     }
 
-    @Override
-    public void slideUp(){
-        navView.animate().translationY(0).setDuration(500);
-            /*view.setVisibility(View.VISIBLE);
-            TranslateAnimation animate = new TranslateAnimation(
-                    0,                 // fromXDelta
-                    0,                 // toXDelta
-                    view.getHeight(),  // fromYDelta
-                    0);                // toYDelta
-            animate.setDuration(500);
-            animate.setFillAfter(true);
-            view.startAnimation(animate);*/
-
-
-    }
-
-
-    // slide the view from its current position to below itself
-    @Override
-    public void slideDown(){
-        navView.animate().translationY(navView.getHeight()).setDuration(500);
-            /*TranslateAnimation animate = new TranslateAnimation(
-                    0,                 // fromXDelta
-                    0,                 // toXDelta
-                    0,                 // fromYDelta
-                    view.getHeight()); // toYDelta
-            animate.setDuration(500);
-            animate.setFillAfter(true);
-            view.startAnimation(animate);*/
-
-
-    }
+//    @Override
+//    public void slideUp(){
+//        //navView.animate().translationY(0).setDuration(500);
+//            /*view.setVisibility(View.VISIBLE);
+//            TranslateAnimation animate = new TranslateAnimation(
+//                    0,                 // fromXDelta
+//                    0,                 // toXDelta
+//                    view.getHeight(),  // fromYDelta
+//                    0);                // toYDelta
+//            animate.setDuration(500);
+//            animate.setFillAfter(true);
+//            view.startAnimation(animate);*/
+//
+//
+//    }
+//
+//
+//    // slide the view from its current position to below itself
+//    @Override
+//    public void slideDown(){
+//        //navView.animate().translationY(navView.getHeight()).setDuration(500);
+//            /*TranslateAnimation animate = new TranslateAnimation(
+//                    0,                 // fromXDelta
+//                    0,                 // toXDelta
+//                    0,                 // fromYDelta
+//                    view.getHeight()); // toYDelta
+//            animate.setDuration(500);
+//            animate.setFillAfter(true);
+//            view.startAnimation(animate);*/
+//
+//
+//    }
 }
