@@ -13,7 +13,7 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
         <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
-        <item name="bgColor">@color/white</item>
+        <item name="bgColor">@color/bgColor</item>
         <item name="navBarIconColor">@color/black50</item>
         <item name="navBarIconColor_active">@color/brickRed50</item>
         <item name="navBarIconColorAccent_active">@color/brickRedAccent</item>

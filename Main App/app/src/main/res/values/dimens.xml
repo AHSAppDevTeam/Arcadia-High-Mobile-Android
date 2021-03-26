@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <dimen name="appBarHeight">56dp</dimen>
+    <dimen name="design_bottom_navigation_height" tools:override="true">48dp</dimen>
+    <dimen name="navBarIcon_height">32dp</dimen>
+    <dimen name="navBarInnerIcon_height">24dp</dimen>
 </resources>

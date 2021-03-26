@@ -3,30 +3,30 @@
     <item android:state_checked="true">
         <layer-list>
             <item
-                android:width="30dp"
-                android:height="30dp">
+                android:width="@dimen/navBarIcon_height"
+                android:height="@dimen/navBarIcon_height">
                 <shape android:shape="oval">
                     <solid android:color="?attr/navBarIconColorAccent_active"/>
                 </shape>
             </item>
             <item android:drawable="@drawable/navbar_bulletin_ic_active"
-                android:width="24dp"
-                android:height="24dp"
+                android:width="@dimen/navBarInnerIcon_height"
+                android:height="@dimen/navBarInnerIcon_height"
                 android:gravity="center"/>
         </layer-list>
     </item>
     <item>
         <layer-list>
             <item
-                android:width="30dp"
-                android:height="30dp">
+                android:width="@dimen/navBarIcon_height"
+                android:height="@dimen/navBarIcon_height">
                 <shape>
 
                 </shape>
             </item>
             <item android:drawable="@drawable/navbar_bulletin_ic"
-                android:width="24dp"
-                android:height="24dp"
+                android:width="@dimen/navBarInnerIcon_height"
+                android:height="@dimen/navBarInnerIcon_height"
                 android:gravity="center"/>
         </layer-list>
     </item>
