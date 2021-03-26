@@ -8,6 +8,7 @@ import androidx.viewpager2.widget.MarginPageTransformer;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -39,12 +40,20 @@ public class MainActivity extends AppCompatActivity {
         viewPager2.setClipToPadding(false);
         viewPager2.setClipChildren(false);
         viewPager2.setOffscreenPageLimit(3);
-        viewPager2.getChildAt(0).setOverScrollMode(RecyclerView.OVER_SCROLL_NEVER);
+
+        // overscroll effect thing
+        //viewPager2.getChildAt(0).setOverScrollMode(RecyclerView.OVER_SCROLL_NEVER);
 
         CompositePageTransformer compositePageTransformer = new CompositePageTransformer();
-        compositePageTransformer.addTransformer(new MarginPageTransformer(40));
+        //margin determines distance between two pages
+        //adjust left/right padding of viewpager2 to determine distance between left and right edges and current page
+        compositePageTransformer.addTransformer(new MarginPageTransformer((int) dp_to_px(10))); //note: conversion between dp and pixel, apply later
         compositePageTransformer.addTransformer(new ScaleTransformer());
         viewPager2.setPageTransformer(compositePageTransformer);
+    }
+
+    public float dp_to_px(float dp) {
+        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,dp,getResources().getDisplayMetrics());
     }
 
     class ScaleTransformer implements ViewPager2.PageTransformer {
