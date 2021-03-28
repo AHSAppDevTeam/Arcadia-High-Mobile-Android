@@ -4,73 +4,83 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?android:attr/selectableItemBackground"
-    android:foreground="?android:attr/selectableItemBackground"
-    android:clickable="true">
+    >
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout2"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true">
 
-        <ImageView
-            android:id="@+id/featured_article_image"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintDimensionRatio="3:2"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-        </ImageView>
-
-        <TextView
-            android:id="@+id/featured_article_name"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="start"
-            android:text="Article Name"
-            android:textAlignment="textStart"
-            android:textSize="36sp"
-            android:textStyle="bold"
-            app:layout_constraintTop_toBottomOf="@+id/featured_article_image"
-            tools:layout_editor_absoluteX="0dp" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <LinearLayout
-        android:id="@+id/featured_article_stats"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintDimensionRatio="w,1:1"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2">
-
-        <ImageView
-            android:layout_width="10dp"
-            android:layout_height="match_parent"
-            android:src="@drawable/testicon"
             >
 
-        </ImageView>
+            <ImageView
+                android:id="@+id/featured_article_image"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintDimensionRatio="3:2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="Type"
-            android:textAllCaps="true"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:paddingLeft="8dp"></TextView>
+            </ImageView>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="00m ago"
-            android:gravity="center_vertical"
-            android:paddingLeft="8dp"></TextView>
-    </LinearLayout>
+            <TextView
+                android:id="@+id/featured_article_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:text="Article Name"
+                android:textAlignment="textStart"
+                android:textSize="36sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@+id/featured_article_image"
+                tools:layout_editor_absoluteX="0dp" />
+
+            <LinearLayout
+                android:id="@+id/featured_article_stats"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/featured_article_name">
+
+                <ImageView
+                    android:layout_width="10dp"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/testicon">
+
+                </ImageView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:paddingLeft="8dp"
+                    android:text="Type"
+                    android:textAllCaps="true"
+                    android:textSize="20sp"
+                    android:textStyle="bold"></TextView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="8dp"
+                    android:text="00m ago"></TextView>
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </FrameLayout>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
