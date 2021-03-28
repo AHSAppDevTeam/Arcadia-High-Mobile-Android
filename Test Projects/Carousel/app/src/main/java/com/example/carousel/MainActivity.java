@@ -72,6 +72,8 @@ public class MainActivity extends AppCompatActivity {
             page.setPivotY(centerY);
             // Set scale in between min and max
             page.setScaleY(minScale + diff*curentPos);
+            // Fade text
+            page.findViewById(R.id.featured_article_stats).setAlpha((float) Math.pow(curentPos,4));
         }
     }
 
