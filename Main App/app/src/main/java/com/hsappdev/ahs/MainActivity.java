@@ -2,19 +2,17 @@ package com.hsappdev.ahs;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
-import androidx.core.view.WindowCompat;
 import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class MainActivity extends AppCompatActivity implements BottomNavigationAdapter{
+public class MainActivity extends AppCompatActivity implements BottomNavigationCallback, SettingsManager.DayNightCallback {
 
     private BottomNavigationView navView;
 
@@ -41,36 +39,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationA
         NavController navController = navHostFragment.getNavController();
         NavigationUI.setupWithNavController(navView, navController);
         navView.setItemIconTintList(null); // Remove tint from navbar; Required for navbar icons to work
-    }
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
-        if (hasFocus) {
-            //hideSystemUI();
-        }
-    }
 
-    @Override
-    public void onRestart() {
-        super.onRestart();
-        //hideSystemUI();
-    }
-
-    private void hideSystemUI() {
-        // Enables regular immersive mode.
-        // For "lean back" mode, remove SYSTEM_UI_FLAG_IMMERSIVE.
-        // Or for "sticky immersive," replace it with SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-        View decorView = getWindow().getDecorView();
-        decorView.setSystemUiVisibility(
-                View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-                        // Set the content to appear under the system bars so that the
-                        // content doesn't resize when the system bars hide and show.
-                        | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                        // Hide the nav bar and status bar
-                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                        | View.SYSTEM_UI_FLAG_FULLSCREEN);
     }
 
     @Override
@@ -105,4 +74,41 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationA
 
 
     }
+
+    @Override
+    public void onNewMode(boolean isNightModeOn) {
+        AppCompatDelegate.setDefaultNightMode(isNightModeOn ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO);
+        getWindow().setWindowAnimations(R.style.WindowAnimationTransition);
+        recreate();
+    }
+    //    @Override
+//    public void onWindowFocusChanged(boolean hasFocus) {
+//        super.onWindowFocusChanged(hasFocus);
+//        if (hasFocus) {
+//            //hideSystemUI();
+//        }
+//    }
+//
+//    @Override
+//    public void onRestart() {
+//        super.onRestart();
+//        //hideSystemUI();
+//    }
+//
+//    private void hideSystemUI() {
+//        // Enables regular immersive mode.
+//        // For "lean back" mode, remove SYSTEM_UI_FLAG_IMMERSIVE.
+//        // Or for "sticky immersive," replace it with SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+//        View decorView = getWindow().getDecorView();
+//        decorView.setSystemUiVisibility(
+//                View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+//                        // Set the content to appear under the system bars so that the
+//                        // content doesn't resize when the system bars hide and show.
+//                        | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+//                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+//                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+//                        // Hide the nav bar and status bar
+//                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+//                        | View.SYSTEM_UI_FLAG_FULLSCREEN);
+//    }
 }

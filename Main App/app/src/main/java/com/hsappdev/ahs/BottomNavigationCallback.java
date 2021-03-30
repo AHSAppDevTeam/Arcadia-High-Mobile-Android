@@ -1,6 +1,6 @@
 package com.hsappdev.ahs;
 
-public interface BottomNavigationAdapter {
+public interface BottomNavigationCallback {
     public void slideUp();
     public void slideDown();
 }

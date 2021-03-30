@@ -7,6 +7,7 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="transparent">#0000</color>
     <color name="white50">#7FFFFFFF</color>
     <color name="black50">#7F000000</color>
 
@@ -15,9 +16,16 @@
     <color name="bgColor">#fff</color>
     <color name="bgColor_night">#272626</color>
 
+    <color name="brightRed">#c22b2b</color>
+
     <color name="brickRed">#a21313</color>
     <color name="brickRed50">#7fa21313</color>
     <color name="brickRedAccent">#7febd9d9</color>
 
+    <color name="redGradientStart">#c74335</color>
+    <color name="redGradientEnd">#c95d16</color>
+
+    <color name="blueGradientStart">#63a8a8</color>
+    <color name="blueGradientEnd">#2e8a7d</color>
     <color name="teal">#55a0ae</color>
 </resources>

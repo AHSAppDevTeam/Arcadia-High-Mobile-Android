@@ -4,4 +4,8 @@
     <dimen name="design_bottom_navigation_height" tools:override="true">48dp</dimen>
     <dimen name="navBarIcon_height">32dp</dimen>
     <dimen name="navBarInnerIcon_height">24dp</dimen>
+    <dimen name="strokeWidth">2dp</dimen>
+    <dimen name="padding_x.5">7.5dp</dimen>
+    <dimen name="padding">15dp</dimen>
+    <dimen name="padding_x2">30dp</dimen>
 </resources>

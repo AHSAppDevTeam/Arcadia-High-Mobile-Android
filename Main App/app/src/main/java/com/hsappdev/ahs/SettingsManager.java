@@ -21,6 +21,10 @@ public class SettingsManager {
         themeKey = context.getResources().getString(R.string.theme_key);
     }
 
+    public interface DayNightCallback {
+        void onNewMode(boolean isNightModeOn);
+    }
+
     //https://medium.com/androiddevelopers/appcompat-v23-2-daynight-d10f90c83e94
     /**
      * gets whether Night Mode has been turned on from SharedPreferences
@@ -38,4 +42,5 @@ public class SettingsManager {
         SharedPreferences.Editor editor = settings.edit();
         editor.putBoolean(themeKey, isNightModeOn).apply();
     }
+
 }

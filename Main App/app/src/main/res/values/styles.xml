@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="WindowAnimationTransition">
-        <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
-        <item name="android:windowExitAnimation">@android:anim/fade_out</item>
-        <item name="android:activityCloseEnterAnimation">@android:anim/fade_in</item>
-        <item name="android:activityCloseExitAnimation">@android:anim/fade_out</item>
+        <item name="android:windowEnterAnimation">@anim/fade_in</item>
+        <item name="android:windowExitAnimation">@anim/fade_out</item>
+<!--        <item name="android:activityOpenEnterAnimation">@android:anim/fade_in</item>-->
+<!--        <item name="android:activityOpenExitAnimation">@android:anim/fade_out</item>-->
+<!--        <item name="android:activityCloseEnterAnimation">@android:anim/fade_in</item>-->
+<!--        <item name="android:activityCloseExitAnimation">@android:anim/fade_out</item>-->
     </style>
 </resources>

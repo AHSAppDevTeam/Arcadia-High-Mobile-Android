@@ -2,8 +2,9 @@
     <!-- Base application theme. -->
     <style name="Theme.ArcadiaHighMobile" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary brand color. -->
+        <item name="android:windowLightStatusBar">true</item>
         <item name="colorPrimary">@color/brickRed</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorPrimaryVariant">@color/white</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
@@ -12,8 +13,12 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
-        <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
-        <item name="bgColor">@color/bgColor</item>
+        <item name="android:ambientShadowAlpha">.15</item>
+        <item name="android:spotShadowAlpha">.15</item>
+<!--        <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>-->
+
+        <item name="bgColor">@color/white</item>
+        <item name="bgColorAccent">@color/white</item>
         <item name="navBarIconColor">@color/black50</item>
         <item name="navBarIconColor_active">@color/brickRed50</item>
         <item name="navBarIconColorAccent_active">@color/brickRedAccent</item>

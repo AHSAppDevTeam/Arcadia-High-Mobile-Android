@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <attr name = "bgColor" value="color"/>
+    <attr name = "bgColorAccent" value="color"/>
     <attr name = "navBarIconColor" value="color"/>
     <attr name = "navBarIconColor_active" value="color"/>
     <attr name = "navBarIconColorAccent_active" value="color"/>

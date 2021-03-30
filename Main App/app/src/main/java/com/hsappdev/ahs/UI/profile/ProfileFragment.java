@@ -3,6 +3,7 @@ package com.hsappdev.ahs.UI.profile;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.CompoundButton;
 
 import com.google.android.material.switchmaterial.SwitchMaterial;
+import com.hsappdev.ahs.BottomNavigationCallback;
 import com.hsappdev.ahs.R;
 import com.hsappdev.ahs.SettingsManager;
 
@@ -25,6 +27,17 @@ public class ProfileFragment extends Fragment {
 
     public static ProfileFragment newInstance() {
         return new ProfileFragment();
+    }
+    private SettingsManager.DayNightCallback dayNightCallback;
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        try {
+             dayNightCallback = (SettingsManager.DayNightCallback) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException();
+        }
     }
 
     @Override
@@ -37,11 +50,8 @@ public class ProfileFragment extends Fragment {
         dayNightSwitch.setChecked(settingsManager.isNightModeOn());
         dayNightSwitch.setOnCheckedChangeListener((compoundButton, b) -> {
             Log.d(TAG, "New dayNight state: " + b);
-            if(b)
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES); // now true, turn on night mode
-            else
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO); // now false, turn it off
             settingsManager.updateNightMode(b);
+            dayNightCallback.onNewMode(b);
         });
 
         return view;

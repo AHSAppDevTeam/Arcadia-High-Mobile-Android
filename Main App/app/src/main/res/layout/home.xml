@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,17 +9,135 @@
     <androidx.core.widget.NestedScrollView
         android:id="@+id/home_scrollView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="match_parent">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:background="?attr/bgColor"
+            android:orientation="vertical"
+            android:clipChildren="false">
 
-            <TextView
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/linearLayout"
                 android:layout_width="match_parent"
-                android:layout_height="500dp"
-                android:text="This is Home Fragment" />
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/padding"
+                android:layout_marginEnd="@dimen/padding"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:alpha="0.15"
+                    android:scaleType="fitStart"
+
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@android:drawable/presence_video_busy" />
+
+                <TextView
+                    android:id="@+id/home_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sfprodisplay_bold"
+                    android:includeFontPadding="false"
+                    android:lineSpacingExtra="0dp"
+                    android:text="Arcadia"
+                    android:textColor="@color/brightRed"
+                    android:textSize="36sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:layout_conversion_absoluteHeight="43dp"
+                    tools:layout_conversion_absoluteWidth="130dp" />
+
+
+                <TextView
+                    android:id="@+id/home_monthDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sfprodisplay_medium"
+                    android:includeFontPadding="false"
+                    android:lineSpacingExtra="0dp"
+                    android:text="Month "
+                    android:textColor="@color/brightRed"
+                    android:textSize="24sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/home_title"
+                    tools:layout_conversion_absoluteHeight="34dp"
+                    tools:layout_conversion_absoluteWidth="86dp" />
+
+                <TextView
+                    android:id="@+id/home_dayDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sfprodisplay_light"
+                    android:includeFontPadding="false"
+                    android:lineSpacingExtra="0dp"
+                    android:text="Day"
+                    android:textColor="@color/brightRed"
+                    android:textSize="24sp"
+                    app:layout_constraintStart_toEndOf="@+id/home_monthDate"
+                    app:layout_constraintTop_toBottomOf="@+id/home_title"
+                    tools:layout_conversion_absoluteHeight="34dp"
+                    tools:layout_conversion_absoluteWidth="46dp" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/linearLayout2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/padding"
+                android:layout_marginTop="@dimen/padding"
+
+
+                android:layout_marginEnd="@dimen/padding">
+
+                <TextView
+                    android:id="@+id/home_ausdNews_selector"
+                    android:elevation="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/home_ausdnews_bg_active"
+                    android:fontFamily="@font/sfprodisplay_regular"
+                    android:foreground="@drawable/home_ripple_masked"
+                    android:gravity="center"
+                    android:paddingStart="@dimen/padding_x2"
+                    android:paddingTop="@dimen/padding_x.5"
+                    android:paddingEnd="@dimen/padding_x2"
+                    android:paddingBottom="@dimen/padding_x.5"
+                    android:text="AUSD News"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/home_community_selector"
+                    android:elevation="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/home_community_bg_inactive"
+                    android:fontFamily="@font/sfprodisplay_regular"
+                    android:foreground="@drawable/home_ripple_masked"
+                    android:gravity="center"
+                    android:paddingStart="@dimen/padding_x2"
+                    android:paddingTop="@dimen/padding_x.5"
+                    android:paddingEnd="@dimen/padding_x2"
+                    android:paddingBottom="@dimen/padding_x.5"
+                    android:text="Community"
+                    android:textColor="@color/teal"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toEndOf="@+id/home_ausdNews_selector"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
                 android:id="@+id/textView2"
