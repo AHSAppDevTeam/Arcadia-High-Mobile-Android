@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         CompositePageTransformer compositePageTransformer = new CompositePageTransformer();
         //margin determines distance between two pages
         //adjust left/right padding of viewpager2 to determine distance between left and right edges and current page
-        compositePageTransformer.addTransformer(new MarginPageTransformer((int) dp_to_px(10))); //note: conversion between dp and pixel, apply later
+        compositePageTransformer.addTransformer(new MarginPageTransformer((int) dp_to_px(0))); //note: conversion between dp and pixel, apply later
         compositePageTransformer.addTransformer(new ScaleTransformer());
         viewPager2.setPageTransformer(compositePageTransformer);
     }

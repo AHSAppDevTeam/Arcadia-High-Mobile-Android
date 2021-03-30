@@ -1,6 +1,7 @@
 package com.example.carousel;
 
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -58,6 +59,10 @@ public class FeaturedArticleAdapter extends RecyclerView.Adapter<FeaturedArticle
         }
 
         public void setArticleImage(int articleImage) {
+            // Set clip to outline programmatically since xml is not supported due to a bug with android
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                this.articleImage.setClipToOutline(true);
+            }
             this.articleImage.setImageResource(articleImage);
         }
 
