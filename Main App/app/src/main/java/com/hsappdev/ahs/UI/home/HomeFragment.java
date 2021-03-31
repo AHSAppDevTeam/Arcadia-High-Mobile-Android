@@ -10,10 +10,14 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.viewpager2.widget.CompositePageTransformer;
+import androidx.viewpager2.widget.MarginPageTransformer;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.StyleSpan;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,10 +26,16 @@ import android.widget.TextView;
 
 import com.hsappdev.ahs.BottomNavigationCallback;
 import com.hsappdev.ahs.R;
+import com.hsappdev.ahs.dataTypes.Article;
+import com.hsappdev.ahs.gui.homePage.viewPagers.FeaturedArticleAdapter;
+import com.hsappdev.ahs.gui.homePage.viewPagers.ScaleAndFadeTransformer;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
+import java.util.UUID;
 
 public class HomeFragment extends Fragment {
 
@@ -36,6 +46,10 @@ public class HomeFragment extends Fragment {
     }
 
     private BottomNavigationCallback bottomNavigationViewAdapter;
+
+    // For Featured Articles
+    ViewPager2 featuredArticleViewPager;
+    List<Article> articleList;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -112,6 +126,9 @@ public class HomeFragment extends Fragment {
         TextView dayText = view.findViewById(R.id.home_dayDate);
         String day = new SimpleDateFormat("d", Locale.US).format(Calendar.getInstance().getTimeInMillis());
         dayText.setText(day);
+
+        setUpFeaturedArticleViewPager(view);
+
         return view;
     }
 
@@ -120,6 +137,34 @@ public class HomeFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         mViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
         // TODO: Use the ViewModel
+    }
+
+    public void setUpFeaturedArticleViewPager(View view){
+        featuredArticleViewPager = view.findViewById(R.id.carousel);
+
+        articleList = new ArrayList<>();
+        // TODO: Fix article id and image
+        articleList.add(new Article(UUID.randomUUID().toString(), R.drawable.test_image));
+        articleList.add(new Article(UUID.randomUUID().toString(), R.drawable.test_image1));
+        articleList.add(new Article(UUID.randomUUID().toString(), R.drawable.test_image));
+        articleList.add(new Article(UUID.randomUUID().toString(), R.drawable.test_image1));
+
+        featuredArticleViewPager.setAdapter(new FeaturedArticleAdapter(articleList, featuredArticleViewPager));
+
+        featuredArticleViewPager.setClipToPadding(false);
+        featuredArticleViewPager.setClipChildren(false);
+        featuredArticleViewPager.setOffscreenPageLimit(3);
+
+        CompositePageTransformer compositePageTransformer = new CompositePageTransformer();
+        //margin determines distance between two pages
+        //adjust left/right padding of viewpager2 to determine distance between left and right edges and current page
+        compositePageTransformer.addTransformer(new MarginPageTransformer((int) dp_to_px(0))); //note: conversion between dp and pixel, apply later
+        compositePageTransformer.addTransformer(new ScaleAndFadeTransformer());
+        featuredArticleViewPager.setPageTransformer(compositePageTransformer);
+    }
+
+    public float dp_to_px(float dp) {
+        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,dp,getResources().getDisplayMetrics());
     }
 
 

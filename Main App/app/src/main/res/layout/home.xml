@@ -138,7 +138,11 @@
                     app:layout_constraintStart_toEndOf="@+id/home_ausdNews_selector"
                     app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.fragment.app.FragmentContainerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
+            </androidx.fragment.app.FragmentContainerView>
             <TextView
                 android:id="@+id/textView2"
                 android:layout_width="match_parent"
