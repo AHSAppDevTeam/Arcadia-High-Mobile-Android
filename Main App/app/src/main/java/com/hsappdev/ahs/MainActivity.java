@@ -1,5 +1,6 @@
 package com.hsappdev.ahs;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.navigation.NavController;
@@ -7,14 +8,24 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationCallback, SettingsManager.DayNightCallback {
 
     private BottomNavigationView navView;
+    private static final String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +38,15 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationC
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         else
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+
+        Resources r =getResources();
+        FirebaseOptions options = new FirebaseOptions.Builder()
+                .setApplicationId(r.getString(R.string.database_app_id))
+                .setApiKey(r.getString(R.string.database_api_key))
+                .setDatabaseUrl(r.getString(R.string.database_url))
+                .build();
+        FirebaseApp.initializeApp(getApplicationContext(), options);
+
         setContentView(R.layout.activity_main);
 
         navView = findViewById(R.id.nav_view);
@@ -39,6 +59,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationC
         NavController navController = navHostFragment.getNavController();
         NavigationUI.setupWithNavController(navView, navController);
         navView.setItemIconTintList(null); // Remove tint from navbar; Required for navbar icons to work
+
 
     }
 

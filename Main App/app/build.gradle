@@ -30,6 +30,10 @@ android {
 
 dependencies {
 
+    implementation 'com.google.firebase:firebase-database:19.7.0' // for firebase functions
+    implementation 'com.google.firebase:firebase-messaging:21.0.1'
+    implementation 'com.google.firebase:firebase-analytics:18.0.2'
+
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'com.google.android.material:material:1.3.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'

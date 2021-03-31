@@ -27,8 +27,6 @@ import android.widget.TextView;
 import com.hsappdev.ahs.BottomNavigationCallback;
 import com.hsappdev.ahs.R;
 import com.hsappdev.ahs.dataTypes.Article;
-import com.hsappdev.ahs.gui.homePage.viewPagers.FeaturedArticleAdapter;
-import com.hsappdev.ahs.gui.homePage.viewPagers.ScaleAndFadeTransformer;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -140,7 +138,7 @@ public class HomeFragment extends Fragment {
     }
 
     public void setUpFeaturedArticleViewPager(View view){
-        featuredArticleViewPager = view.findViewById(R.id.carousel);
+        featuredArticleViewPager = view.findViewById(R.id.home_featured_carousel);
 
         articleList = new ArrayList<>();
         // TODO: Fix article id and image
@@ -149,18 +147,18 @@ public class HomeFragment extends Fragment {
         articleList.add(new Article(UUID.randomUUID().toString(), R.drawable.test_image));
         articleList.add(new Article(UUID.randomUUID().toString(), R.drawable.test_image1));
 
-        featuredArticleViewPager.setAdapter(new FeaturedArticleAdapter(articleList, featuredArticleViewPager));
-
-        featuredArticleViewPager.setClipToPadding(false);
-        featuredArticleViewPager.setClipChildren(false);
-        featuredArticleViewPager.setOffscreenPageLimit(3);
+//        featuredArticleViewPager.setAdapter(new FeaturedArticleAdapter(articleList));
+//
+//        featuredArticleViewPager.setClipToPadding(false);
+//        featuredArticleViewPager.setClipChildren(false);
+//        featuredArticleViewPager.setOffscreenPageLimit(3);
 
         CompositePageTransformer compositePageTransformer = new CompositePageTransformer();
         //margin determines distance between two pages
         //adjust left/right padding of viewpager2 to determine distance between left and right edges and current page
         compositePageTransformer.addTransformer(new MarginPageTransformer((int) dp_to_px(0))); //note: conversion between dp and pixel, apply later
         compositePageTransformer.addTransformer(new ScaleAndFadeTransformer());
-        featuredArticleViewPager.setPageTransformer(compositePageTransformer);
+//        featuredArticleViewPager.setPageTransformer(compositePageTransformer);
     }
 
     public float dp_to_px(float dp) {

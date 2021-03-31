@@ -7,6 +7,14 @@
     <string name="navbar_title_saved">Saved</string>
     <string name="navbar_title_profile">Profile</string>
 
+    <string name="database_app_id">1:654225823864:android:79667fc6142c94cbb7758d</string>
+    <string name="database_url">https://ahs-app.firebaseio.com/</string>
+    <string name="database_api_key">AIzaSyBRBGC45zgZd6JtLKDq2nfwDnW5symCwX8</string>
+
+    <string name="database_locations_ref">locations</string>
+    <string name="database_ausdNews_ref">homepage</string>
+    <string name="database_locations_catID_ref">categoryIDs</string>
+
     <string name="settings_file">settings</string>
     <string name="theme_key">themeKey</string>
     <!-- TODO: Remove or change this placeholder text -->

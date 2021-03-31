@@ -1,4 +1,4 @@
-package com.hsappdev.ahs.gui.homePage.viewPagers;
+package com.hsappdev.ahs.UI.home;
 
 import android.view.View;
 import android.widget.ImageView;

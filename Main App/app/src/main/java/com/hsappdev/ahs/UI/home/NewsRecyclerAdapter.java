@@ -5,20 +5,22 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.hsappdev.ahs.R;
 import com.hsappdev.ahs.dataTypes.Article;
-import com.hsappdev.ahs.gui.homePage.viewPagers.FeaturedArticleAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class NewsRecyclerAdapter extends RecyclerView.Adapter {
-    List<List<Article>> articlesList = new ArrayList<>();
+    //List<List<Article>> articlesList = new ArrayList<>();
+
+    ArrayList<String> categoryTitles;
+    public NewsRecyclerAdapter(ArrayList<String> categoryTitles) {
+        this.categoryTitles = categoryTitles;
+    }
 
     @NonNull
     @Override

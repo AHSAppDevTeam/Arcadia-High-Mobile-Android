@@ -1,4 +1,4 @@
-package com.hsappdev.ahs.gui.homePage.viewPagers;
+package com.hsappdev.ahs.UI.home;
 
 import android.os.Build;
 import android.view.LayoutInflater;
@@ -9,7 +9,6 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager2.widget.ViewPager2;
 
 import com.hsappdev.ahs.R;
 import com.hsappdev.ahs.dataTypes.Article;
@@ -29,7 +28,7 @@ public class FeaturedArticleAdapter extends RecyclerView.Adapter<FeaturedArticle
     public FeaturedArticleViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new FeaturedArticleViewHolder(
                 LayoutInflater.from(parent.getContext()).inflate(
-                        R.layout.featured_article_slide,
+                        R.layout.home_featured_article_slide,
                         parent,
                         false
                 )

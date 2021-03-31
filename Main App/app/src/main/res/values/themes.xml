@@ -13,8 +13,8 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
-        <item name="android:ambientShadowAlpha">.15</item>
-        <item name="android:spotShadowAlpha">.15</item>
+        <item name="android:ambientShadowAlpha">.1</item>
+        <item name="android:spotShadowAlpha">.1</item>
 <!--        <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>-->
 
         <item name="bgColor">@color/white</item>
