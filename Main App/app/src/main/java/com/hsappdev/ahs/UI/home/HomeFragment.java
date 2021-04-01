@@ -22,8 +22,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.dynamic.SupportFragmentWrapper;
 import com.hsappdev.ahs.BottomNavigationCallback;
 import com.hsappdev.ahs.R;
 import com.hsappdev.ahs.dataTypes.Article;
@@ -65,6 +67,12 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.home, container, false);
+        Fragment homeNewsFragment = new HomeNewsFragment();
+        getParentFragmentManager().beginTransaction()
+                .add(R.id.home_news_fragment_holder, homeNewsFragment)
+                .commit();
+
+
         NestedScrollView scrollView = view.findViewById(R.id.home_scrollView);
         final float scrollAnimBuffer = 5;
         scrollView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
@@ -141,11 +149,7 @@ public class HomeFragment extends Fragment {
         featuredArticleViewPager = view.findViewById(R.id.home_featured_carousel);
 
         articleList = new ArrayList<>();
-        // TODO: Fix article id and image
-        articleList.add(new Article(UUID.randomUUID().toString(), R.drawable.test_image));
-        articleList.add(new Article(UUID.randomUUID().toString(), R.drawable.test_image1));
-        articleList.add(new Article(UUID.randomUUID().toString(), R.drawable.test_image));
-        articleList.add(new Article(UUID.randomUUID().toString(), R.drawable.test_image1));
+//
 
 //        featuredArticleViewPager.setAdapter(new FeaturedArticleAdapter(articleList));
 //

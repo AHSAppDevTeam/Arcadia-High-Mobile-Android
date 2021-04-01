@@ -1,30 +1,44 @@
 package com.hsappdev.ahs.dataTypes;
 
 public class Article {
+    private String author;
+    private String body;
+    private String date;
+    private String title;
 
-    private String articleId;
-    private int articleImage;
 
-    public Article(String articleId, int articleImage) {
-        this.articleId = articleId;
-        this.articleImage = articleImage;
+    public Article(String author, String date, String title, String body) {
+        this.author = author;
+        this.date = date;
+        this.title = title;
+        this.body = body;
     }
 
 
     // GETTERS AND SETTERS
-    public String getArticleId() {
-        return articleId;
+
+
+    public String getAuthor() {
+        return author;
     }
 
-    public void setArticleId(String articleId) {
-        this.articleId = articleId;
+    public void setAuthor(String author) {
+        this.author = author;
     }
 
-    public int getArticleImage() {
-        return articleImage;
+    public String getDate() {
+        return date;
     }
 
-    public void setArticleImage(int articleImage) {
-        this.articleImage = articleImage;
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

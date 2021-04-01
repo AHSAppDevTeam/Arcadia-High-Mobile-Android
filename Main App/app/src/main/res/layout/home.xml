@@ -139,15 +139,12 @@
                     app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
             <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/home_news_fragment_holder"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
             </androidx.fragment.app.FragmentContainerView>
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="match_parent"
-                android:layout_height="500dp"
-                android:text="Scroll Behavior Test" />
+
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 

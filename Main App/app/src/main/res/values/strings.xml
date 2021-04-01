@@ -14,6 +14,9 @@
     <string name="database_locations_ref">locations</string>
     <string name="database_ausdNews_ref">homepage</string>
     <string name="database_locations_catID_ref">categoryIDs</string>
+    <string name="database_categories_ref">categories</string>
+    <string name="database_articles_ref">articles</string>
+    <string name="database_categories_articleIds_ref">articleIDs</string>
 
     <string name="settings_file">settings</string>
     <string name="theme_key">themeKey</string>
