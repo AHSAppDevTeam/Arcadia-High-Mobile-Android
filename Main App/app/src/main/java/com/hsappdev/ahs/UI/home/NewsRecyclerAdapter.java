@@ -22,7 +22,7 @@ import com.hsappdev.ahs.dataTypes.Article;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NewsRecyclerAdapter extends RecyclerView.Adapter {
+public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapter.FeaturedViewHolder> {
     //List<List<Article>> articlesList = new ArrayList<>();
 
     ArrayList<String> categoryTitles;
@@ -32,15 +32,14 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter {
 
     @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public FeaturedViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.home_news_section, parent, false);
         return new FeaturedViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        FeaturedViewHolder featuredHolder = (FeaturedViewHolder) holder;
-        featuredHolder.setDetails(categoryTitles.get(position));
+    public void onBindViewHolder(@NonNull FeaturedViewHolder holder, int position) {
+        holder.setDetails(categoryTitles.get(position));
     }
 
     @Override
@@ -53,7 +52,7 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter {
         private ViewPager2 homeNews;
         private Resources resources;
         public void setDetails(String categoryTitle){
-            List<String> articles  = new ArrayList<>();
+
             Resources r = homeNews.getContext().getResources();
             DatabaseReference ref = FirebaseDatabase.getInstance(FirebaseApp.getInstance()).getReference()
                     .child(resources.getString(R.string.database_categories_ref))
@@ -62,8 +61,17 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter {
             ref.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    List<String> articles  = new ArrayList<>();
                     for(DataSnapshot articleId : snapshot.getChildren()){
                         articles.add(articleId.getValue(String.class));
+                    }
+                    if(homeNews.getAdapter() == null) {
+                        FeaturedArticleAdapter featuredArticleAdapter = new FeaturedArticleAdapter(articles);
+                        homeNews.setAdapter(featuredArticleAdapter);
+                    }else{
+                        FeaturedArticleAdapter adapter = ((FeaturedArticleAdapter)homeNews.getAdapter());
+                        adapter.setArticleIds(articles);
+                        adapter.notifyDataSetChanged();
                     }
                 }
 
@@ -74,8 +82,6 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter {
             });
 
 
-            FeaturedArticleAdapter featuredArticleAdapter = new FeaturedArticleAdapter(articles);
-            homeNews.setAdapter(featuredArticleAdapter);
         }
 
         public FeaturedViewHolder(@NonNull View itemView){

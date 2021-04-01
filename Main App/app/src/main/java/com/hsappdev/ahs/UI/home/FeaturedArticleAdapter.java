@@ -80,7 +80,7 @@ public class FeaturedArticleAdapter extends RecyclerView.Adapter<FeaturedArticle
                     String title = snapshot.child("title").getValue(String.class);
                     String date = snapshot.child("date").getValue(String.class);
                     article = new Article(author, date, title, body);
-                    titleTextView.setText(title);
+                    titleTextView.setText(article.getTitle());
                 }
 
                 @Override
@@ -90,15 +90,18 @@ public class FeaturedArticleAdapter extends RecyclerView.Adapter<FeaturedArticle
             });
         }
 
-        public void setArticleImage(int articleImage) {
-            // Set clip to outline programmatically since xml is not supported due to a bug with android
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                this.articleImage.setClipToOutline(true);
-            }
-            this.articleImage.setImageResource(articleImage);
-        }
 
     }
 
+    // GETTERS AND SETTERS
+
+
+    public List<String> getArticleIds() {
+        return articleIds;
+    }
+
+    public void setArticleIds(List<String> articleIds) {
+        this.articleIds = articleIds;
+    }
 }
 

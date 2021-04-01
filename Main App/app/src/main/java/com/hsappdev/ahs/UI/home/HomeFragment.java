@@ -1,8 +1,10 @@
 package com.hsappdev.ahs.UI.home;
 
+import androidx.core.app.ActivityCompat;
 import androidx.core.widget.NestedScrollView;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -68,7 +70,7 @@ public class HomeFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.home, container, false);
         Fragment homeNewsFragment = new HomeNewsFragment();
-        getParentFragmentManager().beginTransaction()
+        getActivity().getSupportFragmentManager().beginTransaction()
                 .add(R.id.home_news_fragment_holder, homeNewsFragment)
                 .commit();
 
