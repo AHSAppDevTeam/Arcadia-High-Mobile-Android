@@ -40,12 +40,17 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationC
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         Resources r =getResources();
-        FirebaseOptions options = new FirebaseOptions.Builder()
-                .setApplicationId(r.getString(R.string.database_app_id))
-                .setApiKey(r.getString(R.string.database_api_key))
-                .setDatabaseUrl(r.getString(R.string.database_url))
-                .build();
-        FirebaseApp.initializeApp(getApplicationContext(), options);
+        try {
+            FirebaseOptions options = new FirebaseOptions.Builder()
+                    .setApplicationId(r.getString(R.string.database_app_id))
+                    .setApiKey(r.getString(R.string.database_api_key))
+                    .setDatabaseUrl(r.getString(R.string.database_url))
+                    .build();
+            FirebaseApp.initializeApp(getApplicationContext(), options);
+        }catch (IllegalStateException e){
+            // Try catch is used in case the options have already been set
+            Log.i(TAG, "Database Options already set");
+        }
 
         setContentView(R.layout.activity_main);
 
