@@ -32,16 +32,15 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationC
 
         Resources r =getResources();
 
-        try {
-            FirebaseOptions options = new FirebaseOptions.Builder()
-                    .setApplicationId(r.getString(R.string.database_app_id))
-                    .setApiKey(r.getString(R.string.database_api_key))
-                    .setDatabaseUrl(r.getString(R.string.database_url))
-                    .build();
+        FirebaseOptions options = new FirebaseOptions.Builder()
+                .setApplicationId(r.getString(R.string.db_app_id))
+                .setApiKey(r.getString(R.string.db_api_key))
+                .setDatabaseUrl(r.getString(R.string.db_url))
+                .build();
+
+        // prevent weird crashes if firebase app is already initialized
+        if (FirebaseApp.getApps(getApplicationContext()).isEmpty()) {
             FirebaseApp.initializeApp(getApplicationContext(), options);
-        }catch (IllegalStateException e){
-            // Try catch is used in case the options have already been set
-            Log.i(TAG, "Database Options already set");
         }
 
         setContentView(R.layout.activity_main);
