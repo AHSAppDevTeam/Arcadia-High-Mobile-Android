@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,7 +30,7 @@ public class HomeNewsFragment extends Fragment {
     }
  //MainActivity -> HomeFragment (home page) ->
     // HomeNewsFragment (AUSD news section) get locations and structure , pass into-> RecyclerViewAdapter -> ViewPager2
-    private ArrayList<String> categoryTitles;
+    private ArrayList<String> categoryTitles = new ArrayList<>();
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,29 +40,36 @@ public class HomeNewsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        categoryTitles = new ArrayList<>();
         Resources r = getResources();
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.home_news_fragment, container, false);
 
-        DatabaseReference ref = FirebaseDatabase.getInstance(FirebaseApp.getInstance()).getReference()
-                .child(r.getString(R.string.database_locations_ref))
-                .child(r.getString(R.string.database_ausdNews_ref))// homepage is default
-                .child(r.getString(R.string.database_locations_catID_ref));
 
+
+        NewsRecyclerAdapter adapter = new NewsRecyclerAdapter(new ArrayList<String>());
+        RecyclerView recyclerView = view.findViewById(R.id.home_news_recyclerView);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        DatabaseReference ref = FirebaseDatabase.getInstance(FirebaseApp.getInstance()).getReference()
+                .child(r.getString(R.string.db_locations))
+                .child(r.getString(R.string.db_location_ausdNews))// homepage is default
+                .child(r.getString(R.string.db_locations_catID));
+        //Log.d(TAG, "oncreateview");
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                //Log.d(TAG, "data changed");
+                adapter.clearAll(); // if there is an update, prevent duplicate articles
+                ArrayList<String> categoriesIDs = new ArrayList<>();
                 for(DataSnapshot sectionTitle : snapshot.getChildren()) {
-                    categoryTitles.add(sectionTitle.getValue(String.class));
+                    categoriesIDs.add(sectionTitle.getValue(String.class));
+
 
                 }
-                Log.d(TAG, categoryTitles.get(0));
-                NewsRecyclerAdapter adapter = new NewsRecyclerAdapter(categoryTitles);
-                RecyclerView recyclerView = view.findViewById(R.id.home_news_recyclerView);
-                recyclerView.setAdapter(adapter);
-                recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+                adapter.addCategoryIDs(categoriesIDs);
+                //Log.d(TAG, "add to category titles");
             }
 
             @Override

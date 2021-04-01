@@ -56,10 +56,10 @@
 
 
                 <TextView
-                    android:id="@+id/home_monthDate"
+                    android:id="@+id/home_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/sfprodisplay_medium"
+                    android:fontFamily="@font/mediumbold_lightregular"
                     android:includeFontPadding="false"
                     android:lineSpacingExtra="0dp"
                     android:text="Month "
@@ -69,21 +69,6 @@
                     app:layout_constraintTop_toBottomOf="@+id/home_title"
                     tools:layout_conversion_absoluteHeight="34dp"
                     tools:layout_conversion_absoluteWidth="86dp" />
-
-                <TextView
-                    android:id="@+id/home_dayDate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/sfprodisplay_light"
-                    android:includeFontPadding="false"
-                    android:lineSpacingExtra="0dp"
-                    android:text="Day"
-                    android:textColor="@color/brightRed"
-                    android:textSize="24sp"
-                    app:layout_constraintStart_toEndOf="@+id/home_monthDate"
-                    app:layout_constraintTop_toBottomOf="@+id/home_title"
-                    tools:layout_conversion_absoluteHeight="34dp"
-                    tools:layout_conversion_absoluteWidth="46dp" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -138,10 +123,12 @@
                     app:layout_constraintStart_toEndOf="@+id/home_ausdNews_selector"
                     app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
+
             <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/home_news_fragment_holder"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/padding">
 
             </androidx.fragment.app.FragmentContainerView>
 

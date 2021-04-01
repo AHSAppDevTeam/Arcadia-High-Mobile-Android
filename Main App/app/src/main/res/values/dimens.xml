@@ -7,5 +7,6 @@
     <dimen name="strokeWidth">2dp</dimen>
     <dimen name="padding_x.5">7.5dp</dimen>
     <dimen name="padding">15dp</dimen>
+    <dimen name="padding_x1.5">22.5dp</dimen>
     <dimen name="padding_x2">30dp</dimen>
 </resources>

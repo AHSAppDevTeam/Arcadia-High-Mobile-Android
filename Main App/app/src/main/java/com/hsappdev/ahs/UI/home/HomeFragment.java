@@ -1,10 +1,8 @@
 package com.hsappdev.ahs.UI.home;
 
-import androidx.core.app.ActivityCompat;
 import androidx.core.widget.NestedScrollView;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -12,32 +10,26 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.viewpager2.widget.CompositePageTransformer;
-import androidx.viewpager2.widget.MarginPageTransformer;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.StyleSpan;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.google.android.gms.dynamic.SupportFragmentWrapper;
 import com.hsappdev.ahs.BottomNavigationCallback;
+import com.hsappdev.ahs.Helper;
 import com.hsappdev.ahs.R;
 import com.hsappdev.ahs.dataTypes.Article;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
-import java.util.UUID;
 
 public class HomeFragment extends Fragment {
 
@@ -71,12 +63,12 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.home, container, false);
         Fragment homeNewsFragment = new HomeNewsFragment();
         getActivity().getSupportFragmentManager().beginTransaction()
-                .add(R.id.home_news_fragment_holder, homeNewsFragment)
+                .replace(R.id.home_news_fragment_holder, homeNewsFragment) //replace instead of add
                 .commit();
 
 
         NestedScrollView scrollView = view.findViewById(R.id.home_scrollView);
-        final float scrollAnimBuffer = 5;
+        final float scrollAnimBuffer = 4;
         scrollView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
             float y = 0;
             @Override
@@ -99,11 +91,7 @@ public class HomeFragment extends Fragment {
 
         TextView ausdNewsSelector = view.findViewById(R.id.home_ausdNews_selector),
                 communitySelector = view.findViewById(R.id.home_community_selector);
-
-
-        SpannableStringBuilder builder = new SpannableStringBuilder("AUSD News");
-        builder.setSpan(new StyleSpan(Typeface.BOLD),0,4, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
-        ausdNewsSelector.setText(builder);
+        Helper.setBoldRegularText(ausdNewsSelector, "AUSD", " News");
 
         communitySelector.setOnClickListener(view1 -> {
             if (news_tab_selected == 0) {
@@ -128,12 +116,11 @@ public class HomeFragment extends Fragment {
         });
 
 
-        TextView monthText = view.findViewById(R.id.home_monthDate);
+
+        TextView dateText = view.findViewById(R.id.home_date);
         String month = new SimpleDateFormat("MMMM ", Locale.US).format(Calendar.getInstance().getTimeInMillis()); // note space
-        monthText.setText(month);
-        TextView dayText = view.findViewById(R.id.home_dayDate);
         String day = new SimpleDateFormat("d", Locale.US).format(Calendar.getInstance().getTimeInMillis());
-        dayText.setText(day);
+        Helper.setBoldRegularText(dateText, month, day);
 
         return view;
     }

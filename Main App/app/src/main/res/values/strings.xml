@@ -7,17 +7,39 @@
     <string name="navbar_title_saved">Saved</string>
     <string name="navbar_title_profile">Profile</string>
 
-    <string name="database_app_id">1:654225823864:android:79667fc6142c94cbb7758d</string>
-    <string name="database_url">https://ahs-app.firebaseio.com/</string>
-    <string name="database_api_key">AIzaSyBRBGC45zgZd6JtLKDq2nfwDnW5symCwX8</string>
+    <!-- database stuff -->
+    <string name="db_app_id">1:654225823864:android:79667fc6142c94cbb7758d</string>
+    <string name="db_url">https://ahs-app.firebaseio.com/</string>
+    <string name="db_api_key">AIzaSyBRBGC45zgZd6JtLKDq2nfwDnW5symCwX8</string>
+    <string name="db_name">main</string>
 
-    <string name="database_locations_ref">locations</string>
-    <string name="database_ausdNews_ref">homepage</string>
-    <string name="database_locations_catID_ref">categoryIDs</string>
-    <string name="database_categories_ref">categories</string>
-    <string name="database_articles_ref">articles</string>
-    <string name="database_categories_articleIds_ref">articleIDs</string>
+    <!-- location branch tells how to structure the app in each page -->
+    <string name="db_locations">locations</string>
+    <!-- ausdNews in location branch -->
+    <string name="db_location_ausdNews">homepage</string>
+    <!-- sections in ausdNews -->
+    <string name="db_locations_catID">categoryIDs</string>
 
+    <!-- categories branch contains the article id's each category has -->
+    <string name="db_categories">categories</string>
+    <!-- article id's in categories -->
+    <string name="db_categories_articleIds">articleIDs</string>
+    <string name="db_categories_titles">title</string>
+    <string name="db_categories_colors">color</string>
+
+    <!--articles branch and article attributes-->
+    <string name="db_articles">articles</string>
+    <string name="db_articles_author">author</string>
+    <string name="db_articles_body">body</string>
+    <string name="db_articles_date">date</string>
+    <string name="db_articles_featured">featured</string>
+    <string name="db_articles_notified">notified</string>
+    <string name="db_articles_timestamp">timestamp</string>
+    <string name="db_articles_title">title</string>
+    <string name="db_articles_views">views</string>
+
+
+    <!-- SharedPreferences file names and file keys -->
     <string name="settings_file">settings</string>
     <string name="theme_key">themeKey</string>
     <!-- TODO: Remove or change this placeholder text -->

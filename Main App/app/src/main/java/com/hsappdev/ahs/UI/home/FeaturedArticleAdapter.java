@@ -1,7 +1,6 @@
 package com.hsappdev.ahs.UI.home;
 
 import android.content.res.Resources;
-import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,8 +26,25 @@ public class FeaturedArticleAdapter extends RecyclerView.Adapter<FeaturedArticle
 
     private List<String> articleIds;
 
-    public FeaturedArticleAdapter(List<String> articles) {
-        this.articleIds = articles;
+    public FeaturedArticleAdapter(List<String> articleIds) {
+        this.articleIds = articleIds;
+    }
+
+    // GETTERS AND SETTERS
+    public List<String> getArticleIds() {
+        return articleIds;
+    }
+
+    public void addArticleIds(String articleId) {
+        articleIds.add(articleId);
+        notifyItemInserted(articleIds.size()-1);
+    }
+    public void clearAll() {
+        articleIds.clear();
+        notifyDataSetChanged();
+    }
+    public void setArticleIds(List<String> articleIds) {
+        this.articleIds = articleIds;
     }
 
     @NonNull
@@ -36,7 +52,7 @@ public class FeaturedArticleAdapter extends RecyclerView.Adapter<FeaturedArticle
     public FeaturedArticleViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new FeaturedArticleViewHolder(
                 LayoutInflater.from(parent.getContext()).inflate(
-                        R.layout.home_featured_article_slide,
+                        R.layout.home_news_featured_article,
                         parent,
                         false
                 )
@@ -53,16 +69,16 @@ public class FeaturedArticleAdapter extends RecyclerView.Adapter<FeaturedArticle
         return articleIds.size();
     }
 
-    class FeaturedArticleViewHolder extends RecyclerView.ViewHolder {
+    static class FeaturedArticleViewHolder extends RecyclerView.ViewHolder {
         private Article article;
-        private ConstraintLayout articleLayout;
-        private ImageView articleImage;
-        private Resources resources;
-        private TextView titleTextView;
+        final private ConstraintLayout articleLayout;
+        final private ImageView articleImage;
+        final private Resources r;
+        final private TextView titleTextView;
 
         public FeaturedArticleViewHolder(@NonNull View itemView) {
             super(itemView);
-            this.resources = itemView.getResources();
+            this.r = itemView.getResources();
             this.articleLayout = (ConstraintLayout) itemView;
             this.articleImage = articleLayout.findViewById(R.id.featured_article_image);
             this.titleTextView = articleLayout.findViewById(R.id.featured_article_name);
@@ -70,15 +86,15 @@ public class FeaturedArticleAdapter extends RecyclerView.Adapter<FeaturedArticle
 
         public void setDetails(String articleId){
             DatabaseReference ref = FirebaseDatabase.getInstance(FirebaseApp.getInstance()).getReference()
-                    .child(resources.getString(R.string.database_articles_ref))
+                    .child(r.getString(R.string.db_articles))
                     .child(articleId);
             ref.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    String author = snapshot.child("author").getValue(String.class);
-                    String body = snapshot.child("body").getValue(String.class);
-                    String title = snapshot.child("title").getValue(String.class);
-                    String date = snapshot.child("date").getValue(String.class);
+                    String author = snapshot.child(r.getString(R.string.db_articles_author)).getValue(String.class);
+                    String body = snapshot.child(r.getString(R.string.db_articles_body)).getValue(String.class);
+                    String title = snapshot.child(r.getString(R.string.db_articles_title)).getValue(String.class);
+                    String date = snapshot.child(r.getString(R.string.db_articles_date)).getValue(String.class);
                     article = new Article(author, date, title, body);
                     titleTextView.setText(article.getTitle());
                 }
@@ -93,15 +109,6 @@ public class FeaturedArticleAdapter extends RecyclerView.Adapter<FeaturedArticle
 
     }
 
-    // GETTERS AND SETTERS
 
-
-    public List<String> getArticleIds() {
-        return articleIds;
-    }
-
-    public void setArticleIds(List<String> articleIds) {
-        this.articleIds = articleIds;
-    }
 }
 

@@ -12,6 +12,7 @@ public class ScaleAndFadeTransformer implements ViewPager2.PageTransformer {
 
     @Override
     public void transformPage(@NonNull View page, float position) {
+        page.setLayerType(View.LAYER_TYPE_NONE, null);
         float curentPos = 1 - Math.abs(position);
         float maxScale = 1f;
         float minScale = 0.75f;

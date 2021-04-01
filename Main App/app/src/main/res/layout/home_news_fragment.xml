@@ -10,6 +10,5 @@
         android:id="@+id/home_news_recyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:nestedScrollingEnabled="false"
-        ></androidx.recyclerview.widget.RecyclerView>
+        android:nestedScrollingEnabled="false" />
 </FrameLayout>
