@@ -1,6 +1,7 @@
 package com.hsappdev.ahs.UI.home;
 
 import android.content.res.Resources;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.CompositePageTransformer;
+import androidx.viewpager2.widget.MarginPageTransformer;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.firebase.FirebaseApp;
@@ -84,10 +87,28 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
 
         }
 
+        public void setUpPager(){
+            homeNews.setClipToPadding(false);
+            homeNews.setClipChildren(false);
+            homeNews.setOffscreenPageLimit(3);
+
+            CompositePageTransformer compositePageTransformer = new CompositePageTransformer();
+            //margin determines distance between two pages
+            //adjust left/right padding of viewpager2 to determine distance between left and right edges and current page
+            compositePageTransformer.addTransformer(new MarginPageTransformer((int) dp_to_px(0))); //note: conversion between dp and pixel, apply later
+            compositePageTransformer.addTransformer(new ScaleAndFadeTransformer());
+            homeNews.setPageTransformer(compositePageTransformer);
+        }
+
+        public float dp_to_px(float dp) {
+            return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,dp, resources.getDisplayMetrics());
+        }
+
         public FeaturedViewHolder(@NonNull View itemView){
             super(itemView);
             resources = itemView.getContext().getResources();
             homeNews = itemView.findViewById(R.id.home_featured_carousel);
+            setUpPager();
         }
     }
 }

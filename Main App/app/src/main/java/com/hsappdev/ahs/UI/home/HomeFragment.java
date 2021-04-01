@@ -135,8 +135,6 @@ public class HomeFragment extends Fragment {
         String day = new SimpleDateFormat("d", Locale.US).format(Calendar.getInstance().getTimeInMillis());
         dayText.setText(day);
 
-        setUpFeaturedArticleViewPager(view);
-
         return view;
     }
 
@@ -147,29 +145,7 @@ public class HomeFragment extends Fragment {
         // TODO: Use the ViewModel
     }
 
-    public void setUpFeaturedArticleViewPager(View view){
-        featuredArticleViewPager = view.findViewById(R.id.home_featured_carousel);
 
-        articleList = new ArrayList<>();
-//
-
-//        featuredArticleViewPager.setAdapter(new FeaturedArticleAdapter(articleList));
-//
-//        featuredArticleViewPager.setClipToPadding(false);
-//        featuredArticleViewPager.setClipChildren(false);
-//        featuredArticleViewPager.setOffscreenPageLimit(3);
-
-        CompositePageTransformer compositePageTransformer = new CompositePageTransformer();
-        //margin determines distance between two pages
-        //adjust left/right padding of viewpager2 to determine distance between left and right edges and current page
-        compositePageTransformer.addTransformer(new MarginPageTransformer((int) dp_to_px(0))); //note: conversion between dp and pixel, apply later
-        compositePageTransformer.addTransformer(new ScaleAndFadeTransformer());
-//        featuredArticleViewPager.setPageTransformer(compositePageTransformer);
-    }
-
-    public float dp_to_px(float dp) {
-        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,dp,getResources().getDisplayMetrics());
-    }
 
 
 }

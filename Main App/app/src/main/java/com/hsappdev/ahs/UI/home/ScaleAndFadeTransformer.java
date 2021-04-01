@@ -26,5 +26,6 @@ public class ScaleAndFadeTransformer implements ViewPager2.PageTransformer {
         page.setScaleY(minScale + diff*curentPos);
         // Fade text
         page.findViewById(R.id.featured_article_stats).setAlpha((float) Math.pow(curentPos,4));
+        page.findViewById(R.id.featured_article_name).setAlpha((float) Math.pow(curentPos,4));
     }
 }
