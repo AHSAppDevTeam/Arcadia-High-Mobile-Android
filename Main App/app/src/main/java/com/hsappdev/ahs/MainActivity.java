@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationC
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
         NavController navController = navHostFragment.getNavController();
         NavigationUI.setupWithNavController(navView, navController);
+
         navView.setItemIconTintList(null); // Remove tint from navbar; Required for navbar icons to work
 
 

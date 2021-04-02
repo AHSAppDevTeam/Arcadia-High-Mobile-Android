@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.CompositePageTransformer;
 import androidx.viewpager2.widget.MarginPageTransformer;
@@ -87,6 +88,7 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
             DatabaseReference ref = FirebaseDatabase.getInstance(FirebaseApp.getInstance()).getReference()
                     .child(r.getString(R.string.db_categories))
                     .child(categoryTitle);
+            boolean isNightModeOn = AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES;
             ref.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -96,7 +98,9 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
                         //articles.add();
                     }
                     String title = snapshot.child(r.getString(R.string.db_categories_titles)).getValue(String.class);
-                    int color = Color.parseColor("#8fa2b1");
+                    int color = (isNightModeOn)
+                            ? Color.parseColor(snapshot.child(r.getString(R.string.db_categories_colorDark)).getValue(String.class))
+                            : Color.parseColor(snapshot.child(r.getString(R.string.db_categories_colorLight)).getValue(String.class));
                     // set section title
                     String regularText = " News";
                     Helper.setBoldRegularText(sectionTitle, title, regularText);

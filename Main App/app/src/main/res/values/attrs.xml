@@ -6,4 +6,9 @@
     <attr name = "navBarIconColor" value="color"/>
     <attr name = "navBarIconColor_active" value="color"/>
     <attr name = "navBarIconColorAccent_active" value="color"/>
+
+    <declare-styleable name="TextViewSelector">
+        <attr name="backgroundInactive" format="reference"/>
+        <attr name="textColorInactive" format="color"/>
+    </declare-styleable>
 </resources>

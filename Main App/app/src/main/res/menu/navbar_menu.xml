@@ -5,21 +5,25 @@
         android:id="@+id/navigation_home"
 
         android:icon="@drawable/navbar_home_selector"
-        android:title="@string/navbar_title_home" />
+        android:title="@string/navbar_title_home"
+        android:menuCategory = "secondary"/>
 
     <item
         android:id="@+id/navigation_bulletin"
         android:icon="@drawable/navbar_bulletin_selector"
-        android:title="@string/navbar_title_bulletin" />
+        android:title="@string/navbar_title_bulletin"
+        android:menuCategory = "secondary"/>
 
     <item
         android:id="@+id/navigation_saved"
         android:icon="@drawable/navbar_saved_selector"
-        android:title="@string/navbar_title_saved" />
+        android:title="@string/navbar_title_saved"
+        android:menuCategory = "secondary"/>
 
     <item
         android:id="@+id/navigation_profile"
         android:icon="@drawable/navbar_profile_selector"
-        android:title="@string/navbar_title_profile" />
+        android:title="@string/navbar_title_profile"
+        android:menuCategory = "secondary"/>
 
 </menu>
