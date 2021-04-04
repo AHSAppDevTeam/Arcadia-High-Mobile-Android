@@ -6,14 +6,16 @@ import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
+import com.hsappdev.ahs.dataTypes.Article;
 
-public class MainActivity extends AppCompatActivity implements BottomNavigationCallback, SettingsManager.DayNightCallback {
+public class MainActivity extends AppCompatActivity implements BottomNavigationCallback, SettingsManager.DayNightCallback, OnItemClick {
 
     private BottomNavigationView navView;
     private static final String TAG = "MainActivity";
@@ -98,6 +100,13 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationC
         AppCompatDelegate.setDefaultNightMode(isNightModeOn ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO);
         getWindow().setWindowAnimations(R.style.WindowAnimationTransition);
         recreate();
+    }
+
+    @Override
+    public void onArticleClicked(Article article) {
+        Intent intent = new Intent(MainActivity.this, ArticleActivity.class);
+        intent.putExtra(ArticleActivity.data_KEY, article);
+        startActivity(intent);
     }
     //    @Override
 //    public void onWindowFocusChanged(boolean hasFocus) {

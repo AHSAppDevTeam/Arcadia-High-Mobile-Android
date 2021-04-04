@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.hsappdev.ahs.BottomNavigationCallback;
 import com.hsappdev.ahs.Helper;
+import com.hsappdev.ahs.OnItemClick;
 import com.hsappdev.ahs.R;
 import com.hsappdev.ahs.dataTypes.Article;
 

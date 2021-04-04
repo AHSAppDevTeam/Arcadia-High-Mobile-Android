@@ -1,5 +1,6 @@
 package com.hsappdev.ahs.UI.home;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
 
@@ -18,6 +19,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.hsappdev.ahs.BottomNavigationCallback;
+import com.hsappdev.ahs.OnItemClick;
 import com.hsappdev.ahs.R;
 
 import java.util.ArrayList;
@@ -25,9 +28,22 @@ import java.util.ArrayList;
 public class HomeNewsFragment extends Fragment {
     private static final String TAG = "HomeNewsFragment";
 
+    private OnItemClick onArticleClick;
+
     public HomeNewsFragment() {
         // Required empty public constructor
     }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        try {
+            onArticleClick = (OnItemClick) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException();
+        }
+    }
+
  //MainActivity -> HomeFragment (home page) ->
     // HomeNewsFragment (AUSD news section) get locations and structure , pass into-> RecyclerViewAdapter -> ViewPager2
     private ArrayList<String> categoryTitles = new ArrayList<>();
@@ -47,7 +63,7 @@ public class HomeNewsFragment extends Fragment {
 
 
 
-        NewsRecyclerAdapter adapter = new NewsRecyclerAdapter(new ArrayList<String>());
+        NewsRecyclerAdapter adapter = new NewsRecyclerAdapter(new ArrayList<String>(), onArticleClick);
         RecyclerView recyclerView = view.findViewById(R.id.home_news_recyclerView);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

@@ -27,6 +27,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hsappdev.ahs.Helper;
+import com.hsappdev.ahs.OnItemClick;
 import com.hsappdev.ahs.R;
 
 import java.util.ArrayList;
@@ -35,9 +36,12 @@ import java.util.List;
 public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapter.FeaturedViewHolder> {
     //List<List<Article>> articlesList = new ArrayList<>();
     private static final String TAG = "NewsRecyclerAdapter";
-    ArrayList<String> categoryIDs;
-    public NewsRecyclerAdapter(ArrayList<String> categoryTitles) {
+    private ArrayList<String> categoryIDs;
+    private OnItemClick onArticleClick;
+
+    public NewsRecyclerAdapter(ArrayList<String> categoryTitles, OnItemClick onArticleClick) {
         this.categoryIDs = categoryTitles;
+        this.onArticleClick = onArticleClick;
     }
 
     @NonNull
@@ -52,7 +56,7 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
         //Log.d(TAG, "holder bind at position " + position +"\tcategory: " + categoryIDs.get(position));
         ((ViewGroup) holder.itemView).setClipChildren(false);
         ((ViewGroup) holder.itemView).setClipToPadding(false);
-        holder.setDetails(categoryIDs.get(position));
+        holder.setDetails(categoryIDs.get(position), onArticleClick);
     }
 
     @Override
@@ -81,9 +85,9 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
         private final ViewPager2 featuredPager;
         private final Resources r;
 
-        public void setDetails(String categoryTitle){
+        public void setDetails(String categoryTitle, OnItemClick onArticleClick){
             setUpPager();
-            FeaturedArticleAdapter featuredArticleAdapter = new FeaturedArticleAdapter(new ArrayList<String>());
+            FeaturedArticleAdapter featuredArticleAdapter = new FeaturedArticleAdapter(new ArrayList<String>(), onArticleClick);
             featuredPager.setAdapter(featuredArticleAdapter);
             DatabaseReference ref = FirebaseDatabase.getInstance(FirebaseApp.getInstance()).getReference()
                     .child(r.getString(R.string.db_categories))

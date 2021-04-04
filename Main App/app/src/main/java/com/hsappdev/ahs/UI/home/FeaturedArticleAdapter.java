@@ -1,6 +1,7 @@
 package com.hsappdev.ahs.UI.home;
 
 import android.content.res.Resources;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,17 +18,21 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.hsappdev.ahs.OnItemClick;
 import com.hsappdev.ahs.R;
 import com.hsappdev.ahs.dataTypes.Article;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FeaturedArticleAdapter extends RecyclerView.Adapter<FeaturedArticleAdapter.FeaturedArticleViewHolder> {
-
+    private static final String TAG = "FeaturedArticleAdapter";
     private List<String> articleIds;
+    private OnItemClick onArticleClick;
 
-    public FeaturedArticleAdapter(List<String> articleIds) {
+    public FeaturedArticleAdapter(List<String> articleIds, OnItemClick onArticleClick) {
         this.articleIds = articleIds;
+        this.onArticleClick = onArticleClick;
     }
 
     // GETTERS AND SETTERS
@@ -55,7 +60,8 @@ public class FeaturedArticleAdapter extends RecyclerView.Adapter<FeaturedArticle
                         R.layout.home_news_featured_article,
                         parent,
                         false
-                )
+                ),
+                onArticleClick
         );
     }
 
@@ -69,33 +75,44 @@ public class FeaturedArticleAdapter extends RecyclerView.Adapter<FeaturedArticle
         return articleIds.size();
     }
 
-    static class FeaturedArticleViewHolder extends RecyclerView.ViewHolder {
+    static class FeaturedArticleViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private Article article;
         final private ConstraintLayout articleLayout;
         final private ImageView articleImage;
         final private Resources r;
         final private TextView titleTextView;
+        private OnItemClick onArticleClick;
 
-        public FeaturedArticleViewHolder(@NonNull View itemView) {
+        public FeaturedArticleViewHolder(@NonNull View itemView, OnItemClick onArticleClick) {
             super(itemView);
             this.r = itemView.getResources();
-            this.articleLayout = (ConstraintLayout) itemView;
-            this.articleImage = articleLayout.findViewById(R.id.featured_article_image);
-            this.titleTextView = articleLayout.findViewById(R.id.featured_article_name);
+            this.articleLayout = itemView.findViewById(R.id.home_news_constraintLayout);
+            this.articleImage = itemView.findViewById(R.id.featured_article_image);
+            this.titleTextView = itemView.findViewById(R.id.featured_article_name);
+            this.onArticleClick = onArticleClick;
+
         }
 
-        public void setDetails(String articleId){
+        public void setDetails(String articleID){
+            articleLayout.setOnClickListener(this);
             DatabaseReference ref = FirebaseDatabase.getInstance(FirebaseApp.getInstance()).getReference()
                     .child(r.getString(R.string.db_articles))
-                    .child(articleId);
+                    .child(articleID);
             ref.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     String author = snapshot.child(r.getString(R.string.db_articles_author)).getValue(String.class);
-                    String body = snapshot.child(r.getString(R.string.db_articles_body)).getValue(String.class);
                     String title = snapshot.child(r.getString(R.string.db_articles_title)).getValue(String.class);
-                    String date = snapshot.child(r.getString(R.string.db_articles_date)).getValue(String.class);
-                    article = new Article(author, date, title, body);
+                    String body = snapshot.child(r.getString(R.string.db_articles_body)).getValue(String.class);
+                    String category = snapshot.child(r.getString(R.string.db_articles_categoryID)).getValue(String.class);
+                    ArrayList<String> imageURLs = new ArrayList<>();
+                    for(DataSnapshot imageURL: snapshot.child(r.getString(R.string.db_articles_imageURLs)).getChildren()) {
+                        imageURLs.add(imageURL.getValue(String.class));
+                    }
+                    boolean featured = true;
+                    long timestamp = snapshot.child(r.getString(R.string.db_articles_timestamp)).getValue(long.class);
+
+                    article = new Article(articleID, author, title, body, category, imageURLs.toArray(new String[0]), featured, timestamp);
                     titleTextView.setText(article.getTitle());
                 }
 
@@ -107,6 +124,12 @@ public class FeaturedArticleAdapter extends RecyclerView.Adapter<FeaturedArticle
         }
 
 
+        @Override
+        public void onClick(View view) {
+            Log.d(TAG, "article click");
+            if(article != null)
+                onArticleClick.onArticleClicked(article);
+        }
     }
 
 
