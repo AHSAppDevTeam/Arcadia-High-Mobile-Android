@@ -18,6 +18,7 @@
             android:orientation="vertical"
             android:clipChildren="false">
 
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/linearLayout"
                 android:layout_width="match_parent"
@@ -83,12 +84,13 @@
 
                 android:layout_marginEnd="@dimen/padding">
 
-                <TextView
+                <com.hsappdev.ahs.UI.home.TextViewSelector
                     android:id="@+id/home_ausdNews_selector"
                     android:elevation="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/home_ausdnews_bg_active"
+                    app:backgroundInactive="@drawable/home_ausdnews_bg_inactive"
                     android:fontFamily="@font/sfprodisplay_regular"
                     android:foreground="@drawable/home_ripple_masked"
                     android:gravity="center"
@@ -98,16 +100,19 @@
                     android:paddingBottom="@dimen/padding_x.5"
                     android:text="AUSD News"
                     android:textColor="@color/white"
+                    app:textColorInactive="@color/brightRed"
+                    app:selected="true"
                     android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
+                <com.hsappdev.ahs.UI.home.TextViewSelector
                     android:id="@+id/home_community_selector"
                     android:elevation="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/home_community_bg_inactive"
+                    android:background="@drawable/home_community_bg_active"
+                    app:backgroundInactive="@drawable/home_community_bg_inactive"
                     android:fontFamily="@font/sfprodisplay_regular"
                     android:foreground="@drawable/home_ripple_masked"
                     android:gravity="center"
@@ -116,7 +121,9 @@
                     android:paddingEnd="@dimen/padding_x2"
                     android:paddingBottom="@dimen/padding_x.5"
                     android:text="Community"
-                    android:textColor="@color/teal"
+                    android:textColor="@color/white"
+                    app:textColorInactive="@color/teal"
+                    app:selected="false"
                     android:textSize="16sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="1.0"
@@ -128,7 +135,8 @@
                 android:id="@+id/home_news_fragment_holder"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/padding">
+                android:layout_marginTop="@dimen/padding"
+                >
 
             </androidx.fragment.app.FragmentContainerView>
 

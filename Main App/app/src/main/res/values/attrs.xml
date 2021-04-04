@@ -8,7 +8,10 @@
     <attr name = "navBarIconColorAccent_active" value="color"/>
 
     <declare-styleable name="TextViewSelector">
+        <attr name="android:background"/>
         <attr name="backgroundInactive" format="reference"/>
+        <attr name="android:textColor"/>
         <attr name="textColorInactive" format="color"/>
+        <attr name="selected" format="boolean"/>
     </declare-styleable>
 </resources>

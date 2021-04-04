@@ -4,7 +4,6 @@ import androidx.core.widget.NestedScrollView;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Context;
-import android.graphics.Typeface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,9 +11,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
-import android.text.Spannable;
-import android.text.SpannableStringBuilder;
-import android.text.style.StyleSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,10 +26,13 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class HomeFragment extends Fragment {
 
+    private static final String TAG = "HomeFragment";
     private HomeViewModel mViewModel;
+    private Fragment homeNewsFragment, communityFragment;
 
     public static HomeFragment newInstance() {
         return new HomeFragment();
@@ -61,11 +60,13 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.home, container, false);
-        Fragment homeNewsFragment = new HomeNewsFragment();
+        homeNewsFragment = new HomeNewsFragment();
+        communityFragment = new HomeCommunityFragment();
         getActivity().getSupportFragmentManager().beginTransaction()
                 .replace(R.id.home_news_fragment_holder, homeNewsFragment) //replace instead of add
+                .add(R.id.home_news_fragment_holder, communityFragment)
+                .hide(communityFragment)
                 .commit();
-
 
         NestedScrollView scrollView = view.findViewById(R.id.home_scrollView);
         final float scrollAnimBuffer = 4;
@@ -89,33 +90,40 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        TextView ausdNewsSelector = view.findViewById(R.id.home_ausdNews_selector),
+        TextViewSelector ausdNewsSelector = view.findViewById(R.id.home_ausdNews_selector),
                 communitySelector = view.findViewById(R.id.home_community_selector);
         Helper.setBoldRegularText(ausdNewsSelector, "AUSD", " News");
 
-        communitySelector.setOnClickListener(view1 -> {
-            if (news_tab_selected == 0) {
-                news_tab_selected = 1;
-                ausdNewsSelector.setBackgroundResource(R.drawable.home_ausdnews_bg_inactive);
-                ausdNewsSelector.setTextColor(getResources().getColor(R.color.brightRed, getActivity().getTheme()));
-                communitySelector.setBackgroundResource(R.drawable.home_community_bg_active);
-                communitySelector.setTextColor(getResources().getColor(R.color.white, getActivity().getTheme()));
-                // switch to community tab
-            }
+
+        ausdNewsSelector.setOnSelectedListener(() -> {
+            news_tab_selected = 0;
+            communitySelector.setSelected(false);
+            getActivity().getSupportFragmentManager().beginTransaction()
+                    .setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right)
+                    .show(homeNewsFragment)
+                    .hide(communityFragment)
+                    .commit();
         });
-
-        ausdNewsSelector.setOnClickListener(view1 -> {
-            if (news_tab_selected == 1) {
-                news_tab_selected = 0;
-                ausdNewsSelector.setBackgroundResource(R.drawable.home_ausdnews_bg_active);
-                ausdNewsSelector.setTextColor(getResources().getColor(R.color.white, getActivity().getTheme()));
-                communitySelector.setBackgroundResource(R.drawable.home_community_bg_inactive);
-                communitySelector.setTextColor(getResources().getColor(R.color.teal, getActivity().getTheme()));
-                // switch to ausd news tab
-            }
+        AtomicBoolean hasAddedCommunityFrag = new AtomicBoolean(false);
+        communitySelector.setOnSelectedListener(() -> {
+            news_tab_selected = 1;
+            ausdNewsSelector.setSelected(false);
+            /*if(hasAddedCommunityFrag.get())*/
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left)
+                        .show(communityFragment)
+                        .hide(homeNewsFragment)
+                        .commit();
+            /*else {
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left)
+                        .add(R.id.home_news_fragment_holder, communityFragment)
+                        .show(communityFragment)
+                        .hide(homeNewsFragment)
+                        .commit();
+                hasAddedCommunityFrag.set(true);
+            }*/
         });
-
-
 
         TextView dateText = view.findViewById(R.id.home_date);
         String month = new SimpleDateFormat("MMMM ", Locale.US).format(Calendar.getInstance().getTimeInMillis()); // note space
