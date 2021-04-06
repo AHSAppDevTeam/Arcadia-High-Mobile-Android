@@ -3,17 +3,17 @@
 <!--    TODO: Fix Icon-->
     <item
         android:id="@+id/article_toolbar_font"
-        android:icon="@drawable/navbar_bulletin_ic"
+        android:icon="@drawable/article_appbar_font_ic"
         app:showAsAction="ifRoom"
         android:title="TODO" />
     <item
         android:id="@+id/article_toolbar_theme"
-        android:icon="@drawable/navbar_profile_ic"
+        android:icon="@drawable/article_appbar_darkmode_ic"
         app:showAsAction="ifRoom"
         android:title="TODO" />
     <item
         android:id="@+id/article_toolbar_saved"
-        android:icon="@drawable/navbar_saved_ic"
+        android:icon="@drawable/article_appbar_saved_ic"
         app:showAsAction="ifRoom"
         android:title="TODO" />
 

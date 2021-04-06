@@ -21,7 +21,7 @@
             style="@style/Widget.MaterialComponents.Toolbar.Surface"
             android:layout_width="match_parent"
             android:layout_height="@dimen/appBarHeight"
-            app:menu="@menu/appbar_menu"
+            app:menu="@menu/article_appbar_menu"
             app:navigationIcon="@drawable/navbar_home_ic"
             app:title="Some Section" />
 
@@ -63,6 +63,7 @@
 
             <TextView
                 android:id="@+id/article_body"
+                android:alpha="0.65"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/sfprodisplay_regular"
