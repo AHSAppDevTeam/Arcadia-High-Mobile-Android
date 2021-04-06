@@ -9,8 +9,12 @@ import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.StyleSpan;
+import android.util.Log;
+import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.google.android.material.appbar.MaterialToolbar;
@@ -19,7 +23,13 @@ import com.hsappdev.ahs.util.ScreenUtil;
 
 public class ArticleActivity extends AppCompatActivity {
 
+    private static final String TAG = "ArticleActivity";
+
     static final String data_KEY = "0";
+    private boolean fontBarIsOpen = false;
+    private final int FONT_BAR_MIN = 18;
+    private final int FONT_BAR_MAX = 54;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,16 +37,10 @@ public class ArticleActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.enter_from_right, R.anim.empty_animation);
         Article article = getIntent().getParcelableExtra(data_KEY);
         View outer = findViewById(R.id.article_linearLayout);
-        outer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-                overridePendingTransition(R.anim.empty_animation, R.anim.exit_to_right);
-            }
-        });
         TextView title = findViewById(R.id.article_title);
         TextView author = findViewById(R.id.article_author);
         TextView body = findViewById(R.id.article_body);
+        LinearLayout fontBar = findViewById(R.id.article_font_adjuster);
         title.setText(article.getTitle());
         author.setText("By " + article.getAuthor());
         ScreenUtil.setHTMLStringToTextView(article.getBody(), body);
@@ -56,6 +60,14 @@ public class ArticleActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.article_toolbar_font:
                         // TODO: handle action
+                        if(fontBarIsOpen){
+                            fontBar.animate().translationY(-100).alpha(0);
+                            fontBarIsOpen = false;
+
+                        } else {
+                            fontBar.animate().translationY(0).alpha(1);
+                            fontBarIsOpen = true;
+                        }
                         return true;
                     case R.id.article_toolbar_theme:
                         // TODO: handle action
@@ -77,6 +89,30 @@ public class ArticleActivity extends AppCompatActivity {
         }else{
             articleToolbar.setTitleTextColor(article.getCategoryDisplayColor()[1]);
         }
+
+        // Fontbar
+        SeekBar fontSeekbar = fontBar.findViewById(R.id.article_font_adjuster_seekbar);
+        TextView fontSizeDisplay = fontBar.findViewById(R.id.article_font_size_display);
+        fontSeekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                int range = FONT_BAR_MAX - FONT_BAR_MIN;
+                int convertedProgress = (int)(progress/100f*range) + FONT_BAR_MIN;
+                fontSizeDisplay.setText(Integer.toString(convertedProgress));
+                body.setTextSize(TypedValue.COMPLEX_UNIT_SP, convertedProgress);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                fontBar.animate().translationY(-100).alpha(0);
+                fontBarIsOpen = false;
+            }
+        });
     }
 
     @Override
