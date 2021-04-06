@@ -17,6 +17,8 @@
 <!--        <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>-->
 
         <item name="titleColor">@color/white</item>
+        <item name="bodyTextColor">@color/darkmode_text_gray</item>
+        <item name="authorTextColor">@color/article_author_text</item>
         <item name="bgColor">@color/black</item>
         <item name="bgColorAccent">@color/bgColor_night</item>
         <item name="navBarIconColor">@color/white50</item>

@@ -126,7 +126,7 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
             //margin determines distance between two pages
             //adjust left/right padding of viewpager2 to determine distance between left and right edges and current page
             //Log.d(TAG, "Dimen value: " + r.getDimension(R.dimen.padding));
-            compositePageTransformer.addTransformer(new MarginPageTransformer(0)); //note: conversion between dp and pixel, apply later
+            compositePageTransformer.addTransformer(new MarginPageTransformer((int) dp_to_px(2))); //note: conversion between dp and pixel, apply later
             compositePageTransformer.addTransformer(new ScaleAndFadeTransformer());
             featuredPager.setPageTransformer(compositePageTransformer);
         }

@@ -81,8 +81,6 @@ public class HomeNewsFragment extends Fragment {
                 ArrayList<String> categoriesIDs = new ArrayList<>();
                 for(DataSnapshot sectionTitle : snapshot.getChildren()) {
                     categoriesIDs.add(sectionTitle.getValue(String.class));
-
-
                 }
                 adapter.addCategoryIDs(categoriesIDs);
                 //Log.d(TAG, "add to category titles");

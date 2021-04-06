@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <attr name = "titleColor" value = "color"/>
+    <attr name = "bodyTextColor" value = "color"/>
+    <attr name = "authorTextColor" value = "color"/>
     <attr name = "bgColor" value="color"/>
     <attr name = "bgColorAccent" value="color"/>
     <attr name = "navBarIconColor" value="color"/>

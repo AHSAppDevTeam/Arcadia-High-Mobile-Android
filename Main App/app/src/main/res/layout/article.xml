@@ -7,12 +7,50 @@
     android:layout_height="match_parent"
     tools:context=".ArticleActivity">
 
-    <TextView
-        android:id="@+id/article_textView"
-        android:layout_width="0dp"
+    <ScrollView
+        android:id="@+id/article_scrollView"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+        <LinearLayout
+            android:id="@+id/article_linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/article_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/heavybold_lightregular"
+                android:text="Title"
+                android:textAlignment="center"
+                android:textColor="?attr/titleColor"
+                android:textSize="26sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/article_author"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/sfprodisplay_regular"
+                android:text="By Firstname Lastname"
+                android:textAlignment="center"
+                android:textColor="?attr/authorTextColor"
+                android:textSize="16sp"
+                android:textStyle="normal" />
+
+            <TextView
+                android:id="@+id/article_body"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/sfprodisplay_regular"
+                android:text="Body Text"
+                android:textIsSelectable= "true"
+                android:textColor="?attr/bodyTextColor"
+                android:textSize="18sp"
+                android:textStyle="normal"
+                android:layout_width="match_parent" />
+        </LinearLayout>
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
