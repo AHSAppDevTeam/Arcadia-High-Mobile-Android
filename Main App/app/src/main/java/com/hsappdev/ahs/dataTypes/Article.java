@@ -6,7 +6,8 @@ import android.os.Parcelable;
 import androidx.annotation.NonNull;
 
 public class Article implements Parcelable {
-    private String articleID, author, title, body, category;
+    private String articleID, author, title, body, category, categoryDisplayName;
+    private int[] categoryDisplayColor; // 0 - lightmode color 1 - darkmode color
     private String[] imageURLs;
     boolean featured;
     long timestamp;
@@ -29,6 +30,8 @@ public class Article implements Parcelable {
         title = in.readString();
         body = in.readString();
         category = in.readString();
+        categoryDisplayName = in.readString();
+        categoryDisplayColor = in.createIntArray();
         imageURLs = in.createStringArray();
         featured = in.readByte() != 0;
         timestamp = in.readLong();
@@ -101,6 +104,22 @@ public class Article implements Parcelable {
         this.featured = featured;
     }
 
+    public int[] getCategoryDisplayColor() {
+        return categoryDisplayColor;
+    }
+
+    public void setCategoryDisplayColor(int[] categoryDisplayColor) {
+        this.categoryDisplayColor = categoryDisplayColor;
+    }
+
+    public String getCategoryDisplayName() {
+        return categoryDisplayName;
+    }
+
+    public void setCategoryDisplayName(String categoryDisplayName) {
+        this.categoryDisplayName = categoryDisplayName;
+    }
+
     public long getTimestamp() {
         return timestamp;
     }
@@ -121,6 +140,8 @@ public class Article implements Parcelable {
         parcel.writeString(title);
         parcel.writeString(body);
         parcel.writeString(category);
+        parcel.writeString(categoryDisplayName);
+        parcel.writeIntArray(categoryDisplayColor);
         parcel.writeStringArray(imageURLs);
         parcel.writeByte((byte) (featured ? 1 : 0));
         parcel.writeLong(timestamp);
@@ -134,6 +155,7 @@ public class Article implements Parcelable {
                 "title: \t" + title + "\n" +
                 "body: \t" + body + "\n" +
                 "category: \t" + category + "\n" +
+                "categoryDisplayName: \t" + categoryDisplayName + "\n" +
                 "imageURLs: \t" + ((imageURLs.length > 0) ? imageURLs[0] : "N/A") + "\n" +
                 "featured: \t" + featured + "\n" +
                 "timestamp: \t" + timestamp + "\n";

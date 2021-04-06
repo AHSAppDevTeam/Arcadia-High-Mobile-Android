@@ -144,12 +144,15 @@ public class FeaturedArticleAdapter extends RecyclerView.Adapter<FeaturedArticle
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             Log.d(TAG, "Set Color");
                             String title = snapshot.child(r.getString(R.string.db_categories_titles)).getValue(String.class);
-                            int color = (isNightModeOn)
-                                    ? Color.parseColor(snapshot.child(r.getString(R.string.db_categories_colorDark)).getValue(String.class))
-                                    : Color.parseColor(snapshot.child(r.getString(R.string.db_categories_colorLight)).getValue(String.class));
+                            int darkColor, lightColor;
+                            darkColor = Color.parseColor(snapshot.child(r.getString(R.string.db_categories_colorDark)).getValue(String.class));
+                            lightColor = Color.parseColor(snapshot.child(r.getString(R.string.db_categories_colorLight)).getValue(String.class));
+                            int color = (isNightModeOn) ? darkColor : lightColor;
                             categoryTextView.setText(title);
                             categoryTextView.setTextColor(color);
                             indicatorImageView.setColorFilter(color, PorterDuff.Mode.SRC_OVER);
+                            article.setCategoryDisplayName(title);
+                            article.setCategoryDisplayColor(new int[]{lightColor, darkColor});
                         }
 
                         @Override

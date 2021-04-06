@@ -13,4 +13,10 @@ public class Helper {
         textView.setText(builder);
         textView.append(regularText);
     }
+
+    public static SpannableStringBuilder getSpanBoldRegularText(String boldText, String regularText) {
+        SpannableStringBuilder builder = new SpannableStringBuilder(boldText);
+        builder.setSpan(new StyleSpan(Typeface.BOLD),0,boldText.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+        return builder.append(regularText);
+    }
 }

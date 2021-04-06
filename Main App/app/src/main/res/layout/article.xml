@@ -5,13 +5,34 @@
     android:id="@+id/article_outerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     tools:context=".ArticleActivity">
+<!--Top Navigation-->
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/article_appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/article_topAppBar"
+            style="@style/Widget.MaterialComponents.Toolbar.Surface"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/appBarHeight"
+            app:menu="@menu/appbar_menu"
+            app:navigationIcon="@drawable/navbar_home_ic"
+            app:title="Some Section" />
+
+    </com.google.android.material.appbar.AppBarLayout>
 
     <ScrollView
         android:id="@+id/article_scrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/article_appBarLayout">
+
         <LinearLayout
             android:id="@+id/article_linearLayout"
             android:layout_width="match_parent"
@@ -43,14 +64,14 @@
 
             <TextView
                 android:id="@+id/article_body"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/sfprodisplay_regular"
                 android:text="Body Text"
-                android:textIsSelectable= "true"
                 android:textColor="?attr/bodyTextColor"
+                android:textIsSelectable="true"
                 android:textSize="18sp"
-                android:textStyle="normal"
-                android:layout_width="match_parent" />
+                android:textStyle="normal" />
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

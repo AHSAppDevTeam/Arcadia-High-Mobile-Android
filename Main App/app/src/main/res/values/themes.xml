@@ -26,4 +26,10 @@
         <item name="navBarIconColor_active">@color/brickRed50</item>
         <item name="navBarIconColorAccent_active">@color/brickRedAccent</item>
     </style>
+
+    <style name="ArticleAppBarTitleFont">
+        <item name="fontFamily">@font/heavybold_lightregular</item>
+        <item name="android:fontFamily">@font/heavybold_lightregular</item>
+    </style>
+
 </resources>
