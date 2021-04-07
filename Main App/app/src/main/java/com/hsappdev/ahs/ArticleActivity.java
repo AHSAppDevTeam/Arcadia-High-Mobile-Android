@@ -61,12 +61,18 @@ public class ArticleActivity extends AppCompatActivity {
                     case R.id.article_toolbar_font:
                         // TODO: handle action
                         if(fontBarIsOpen){
-                            fontBar.animate().translationY(-100).alpha(0);
+                            fontBar.animate().translationY(-100).alpha(0).withEndAction(new Runnable() {
+                                @Override
+                                public void run() {
+                                    fontBar.setVisibility(LinearLayout.GONE);
+                                }
+                            });
                             fontBarIsOpen = false;
 
                         } else {
                             fontBar.animate().translationY(0).alpha(1);
                             fontBarIsOpen = true;
+                            fontBar.setVisibility(LinearLayout.VISIBLE);
                         }
                         return true;
                     case R.id.article_toolbar_theme:
@@ -109,7 +115,12 @@ public class ArticleActivity extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                fontBar.animate().translationY(-100).alpha(0);
+                fontBar.animate().translationY(-100).alpha(0).withEndAction(new Runnable() {
+                    @Override
+                    public void run() {
+                        fontBar.setVisibility(LinearLayout.GONE);
+                    }
+                });
                 fontBarIsOpen = false;
             }
         });
