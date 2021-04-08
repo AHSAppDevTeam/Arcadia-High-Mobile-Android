@@ -4,17 +4,17 @@
     <item
         android:id="@+id/article_toolbar_font"
         android:icon="@drawable/article_appbar_font_ic"
-        app:showAsAction="ifRoom"
-        android:title="TODO" />
+        android:title="Change font size"
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/article_toolbar_theme"
         android:icon="@drawable/article_appbar_darkmode_ic"
-        app:showAsAction="ifRoom"
-        android:title="TODO" />
+        android:title="Switch day or night mode"
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/article_toolbar_saved"
         android:icon="@drawable/article_appbar_saved_ic"
-        app:showAsAction="ifRoom"
-        android:title="TODO" />
+        android:title="Save this article"
+        app:showAsAction="ifRoom" />
 
 </menu>

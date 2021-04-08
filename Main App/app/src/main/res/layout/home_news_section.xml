@@ -26,6 +26,7 @@
         android:clipToPadding="false"
         android:clipChildren="false"
         android:paddingLeft="@dimen/padding_x1.5"
-        android:paddingRight="@dimen/padding_x1.5" />
+        android:paddingRight="@dimen/padding_x1.5"
+        />
 
 </LinearLayout>

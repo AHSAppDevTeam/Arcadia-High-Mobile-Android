@@ -21,7 +21,7 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <TextView
+            <com.hsappdev.ahs.Adjusting_TextView
                 android:id="@+id/article_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -29,10 +29,10 @@
                 android:text="Title"
                 android:textAlignment="center"
                 android:textColor="?attr/titleColor"
-                android:textSize="26sp"
+                android:textSize="24sp"
                 android:textStyle="bold" />
 
-            <TextView
+            <com.hsappdev.ahs.Adjusting_TextView
                 android:id="@+id/article_author"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -43,7 +43,7 @@
                 android:textSize="16sp"
                 android:textStyle="normal" />
 
-            <TextView
+            <com.hsappdev.ahs.Adjusting_TextView
                 android:id="@+id/article_body"
                 android:alpha="0.65"
                 android:layout_width="match_parent"
@@ -75,7 +75,7 @@
         app:layout_constraintTop_toBottomOf="@+id/article_appBarLayout"
         >
 
-        <TextView
+        <com.hsappdev.ahs.Adjusting_TextView
             android:id="@+id/article_font_size_display"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -106,9 +106,8 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/appBarHeight"
             app:menu="@menu/article_appbar_menu"
-            app:navigationIcon="@drawable/navbar_home_ic"
-            app:title="Some Section"
-            />
+            app:navigationIcon="@drawable/navbar_home_ic_active"
+            app:title="Some Section" />
 
     </com.google.android.material.appbar.AppBarLayout>
 

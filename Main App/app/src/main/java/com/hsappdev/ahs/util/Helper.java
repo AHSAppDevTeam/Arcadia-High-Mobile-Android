@@ -1,4 +1,4 @@
-package com.hsappdev.ahs;
+package com.hsappdev.ahs.util;
 
 import android.graphics.Typeface;
 import android.text.Spannable;

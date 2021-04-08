@@ -2,11 +2,6 @@ package com.hsappdev.ahs.UI.home;
 
 import android.content.res.Resources;
 import android.graphics.Color;
-import android.graphics.Typeface;
-import android.text.Spannable;
-import android.text.SpannableStringBuilder;
-import android.text.style.StyleSpan;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,12 +21,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.hsappdev.ahs.Helper;
+import com.hsappdev.ahs.util.Helper;
 import com.hsappdev.ahs.OnItemClick;
 import com.hsappdev.ahs.R;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapter.FeaturedViewHolder> {
     //List<List<Article>> articlesList = new ArrayList<>();

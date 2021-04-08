@@ -10,5 +10,6 @@
         android:id="@+id/home_news_recyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:nestedScrollingEnabled="false" />
+        android:nestedScrollingEnabled="false"
+        android:layoutAnimation="@anim/item_loading"/>
 </FrameLayout>

@@ -13,6 +13,9 @@ import java.time.Instant;
 import java.time.ZoneId;
 
 public class ScreenUtil {
+    public static float px_to_sp(float px, Context context) {
+        return px/context.getResources().getDisplayMetrics().scaledDensity;
+    }
     public static float dp_to_px(float dp, Context context) {
         return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,dp, context.getResources().getDisplayMetrics());
     }

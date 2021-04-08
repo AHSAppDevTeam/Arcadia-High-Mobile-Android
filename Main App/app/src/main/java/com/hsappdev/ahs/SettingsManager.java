@@ -15,10 +15,11 @@ public class SettingsManager {
 
 
     private final SharedPreferences settings;
-    private final String themeKey;
+    private final String themeKey, textScalarKey;
     private SettingsManager(Context context) {
         settings = context.getSharedPreferences(context.getResources().getString(R.string.settings_file), Context.MODE_PRIVATE);
         themeKey = context.getResources().getString(R.string.theme_key);
+        textScalarKey = context.getResources().getString(R.string.textscalar_key);
     }
 
     public interface DayNightCallback {
@@ -43,4 +44,12 @@ public class SettingsManager {
         editor.putBoolean(themeKey, isNightModeOn).apply();
     }
 
+    public float getTextScalar() {
+        return settings.getFloat(textScalarKey, 1.0f);
+    }
+
+    public void updateTextScalar(float newScalar) {
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putFloat(textScalarKey, newScalar).apply();
+    }
 }

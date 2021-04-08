@@ -3,25 +3,38 @@ package com.hsappdev.ahs;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
-import android.graphics.Typeface;
+import android.content.Context;
+import android.content.res.Configuration;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
-import android.text.Spannable;
-import android.text.SpannableStringBuilder;
-import android.text.style.StyleSpan;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.hsappdev.ahs.dataTypes.Article;
+import com.hsappdev.ahs.util.Helper;
 import com.hsappdev.ahs.util.ScreenUtil;
 
-public class ArticleActivity extends AppCompatActivity {
+import org.intellij.lang.annotations.JdkConstants;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class ArticleActivity extends AppCompatActivity implements Adjusting_TextView.hello {
 
     private static final String TAG = "ArticleActivity";
 
@@ -30,11 +43,26 @@ public class ArticleActivity extends AppCompatActivity {
     private final int FONT_BAR_MIN = 18;
     private final int FONT_BAR_MAX = 54;
 
+    private ArrayList<Adjusting_TextView.TextSizeCallback> callbackList= new ArrayList<>();;
+    @Override
+    public void addTextSizeCallback(Adjusting_TextView.TextSizeCallback callback) {
+        callbackList.add(callback);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.article);
-        overridePendingTransition(R.anim.enter_from_right, R.anim.empty_animation);
+        final ArticleViewModel viewModel = new ViewModelProvider(this).get(ArticleViewModel.class);
+        viewModel.getTextScalar().observe(this, new Observer<Float>() {
+            @Override
+            public void onChanged(Float newTextScalar) {
+                for(Adjusting_TextView.TextSizeCallback callback: callbackList) {
+                    callback.onTextSizeChanged(newTextScalar);
+                }
+            }
+        });
+
         Article article = getIntent().getParcelableExtra(data_KEY);
         View outer = findViewById(R.id.article_linearLayout);
         TextView title = findViewById(R.id.article_title);
@@ -54,13 +82,16 @@ public class ArticleActivity extends AppCompatActivity {
                 overridePendingTransition(R.anim.empty_animation, R.anim.exit_to_right);
             }
         });
+        final Context context = this;
+
+        final SeekBar fontSeekbar;
         articleToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.article_toolbar_font:
                         // TODO: handle action
-                        if(fontBarIsOpen){
+                        /*if(fontBarIsOpen){
                             fontBar.animate().translationY(-100).alpha(0).withEndAction(new Runnable() {
                                 @Override
                                 public void run() {
@@ -73,7 +104,67 @@ public class ArticleActivity extends AppCompatActivity {
                             fontBar.animate().translationY(0).alpha(1);
                             fontBarIsOpen = true;
                             fontBar.setVisibility(LinearLayout.VISIBLE);
-                        }
+                        }*/
+                        View view = getLayoutInflater().inflate(R.layout.article_textsizeadjustor, null);
+
+                        PopupWindow window = new PopupWindow(context);
+                        window.setContentView(view);
+
+                        // Fontbar
+                        SeekBar fontSeekbar = view.findViewById(R.id.article_font_adjuster_seekbar);
+                        int progress = (int) (fontSeekbar.getMax()*(viewModel.getTextScalar().getValue()-0.5f));
+                        fontSeekbar.setProgress(progress);
+                        TextView fontSizeDisplay = view.findViewById(R.id.article_font_size_display);
+                        fontSeekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                            @Override
+                            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                                float convertedProgress = ((float) progress)/seekBar.getMax() + 0.5f;
+                                Log.d(TAG, String.valueOf(convertedProgress));
+                                viewModel.setTextScalar(convertedProgress);
+                                fontSizeDisplay.setText(Integer.toString(progress));
+                                /*int range = FONT_BAR_MAX - FONT_BAR_MIN;
+                                int convertedProgress = (int)(progress/100f*range) + FONT_BAR_MIN;
+
+                                body.setTextSize(TypedValue.COMPLEX_UNIT_SP, convertedProgress);*/
+                                /*float scale = ((float) progress)/(seekBar.getMax());
+                                adjustFontScale(getResources().getConfiguration(), scale);*/
+                            }
+
+                            @Override
+                            public void onStartTrackingTouch(SeekBar seekBar) {
+
+                            }
+
+                            @Override
+                            public void onStopTrackingTouch(SeekBar seekBar) {
+                                /*fontBar.animate().translationY(-100).alpha(0).withEndAction(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        fontBar.setVisibility(LinearLayout.GONE);
+                                    }
+                                });
+                                fontBarIsOpen = false;*/
+                                window.dismiss();
+                            }
+                        });
+
+                        // make shadow effect
+                        /*window.setBackgroundDrawable(new ColorDrawable(Color.WHITE));
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                            window.setElevation(10);
+                        }*/
+
+                        /*window.showAsDropDown(articleToolbar, 0,200);*/
+                        window.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.article_font_bar_background));
+                        window.setElevation(getResources().getDimension(R.dimen.elevation));
+
+                        window.setOutsideTouchable(true);
+                        window.setTouchable(true);
+
+                        int padding = (int) getResources().getDimension(R.dimen.padding);
+                        window.setWidth( (articleToolbar.getWidth() - 2*padding));
+                        window.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
+                        window.showAsDropDown(articleToolbar, padding, padding/2);
                         return true;
                     case R.id.article_toolbar_theme:
                         // TODO: handle action
@@ -96,34 +187,6 @@ public class ArticleActivity extends AppCompatActivity {
             articleToolbar.setTitleTextColor(article.getCategoryDisplayColor()[1]);
         }
 
-        // Fontbar
-        SeekBar fontSeekbar = fontBar.findViewById(R.id.article_font_adjuster_seekbar);
-        TextView fontSizeDisplay = fontBar.findViewById(R.id.article_font_size_display);
-        fontSeekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                int range = FONT_BAR_MAX - FONT_BAR_MIN;
-                int convertedProgress = (int)(progress/100f*range) + FONT_BAR_MIN;
-                fontSizeDisplay.setText(Integer.toString(convertedProgress));
-                body.setTextSize(TypedValue.COMPLEX_UNIT_SP, convertedProgress);
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-                fontBar.animate().translationY(-100).alpha(0).withEndAction(new Runnable() {
-                    @Override
-                    public void run() {
-                        fontBar.setVisibility(LinearLayout.GONE);
-                    }
-                });
-                fontBarIsOpen = false;
-            }
-        });
     }
 
     @Override
@@ -131,5 +194,14 @@ public class ArticleActivity extends AppCompatActivity {
         super.onBackPressed();
         // Animation on back press
         overridePendingTransition(R.anim.empty_animation, R.anim.exit_to_right);
+    }
+
+    public void adjustFontScale(Configuration config, float scale) {
+        config.fontScale = scale;
+        DisplayMetrics metrics = getResources().getDisplayMetrics();
+        WindowManager windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
+        windowManager.getDefaultDisplay().getRealMetrics(metrics);
+        metrics.scaledDensity = config.fontScale * metrics.density;
+        getBaseContext().getResources().updateConfiguration(config, metrics);
     }
 }

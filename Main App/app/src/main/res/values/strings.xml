@@ -46,6 +46,7 @@
     <!-- SharedPreferences file names and file keys -->
     <string name="settings_file">settings</string>
     <string name="theme_key">themeKey</string>
+    <string name="textscalar_key">textKey</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 

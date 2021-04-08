@@ -1,5 +1,6 @@
 package com.hsappdev.ahs;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.navigation.NavController;
@@ -9,10 +10,15 @@ import androidx.navigation.ui.NavigationUI;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.Log;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.hsappdev.ahs.dataTypes.Article;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationCallback, SettingsManager.DayNightCallback, OnItemClick {
@@ -107,6 +113,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationC
         Intent intent = new Intent(MainActivity.this, ArticleActivity.class);
         intent.putExtra(ArticleActivity.data_KEY, article);
         startActivity(intent);
+        overridePendingTransition(R.anim.enter_from_right, R.anim.empty_animation);
     }
     //    @Override
 //    public void onWindowFocusChanged(boolean hasFocus) {
