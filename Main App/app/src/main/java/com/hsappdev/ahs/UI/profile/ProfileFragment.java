@@ -1,6 +1,5 @@
 package com.hsappdev.ahs.UI.profile;
 
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Context;
@@ -14,16 +13,18 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
+import android.widget.TextView;
 
 import com.google.android.material.switchmaterial.SwitchMaterial;
-import com.hsappdev.ahs.BottomNavigationCallback;
 import com.hsappdev.ahs.R;
 import com.hsappdev.ahs.SettingsManager;
+import com.hsappdev.ahs.util.Helper;
 
 public class ProfileFragment extends Fragment {
     private static final String TAG = "ProfileFragment";
     private ProfileViewModel mViewModel;
+
+    private ProfileCardFragment profileCardFragment;
 
     public static ProfileFragment newInstance() {
         return new ProfileFragment();
@@ -44,7 +45,14 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.profile, container, false);
-        SwitchMaterial dayNightSwitch = view.findViewById(R.id.profile_dayNight_switch);
+        initProfileCardFragment(view);
+        // Header
+        TextView profileHeader = view.findViewById(R.id.profile_header);
+        String[] headerSplit = profileHeader.getText().toString().split(" ");
+        Helper.setBoldRegularText(profileHeader, headerSplit[0], " " + headerSplit[1]);
+
+
+        SwitchMaterial dayNightSwitch = view.findViewById(R.id.profile_theme_mode_switch);
         SettingsManager settingsManager = SettingsManager.getInstance(getActivity().getApplicationContext());
         Log.d(TAG, "Current dayNight state on Open: " + settingsManager.isNightModeOn());
         dayNightSwitch.setChecked(settingsManager.isNightModeOn());
@@ -55,6 +63,13 @@ public class ProfileFragment extends Fragment {
         });
 
         return view;
+    }
+
+    private void initProfileCardFragment(View view) {
+        profileCardFragment = new ProfileCardFragment();
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.profileCardFragmentHolder, profileCardFragment)
+                .commit();
     }
 
     @Override

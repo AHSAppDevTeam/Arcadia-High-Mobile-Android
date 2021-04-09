@@ -16,4 +16,11 @@
         <attr name="textColorInactive" format="color"/>
         <attr name="selected" format="boolean"/>
     </declare-styleable>
+
+    <declare-styleable name="IconButton">
+        <attr name="android:background"/>
+        <attr name="text" format="string" />
+        <attr name="icon" format="reference" />
+    </declare-styleable>
+
 </resources>

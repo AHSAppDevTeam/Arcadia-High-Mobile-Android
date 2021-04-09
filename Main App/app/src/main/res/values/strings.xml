@@ -49,5 +49,14 @@
     <string name="textscalar_key">textKey</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="profile_page_header_text">Your Profile</string>
+    <string name="profile_card_default_firstname_text">Name</string>
+    <string name="profile_card_default_lastname_text">Last Name</string>
+    <string name="profile_time_remaining_default_value">30 min</string>
+    <string name="profile_time_remaining_default_header">Time Remaining</string>
+    <string name="profile_period_default_header">Period</string>
+    <string name="profile_period_default_value">2nd</string>
+    <string name="profile_options_header">Options</string>
+    <string name="profile_info_header">Info</string>
 
 </resources>

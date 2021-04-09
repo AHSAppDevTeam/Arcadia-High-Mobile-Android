@@ -31,4 +31,14 @@
     <color name="blueGradientStart">#63a8a8</color>
     <color name="blueGradientEnd">#2e8a7d</color>
     <color name="teal">#55a0ae</color>
+
+    <color name="subtleBlueGradientStart">#70afb4</color>
+    <color name="subtleBlueGradientEnd">#167e96</color>
+
+<!--    Profile Card -->
+    <color name="profileCardBackground">#c96546</color>
+<!--    Profile -->
+    <color name="profileOptionThemeModeIconBg">#5856d6</color>
+
+
 </resources>

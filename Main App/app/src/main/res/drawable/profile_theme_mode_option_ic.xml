@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:width="@dimen/padding_x2"
+        android:height="@dimen/padding_x2">
+        <shape>
+            <solid android:color="@color/profileOptionThemeModeIconBg"/>
+            <corners android:radius="@dimen/profile_standard_radius"/>
+        </shape>
+    </item>
+    <item android:width="@dimen/padding_x1.5"
+        android:height="@dimen/padding_x1.5"
+        android:gravity="center"
+        android:drawable="@drawable/profile_darkmode_ic">
+    </item>
+</layer-list>
