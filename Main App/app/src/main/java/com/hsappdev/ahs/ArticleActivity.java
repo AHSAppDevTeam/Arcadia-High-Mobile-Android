@@ -43,6 +43,8 @@ public class ArticleActivity extends AppCompatActivity implements Adjusting_Text
     private final int FONT_BAR_MIN = 18;
     private final int FONT_BAR_MAX = 54;
 
+    PopupWindow fontBarWindow;
+
     private ArrayList<Adjusting_TextView.TextSizeCallback> callbackList= new ArrayList<>();;
     @Override
     public void addTextSizeCallback(Adjusting_TextView.TextSizeCallback callback) {
@@ -78,6 +80,7 @@ public class ArticleActivity extends AppCompatActivity implements Adjusting_Text
         articleToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                fontBarWindow.dismiss();
                 finish();
                 overridePendingTransition(R.anim.empty_animation, R.anim.exit_to_right);
             }
@@ -107,8 +110,8 @@ public class ArticleActivity extends AppCompatActivity implements Adjusting_Text
                         }*/
                         View view = getLayoutInflater().inflate(R.layout.article_textsizeadjustor, null);
 
-                        PopupWindow window = new PopupWindow(context);
-                        window.setContentView(view);
+                        fontBarWindow = new PopupWindow(context);
+                        fontBarWindow.setContentView(view);
 
                         // Fontbar
                         SeekBar fontSeekbar = view.findViewById(R.id.article_font_adjuster_seekbar);
@@ -144,7 +147,7 @@ public class ArticleActivity extends AppCompatActivity implements Adjusting_Text
                                     }
                                 });
                                 fontBarIsOpen = false;*/
-                                window.dismiss();
+                                fontBarWindow.dismiss();
                             }
                         });
 
@@ -155,16 +158,16 @@ public class ArticleActivity extends AppCompatActivity implements Adjusting_Text
                         }*/
 
                         /*window.showAsDropDown(articleToolbar, 0,200);*/
-                        window.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.article_font_bar_background));
-                        window.setElevation(getResources().getDimension(R.dimen.elevation));
+                        fontBarWindow.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.article_font_bar_background));
+                        fontBarWindow.setElevation(getResources().getDimension(R.dimen.elevation));
 
                         window.setOutsideTouchable(true);
-                        window.setTouchable(true);
+                        fontBarWindow.setTouchable(true);
 
                         int padding = (int) getResources().getDimension(R.dimen.padding);
-                        window.setWidth( (articleToolbar.getWidth() - 2*padding));
-                        window.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
-                        window.showAsDropDown(articleToolbar, padding, padding/2);
+                        fontBarWindow.setWidth( (articleToolbar.getWidth() - 2*padding));
+                        fontBarWindow.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
+                        fontBarWindow.showAsDropDown(articleToolbar, padding, padding/2);
                         return true;
                     case R.id.article_toolbar_theme:
                         // TODO: handle action
