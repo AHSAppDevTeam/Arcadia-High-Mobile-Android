@@ -161,7 +161,7 @@ public class ArticleActivity extends AppCompatActivity implements Adjusting_Text
                         fontBarWindow.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.article_font_bar_background));
                         fontBarWindow.setElevation(getResources().getDimension(R.dimen.elevation));
 
-                        window.setOutsideTouchable(true);
+                        fontBarWindow.setOutsideTouchable(true);
                         fontBarWindow.setTouchable(true);
 
                         int padding = (int) getResources().getDimension(R.dimen.padding);
