@@ -80,7 +80,7 @@ public class ArticleActivity extends AppCompatActivity implements Adjusting_Text
         articleToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fontBarWindow.dismiss();
+                dismissFontWindow();
                 finish();
                 overridePendingTransition(R.anim.empty_animation, R.anim.exit_to_right);
             }
@@ -192,9 +192,16 @@ public class ArticleActivity extends AppCompatActivity implements Adjusting_Text
 
     }
 
+    private void dismissFontWindow() {
+        if(fontBarWindow != null) {
+            fontBarWindow.dismiss();
+        }
+    }
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        dismissFontWindow();
         // Animation on back press
         overridePendingTransition(R.anim.empty_animation, R.anim.exit_to_right);
     }
