@@ -183,12 +183,8 @@ public class ArticleActivity extends AppCompatActivity implements Adjusting_Text
         // Set details for toolbar
         articleToolbar.setTitle(Helper.getSpanBoldRegularText(article.getCategoryDisplayName(), " News"));
         articleToolbar.setTitleTextAppearance(this, R.style.ArticleAppBarTitleFont);
-        boolean isNightModeOn = AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES;
-        if(isNightModeOn){
-            articleToolbar.setTitleTextColor(article.getCategoryDisplayColor()[0]);
-        }else{
-            articleToolbar.setTitleTextColor(article.getCategoryDisplayColor()[1]);
-        }
+        articleToolbar.setTitleTextColor(article.getCategoryDisplayColor());
+
 
     }
 

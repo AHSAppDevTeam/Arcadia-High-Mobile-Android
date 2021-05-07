@@ -25,8 +25,7 @@
     <!-- article id's in categories -->
     <string name="db_categories_articleIds">articleIDs</string>
     <string name="db_categories_titles">title</string>
-    <string name="db_categories_colorLight">colorLightMode</string>
-    <string name="db_categories_colorDark">colorDarkMode</string>
+    <string name="db_categories_color">color</string>
 
     <!--articles branch and article attributes-->
     <string name="db_articles">articles</string>

@@ -124,7 +124,7 @@ public class FeaturedArticleAdapter extends RecyclerView.Adapter<FeaturedArticle
                     }
                     boolean featured = true;
 
-                    long timestamp = snapshot.child(r.getString(R.string.db_articles_timestamp)).getValue(long.class);
+                    long timestamp =  snapshot.child(r.getString(R.string.db_articles_timestamp)).getValue(long.class);
 
                     article = new Article(articleID, author, title, body, category, imageURLs.toArray(new String[0]), featured, timestamp);
                     titleTextView.setText(article.getTitle());
@@ -144,15 +144,13 @@ public class FeaturedArticleAdapter extends RecyclerView.Adapter<FeaturedArticle
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             Log.d(TAG, "Set Color");
                             String title = snapshot.child(r.getString(R.string.db_categories_titles)).getValue(String.class);
-                            int darkColor, lightColor;
-                            darkColor = Color.parseColor(snapshot.child(r.getString(R.string.db_categories_colorDark)).getValue(String.class));
-                            lightColor = Color.parseColor(snapshot.child(r.getString(R.string.db_categories_colorLight)).getValue(String.class));
-                            int color = (isNightModeOn) ? darkColor : lightColor;
+
+                            int color = Color.parseColor(snapshot.child(r.getString(R.string.db_categories_color)).getValue(String.class));
                             categoryTextView.setText(title);
                             categoryTextView.setTextColor(color);
                             indicatorImageView.setColorFilter(color, PorterDuff.Mode.SRC_OVER);
                             article.setCategoryDisplayName(title);
-                            article.setCategoryDisplayColor(new int[]{lightColor, darkColor});
+                            article.setCategoryDisplayColor(color);
                         }
 
                         @Override

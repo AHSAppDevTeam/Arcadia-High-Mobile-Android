@@ -96,9 +96,8 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
                         //articles.add();
                     }
                     String title = snapshot.child(r.getString(R.string.db_categories_titles)).getValue(String.class);
-                    int color = (isNightModeOn)
-                            ? Color.parseColor(snapshot.child(r.getString(R.string.db_categories_colorDark)).getValue(String.class))
-                            : Color.parseColor(snapshot.child(r.getString(R.string.db_categories_colorLight)).getValue(String.class));
+                    int color = Color.parseColor(snapshot.child(r.getString(R.string.db_categories_color)).getValue(String.class));
+
                     // set section title
                     String regularText = " News";
                     Helper.setBoldRegularText(sectionTitle, title, regularText);
