@@ -21,6 +21,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.hsappdev.ahs.dataTypes.Article;
 import com.hsappdev.ahs.util.Helper;
 import com.hsappdev.ahs.OnItemClick;
 import com.hsappdev.ahs.R;
@@ -81,7 +82,7 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
 
         public void setDetails(String categoryTitle, OnItemClick onArticleClick){
             setUpPager();
-            FeaturedArticleAdapter featuredArticleAdapter = new FeaturedArticleAdapter(new ArrayList<String>(), onArticleClick);
+            FeaturedArticleAdapter featuredArticleAdapter = new FeaturedArticleAdapter(new ArrayList<Article>(), onArticleClick);
             featuredPager.setAdapter(featuredArticleAdapter);
             DatabaseReference ref = FirebaseDatabase.getInstance(FirebaseApp.getInstance()).getReference()
                     .child(r.getString(R.string.db_categories))
@@ -92,7 +93,42 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     featuredArticleAdapter.clearAll();
                     for(DataSnapshot articleId : snapshot.child(r.getString(R.string.db_categories_articleIds)).getChildren()){
-                        featuredArticleAdapter.addArticleIds(articleId.getValue(String.class));
+                        String stringID = articleId.getValue(String.class);
+                        DatabaseReference ref = FirebaseDatabase.getInstance(FirebaseApp.getInstance()).getReference()
+                                .child(r.getString(R.string.db_articles))
+                                .child(stringID);
+
+                        ref.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                String author = snapshot.child(r.getString(R.string.db_articles_author)).getValue(String.class);
+                                String title = snapshot.child(r.getString(R.string.db_articles_title)).getValue(String.class);
+                                String body = snapshot.child(r.getString(R.string.db_articles_body)).getValue(String.class);
+                                String category = snapshot.child(r.getString(R.string.db_articles_categoryID)).getValue(String.class);
+                                ArrayList<String> imageURLs = new ArrayList<>();
+                                for (DataSnapshot imageURL : snapshot.child(r.getString(R.string.db_articles_imageURLs)).getChildren()) {
+                                    imageURLs.add(imageURL.getValue(String.class));
+                                }
+                                boolean featured = snapshot.child("featured").getValue(boolean.class);
+                                long timestamp = 1;
+                                // Try catch is a quick fix until Xing fixes the string timestamp problem
+                                try {
+                                    timestamp = snapshot.child(r.getString(R.string.db_articles_timestamp)).getValue(long.class);
+                                } catch (Exception e) {
+
+                                }
+
+                                Article article = new Article(stringID, author, title, body, category, imageURLs.toArray(new String[0]), featured, timestamp);
+                                featuredArticleAdapter.addArticle(article);
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+
+                        });
+
                         //articles.add();
                     }
                     String title = snapshot.child(r.getString(R.string.db_categories_titles)).getValue(String.class);
@@ -118,7 +154,6 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
             CompositePageTransformer compositePageTransformer = new CompositePageTransformer();
             //margin determines distance between two pages
             //adjust left/right padding of viewpager2 to determine distance between left and right edges and current page
-            //Log.d(TAG, "Dimen value: " + r.getDimension(R.dimen.padding));
             compositePageTransformer.addTransformer(new MarginPageTransformer((int) dp_to_px(2))); //note: conversion between dp and pixel, apply later
             compositePageTransformer.addTransformer(new ScaleAndFadeTransformer());
             featuredPager.setPageTransformer(compositePageTransformer);

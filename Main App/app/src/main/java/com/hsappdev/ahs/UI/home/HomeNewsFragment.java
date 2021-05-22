@@ -46,7 +46,6 @@ public class HomeNewsFragment extends Fragment {
 
  //MainActivity -> HomeFragment (home page) ->
     // HomeNewsFragment (AUSD news section) get locations and structure , pass into-> RecyclerViewAdapter -> ViewPager2
-    private ArrayList<String> categoryTitles = new ArrayList<>();
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

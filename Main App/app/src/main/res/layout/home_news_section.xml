@@ -28,5 +28,22 @@
         android:paddingLeft="@dimen/padding_x1.5"
         android:paddingRight="@dimen/padding_x1.5"
         />
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/home_medium_carousel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/padding_x1.5"
+        android:paddingRight="@dimen/padding_x1.5"
+        android:clipToPadding="false"
+        android:clipChildren="false"/>
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/home_mini_carousel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/padding_x1.5"
+        android:paddingRight="@dimen/padding_x1.5"
+        android:clipToPadding="false"
+        android:clipChildren="false"/>
 
 </LinearLayout>
