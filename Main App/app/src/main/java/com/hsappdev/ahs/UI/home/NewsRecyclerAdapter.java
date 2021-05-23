@@ -1,9 +1,7 @@
 package com.hsappdev.ahs.UI.home;
 
-import android.app.Activity;
 import android.content.res.Resources;
 import android.graphics.Color;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,8 +10,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.CompositePageTransformer;
 import androidx.viewpager2.widget.MarginPageTransformer;
@@ -32,28 +28,26 @@ import com.hsappdev.ahs.R;
 
 import java.util.ArrayList;
 
-public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapter.CategoryViewHolder> {
+public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapter.FeaturedViewHolder> {
     //List<List<Article>> articlesList = new ArrayList<>();
     private static final String TAG = "NewsRecyclerAdapter";
     private ArrayList<String> categoryIDs;
     private OnItemClick onArticleClick;
-    private Fragment activity;
 
-    public NewsRecyclerAdapter(ArrayList<String> categoryTitles, OnItemClick onArticleClick, Fragment activity) {
+    public NewsRecyclerAdapter(ArrayList<String> categoryTitles, OnItemClick onArticleClick) {
         this.categoryIDs = categoryTitles;
         this.onArticleClick = onArticleClick;
-        this.activity = activity;
     }
 
     @NonNull
     @Override
-    public CategoryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public FeaturedViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.home_news_section, parent, false);
-        return new CategoryViewHolder(view);
+        return new FeaturedViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CategoryViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull FeaturedViewHolder holder, int position) {
         //Log.d(TAG, "holder bind at position " + position +"\tcategory: " + categoryIDs.get(position));
         ((ViewGroup) holder.itemView).setClipChildren(false);
         ((ViewGroup) holder.itemView).setClipToPadding(false);
@@ -81,33 +75,23 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
         notifyDataSetChanged();
     }
 
-    class CategoryViewHolder extends RecyclerView.ViewHolder{
+    static class FeaturedViewHolder extends RecyclerView.ViewHolder{
         private final TextView sectionTitle;
         private final ViewPager2 featuredPager;
-        private final ViewPager2 mediumLevelPager;
         private final Resources r;
-
 
         public void setDetails(String categoryTitle, OnItemClick onArticleClick){
             setUpPager();
             FeaturedArticleAdapter featuredArticleAdapter = new FeaturedArticleAdapter(new ArrayList<Article>(), onArticleClick);
             featuredPager.setAdapter(featuredArticleAdapter);
-            MediumLevelArticleAdapter mediumLevelArticleAdapter = new MediumLevelArticleAdapter(new ArrayList<Article>(), onArticleClick, activity);
-            mediumLevelPager.setAdapter(mediumLevelArticleAdapter);
-
-            setUpCategory(categoryTitle, featuredArticleAdapter, mediumLevelArticleAdapter);
-
-        }
-
-        public void setUpCategory(String categoryTitle, FeaturedArticleAdapter featuredArticleAdapter, MediumLevelArticleAdapter mediumLevelArticleAdapter){
             DatabaseReference ref = FirebaseDatabase.getInstance(FirebaseApp.getInstance()).getReference()
                     .child(r.getString(R.string.db_categories))
                     .child(categoryTitle);
+            boolean isNightModeOn = AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES;
             ref.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     featuredArticleAdapter.clearAll();
-                    mediumLevelArticleAdapter.clearAll();
                     for(DataSnapshot articleId : snapshot.child(r.getString(R.string.db_categories_articleIds)).getChildren()){
                         String stringID = articleId.getValue(String.class);
                         DatabaseReference ref = FirebaseDatabase.getInstance(FirebaseApp.getInstance()).getReference()
@@ -115,23 +99,6 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
                                 .child(stringID);
 
                         ref.addValueEventListener(new ValueEventListener() {
-                            boolean firstTime = true;
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                if(firstTime) {
-                                    firstTime = false;
-                                }else{
-                                    setUpCategory(categoryTitle, featuredArticleAdapter, mediumLevelArticleAdapter);
-                                }
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-
-                            }
-                        });
-
-                        ref.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 String author = snapshot.child(r.getString(R.string.db_articles_author)).getValue(String.class);
@@ -152,29 +119,7 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
                                 }
 
                                 Article article = new Article(stringID, author, title, body, category, imageURLs.toArray(new String[0]), featured, timestamp);
-
-                                /*
-                                 * ARTICLE SORTING JUNCTION
-                                 * from here, each article is sorted into their respective viewpagers
-                                 */
-                                if(category.equals("General_Info")){
-                                    if(article.isFeatured()) {
-                                        featuredArticleAdapter.addArticle(article);
-                                    }else{
-                                        // Add the article to a view pager of "lower class"
-                                        mediumLevelArticleAdapter.addArticle(article);
-                                    }
-                                }else{
-                                    // Limit featured articles to 1
-                                    if(article.isFeatured() && featuredArticleAdapter.getArticleIds().size() == 0) {
-                                        featuredArticleAdapter.addArticle(article);
-                                    }else{
-                                        // Add the article to a view pager of "lower class"
-                                        Log.d("tag", "new1");
-
-                                        mediumLevelArticleAdapter.addArticle(article);
-                                    }
-                                }
+                                featuredArticleAdapter.addArticle(article);
                             }
 
                             @Override
@@ -200,10 +145,10 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
 
                 }
             });
+
         }
 
         public void setUpPager(){
-            // FeaturedPager
             featuredPager.setOffscreenPageLimit(3);
 
             CompositePageTransformer compositePageTransformer = new CompositePageTransformer();
@@ -212,22 +157,17 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
             compositePageTransformer.addTransformer(new MarginPageTransformer((int) dp_to_px(2))); //note: conversion between dp and pixel, apply later
             compositePageTransformer.addTransformer(new ScaleAndFadeTransformer());
             featuredPager.setPageTransformer(compositePageTransformer);
-
-            // MediumLevelPager
-            mediumLevelPager.setOffscreenPageLimit(3);
-            //mediumLevelPager.setPageTransformer(compositePageTransformer);
         }
 
         public float dp_to_px(float dp) {
             return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,dp, r.getDisplayMetrics());
         }
 
-        public CategoryViewHolder(@NonNull View itemView){
+        public FeaturedViewHolder(@NonNull View itemView){
             super(itemView);
             r = itemView.getContext().getResources();
 
             featuredPager = itemView.findViewById(R.id.home_featured_carousel);
-            mediumLevelPager = itemView.findViewById(R.id.home_medium_carousel);
             sectionTitle = itemView.findViewById(R.id.home_news_sectionTitle);
         }
     }
