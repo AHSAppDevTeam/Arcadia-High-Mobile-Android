@@ -35,7 +35,7 @@ import java.util.List;
 public class FeaturedArticleAdapter extends RecyclerView.Adapter<FeaturedArticleAdapter.FeaturedArticleViewHolder> {
     private static final String TAG = "FeaturedArticleAdapter";
     private List<Article> articles;
-    private OnItemClick onArticleClick;
+    protected OnItemClick onArticleClick;
 
     public FeaturedArticleAdapter(List<Article> articles, OnItemClick onArticleClick) {
         this.articles = articles;
