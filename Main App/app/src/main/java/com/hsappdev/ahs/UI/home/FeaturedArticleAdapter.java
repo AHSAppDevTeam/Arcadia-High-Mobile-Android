@@ -34,29 +34,29 @@ import java.util.List;
 
 public class FeaturedArticleAdapter extends RecyclerView.Adapter<FeaturedArticleAdapter.FeaturedArticleViewHolder> {
     private static final String TAG = "FeaturedArticleAdapter";
-    private List<Article> articles;
+    private List<String> articleIds;
     private OnItemClick onArticleClick;
 
-    public FeaturedArticleAdapter(List<Article> articles, OnItemClick onArticleClick) {
-        this.articles = articles;
+    public FeaturedArticleAdapter(List<String> articleIds, OnItemClick onArticleClick) {
+        this.articleIds = articleIds;
         this.onArticleClick = onArticleClick;
     }
 
     // GETTERS AND SETTERS
-    public List<Article> getArticleIds() {
-        return articles;
+    public List<String> getArticleIds() {
+        return articleIds;
     }
 
-    public void addArticle(Article article) {
-        articles.add(article);
-        notifyItemInserted(articles.size()-1);
+    public void addArticleIds(String articleId) {
+        articleIds.add(articleId);
+        notifyItemInserted(articleIds.size()-1);
     }
     public void clearAll() {
-        articles.clear();
+        articleIds.clear();
         notifyDataSetChanged();
     }
-    public void setArticles(List<Article> articles) {
-        this.articles = articles;
+    public void setArticleIds(List<String> articleIds) {
+        this.articleIds = articleIds;
     }
 
     @NonNull
@@ -74,12 +74,12 @@ public class FeaturedArticleAdapter extends RecyclerView.Adapter<FeaturedArticle
 
     @Override
     public void onBindViewHolder(@NonNull FeaturedArticleViewHolder holder, int position) {
-        holder.setDetails(articles.get(position));
+        holder.setDetails(articleIds.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return articles.size();
+        return articleIds.size();
     }
 
     static class FeaturedArticleViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
@@ -106,35 +106,60 @@ public class FeaturedArticleAdapter extends RecyclerView.Adapter<FeaturedArticle
 
         }
 
-        public void setDetails(Article articleData){
-            this.article = articleData;
-
+        public void setDetails(String articleID){
             articleLayout.setOnClickListener(this);
-
-            titleTextView.setText(article.getTitle());
-            if(article.getImageURLs().length != 0) { // When there are at least one article, show first image
-                ImageUtil.setImageToView(article.getImageURLs()[0], articleImage);
-            }
-
-            ScreenUtil.setTimeToTextView(article.getTimestamp(), timeTextView);
-
-            boolean isNightModeOn = AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES;
-            // For Finding The Correct Color and Title for Featured Articles
             DatabaseReference ref = FirebaseDatabase.getInstance(FirebaseApp.getInstance()).getReference()
-                    .child(r.getString(R.string.db_categories))
-                    .child(article.getCategory());
+                    .child(r.getString(R.string.db_articles))
+                    .child(articleID);
             ref.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    Log.d(TAG, "Set Color");
-                    String title = snapshot.child(r.getString(R.string.db_categories_titles)).getValue(String.class);
+                    String author = snapshot.child(r.getString(R.string.db_articles_author)).getValue(String.class);
+                    String title = snapshot.child(r.getString(R.string.db_articles_title)).getValue(String.class);
+                    String body = snapshot.child(r.getString(R.string.db_articles_body)).getValue(String.class);
+                    String category = snapshot.child(r.getString(R.string.db_articles_categoryID)).getValue(String.class);
+                    ArrayList<String> imageURLs = new ArrayList<>();
+                    for(DataSnapshot imageURL: snapshot.child(r.getString(R.string.db_articles_imageURLs)).getChildren()) {
+                        imageURLs.add(imageURL.getValue(String.class));
+                    }
+                    boolean featured = true;
 
-                    int color = Color.parseColor(snapshot.child(r.getString(R.string.db_categories_color)).getValue(String.class));
-                    categoryTextView.setText(title);
-                    categoryTextView.setTextColor(color);
-                    indicatorImageView.setColorFilter(color, PorterDuff.Mode.SRC_OVER);
-                    article.setCategoryDisplayName(title);
-                    article.setCategoryDisplayColor(color);
+                    long timestamp =  snapshot.child(r.getString(R.string.db_articles_timestamp)).getValue(long.class);
+
+                    article = new Article(articleID, author, title, body, category, imageURLs.toArray(new String[0]), featured, timestamp);
+                    titleTextView.setText(article.getTitle());
+                    if(article.getImageURLs().length != 0) { // When there are at least one article, show first image
+                        ImageUtil.setImageToView(article.getImageURLs()[0], articleImage);
+                    }
+
+                    ScreenUtil.setTimeToTextView(article.getTimestamp(), timeTextView);
+
+                    boolean isNightModeOn = AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES;
+                    // For Finding The Correct Color and Title for Featured Articles
+                    DatabaseReference ref = FirebaseDatabase.getInstance(FirebaseApp.getInstance()).getReference()
+                            .child(r.getString(R.string.db_categories))
+                            .child(article.getCategory());
+                    ref.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            Log.d(TAG, "Set Color");
+                            String title = snapshot.child(r.getString(R.string.db_categories_titles)).getValue(String.class);
+
+                            int color = Color.parseColor(snapshot.child(r.getString(R.string.db_categories_color)).getValue(String.class));
+                            categoryTextView.setText(title);
+                            categoryTextView.setTextColor(color);
+                            indicatorImageView.setColorFilter(color, PorterDuff.Mode.SRC_OVER);
+                            article.setCategoryDisplayName(title);
+                            article.setCategoryDisplayColor(color);
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+
+
                 }
 
                 @Override
