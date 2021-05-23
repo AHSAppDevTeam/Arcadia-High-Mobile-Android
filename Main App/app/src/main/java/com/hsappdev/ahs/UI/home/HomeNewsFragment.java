@@ -60,7 +60,9 @@ public class HomeNewsFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.home_news_fragment, container, false);
 
-        NewsRecyclerAdapter adapter = new NewsRecyclerAdapter(new ArrayList<String>(), onArticleClick, this);
+
+
+        NewsRecyclerAdapter adapter = new NewsRecyclerAdapter(new ArrayList<String>(), onArticleClick);
         RecyclerView recyclerView = view.findViewById(R.id.home_news_recyclerView);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
