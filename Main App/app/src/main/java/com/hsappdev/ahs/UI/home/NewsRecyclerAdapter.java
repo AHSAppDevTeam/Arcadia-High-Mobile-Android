@@ -74,15 +74,22 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
         notifyDataSetChanged();
     }
 
+
+
     static class FeaturedViewHolder extends RecyclerView.ViewHolder{
         private final TextView sectionTitle;
         private final ViewPager2 featuredPager;
+        private final ViewPager2 mediumPager;
         private final Resources r;
 
         public void setDetails(String categoryTitle, OnItemClick onArticleClick){
             setUpPager();
             FeaturedArticleAdapter featuredArticleAdapter = new FeaturedArticleAdapter(new ArrayList<String>(), onArticleClick);
+            MediumArticleAdapter mediumArticleAdapter = new MediumArticleAdapter(new ArrayList<String>(), onArticleClick);
+
             featuredPager.setAdapter(featuredArticleAdapter);
+            mediumPager.setAdapter(mediumArticleAdapter);
+
             DatabaseReference ref = FirebaseDatabase.getInstance(FirebaseApp.getInstance()).getReference()
                     .child(r.getString(R.string.db_categories))
                     .child(categoryTitle);
@@ -91,8 +98,11 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     featuredArticleAdapter.clearAll();
+                    mediumArticleAdapter.clearAll();
+
                     for(DataSnapshot articleId : snapshot.child(r.getString(R.string.db_categories_articleIds)).getChildren()){
                         featuredArticleAdapter.addArticleIds(articleId.getValue(String.class));
+                        mediumArticleAdapter.addArticleId(articleId.getValue(String.class));
                         //articles.add();
                     }
                     String title = snapshot.child(r.getString(R.string.db_categories_titles)).getValue(String.class);
@@ -133,6 +143,7 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
             r = itemView.getContext().getResources();
 
             featuredPager = itemView.findViewById(R.id.home_featured_carousel);
+            mediumPager = itemView.findViewById(R.id.home_medium_carousel);
             sectionTitle = itemView.findViewById(R.id.home_news_sectionTitle);
         }
     }

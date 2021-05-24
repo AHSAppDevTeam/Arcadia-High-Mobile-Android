@@ -22,4 +22,17 @@ public class ImageUtil {
                 .into(imageView);
 
     }
+
+    public static void setImageToSmallView(String imageUrl, ImageView imageView){
+        ShapeableImageView shapeableImageView = (ShapeableImageView) imageView;
+        shapeableImageView.setShapeAppearanceModel(new ShapeAppearanceModel().withCornerSize(ScreenUtil.dp_to_px(imageView.getContext().getResources().getDimension(R.dimen.padding)/4, imageView.getContext())));
+        Glide
+                .with(imageView.getContext())
+                .load(imageUrl)
+                .centerCrop()
+                .error(R.drawable.home_img_shadow_frame)
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .into(imageView);
+
+    }
 }
