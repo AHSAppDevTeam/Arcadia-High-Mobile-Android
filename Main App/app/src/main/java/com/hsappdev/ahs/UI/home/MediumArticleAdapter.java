@@ -113,18 +113,7 @@ public class MediumArticleAdapter extends RecyclerView.Adapter<MediumArticleAdap
         public void setDetails(List<String> articlesToAdd){
             linearLayoutLeft.removeAllViews();
             linearLayoutRight.removeAllViews();
-            linearLayoutLeft.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Log.d("click", "click1");
-                }
-            });
-            linearLayoutRight.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Log.d("click", "click2");
-                }
-            });
+
             for(int i=0; i<articlesToAdd.size(); i++){
                 String articleId = articlesToAdd.get(i);
                 MediumArticleUnit mediumArticleUnit =  new MediumArticleUnit(itemView.getContext(), articleId, onArticleClick);
