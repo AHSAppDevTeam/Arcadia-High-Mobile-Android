@@ -35,6 +35,7 @@ public class Article implements Parcelable {
         imageURLs = in.createStringArray();
         featured = in.readByte() != 0;
         timestamp = in.readLong();
+        in.readParcelable(ClassLoader.getSystemClassLoader());
     }
 
     public static final Creator<Article> CREATOR = new Creator<Article>() {
