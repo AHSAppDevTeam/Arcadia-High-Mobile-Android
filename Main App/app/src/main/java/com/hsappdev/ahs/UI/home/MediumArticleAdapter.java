@@ -1,27 +1,16 @@
 package com.hsappdev.ahs.UI.home;
 
 import android.content.res.Resources;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.hsappdev.ahs.OnItemClick;
 import com.hsappdev.ahs.R;
-import com.hsappdev.ahs.dataTypes.Article;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +20,7 @@ public class MediumArticleAdapter extends RecyclerView.Adapter<MediumArticleAdap
     private List<String> articleIds;
     private OnItemClick onArticleClick;
 
-    private final int numStacked = 2;
+    public final int numArticles = 2;
 
     public MediumArticleAdapter(List<String> articleIds, OnItemClick onArticleClick) {
         this.articleIds = articleIds;
@@ -56,16 +45,16 @@ public class MediumArticleAdapter extends RecyclerView.Adapter<MediumArticleAdap
         List<String> articlesToAdd = new ArrayList<>();
 
         // if we are not in an odd case
-        if(position < articleIds.size()/numStacked){
-            for (int index = 0; index<numStacked; index++){
-                articlesToAdd.add(articleIds.get((position)*numStacked+index));
+        if(position < articleIds.size()/ numArticles){
+            for (int index = 0; index< numArticles; index++){
+                articlesToAdd.add(articleIds.get((position)* numArticles +index));
             }
         }else{
             // if we are in an odd case
             // then find the # of odd ones
-            int oddOnes = articleIds.size()-(position)*numStacked;
+            int oddOnes = articleIds.size()-(position)* numArticles;
             for (int index = 0; index<oddOnes; index++){
-                articlesToAdd.add(articleIds.get((position)*numStacked+index));
+                articlesToAdd.add(articleIds.get((position)* numArticles +index));
             }
         }
 
@@ -77,10 +66,10 @@ public class MediumArticleAdapter extends RecyclerView.Adapter<MediumArticleAdap
         if(articleIds.size() == 0){
             return 0;
         }
-        if(articleIds.size()%numStacked == 0){
-            return articleIds.size()/numStacked;
+        if(articleIds.size()% numArticles == 0){
+            return articleIds.size()/ numArticles;
         }else{
-            return articleIds.size()/numStacked+1;
+            return articleIds.size()/ numArticles +1;
         }
     }
 

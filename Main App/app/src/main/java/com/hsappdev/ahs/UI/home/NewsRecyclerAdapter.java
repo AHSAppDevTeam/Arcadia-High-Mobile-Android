@@ -132,6 +132,10 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
             compositePageTransformer.addTransformer(new MarginPageTransformer((int) dp_to_px(2))); //note: conversion between dp and pixel, apply later
             compositePageTransformer.addTransformer(new ScaleAndFadeTransformer());
             featuredPager.setPageTransformer(compositePageTransformer);
+
+            mediumPager.setOffscreenPageLimit(3);
+
+            mediumPager.setPageTransformer(new MarginPageTransformer((int) dp_to_px(2)));
         }
 
         public float dp_to_px(float dp) {
