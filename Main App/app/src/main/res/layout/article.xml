@@ -43,9 +43,11 @@
                 android:textSize="16sp"
                 android:textStyle="normal" />
 
+            <!-- WARNING: Do not place any transparency on this TextView
+             because there are certain Samsung and LG phones that cannot handle it
+              and will crash if a transparency is set-->
             <com.hsappdev.ahs.Adjusting_TextView
                 android:id="@+id/article_body"
-                android:alpha="0.65"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/sfprodisplay_regular"
