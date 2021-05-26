@@ -21,11 +21,13 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.hsappdev.ahs.dataTypes.Article;
 import com.hsappdev.ahs.util.Helper;
 import com.hsappdev.ahs.OnItemClick;
 import com.hsappdev.ahs.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapter.FeaturedViewHolder> {
     //List<List<Article>> articlesList = new ArrayList<>();
@@ -103,13 +105,13 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
                     featuredArticleAdapter.clearAll();
                     mediumArticleAdapter.clearAll();
                     smallArticleAdapter.clearAll();
-
+                    List<String> articleIds = new ArrayList<>();
                     for(DataSnapshot articleId : snapshot.child(r.getString(R.string.db_categories_articleIds)).getChildren()){
-                        featuredArticleAdapter.addArticleIds(articleId.getValue(String.class));
-                        mediumArticleAdapter.addArticleId(articleId.getValue(String.class));
-                        smallArticleAdapter.addArticleId(articleId.getValue(String.class));
-                        //articles.add();
+                        articleIds.add(articleId.getValue(String.class));
                     }
+
+                    articleSortingJunction(articleIds, categoryTitle, featuredArticleAdapter, mediumArticleAdapter, smallArticleAdapter);
+
                     String title = snapshot.child(r.getString(R.string.db_categories_titles)).getValue(String.class);
                     int color = Color.parseColor(snapshot.child(r.getString(R.string.db_categories_color)).getValue(String.class));
 
@@ -125,6 +127,44 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
                 }
             });
 
+        }
+
+        /**
+         * Sort articles into the correct categories
+         * @param featuredArticleAdapter
+         * @param mediumArticleAdapter
+         * @param smallArticleAdapter
+         */
+        public void articleSortingJunction(List<String> articleIds, String categoryTitle,
+                                           FeaturedArticleAdapter featuredArticleAdapter,
+                                           MediumArticleAdapter mediumArticleAdapter,
+                                           SmallArticleAdapter smallArticleAdapter){
+            if(categoryTitle.equals("General_Info")){
+                /*
+                * Structure
+                * > single carousel for all articles
+                * */
+                featuredArticleAdapter.setArticleIds(articleIds);
+            }else{
+                /*
+                 * Structure
+                 * > one large article for most recent
+                 * > two medium articles for second and third most recent
+                 * > rest of articles go into the small viewpager
+                 * */
+                if(articleIds.size() > 0){
+                    featuredArticleAdapter.addArticleIds(articleIds.get(0));
+                    articleIds.remove(0);
+                }
+                for (int i = 0; i < MultiArticleAdapter.numArticles; i++) {
+                    if(articleIds.size() > 0) {
+                        mediumArticleAdapter.addArticleId(articleIds.get(0));
+                        articleIds.remove(0);
+                    }
+                }
+
+                smallArticleAdapter.setArticleIds(articleIds); // Add rest of ids
+            }
         }
 
         public void setUpPager(){

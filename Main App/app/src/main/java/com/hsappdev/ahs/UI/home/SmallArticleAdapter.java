@@ -19,7 +19,7 @@ public class SmallArticleAdapter extends MultiArticleAdapter<SmallArticleAdapter
     private static final String TAG = "MediumArticleAdapter";
 
 
-    public final int numArticles = 2;
+    public static final int numArticles = 2;
 
     public SmallArticleAdapter(List<String> articleIds, OnItemClick onArticleClick) {
         super(articleIds, onArticleClick);

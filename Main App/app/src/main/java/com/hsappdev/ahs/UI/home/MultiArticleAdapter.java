@@ -24,7 +24,7 @@ public abstract class MultiArticleAdapter<T extends MultiArticleAdapter.MultiArt
     protected List<String> articleIds;
     protected OnItemClick onArticleClick;
 
-    protected int numArticles = 2;
+    public static final int numArticles = 2;
 
     public MultiArticleAdapter(List<String> articleIds, OnItemClick onArticleClick) {
         this.articleIds = articleIds;
@@ -72,6 +72,11 @@ public abstract class MultiArticleAdapter<T extends MultiArticleAdapter.MultiArt
 
     public void addArticleId(String articleId) {
         articleIds.add(articleId);
+        notifyDataSetChanged();
+    }
+
+    public void setArticleIds(List<String> articleIds) {
+        this.articleIds = articleIds;
         notifyDataSetChanged();
     }
 

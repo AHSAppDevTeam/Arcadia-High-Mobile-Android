@@ -57,6 +57,7 @@ public class FeaturedArticleAdapter extends RecyclerView.Adapter<FeaturedArticle
     }
     public void setArticleIds(List<String> articleIds) {
         this.articleIds = articleIds;
+        notifyDataSetChanged();
     }
 
     @NonNull
