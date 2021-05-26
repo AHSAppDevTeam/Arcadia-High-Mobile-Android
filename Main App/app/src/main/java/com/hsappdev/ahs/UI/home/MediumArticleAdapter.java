@@ -15,21 +15,16 @@ import com.hsappdev.ahs.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MediumArticleAdapter extends RecyclerView.Adapter<MediumArticleAdapter.MediumArticleViewHolder>{
+public class MediumArticleAdapter extends MultiArticleAdapter<MediumArticleAdapter.MediumArticleViewHolder>{
     private static final String TAG = "MediumArticleAdapter";
-    private List<String> articleIds;
-    private OnItemClick onArticleClick;
-
-    public final int numArticles = 2;
 
     public MediumArticleAdapter(List<String> articleIds, OnItemClick onArticleClick) {
-        this.articleIds = articleIds;
-        this.onArticleClick = onArticleClick;
+        super(articleIds, onArticleClick);
     }
 
     @NonNull
     @Override
-    public MediumArticleAdapter.MediumArticleViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public MediumArticleViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new MediumArticleAdapter.MediumArticleViewHolder(
                 LayoutInflater.from(parent.getContext()).inflate(
                         R.layout.home_news_medium_article_holder,
@@ -40,64 +35,19 @@ public class MediumArticleAdapter extends RecyclerView.Adapter<MediumArticleAdap
         );
     }
 
-    @Override
-    public void onBindViewHolder(@NonNull MediumArticleAdapter.MediumArticleViewHolder holder, int position) {
-        List<String> articlesToAdd = new ArrayList<>();
 
-        // if we are not in an odd case
-        if(position < articleIds.size()/ numArticles){
-            for (int index = 0; index< numArticles; index++){
-                articlesToAdd.add(articleIds.get((position)* numArticles +index));
-            }
-        }else{
-            // if we are in an odd case
-            // then find the # of odd ones
-            int oddOnes = articleIds.size()-(position)* numArticles;
-            for (int index = 0; index<oddOnes; index++){
-                articlesToAdd.add(articleIds.get((position)* numArticles +index));
-            }
-        }
-
-        holder.setDetails(articlesToAdd);
-    }
-
-    @Override
-    public int getItemCount() {
-        if(articleIds.size() == 0){
-            return 0;
-        }
-        if(articleIds.size()% numArticles == 0){
-            return articleIds.size()/ numArticles;
-        }else{
-            return articleIds.size()/ numArticles +1;
-        }
-    }
-
-    public void clearAll() {
-        articleIds.clear();
-        notifyDataSetChanged();
-    }
-
-    public void addArticleId(String articleId) {
-        articleIds.add(articleId);
-        notifyDataSetChanged();
-    }
-
-    static class MediumArticleViewHolder extends RecyclerView.ViewHolder{
-        final private Resources r;
+    static public class MediumArticleViewHolder extends MultiArticleAdapter.MultiArticleViewHolder{
         private final LinearLayout linearLayoutLeft;
         private final LinearLayout linearLayoutRight;
-        private OnItemClick onArticleClick;
 
         public MediumArticleViewHolder(@NonNull View itemView, OnItemClick onArticleClick) {
-            super(itemView);
-            this.r = itemView.getResources();
+            super(itemView, onArticleClick);
             this.linearLayoutLeft = itemView.findViewById(R.id.home_news_medium_article_linear_layout_left);
             this.linearLayoutRight = itemView.findViewById(R.id.home_news_medium_article_linear_layout_right);
-            this.onArticleClick = onArticleClick;
 
 
         }
+
 
         public void setDetails(List<String> articlesToAdd){
             linearLayoutLeft.removeAllViews();

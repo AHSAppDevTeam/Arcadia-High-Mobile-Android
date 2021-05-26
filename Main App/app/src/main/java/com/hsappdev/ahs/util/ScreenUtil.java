@@ -22,7 +22,7 @@ public class ScreenUtil {
 
     public static void setHTMLStringToTextView(String html, TextView textView){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            textView.setText(Html.fromHtml(html, Html.FROM_HTML_MODE_COMPACT));
+            textView.setText(Html.fromHtml(html, Html.FROM_HTML_SEPARATOR_LINE_BREAK_PARAGRAPH));
         } else {
             textView.setText(Html.fromHtml(html));
         }

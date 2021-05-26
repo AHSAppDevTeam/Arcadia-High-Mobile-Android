@@ -37,6 +37,23 @@ public class MediumArticleUnit extends ConstraintLayout {
 
     final private View contentView;
 
+
+    public MediumArticleUnit(@NonNull Context context, String articleId, OnItemClick onItemClick, int layoutID) {
+        super(context);
+        // Inflate view
+        View view = inflate(getContext(), layoutID, this);
+
+        // Get the data
+        this.r = view.getResources();
+        this.articleLayout = view.findViewById(R.id.home_news_constraintLayout);
+        this.articleImage = view.findViewById(R.id.medium_article_image);
+        this.titleTextView = view.findViewById(R.id.medium_article_name);
+        this.timeTextView = view.findViewById(R.id.medium_article_time);
+        this.onArticleClick = onItemClick;
+        contentView = view;
+        setDetails(articleId);
+    }
+
     public MediumArticleUnit(@NonNull Context context, String articleId, OnItemClick onItemClick) {
         super(context);
         // Inflate view

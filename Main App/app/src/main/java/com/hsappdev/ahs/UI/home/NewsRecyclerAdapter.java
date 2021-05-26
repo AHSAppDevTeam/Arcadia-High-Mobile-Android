@@ -80,15 +80,18 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
         private final TextView sectionTitle;
         private final ViewPager2 featuredPager;
         private final ViewPager2 mediumPager;
+        private final ViewPager2 smallPager;
         private final Resources r;
 
         public void setDetails(String categoryTitle, OnItemClick onArticleClick){
             setUpPager();
             FeaturedArticleAdapter featuredArticleAdapter = new FeaturedArticleAdapter(new ArrayList<String>(), onArticleClick);
             MediumArticleAdapter mediumArticleAdapter = new MediumArticleAdapter(new ArrayList<String>(), onArticleClick);
+            SmallArticleAdapter smallArticleAdapter = new SmallArticleAdapter(new ArrayList<String>(), onArticleClick);
 
             featuredPager.setAdapter(featuredArticleAdapter);
             mediumPager.setAdapter(mediumArticleAdapter);
+            smallPager.setAdapter(smallArticleAdapter);
 
             DatabaseReference ref = FirebaseDatabase.getInstance(FirebaseApp.getInstance()).getReference()
                     .child(r.getString(R.string.db_categories))
@@ -99,10 +102,12 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     featuredArticleAdapter.clearAll();
                     mediumArticleAdapter.clearAll();
+                    smallArticleAdapter.clearAll();
 
                     for(DataSnapshot articleId : snapshot.child(r.getString(R.string.db_categories_articleIds)).getChildren()){
                         featuredArticleAdapter.addArticleIds(articleId.getValue(String.class));
                         mediumArticleAdapter.addArticleId(articleId.getValue(String.class));
+                        smallArticleAdapter.addArticleId(articleId.getValue(String.class));
                         //articles.add();
                     }
                     String title = snapshot.child(r.getString(R.string.db_categories_titles)).getValue(String.class);
@@ -134,8 +139,10 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
             featuredPager.setPageTransformer(compositePageTransformer);
 
             mediumPager.setOffscreenPageLimit(3);
-
             mediumPager.setPageTransformer(new MarginPageTransformer((int) dp_to_px(2)));
+
+            smallPager.setOffscreenPageLimit(3);
+
         }
 
         public float dp_to_px(float dp) {
@@ -148,6 +155,7 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
 
             featuredPager = itemView.findViewById(R.id.home_featured_carousel);
             mediumPager = itemView.findViewById(R.id.home_medium_carousel);
+            smallPager = itemView.findViewById(R.id.home_small_carousel);
             sectionTitle = itemView.findViewById(R.id.home_news_sectionTitle);
         }
     }
