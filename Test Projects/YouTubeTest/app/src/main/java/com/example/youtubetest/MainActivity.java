@@ -1,6 +1,8 @@
 package com.example.youtubetest;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentActivity;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -13,49 +15,37 @@ import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerView;
 
-public class MainActivity extends YouTubeBaseActivity {
+import java.util.ArrayList;
+import java.util.List;
 
-    // Even though it is not safe to store a key like this
-    // this app is a test version and security will be
-    // taken into account in the real app
-    private static final String API_KEY = "<<<API KEY HERE>>>";
+public class MainActivity extends AppCompatActivity {
+    private static final String TAG = "MainActivity";
 
-    YouTubePlayerView youTubePlayerView;
-    Button playButton;
-
-    YouTubePlayer.OnInitializedListener onInitializedListener;
+    private YoutubeVideoCallback<MediaFragment> youtubeVideoCallback;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        playButton = findViewById(R.id.playButton);
-        youTubePlayerView = findViewById(R.id.youTubePlayerView);
+        ViewPager2 viewpager = findViewById(R.id.viewPager);
 
-        onInitializedListener = new YouTubePlayer.OnInitializedListener() {
-            @Override
-            public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
-                youTubePlayer.loadVideo("W4hTJybfU7s");
-            }
+        this.youtubeVideoCallback = new YoutubeVideoCallback<>();
 
-            @Override
-            public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
+        Media[] mediaList = new Media[4];
+        mediaList[0] = new Media("W4hTJybfU7s", true);
+        mediaList[1] = new Media("ovJcsL7vyrk", true);
+        mediaList[2] = new Media("VriiDn676PQ", true);
+        mediaList[3] = new Media("AeJ9q45PfD0", true);
 
-            }
-        };
 
-        playButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d("youtubeSetup", "play clicked");
-                youTubePlayerView.initialize(getApiKey(), onInitializedListener);
-            }
-        });
+        ImageVideoAdapter imageVideoAdapter = new ImageVideoAdapter(getSupportFragmentManager(), getLifecycle(), youtubeVideoCallback, viewpager, mediaList);
+
+        viewpager.setAdapter(imageVideoAdapter);
+
+
 
     }
 
-    public static String getApiKey() {
-        return API_KEY;
-    }
+
 }
