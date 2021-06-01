@@ -27,7 +27,7 @@ import com.hsappdev.ahs.util.ScreenUtil;
 import java.util.ArrayList;
 
 public class MediumArticleUnit extends ConstraintLayout {
-    private Article article;
+    protected Article article;
     final private ConstraintLayout articleLayout;
     final private ImageView articleImage;
     final private Resources r;
@@ -35,7 +35,7 @@ public class MediumArticleUnit extends ConstraintLayout {
     final private TextView timeTextView;
     private OnItemClick onArticleClick;
 
-    final private View contentView;
+    final protected View contentView;
 
 
     public MediumArticleUnit(@NonNull Context context, String articleId, OnItemClick onItemClick, int layoutID) {
@@ -95,14 +95,6 @@ public class MediumArticleUnit extends ConstraintLayout {
 
                 article = new Article(articleId, author, title, body, category, imageURLs.toArray(new String[0]), videoURLs.toArray(new String[0]), featured, timestamp);
 
-                titleTextView.setText(article.getTitle());
-                ScreenUtil.setTimeToTextView(article.getTimestamp(), timeTextView);
-                if(article.getImageURLs().length != 0){
-                    ImageUtil.setImageToSmallView(article.getImageURLs()[0], articleImage);
-                } else if(article.getVideoURLs().length != 0){
-                    ImageUtil.setImageToSmallView(ImageUtil.getYoutubeThumbnail(article.getVideoURLs()[0]), articleImage);
-                }
-
                 DatabaseReference ref = FirebaseDatabase.getInstance(FirebaseApp.getInstance()).getReference()
                         .child(r.getString(R.string.db_categories))
                         .child(article.getCategory());
@@ -114,6 +106,8 @@ public class MediumArticleUnit extends ConstraintLayout {
 
                         article.setCategoryDisplayName(title);
                         article.setCategoryDisplayColor(color);
+
+                        onArticleRetrieved();
                     }
 
                     @Override
@@ -137,6 +131,16 @@ public class MediumArticleUnit extends ConstraintLayout {
 
             }
         });
+    }
+
+    public void onArticleRetrieved(){
+        titleTextView.setText(article.getTitle());
+        ScreenUtil.setTimeToTextView(article.getTimestamp(), timeTextView);
+        if(article.getImageURLs().length != 0){
+            ImageUtil.setImageToSmallView(article.getImageURLs()[0], articleImage);
+        } else if(article.getVideoURLs().length != 0){
+            ImageUtil.setImageToSmallView(ImageUtil.getYoutubeThumbnail(article.getVideoURLs()[0]), articleImage);
+        }
     }
 
 }
