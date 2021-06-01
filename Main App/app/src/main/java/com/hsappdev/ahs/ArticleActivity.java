@@ -6,16 +6,14 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
@@ -26,15 +24,18 @@ import android.widget.TextView;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.hsappdev.ahs.dataTypes.Article;
+import com.hsappdev.ahs.mediaPager.ImageViewActivity;
+import com.hsappdev.ahs.mediaPager.OnImageClick;
 import com.hsappdev.ahs.util.Helper;
 import com.hsappdev.ahs.util.ScreenUtil;
-
-import org.intellij.lang.annotations.JdkConstants;
+import com.hsappdev.ahs.mediaPager.ImageVideoAdapter;
+import com.hsappdev.ahs.mediaPager.Media;
+import com.hsappdev.ahs.mediaPager.YouTubeFragment;
+import com.hsappdev.ahs.mediaPager.YoutubeVideoCallback;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class ArticleActivity extends AppCompatActivity implements Adjusting_TextView.hello {
+public class ArticleActivity extends AppCompatActivity implements Adjusting_TextView.hello, OnImageClick {
 
     private static final String TAG = "ArticleActivity";
 
@@ -44,8 +45,16 @@ public class ArticleActivity extends AppCompatActivity implements Adjusting_Text
     private final int FONT_BAR_MAX = 54;
 
     PopupWindow fontBarWindow;
+    ViewPager2 mediaViewPager;
+    private YoutubeVideoCallback<YouTubeFragment> youtubeVideoCallback;
 
-    private ArrayList<Adjusting_TextView.TextSizeCallback> callbackList= new ArrayList<>();;
+
+    private ArrayList<Adjusting_TextView.TextSizeCallback> callbackList= new ArrayList<>();
+
+    public ArticleActivity() {
+        youtubeVideoCallback = new YoutubeVideoCallback<>();
+    }
+
     @Override
     public void addTextSizeCallback(Adjusting_TextView.TextSizeCallback callback) {
         callbackList.add(callback);
@@ -55,6 +64,7 @@ public class ArticleActivity extends AppCompatActivity implements Adjusting_Text
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.article);
+
         final ArticleViewModel viewModel = new ViewModelProvider(this).get(ArticleViewModel.class);
         viewModel.getTextScalar().observe(this, new Observer<Float>() {
             @Override
@@ -75,6 +85,24 @@ public class ArticleActivity extends AppCompatActivity implements Adjusting_Text
         author.setText("By " + article.getAuthor());
         ScreenUtil.setHTMLStringToTextView(article.getBody(), body);
 
+        // Media ViewPager2
+
+        mediaViewPager = findViewById(R.id.mediaViewPager);
+        // Prepare mediaList
+        Media[] mediaList = new Media[article.getImageURLs().length+article.getVideoURLs().length];
+        int i = 0;
+        for(String video : article.getVideoURLs()){
+            mediaList[i] = new Media(video, true);
+            i++;
+        }
+        for(String image : article.getImageURLs()){
+            mediaList[i] = new Media(image, false);
+            i++;
+        }
+
+        ImageVideoAdapter imageVideoAdapter = new ImageVideoAdapter(getSupportFragmentManager(), getLifecycle(), youtubeVideoCallback, mediaViewPager, mediaList, this);
+
+        mediaViewPager.setAdapter(imageVideoAdapter);
         // Toolbar
         MaterialToolbar articleToolbar = (MaterialToolbar) findViewById(R.id.article_topAppBar);
         articleToolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -170,7 +198,11 @@ public class ArticleActivity extends AppCompatActivity implements Adjusting_Text
                         fontBarWindow.showAsDropDown(articleToolbar, padding, padding/2);
                         return true;
                     case R.id.article_toolbar_theme:
-                        // TODO: handle action
+                        SettingsManager settingsManager = SettingsManager.getInstance(getApplicationContext());
+                        settingsManager.updateNightMode(!settingsManager.isNightModeOn());
+                        AppCompatDelegate.setDefaultNightMode(settingsManager.isNightModeOn() ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO);
+                        getWindow().setWindowAnimations(R.style.WindowAnimationTransition);
+                        recreate();
                         return true;
                     case R.id.article_toolbar_saved:
                         // TODO: handle action
@@ -209,5 +241,12 @@ public class ArticleActivity extends AppCompatActivity implements Adjusting_Text
         windowManager.getDefaultDisplay().getRealMetrics(metrics);
         metrics.scaledDensity = config.fontScale * metrics.density;
         getBaseContext().getResources().updateConfiguration(config, metrics);
+    }
+
+    @Override
+    public void onImageClick(Media media) {
+        Intent intent = new Intent(ArticleActivity.this, ImageViewActivity.class);
+        intent.putExtra(ImageViewActivity.IMAGE_URL_KEY, media.getMediaURL());
+        startActivity(intent);
     }
 }

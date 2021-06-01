@@ -9,20 +9,23 @@ public class Article implements Parcelable {
     private String articleID, author, title, body, category, categoryDisplayName;
     private int categoryDisplayColor;
     private String[] imageURLs;
+    private String[] videoURLs;
     boolean featured;
     long timestamp;
 
 
-    public Article(String articleID, String author, String title, String body, String category, String[] imageURLs, boolean featured, long timestamp) {
+    public Article(String articleID, String author, String title, String body, String category, String[] imageURLs, String[] videoURls, boolean featured, long timestamp) {
         this.articleID = articleID;
         this.author = author;
         this.title = title;
         this.body = body;
         this.category = category;
         this.imageURLs = imageURLs;
+        this.videoURLs = videoURls;
         this.featured = featured;
         this.timestamp = timestamp;
     }
+
 
     protected Article(Parcel in) {
         articleID = in.readString();
@@ -33,6 +36,7 @@ public class Article implements Parcelable {
         categoryDisplayName = in.readString();
         categoryDisplayColor = in.readInt();
         imageURLs = in.createStringArray();
+        videoURLs = in.createStringArray();
         featured = in.readByte() != 0;
         timestamp = in.readLong();
         in.readParcelable(ClassLoader.getSystemClassLoader());
@@ -49,6 +53,15 @@ public class Article implements Parcelable {
             return new Article[size];
         }
     };
+
+    public String[] getVideoURLs() {
+        return videoURLs;
+    }
+
+    public void setVideoURLs(String[] videoURLs) {
+        this.videoURLs = videoURLs;
+    }
+
     public String getArticleID() {
         return articleID;
     }
@@ -144,6 +157,7 @@ public class Article implements Parcelable {
         parcel.writeString(categoryDisplayName);
         parcel.writeInt(categoryDisplayColor);
         parcel.writeStringArray(imageURLs);
+        parcel.writeStringArray(videoURLs);
         parcel.writeByte((byte) (featured ? 1 : 0));
         parcel.writeLong(timestamp);
     }

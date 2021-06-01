@@ -139,7 +139,7 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
                                            FeaturedArticleAdapter featuredArticleAdapter,
                                            MediumArticleAdapter mediumArticleAdapter,
                                            SmallArticleAdapter smallArticleAdapter){
-            if(categoryTitle.equals("General_Info")){
+            if(categoryTitle.equals("Featured")){
                 /*
                 * Structure
                 * > single carousel for all articles

@@ -120,17 +120,23 @@ public class FeaturedArticleAdapter extends RecyclerView.Adapter<FeaturedArticle
                     String body = snapshot.child(r.getString(R.string.db_articles_body)).getValue(String.class);
                     String category = snapshot.child(r.getString(R.string.db_articles_categoryID)).getValue(String.class);
                     ArrayList<String> imageURLs = new ArrayList<>();
+                    ArrayList<String> videoURLs = new ArrayList<>();
                     for(DataSnapshot imageURL: snapshot.child(r.getString(R.string.db_articles_imageURLs)).getChildren()) {
                         imageURLs.add(imageURL.getValue(String.class));
+                    }
+                    for (DataSnapshot videoURL : snapshot.child(r.getString(R.string.db_articles_videoURLs)).getChildren()) {
+                        videoURLs.add(videoURL.getValue(String.class));
                     }
                     boolean featured = true;
 
                     long timestamp =  snapshot.child(r.getString(R.string.db_articles_timestamp)).getValue(long.class);
 
-                    article = new Article(articleID, author, title, body, category, imageURLs.toArray(new String[0]), featured, timestamp);
+                    article = new Article(articleID, author, title, body, category, imageURLs.toArray(new String[0]), videoURLs.toArray(new String[0]), featured, timestamp);
                     titleTextView.setText(article.getTitle());
                     if(article.getImageURLs().length != 0) { // When there are at least one article, show first image
                         ImageUtil.setImageToView(article.getImageURLs()[0], articleImage);
+                    } else if(article.getVideoURLs().length != 0){
+                        ImageUtil.setImageToSmallView(ImageUtil.getYoutubeThumbnail(article.getVideoURLs()[0]), articleImage);
                     }
 
                     ScreenUtil.setTimeToTextView(article.getTimestamp(), timeTextView);

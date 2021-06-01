@@ -82,19 +82,25 @@ public class MediumArticleUnit extends ConstraintLayout {
                 String body = snapshot.child(r.getString(R.string.db_articles_body)).getValue(String.class);
                 String category = snapshot.child(r.getString(R.string.db_articles_categoryID)).getValue(String.class);
                 ArrayList<String> imageURLs = new ArrayList<>();
+                ArrayList<String> videoURLs = new ArrayList<>();
                 for (DataSnapshot imageURL : snapshot.child(r.getString(R.string.db_articles_imageURLs)).getChildren()) {
                     imageURLs.add(imageURL.getValue(String.class));
+                }
+                for (DataSnapshot videoURL : snapshot.child(r.getString(R.string.db_articles_videoURLs)).getChildren()) {
+                    videoURLs.add(videoURL.getValue(String.class));
                 }
                 boolean featured = true;
 
                 long timestamp = snapshot.child(r.getString(R.string.db_articles_timestamp)).getValue(long.class);
 
-                article = new Article(articleId, author, title, body, category, imageURLs.toArray(new String[0]), featured, timestamp);
+                article = new Article(articleId, author, title, body, category, imageURLs.toArray(new String[0]), videoURLs.toArray(new String[0]), featured, timestamp);
 
                 titleTextView.setText(article.getTitle());
                 ScreenUtil.setTimeToTextView(article.getTimestamp(), timeTextView);
                 if(article.getImageURLs().length != 0){
                     ImageUtil.setImageToSmallView(article.getImageURLs()[0], articleImage);
+                } else if(article.getVideoURLs().length != 0){
+                    ImageUtil.setImageToSmallView(ImageUtil.getYoutubeThumbnail(article.getVideoURLs()[0]), articleImage);
                 }
 
                 DatabaseReference ref = FirebaseDatabase.getInstance(FirebaseApp.getInstance()).getReference()

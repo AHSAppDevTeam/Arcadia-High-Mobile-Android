@@ -35,6 +35,7 @@
     <string name="db_articles_date">date</string>
     <string name="db_articles_featured">featured</string>
     <string name="db_articles_imageURLs">imageURLs</string>
+    <string name="db_articles_videoURLs">videoIDs</string>
     <string name="db_articles_notified">notified</string>
     <string name="db_articles_thumbURLs">thumbURLs</string>
     <string name="db_articles_timestamp">timestamp</string>

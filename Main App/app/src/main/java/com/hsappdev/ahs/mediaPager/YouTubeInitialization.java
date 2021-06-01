@@ -1,4 +1,4 @@
-package com.hsappdev.ahs.videoPlayer;
+package com.hsappdev.ahs.mediaPager;
 
 public class YouTubeInitialization {
 

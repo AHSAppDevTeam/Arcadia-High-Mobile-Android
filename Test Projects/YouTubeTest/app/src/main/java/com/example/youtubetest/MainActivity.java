@@ -1,27 +1,14 @@
 package com.example.youtubetest;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.youtube.player.YouTubeBaseActivity;
-import com.google.android.youtube.player.YouTubeInitializationResult;
-import com.google.android.youtube.player.YouTubePlayer;
-import com.google.android.youtube.player.YouTubePlayerView;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
 
-    private YoutubeVideoCallback<MediaFragment> youtubeVideoCallback;
+    private YoutubeVideoCallback<YouTubeFragment> youtubeVideoCallback;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
 
         Media[] mediaList = new Media[4];
         mediaList[0] = new Media("W4hTJybfU7s", true);
-        mediaList[1] = new Media("ovJcsL7vyrk", true);
+        mediaList[1] = new Media("https://media.discordapp.net/attachments/787088938933157952/848096637078994974/unknown.png", false);
         mediaList[2] = new Media("VriiDn676PQ", true);
         mediaList[3] = new Media("AeJ9q45PfD0", true);
 

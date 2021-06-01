@@ -1,4 +1,6 @@
-package com.example.youtubetest;
+package com.hsappdev.ahs.mediaPager;
+
+import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -15,12 +17,14 @@ public class ImageVideoAdapter extends FragmentStateAdapter {
     private final Media[] mediaList;
     private final Fragment[] fragments;
     final private YoutubeVideoCallback<YouTubeFragment> youtubeVideoCallback;
+    final private OnImageClick onImageClick;
 
-    public ImageVideoAdapter(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle, YoutubeVideoCallback<YouTubeFragment> youtubeVideoCallback, ViewPager2 viewPager2, Media[] mediaList) {
+    public ImageVideoAdapter(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle, YoutubeVideoCallback<YouTubeFragment> youtubeVideoCallback, ViewPager2 viewPager2, Media[] mediaList, OnImageClick onImageClick) {
         super(fragmentManager, lifecycle);
         this.youtubeVideoCallback = youtubeVideoCallback;
         this.mediaList = mediaList;
         this.fragments = new Fragment[mediaList.length];
+        this.onImageClick = onImageClick;
 
         viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
@@ -58,7 +62,10 @@ public class ImageVideoAdapter extends FragmentStateAdapter {
             YouTubeFragment fragment = new YouTubeFragment(mediaList[position], youtubeVideoCallback);
             fragments[position] = fragment;
         } else {
-            ImageFragment fragment = new ImageFragment(mediaList[position]);
+            ImageFragment fragment = new ImageFragment();
+            Bundle bundle = new Bundle();
+            bundle.putString(ImageViewActivity.IMAGE_URL_KEY, mediaList[position].getMediaURL());
+            fragment.setArguments(bundle);
             fragments[position] = fragment;
         }
         return fragments[position];

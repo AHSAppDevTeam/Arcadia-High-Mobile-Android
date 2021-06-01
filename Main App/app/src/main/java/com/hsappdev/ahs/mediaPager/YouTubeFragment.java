@@ -1,18 +1,13 @@
-package com.example.youtubetest;
+package com.hsappdev.ahs.mediaPager;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerSupportFragmentX;
-import com.google.android.youtube.player.YouTubePlayerView;
 
-public class MediaFragment extends YouTubePlayerSupportFragmentX implements YoutubeVideoCallback.YoutubeVideoInterface, YouTubePlayer.OnInitializedListener {
+public class YouTubeFragment extends YouTubePlayerSupportFragmentX implements YoutubeVideoCallback.YoutubeVideoInterface, YouTubePlayer.OnInitializedListener, YouTubePlayer.OnFullscreenListener {
     private static final String TAG = "MediaFragment";
     private Media media;
 
@@ -20,17 +15,18 @@ public class MediaFragment extends YouTubePlayerSupportFragmentX implements Yout
 
     private int lastPlayTime = 0;
 
-    private YoutubeVideoCallback<MediaFragment> youtubeVideoCallback;
+    private YoutubeVideoCallback<YouTubeFragment> youtubeVideoCallback;
 
-    public MediaFragment() {
+    public YouTubeFragment() {
         super();
     }
 
-    public MediaFragment(Media media, YoutubeVideoCallback<MediaFragment> youtubeVideoCallback) {
+    public YouTubeFragment(Media media, YoutubeVideoCallback<YouTubeFragment> youtubeVideoCallback) {
         super();
         this.media = media;
         this.youtubeVideoCallback = youtubeVideoCallback;
         this.youtubeVideoCallback.registerView(this);
+
     }
 
     @Override
@@ -56,11 +52,17 @@ public class MediaFragment extends YouTubePlayerSupportFragmentX implements Yout
     public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
         this.youTubePlayer = youTubePlayer;
         youTubePlayer.cueVideo(media.getMediaURL(), lastPlayTime);
+        youTubePlayer.setOnFullscreenListener(this);
         Log.d(TAG, "onInitializationSuccess: ");
     }
 
     @Override
     public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
+
+    }
+
+    @Override
+    public void onFullscreen(boolean b) {
 
     }
 }

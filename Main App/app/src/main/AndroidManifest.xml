@@ -9,7 +9,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ArcadiaHighMobile">
-        <activity android:name=".ArticleActivity"></activity>
+        <activity android:name=".ArticleActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            >
+
+        </activity>
+        <activity android:name=".mediaPager.ImageViewActivity">
+        </activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -18,5 +24,11 @@
             </intent-filter>
         </activity>
     </application>
+
+    <queries>
+        <intent>
+            <action android:name="com.google.android.youtube.api.service.START" />
+        </intent>
+    </queries>
 
 </manifest>
