@@ -6,12 +6,14 @@ import android.os.Parcelable;
 public class CommunitySection implements Parcelable {
     private String categoryDisplayName, blurb, displayColor;
     private boolean isFeatured;
+    private String[] thumbURLs;
 
-    public CommunitySection(String categoryDisplayName, String blurb, String displayColor, boolean isFeatured) {
+    public CommunitySection(String categoryDisplayName, String blurb, String displayColor, boolean isFeatured, String[] thumbURLs) {
         this.categoryDisplayName = categoryDisplayName;
         this.blurb = blurb;
         this.displayColor = displayColor;
         this.isFeatured = isFeatured;
+        this.thumbURLs = thumbURLs;
     }
 
     // GETTERS AND SETTERS
@@ -47,11 +49,20 @@ public class CommunitySection implements Parcelable {
         isFeatured = featured;
     }
 
+    public String[] getThumbURLs() {
+        return thumbURLs;
+    }
+
+    public void setThumbURLs(String[] thumbURLs) {
+        this.thumbURLs = thumbURLs;
+    }
+
     protected CommunitySection(Parcel in) {
         categoryDisplayName = in.readString();
         blurb = in.readString();
         displayColor = in.readString();
         isFeatured = in.readByte() != 0;
+        in.readStringArray(thumbURLs);
     }
 
     public static final Creator<CommunitySection> CREATOR = new Creator<CommunitySection>() {
@@ -77,5 +88,6 @@ public class CommunitySection implements Parcelable {
         dest.writeString(blurb);
         dest.writeString(displayColor);
         dest.writeByte((byte) (isFeatured ? 1 : 0));
+        dest.writeStringArray(thumbURLs);
     }
 }

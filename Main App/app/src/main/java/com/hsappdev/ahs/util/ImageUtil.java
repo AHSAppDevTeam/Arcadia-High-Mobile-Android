@@ -25,8 +25,10 @@ import jp.wasabeef.glide.transformations.BlurTransformation;
 
 public class ImageUtil {
     public static void setImageToView(String imageUrl, ImageView imageView){
-        ShapeableImageView shapeableImageView = (ShapeableImageView) imageView;
-        shapeableImageView.setShapeAppearanceModel(new ShapeAppearanceModel().withCornerSize(ScreenUtil.dp_to_px(imageView.getContext().getResources().getDimension(R.dimen.padding)/2, imageView.getContext())));
+        if (imageView instanceof ShapeableImageView) {
+            ShapeableImageView shapeableImageView = (ShapeableImageView) imageView;
+            shapeableImageView.setShapeAppearanceModel(new ShapeAppearanceModel().withCornerSize(ScreenUtil.dp_to_px(imageView.getContext().getResources().getDimension(R.dimen.padding) / 2, imageView.getContext())));
+        }
         Glide
                 .with(imageView.getContext())
                 .load(imageUrl)

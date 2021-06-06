@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -21,9 +22,11 @@ import com.hsappdev.ahs.OnItemClick;
 import com.hsappdev.ahs.R;
 import com.hsappdev.ahs.dataTypes.CommunitySection;
 import com.hsappdev.ahs.util.Helper;
+import com.hsappdev.ahs.util.ImageUtil;
 import com.hsappdev.ahs.util.ScreenUtil;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class CommunityRecyclerAdapter extends RecyclerView.Adapter<CommunityRecyclerAdapter.CommunityViewHolder>{
@@ -74,6 +77,9 @@ public class CommunityRecyclerAdapter extends RecyclerView.Adapter<CommunityRecy
         final private TextView categoryTitle;
         final private TextView categoryBlurb;
 
+        // Image Grid
+        final private ImageView image1, image2, image3, image4;
+
         public void setDetails(String categoryId){
             DatabaseReference ref = FirebaseDatabase.getInstance(FirebaseApp.getInstance()).getReference()
                     .child(r.getString(R.string.db_categories))
@@ -85,12 +91,17 @@ public class CommunityRecyclerAdapter extends RecyclerView.Adapter<CommunityRecy
                     String blurb = snapshot.child("blurb").getValue(String.class);
                     String color = snapshot.child("color").getValue(String.class);
                     boolean isFeatured = snapshot.child(r.getString(R.string.db_articles_featured)).getValue(boolean.class);
+                    ArrayList<String> thumbURLs = new ArrayList<>();
 
-                    communitySection = new CommunitySection(title, blurb, color,  isFeatured);
+                    for (DataSnapshot thumbURL : snapshot.child(r.getString(R.string.db_articles_thumbURLs)).getChildren()) {
+                        thumbURLs.add(thumbURL.getValue(String.class));
+                    }
+
+                    communitySection = new CommunitySection(title, blurb, color,  isFeatured, thumbURLs.toArray(new String[0]));
                     categoryTitle.setTextColor(Color.parseColor(communitySection.getDisplayColor()));
                     Helper.setBoldRegularText(categoryTitle, communitySection.getCategoryDisplayName(), " News");
                     categoryBlurb.setText(communitySection.getBlurb());
-
+                    setImages();
                 }
 
                 @Override
@@ -100,6 +111,23 @@ public class CommunityRecyclerAdapter extends RecyclerView.Adapter<CommunityRecy
             });
         }
 
+        private void setImages() {
+            for (int i = 0; i < communitySection.getThumbURLs().length; i++) {
+                String url = communitySection.getThumbURLs()[i];
+                switch (i) {
+                    case 1:
+                        ImageUtil.setImageToView(url, image1);
+                    case 2:
+                        ImageUtil.setImageToView(url, image2);
+                    case 3:
+                        ImageUtil.setImageToView(url, image3);
+                    case 4:
+                        ImageUtil.setImageToView(url, image4);
+                }
+
+            }
+        }
+
         public CommunityViewHolder(View itemView, OnItemClick onCommunityClick) {
             super(itemView);
             this.onCommunityClick = onCommunityClick;
@@ -107,6 +135,12 @@ public class CommunityRecyclerAdapter extends RecyclerView.Adapter<CommunityRecy
 
             this.categoryTitle = itemView.findViewById(R.id.community_section_name);
             this.categoryBlurb = itemView.findViewById(R.id.community_section_blurb);
+
+            this.image1 = itemView.findViewById(R.id.community_image_1);
+            this.image2 = itemView.findViewById(R.id.community_image_2);
+            this.image3 = itemView.findViewById(R.id.community_image_3);
+            this.image4 = itemView.findViewById(R.id.community_image_4);
+
         }
     }
 }
