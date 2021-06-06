@@ -9,8 +9,9 @@ import androidx.annotation.NonNull;
 
 import com.hsappdev.ahs.OnItemClick;
 import com.hsappdev.ahs.R;
+import com.hsappdev.ahs.dataTypes.Article;
 
-public class SmallArticleUnit extends MediumArticleUnit{
+public class SmallArticleUnit extends MediumArticleUnit implements OnArticleLoadedCallback{
 
     private TextView timeTextView;
     private TextView categoryTextView;
@@ -21,8 +22,8 @@ public class SmallArticleUnit extends MediumArticleUnit{
     }
 
     @Override
-    public void onArticleRetrieved() {
-        super.onArticleRetrieved();
+    public void onArticleLoaded(Article article) {
+        super.onArticleLoaded(article);
         timeTextView = contentView.findViewById(R.id.medium_article_time);
         categoryTextView = contentView.findViewById(R.id.medium_article_category);
         indicatorImageView = contentView.findViewById(R.id.medium_article_indicator);

@@ -26,7 +26,7 @@ import com.hsappdev.ahs.util.ScreenUtil;
 
 import java.util.ArrayList;
 
-public class MediumArticleUnit extends ConstraintLayout {
+public class MediumArticleUnit extends ConstraintLayout implements OnArticleLoadedCallback{
     protected Article article;
     final private ConstraintLayout articleLayout;
     final private ImageView articleImage;
@@ -71,69 +71,14 @@ public class MediumArticleUnit extends ConstraintLayout {
     }
 
     public void setDetails(String articleId){
-        DatabaseReference ref = FirebaseDatabase.getInstance(FirebaseApp.getInstance()).getReference()
-                .child(r.getString(R.string.db_articles))
-                .child(articleId);
-        ref.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String author = snapshot.child(r.getString(R.string.db_articles_author)).getValue(String.class);
-                String title = snapshot.child(r.getString(R.string.db_articles_title)).getValue(String.class);
-                String body = snapshot.child(r.getString(R.string.db_articles_body)).getValue(String.class);
-                String category = snapshot.child(r.getString(R.string.db_articles_categoryID)).getValue(String.class);
-                ArrayList<String> imageURLs = new ArrayList<>();
-                ArrayList<String> videoURLs = new ArrayList<>();
-                for (DataSnapshot imageURL : snapshot.child(r.getString(R.string.db_articles_imageURLs)).getChildren()) {
-                    imageURLs.add(imageURL.getValue(String.class));
-                }
-                for (DataSnapshot videoURL : snapshot.child(r.getString(R.string.db_articles_videoURLs)).getChildren()) {
-                    videoURLs.add(videoURL.getValue(String.class));
-                }
-                boolean featured = true;
-
-                long timestamp = snapshot.child(r.getString(R.string.db_articles_timestamp)).getValue(long.class);
-
-                article = new Article(articleId, author, title, body, category, imageURLs.toArray(new String[0]), videoURLs.toArray(new String[0]), featured, timestamp);
-
-                DatabaseReference ref = FirebaseDatabase.getInstance(FirebaseApp.getInstance()).getReference()
-                        .child(r.getString(R.string.db_categories))
-                        .child(article.getCategory());
-                ref.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        String title = snapshot.child(r.getString(R.string.db_categories_titles)).getValue(String.class);
-                        int color = Color.parseColor(snapshot.child(r.getString(R.string.db_categories_color)).getValue(String.class));
-
-                        article.setCategoryDisplayName(title);
-                        article.setCategoryDisplayColor(color);
-
-                        onArticleRetrieved();
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
-
-                contentView.setOnClickListener(new View.OnClickListener(){
-
-                    @Override
-                    public void onClick(View v) {
-                        onArticleClick.onArticleClicked(article);
-                    }
-                });
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
+        new ArticleLoader().loadArticle(articleId, r, this);
     }
 
-    public void onArticleRetrieved(){
+
+    @Override
+    public void onArticleLoaded(Article article) {
+        this.article = article;
+        
         titleTextView.setText(article.getTitle());
         ScreenUtil.setTimeToTextView(article.getTimestamp(), timeTextView);
         if(article.getImageURLs().length != 0){
@@ -141,6 +86,13 @@ public class MediumArticleUnit extends ConstraintLayout {
         } else if(article.getVideoURLs().length != 0){
             ImageUtil.setImageToSmallView(ImageUtil.getYoutubeThumbnail(article.getVideoURLs()[0]), articleImage);
         }
-    }
 
+        contentView.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                onArticleClick.onArticleClicked(article);
+            }
+        });
+    }
 }
