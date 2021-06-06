@@ -14,8 +14,8 @@
             >
 
         </activity>
-        <activity android:name=".mediaPager.ImageViewActivity">
-        </activity>
+        <activity android:name=".mediaPager.ImageViewActivity"/>
+        <activity android:name=".CommunityActivity"/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

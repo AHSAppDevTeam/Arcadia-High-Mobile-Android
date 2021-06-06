@@ -1,5 +1,6 @@
 package com.hsappdev.ahs.UI.home;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
 
@@ -32,14 +33,23 @@ public class HomeCommunityFragment extends Fragment {
     private CommunityRecyclerAdapter communityRecyclerAdapter;
     private RecyclerView recyclerView;
     private View contentView;
-    private OnItemClick onCommunityClick;
+    private OnSectionClicked onCommunityClick;
     private Resources r;
 
     public HomeCommunityFragment() {
-        // Required empty public constructor
+
     }
 
 
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        try {
+            onCommunityClick = (OnSectionClicked) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException();
+        }
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

@@ -19,9 +19,11 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.hsappdev.ahs.UI.home.OnSectionClicked;
 import com.hsappdev.ahs.dataTypes.Article;
+import com.hsappdev.ahs.dataTypes.CommunitySection;
 
-public class MainActivity extends AppCompatActivity implements BottomNavigationCallback, SettingsManager.DayNightCallback, OnItemClick {
+public class MainActivity extends AppCompatActivity implements BottomNavigationCallback, SettingsManager.DayNightCallback, OnItemClick, OnSectionClicked {
 
     private BottomNavigationView navView;
     private static final String TAG = "MainActivity";
@@ -112,6 +114,14 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationC
     public void onArticleClicked(Article article) {
         Intent intent = new Intent(MainActivity.this, ArticleActivity.class);
         intent.putExtra(ArticleActivity.data_KEY, article);
+        startActivity(intent);
+        overridePendingTransition(R.anim.enter_from_right, R.anim.empty_animation);
+    }
+
+    @Override
+    public void onClicked(CommunitySection communitySection) {
+        Intent intent = new Intent(MainActivity.this, CommunityActivity.class);
+        intent.putExtra(CommunityActivity.DATA_KEY, communitySection);
         startActivity(intent);
         overridePendingTransition(R.anim.enter_from_right, R.anim.empty_animation);
     }

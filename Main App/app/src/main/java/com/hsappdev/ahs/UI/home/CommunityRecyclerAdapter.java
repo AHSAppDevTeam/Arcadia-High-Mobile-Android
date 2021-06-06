@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.ContentView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,19 +24,17 @@ import com.hsappdev.ahs.R;
 import com.hsappdev.ahs.dataTypes.CommunitySection;
 import com.hsappdev.ahs.util.Helper;
 import com.hsappdev.ahs.util.ImageUtil;
-import com.hsappdev.ahs.util.ScreenUtil;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class CommunityRecyclerAdapter extends RecyclerView.Adapter<CommunityRecyclerAdapter.CommunityViewHolder>{
 
     private static final String TAG = "CommunityRecyclerAdapte";
     private List<String> communitySections;
-    private OnItemClick  onCommunityClick;
+    private OnSectionClicked onCommunityClick;
 
-    public CommunityRecyclerAdapter(OnItemClick onCommunityClick) {
+    public CommunityRecyclerAdapter(OnSectionClicked onCommunityClick) {
         this.communitySections = new ArrayList<String>();
         this.onCommunityClick = onCommunityClick;
     }
@@ -69,18 +68,21 @@ public class CommunityRecyclerAdapter extends RecyclerView.Adapter<CommunityRecy
         return communitySections.size();
     }
 
-    public static class CommunityViewHolder extends RecyclerView.ViewHolder{
-        final private OnItemClick onCommunityClick;
+    public static class CommunityViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        final private OnSectionClicked onCommunityClick;
         final private Resources r;
         private CommunitySection communitySection;
 
         final private TextView categoryTitle;
         final private TextView categoryBlurb;
 
+        final private View contentView;
+
         // Image Grid
         final private ImageView image1, image2, image3, image4;
 
         public void setDetails(String categoryId){
+            contentView.setOnClickListener(this);
             DatabaseReference ref = FirebaseDatabase.getInstance(FirebaseApp.getInstance()).getReference()
                     .child(r.getString(R.string.db_categories))
                     .child(categoryId);
@@ -102,6 +104,7 @@ public class CommunityRecyclerAdapter extends RecyclerView.Adapter<CommunityRecy
                     Helper.setBoldRegularText(categoryTitle, communitySection.getCategoryDisplayName(), " News");
                     categoryBlurb.setText(communitySection.getBlurb());
                     setImages();
+
                 }
 
                 @Override
@@ -128,8 +131,9 @@ public class CommunityRecyclerAdapter extends RecyclerView.Adapter<CommunityRecy
             }
         }
 
-        public CommunityViewHolder(View itemView, OnItemClick onCommunityClick) {
+        public CommunityViewHolder(View itemView, OnSectionClicked onCommunityClick) {
             super(itemView);
+            this.contentView = itemView.findViewById(R.id.community_constraintLayout);
             this.onCommunityClick = onCommunityClick;
             this.r = itemView.getResources();
 
@@ -141,6 +145,11 @@ public class CommunityRecyclerAdapter extends RecyclerView.Adapter<CommunityRecy
             this.image3 = itemView.findViewById(R.id.community_image_3);
             this.image4 = itemView.findViewById(R.id.community_image_4);
 
+        }
+
+        @Override
+        public void onClick(View v) {
+            onCommunityClick.onClicked(communitySection);
         }
     }
 }

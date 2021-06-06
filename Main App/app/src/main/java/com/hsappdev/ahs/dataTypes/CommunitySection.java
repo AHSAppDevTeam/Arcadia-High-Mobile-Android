@@ -62,7 +62,7 @@ public class CommunitySection implements Parcelable {
         blurb = in.readString();
         displayColor = in.readString();
         isFeatured = in.readByte() != 0;
-        in.readStringArray(thumbURLs);
+        thumbURLs = in.createStringArray();
     }
 
     public static final Creator<CommunitySection> CREATOR = new Creator<CommunitySection>() {

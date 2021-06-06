@@ -5,9 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:grid="http://schemas.android.com/apk/lib/android.support.v7.widget.GridLayout"
-    android:padding="@dimen/padding">
+    android:padding="@dimen/padding"
+    >
 
     <FrameLayout
+        android:id="@+id/community_constraintLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clickable="true"
