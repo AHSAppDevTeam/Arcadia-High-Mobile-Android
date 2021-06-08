@@ -5,14 +5,15 @@
     android:id="@+id/article_outerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
+    android:fitsSystemWindows="false"
     tools:context=".ArticleActivity">
 
     <ScrollView
         android:id="@+id/article_scrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/article_appBarLayout">
+        app:layout_constraintTop_toBottomOf="@id/article_appBarLayout"
+        android:paddingBottom="@dimen/padding_x2">
 
         <LinearLayout
             android:id="@+id/article_linearLayout"
@@ -33,8 +34,18 @@
                     app:layout_constraintDimensionRatio="w,1.5"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent" >
+
+                </androidx.viewpager2.widget.ViewPager2>
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/article_tab_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:tabBackground="@drawable/tab_layout_selector"
+                app:tabGravity="center"
+                app:tabIndicatorHeight="0dp"/>
 
             <com.hsappdev.ahs.Adjusting_TextView
                 android:id="@+id/article_title"

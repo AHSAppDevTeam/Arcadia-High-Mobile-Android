@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.ContentView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,7 +18,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.hsappdev.ahs.OnItemClick;
 import com.hsappdev.ahs.R;
 import com.hsappdev.ahs.dataTypes.CommunitySection;
 import com.hsappdev.ahs.util.Helper;
@@ -99,7 +97,7 @@ public class CommunityRecyclerAdapter extends RecyclerView.Adapter<CommunityRecy
                         thumbURLs.add(thumbURL.getValue(String.class));
                     }
 
-                    communitySection = new CommunitySection(title, blurb, color,  isFeatured, thumbURLs.toArray(new String[0]));
+                    communitySection = new CommunitySection(categoryId, title, blurb, color,  isFeatured, thumbURLs.toArray(new String[0]));
                     categoryTitle.setTextColor(Color.parseColor(communitySection.getDisplayColor()));
                     Helper.setBoldRegularText(categoryTitle, communitySection.getCategoryDisplayName(), " News");
                     categoryBlurb.setText(communitySection.getBlurb());
@@ -118,13 +116,13 @@ public class CommunityRecyclerAdapter extends RecyclerView.Adapter<CommunityRecy
             for (int i = 0; i < communitySection.getThumbURLs().length; i++) {
                 String url = communitySection.getThumbURLs()[i];
                 switch (i) {
-                    case 1:
+                    case 0:
                         ImageUtil.setImageToView(url, image1);
-                    case 2:
+                    case 1:
                         ImageUtil.setImageToView(url, image2);
-                    case 3:
+                    case 2:
                         ImageUtil.setImageToView(url, image3);
-                    case 4:
+                    case 3:
                         ImageUtil.setImageToView(url, image4);
                 }
 
@@ -133,7 +131,7 @@ public class CommunityRecyclerAdapter extends RecyclerView.Adapter<CommunityRecy
 
         public CommunityViewHolder(View itemView, OnSectionClicked onCommunityClick) {
             super(itemView);
-            this.contentView = itemView.findViewById(R.id.community_constraintLayout);
+            this.contentView = itemView.findViewById(R.id.community_frameLayout);
             this.onCommunityClick = onCommunityClick;
             this.r = itemView.getResources();
 

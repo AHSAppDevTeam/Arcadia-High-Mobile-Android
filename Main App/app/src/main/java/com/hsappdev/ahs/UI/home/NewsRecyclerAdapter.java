@@ -6,6 +6,7 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TableLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,6 +16,8 @@ import androidx.viewpager2.widget.CompositePageTransformer;
 import androidx.viewpager2.widget.MarginPageTransformer;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -83,6 +86,9 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
         private final ViewPager2 featuredPager;
         private final ViewPager2 mediumPager;
         private final ViewPager2 smallPager;
+        private final TabLayout featuredTabLayout;
+        private final TabLayout mediumTabLayout;
+        private final TabLayout smallTabLayout;
         private final Resources r;
 
         public void setDetails(String categoryTitle, OnItemClick onArticleClick){
@@ -165,6 +171,45 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
 
                 smallArticleAdapter.setArticleIds(articleIds); // Add rest of ids
             }
+
+            setUpTabLayout(featuredArticleAdapter, mediumArticleAdapter, smallArticleAdapter);
+        }
+
+        private void setUpTabLayout(FeaturedArticleAdapter featuredArticleAdapter,
+                                    MediumArticleAdapter mediumArticleAdapter,
+                                    SmallArticleAdapter smallArticleAdapter) {
+            if(featuredArticleAdapter.getItemCount() > 1) {
+                featuredTabLayout.setVisibility(View.VISIBLE);
+                TabLayoutMediator tabLayoutMediator = new TabLayoutMediator(featuredTabLayout, featuredPager, true, new TabLayoutMediator.TabConfigurationStrategy() {
+                    @Override
+                    public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) { }
+                });
+                tabLayoutMediator.attach();
+            } else {
+                featuredTabLayout.setVisibility(View.GONE);
+            }
+
+            if(mediumArticleAdapter.getItemCount() > 1) {
+                mediumTabLayout.setVisibility(View.VISIBLE);
+                TabLayoutMediator tabLayoutMediator = new TabLayoutMediator(mediumTabLayout, mediumPager, true, new TabLayoutMediator.TabConfigurationStrategy() {
+                    @Override
+                    public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) { }
+                });
+                tabLayoutMediator.attach();
+            } else {
+                mediumTabLayout.setVisibility(View.GONE);
+            }
+
+            if(smallArticleAdapter.getItemCount() > 1) {
+                smallTabLayout.setVisibility(View.VISIBLE);
+                TabLayoutMediator tabLayoutMediator = new TabLayoutMediator(smallTabLayout, smallPager, true, new TabLayoutMediator.TabConfigurationStrategy() {
+                    @Override
+                    public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) { }
+                });
+                tabLayoutMediator.attach();
+            } else {
+                smallTabLayout.setVisibility(View.GONE);
+            }
         }
 
         public void setUpPager(){
@@ -197,6 +242,10 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
             mediumPager = itemView.findViewById(R.id.home_medium_carousel);
             smallPager = itemView.findViewById(R.id.home_small_carousel);
             sectionTitle = itemView.findViewById(R.id.home_news_sectionTitle);
+
+            featuredTabLayout = itemView.findViewById(R.id.featured_tab_layout);
+            mediumTabLayout = itemView.findViewById(R.id.medium_tab_layout);
+            smallTabLayout = itemView.findViewById(R.id.small_tab_layout);
         }
     }
 }

@@ -4,11 +4,12 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class CommunitySection implements Parcelable {
-    private String categoryDisplayName, blurb, displayColor;
+    private String categoryId, categoryDisplayName, blurb, displayColor;
     private boolean isFeatured;
     private String[] thumbURLs;
 
-    public CommunitySection(String categoryDisplayName, String blurb, String displayColor, boolean isFeatured, String[] thumbURLs) {
+    public CommunitySection(String categoryId, String categoryDisplayName, String blurb, String displayColor, boolean isFeatured, String[] thumbURLs) {
+        this.categoryId = categoryId;
         this.categoryDisplayName = categoryDisplayName;
         this.blurb = blurb;
         this.displayColor = displayColor;
@@ -57,7 +58,16 @@ public class CommunitySection implements Parcelable {
         this.thumbURLs = thumbURLs;
     }
 
+    public String getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(String categoryId) {
+        this.categoryId = categoryId;
+    }
+
     protected CommunitySection(Parcel in) {
+        categoryId = in.readString();
         categoryDisplayName = in.readString();
         blurb = in.readString();
         displayColor = in.readString();
@@ -84,6 +94,7 @@ public class CommunitySection implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(categoryId);
         dest.writeString(categoryDisplayName);
         dest.writeString(blurb);
         dest.writeString(displayColor);

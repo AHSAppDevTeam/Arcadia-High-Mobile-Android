@@ -23,6 +23,15 @@ import com.hsappdev.ahs.util.ScreenUtil;
 
 import java.util.ArrayList;
 
+/**
+ * A very useful class that can be used to load an article
+ * This class prevents duplicate code and simplifies article loading
+ * The class calling
+ * new ArticleLoader().loadArticle()
+ * should implement the OnArticleLoadedCallback
+ * If there is an update to an article, the callback will be triggered a second time
+ */
+
 public class ArticleLoader {
 
     private Article article;

@@ -1,5 +1,6 @@
 package com.hsappdev.ahs;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
@@ -23,6 +24,8 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 import com.hsappdev.ahs.dataTypes.Article;
 import com.hsappdev.ahs.mediaPager.ImageViewActivity;
 import com.hsappdev.ahs.mediaPager.OnImageClick;
@@ -46,6 +49,7 @@ public class ArticleActivity extends AppCompatActivity implements Adjusting_Text
 
     PopupWindow fontBarWindow;
     ViewPager2 mediaViewPager;
+    TabLayout tabLayout;
     private YoutubeVideoCallback<YouTubeFragment> youtubeVideoCallback;
 
 
@@ -88,6 +92,17 @@ public class ArticleActivity extends AppCompatActivity implements Adjusting_Text
         // Media ViewPager2
 
         mediaViewPager = findViewById(R.id.mediaViewPager);
+        tabLayout = findViewById(R.id.article_tab_layout);
+
+        TabLayoutMediator tabLayoutMediator = null;
+        if(article.getImageURLs().length > 1) {
+
+            tabLayoutMediator = new TabLayoutMediator(tabLayout, mediaViewPager, true, new TabLayoutMediator.TabConfigurationStrategy() {
+                @Override
+                public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) { }
+            });
+        }
+
         // Prepare mediaList
         Media[] mediaList = new Media[article.getImageURLs().length+article.getVideoURLs().length];
         int i = 0;
@@ -103,6 +118,10 @@ public class ArticleActivity extends AppCompatActivity implements Adjusting_Text
         ImageVideoAdapter imageVideoAdapter = new ImageVideoAdapter(getSupportFragmentManager(), getLifecycle(), youtubeVideoCallback, mediaViewPager, mediaList, this);
 
         mediaViewPager.setAdapter(imageVideoAdapter);
+        if(tabLayoutMediator != null) {
+            tabLayoutMediator.attach();
+        }
+
         // Toolbar
         MaterialToolbar articleToolbar = (MaterialToolbar) findViewById(R.id.article_topAppBar);
         articleToolbar.setNavigationOnClickListener(new View.OnClickListener() {

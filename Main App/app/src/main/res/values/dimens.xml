@@ -12,6 +12,8 @@
     <dimen name="elevation">5dp</dimen>
     <dimen name="shadowElevation">15dp</dimen>
 
+    <dimen name="cornerIconSize">48dp</dimen>
+
     <dimen name="profile_card_accountImage_borderWidth">-7.5dp</dimen>
     <dimen name="profile_card_accountImage_borderWidthx2">16dp</dimen>
 

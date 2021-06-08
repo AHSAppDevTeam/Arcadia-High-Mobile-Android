@@ -28,6 +28,14 @@
         android:paddingLeft="@dimen/padding_x1.5"
         android:paddingRight="@dimen/padding_x1.5"
         />
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/featured_tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/bgColor"
+        app:tabBackground="@drawable/tab_layout_selector"
+        app:tabGravity="center"
+        app:tabIndicatorHeight="0dp"/>
 
     <androidx.viewpager2.widget.ViewPager2
 
@@ -39,6 +47,14 @@
         android:paddingLeft="@dimen/padding_x1.5"
         android:paddingRight="@dimen/padding_x1.5"
         />
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/medium_tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/bgColor"
+        app:tabBackground="@drawable/tab_layout_selector"
+        app:tabGravity="center"
+        app:tabIndicatorHeight="0dp"/>
 
     <androidx.viewpager2.widget.ViewPager2
 
@@ -50,5 +66,12 @@
         android:paddingLeft="@dimen/padding_x1.5"
         android:paddingRight="@dimen/padding_x1.5"
         />
-
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/small_tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/bgColor"
+        app:tabBackground="@drawable/tab_layout_selector"
+        app:tabGravity="center"
+        app:tabIndicatorHeight="0dp"/>
 </LinearLayout>
