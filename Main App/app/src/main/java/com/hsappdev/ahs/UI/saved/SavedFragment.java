@@ -2,7 +2,9 @@ package com.hsappdev.ahs.UI.saved;
 
 import androidx.lifecycle.ViewModelProvider;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -21,6 +23,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.hsappdev.ahs.OnItemClick;
 import com.hsappdev.ahs.R;
@@ -78,10 +81,20 @@ public class SavedFragment extends Fragment {
         clearAllButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SavedDatabase savedDatabase = SavedDatabase.getInstance(getActivity().getApplicationContext());
-                savedDatabase.deleteAll();
-                savedRecyclerAdapter.clearAll();
-                emptyMsgTextView.setVisibility(View.VISIBLE);
+                new AlertDialog.Builder(getActivity())
+                        .setTitle("Delete Request")
+                        .setIcon(R.drawable.article_appbar_not_saved_ic)
+                        .setMessage("Do you really want to clear all saved articles?")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                SavedDatabase savedDatabase = SavedDatabase.getInstance(getActivity().getApplicationContext());
+                                savedDatabase.deleteAll();
+                                savedRecyclerAdapter.clearAll();
+                                emptyMsgTextView.setVisibility(View.VISIBLE);
+                                Toast.makeText(getActivity(), "All saved articles cleared", Toast.LENGTH_SHORT).show();
+                            }})
+                        .setNegativeButton(android.R.string.no, null).show();
             }
         });
         String[] items = new String[]{NEWEST, OLDEST};
@@ -106,6 +119,27 @@ public class SavedFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = new ViewModelProvider(this).get(SavedViewModel.class);
+    }
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        onRefresh();
+    }
+
+    public void onRefresh() {
+        emptyMsgTextView.setVisibility(View.VISIBLE);
+        savedRecyclerAdapter.clearAll();
+        SavedDatabase savedDatabase = SavedDatabase.getInstance(getActivity().getApplicationContext());
+        savedDatabase.loadAllSavedArticles(new SavedDatabase.ArticleLoadedCallback() {
+            @Override
+            public void onArticleLoaded(Article article) {
+                savedRecyclerAdapter.addArticle(article);
+                emptyMsgTextView.setVisibility(View.GONE);
+                Log.d(TAG, "onArticleLoaded: " + article.getArticleID());
+            }
+        });
     }
 
     private void setUpRecyclerView() {

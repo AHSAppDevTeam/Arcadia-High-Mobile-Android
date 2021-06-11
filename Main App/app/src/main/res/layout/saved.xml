@@ -66,7 +66,8 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/saved_fragment_recycler_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/navbar_height"/>
 
         <TextView
             android:id="@+id/saved_fragment_empty_message"
