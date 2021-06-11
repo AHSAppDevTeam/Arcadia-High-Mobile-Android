@@ -5,6 +5,7 @@
     <dimen name="navBarIcon_height">32dp</dimen>
     <dimen name="navBarInnerIcon_height">24dp</dimen>
     <dimen name="strokeWidth">2dp</dimen>
+    <dimen name="padding_x.25">4dp</dimen> <!-- Rounded value -->
     <dimen name="padding_x.5">7.5dp</dimen>
     <dimen name="padding">15dp</dimen>
     <dimen name="padding_x1.5">22.5dp</dimen>

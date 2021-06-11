@@ -17,12 +17,19 @@
         app:layout_constraintTop_toTopOf="parent"
         android:alpha=".7"></ImageView>
 
-    <Button
+    <ImageButton
         android:id="@+id/media_image_exit_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/cornerIconSize"
+        android:layout_height="@dimen/cornerIconSize"
         android:text="Back"
+        android:layout_margin="@dimen/padding"
+        android:foreground="?attr/actionBarItemBackground"
+        android:src="@drawable/navbar_home_ic_active"
+        android:backgroundTint="?attr/bgColor"
+        android:alpha=".7"
+        android:background="@drawable/icon_circle"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

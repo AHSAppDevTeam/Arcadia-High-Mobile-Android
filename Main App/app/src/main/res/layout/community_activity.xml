@@ -28,7 +28,8 @@
                 android:id="@+id/community_activity_home_button"
                 android:layout_width="@dimen/cornerIconSize"
                 android:layout_height="@dimen/cornerIconSize"
-                android:src="@drawable/navbar_home_ic"
+                android:src="@drawable/profile_darkmode_ic"
+                android:tint="@color/white"
                 android:background="@drawable/icon_circle"
                 android:foreground="?attr/actionBarItemBackground"
                 />

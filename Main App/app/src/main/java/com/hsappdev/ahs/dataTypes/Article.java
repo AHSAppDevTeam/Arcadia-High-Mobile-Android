@@ -6,7 +6,7 @@ import android.os.Parcelable;
 import androidx.annotation.NonNull;
 
 public class Article implements Parcelable {
-    private String articleID, author, title, body, category, categoryDisplayName;
+    private String articleID, author, title, body, categoryID, categoryDisplayName;
     private int categoryDisplayColor;
     private String[] imageURLs;
     private String[] videoURLs;
@@ -14,25 +14,37 @@ public class Article implements Parcelable {
     long timestamp;
 
 
-    public Article(String articleID, String author, String title, String body, String category, String[] imageURLs, String[] videoURls, boolean featured, long timestamp) {
+    public Article(String articleID, String author, String title, String body, String categoryID, String[] imageURLs, String[] videoURls, boolean featured, long timestamp) {
         this.articleID = articleID;
         this.author = author;
         this.title = title;
         this.body = body;
-        this.category = category;
+        this.categoryID = categoryID;
         this.imageURLs = imageURLs;
         this.videoURLs = videoURls;
         this.featured = featured;
         this.timestamp = timestamp;
     }
 
+    public Article(String articleID, String author, String title, String body, String categoryID, String[] imageURLs, String[] videoURLs, long timestamp, String categoryDisplayName, int categoryDisplayColor) {
+        this.articleID = articleID;
+        this.author = author;
+        this.title = title;
+        this.body = body;
+        this.categoryID = categoryID;
+        this.categoryDisplayName = categoryDisplayName;
+        this.categoryDisplayColor = categoryDisplayColor;
+        this.imageURLs = imageURLs;
+        this.videoURLs = videoURLs;
+        this.timestamp = timestamp;
+    }
 
     protected Article(Parcel in) {
         articleID = in.readString();
         author = in.readString();
         title = in.readString();
         body = in.readString();
-        category = in.readString();
+        categoryID = in.readString();
         categoryDisplayName = in.readString();
         categoryDisplayColor = in.readInt();
         imageURLs = in.createStringArray();
@@ -94,12 +106,12 @@ public class Article implements Parcelable {
         this.body = body;
     }
 
-    public String getCategory() {
-        return category;
+    public String getCategoryID() {
+        return categoryID;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
+    public void setCategoryID(String categoryID) {
+        this.categoryID = categoryID;
     }
 
     public String[] getImageURLs() {
@@ -153,7 +165,7 @@ public class Article implements Parcelable {
         parcel.writeString(author);
         parcel.writeString(title);
         parcel.writeString(body);
-        parcel.writeString(category);
+        parcel.writeString(categoryID);
         parcel.writeString(categoryDisplayName);
         parcel.writeInt(categoryDisplayColor);
         parcel.writeStringArray(imageURLs);
@@ -169,7 +181,7 @@ public class Article implements Parcelable {
                 "author: \t" + title + "\n" +
                 "title: \t" + title + "\n" +
                 "body: \t" + body + "\n" +
-                "category: \t" + category + "\n" +
+                "category: \t" + categoryID + "\n" +
                 "categoryDisplayName: \t" + categoryDisplayName + "\n" +
                 "imageURLs: \t" + ((imageURLs.length > 0) ? imageURLs[0] : "N/A") + "\n" +
                 "featured: \t" + featured + "\n" +
