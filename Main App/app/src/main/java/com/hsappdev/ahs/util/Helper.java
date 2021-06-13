@@ -6,6 +6,10 @@ import android.text.SpannableStringBuilder;
 import android.text.style.StyleSpan;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.SortedList;
+
+import com.hsappdev.ahs.dataTypes.Article;
+
 public class Helper {
     public static void setBoldRegularText(TextView textView, String boldText, String regularText) {
         SpannableStringBuilder builder = new SpannableStringBuilder(boldText);
@@ -19,4 +23,5 @@ public class Helper {
         builder.setSpan(new StyleSpan(Typeface.BOLD),0,boldText.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
         return builder.append(regularText);
     }
+
 }
