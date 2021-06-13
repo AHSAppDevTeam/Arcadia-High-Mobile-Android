@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:custom="http://schemas.android.com/apk/res-auto"
     tools:context=".UI.saved.SavedFragment">
 
     <LinearLayout
@@ -28,14 +28,13 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/padding_x.5"
-            >
+            android:padding="@dimen/padding_x.5">
 
             <Spinner
-                android:paddingLeft="@dimen/padding_x.5"
                 android:id="@+id/saved_fragment_sort_by_spinner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/padding_x.5"
                 android:spinnerMode="dropdown"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -45,21 +44,22 @@
                 android:id="@+id/saved_fragment_clear_all"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:background="@drawable/saved_fragment_sortby_btn_bg"
+                android:foreground="?selectableItemBackground"
+                android:orientation="horizontal"
                 android:text="Clear all"
                 android:textAllCaps="false"
                 android:textSize="12sp"
-                android:background="@drawable/saved_fragment_sortby_btn_bg"
-                android:foreground="?selectableItemBackground"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:orientation="horizontal" >
+                app:layout_constraintTop_toTopOf="parent">
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:padding="@dimen/padding_x.5"
                     android:text="Clear All"
-                    android:textColor="@color/white"
-                    android:padding="@dimen/padding_x.5"/>
+                    android:textColor="@color/white" />
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -67,18 +67,18 @@
             android:id="@+id/saved_fragment_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/navbar_height"/>
+            android:paddingBottom="@dimen/navbar_height" />
 
         <TextView
             android:id="@+id/saved_fragment_empty_message"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/padding"
-            android:paddingRight="@dimen/padding"
-            android:paddingTop="@dimen/padding_x2"
-            android:lineSpacingExtra="@dimen/padding"
             android:alpha=".5"
             android:gravity="center"
+            android:lineSpacingExtra="@dimen/padding"
+            android:paddingLeft="@dimen/padding"
+            android:paddingTop="@dimen/padding_x2"
+            android:paddingRight="@dimen/padding"
             android:text="No articles saved!\nClick on the bookmark icon to save an article"
             android:textColor="?attr/colorAccent"
             android:textSize="14sp"

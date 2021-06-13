@@ -17,6 +17,7 @@
     <string name="db_locations">locations</string>
     <!-- ausdNews in location branch -->
     <string name="db_location_ausdNews">homepage</string>
+    <string name="db_location_bulletin">bulletin</string>
     <!-- sections in ausdNews -->
     <string name="db_locations_catID">categoryIDs</string>
 
@@ -58,5 +59,7 @@
     <string name="profile_period_default_value">2nd</string>
     <string name="profile_options_header">Options</string>
     <string name="profile_info_header">Info</string>
+    <string name="firebaseFunctionsIncrementView">https://us-central1-arcadia-high-mobile.cloudfunctions.net/incrementView</string>
+    <string name="student_bulletin_title_text"><b>Student</b> Bulletin</string>
 
 </resources>

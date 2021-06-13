@@ -32,7 +32,6 @@
         android:id="@+id/featured_tab_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/bgColor"
         app:tabBackground="@drawable/tab_layout_selector"
         app:tabGravity="center"
         app:tabIndicatorHeight="0dp"/>
@@ -51,7 +50,6 @@
         android:id="@+id/medium_tab_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/bgColor"
         app:tabBackground="@drawable/tab_layout_selector"
         app:tabGravity="center"
         app:tabIndicatorHeight="0dp"/>
@@ -70,7 +68,6 @@
         android:id="@+id/small_tab_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/bgColor"
         app:tabBackground="@drawable/tab_layout_selector"
         app:tabGravity="center"
         app:tabIndicatorHeight="0dp"/>

@@ -8,6 +8,20 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="This is Bulletin Fragment" />
+        android:fontFamily="@font/heavybold_lightregular"
+        android:padding="@dimen/padding"
+        android:text="@string/student_bulletin_title_text"
+        android:textColor="@color/brightRed"
+        android:textSize="32sp" />
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.hsappdev.ahs.UI.home.BulletinIconCategoriesLoader
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal" />
+    </HorizontalScrollView>
 
 </FrameLayout>

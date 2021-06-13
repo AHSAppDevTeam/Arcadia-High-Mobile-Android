@@ -39,6 +39,8 @@
     <color name="profileCardBackground">#c96546</color>
 <!--    Profile -->
     <color name="profileOptionThemeModeIconBg">#5856d6</color>
+    <color name="community_activity_start_gradient_color">#5fa4a9</color>
+    <color name="community_activity_article_image_default_img_color">#d3bdbd</color>
 
 
 </resources>

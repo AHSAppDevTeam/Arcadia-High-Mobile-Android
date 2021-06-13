@@ -75,9 +75,12 @@ public class SavedRecyclerAdapter extends RecyclerView.Adapter<SavedRecyclerAdap
 
     public void onSortModeChanged(int sort) {
         sortMode = sort;
+        articleSortedList.beginBatchedUpdates();
         List<Article> tempArticleHolder = new ArrayList<>(savedArticleList);
         clearAll();
         addArticles(tempArticleHolder);
+        articleSortedList.endBatchedUpdates();
+
     }
 
     @NonNull

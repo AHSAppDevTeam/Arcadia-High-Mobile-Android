@@ -4,8 +4,11 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,9 +22,13 @@ import com.google.firebase.database.ValueEventListener;
 import com.hsappdev.ahs.UI.home.CommunityArticleUnit;
 import com.hsappdev.ahs.dataTypes.Article;
 import com.hsappdev.ahs.dataTypes.CommunitySection;
+import com.hsappdev.ahs.util.Helper;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 public class CommunityActivity extends AppCompatActivity implements OnItemClick, View.OnClickListener{
     public static final String DATA_KEY = "DATA_INDEX";
@@ -32,18 +39,24 @@ public class CommunityActivity extends AppCompatActivity implements OnItemClick,
     private Resources r;
 
     private ImageButton backButton;
+    private TextView categoryTitle;
+    private TextView dateText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.community_activity);
         communitySection = getIntent().getParcelableExtra(DATA_KEY);
         r = getResources();
 
         backButton = findViewById(R.id.community_activity_home_button);
-
+        categoryTitle = findViewById(R.id.community_activity_category_name);
+        dateText = findViewById(R.id.community_date);
         backButton.setOnClickListener(this);
-
+        Helper.setBoldRegularText(categoryTitle, communitySection.getCategoryDisplayName(), " News");
         loadArticles();
     }
 
@@ -71,6 +84,9 @@ public class CommunityActivity extends AppCompatActivity implements OnItemClick,
     }
 
     private void setUpView(List<String> articleIds) {
+        String date = new SimpleDateFormat("MMMM d, yyyy", Locale.US).format(Calendar.getInstance().getTimeInMillis());
+        dateText.setText(date);
+
         LinearLayout linearLayout = findViewById(R.id.community_activity_article_linearLayout);
 
         if(articleIds.size() > 0) {

@@ -4,31 +4,43 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.viewpager2.widget.CompositePageTransformer;
+import androidx.viewpager2.widget.MarginPageTransformer;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.functions.FirebaseFunctions;
+import com.google.firebase.functions.HttpsCallableResult;
+import com.hsappdev.ahs.UI.home.ScaleAndFadeTransformer;
 import com.hsappdev.ahs.dataTypes.Article;
 import com.hsappdev.ahs.localdb.SavedDatabase;
 import com.hsappdev.ahs.mediaPager.ImageViewActivity;
@@ -40,7 +52,18 @@ import com.hsappdev.ahs.mediaPager.Media;
 import com.hsappdev.ahs.mediaPager.YouTubeFragment;
 import com.hsappdev.ahs.mediaPager.YoutubeVideoCallback;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedOutputStream;
+import java.io.BufferedWriter;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ArticleActivity extends AppCompatActivity implements Adjusting_TextView.hello, OnImageClick {
 
@@ -58,6 +81,8 @@ public class ArticleActivity extends AppCompatActivity implements Adjusting_Text
     TabLayout tabLayout;
     private YoutubeVideoCallback<YouTubeFragment> youtubeVideoCallback;
 
+    RequestQueue queue;
+
 
     private ArrayList<Adjusting_TextView.TextSizeCallback> callbackList = new ArrayList<>();
 
@@ -73,7 +98,12 @@ public class ArticleActivity extends AppCompatActivity implements Adjusting_Text
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.article);
+
+        queue = Volley.newRequestQueue(this);
 
         final ArticleViewModel viewModel = new ViewModelProvider(this).get(ArticleViewModel.class);
         viewModel.getTextScalar().observe(this, new Observer<Float>() {
@@ -94,6 +124,8 @@ public class ArticleActivity extends AppCompatActivity implements Adjusting_Text
         title.setText(article.getTitle());
         author.setText("By " + article.getAuthor());
         ScreenUtil.setHTMLStringToTextView(article.getBody(), body);
+
+        incrementViews(article.getArticleID());
 
         // Media ViewPager2
         mediaViewPager = findViewById(R.id.mediaViewPager);
@@ -127,6 +159,21 @@ public class ArticleActivity extends AppCompatActivity implements Adjusting_Text
         if (tabLayoutMediator != null) {
             tabLayoutMediator.attach();
         }
+
+        mediaViewPager.setOffscreenPageLimit(3);
+
+        if(mediaList.length == 0){
+            mediaViewPager.setVisibility(View.GONE);
+            tabLayout.setVisibility(View.GONE);
+        }
+
+        CompositePageTransformer compositePageTransformer = new CompositePageTransformer();
+        //margin determines distance between two pages
+        //adjust left/right padding of viewpager2 to determine distance between left and right edges and current page
+        //Log.d(TAG, "Dimen value: " + r.getDimension(R.dimen.padding));
+        compositePageTransformer.addTransformer(new MarginPageTransformer((int) ScreenUtil.dp_to_px(2, this))); //note: conversion between dp and pixel, apply later
+        compositePageTransformer.addTransformer(new ScaleAndFadeTransformer(true));
+        mediaViewPager.setPageTransformer(compositePageTransformer);
 
         // Toolbar
         MaterialToolbar articleToolbar = findViewById(R.id.article_topAppBar);
@@ -170,6 +217,18 @@ public class ArticleActivity extends AppCompatActivity implements Adjusting_Text
         articleToolbar.setTitleTextColor(article.getCategoryDisplayColor());
 
 
+    }
+
+    private void incrementViews(String articleID) {
+        final String url = getString(R.string.firebaseFunctionsIncrementView);
+        final JSONObject jsonBody;
+        try {
+            jsonBody = new JSONObject("{\"data\":{\"id\":\""+articleID+"\"}}");
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, jsonBody,null, null);
+            queue.add(jsonObjectRequest);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     private void setUpTextSizeAdjuster(ArticleViewModel viewModel, Toolbar articleToolbar, Context context) {

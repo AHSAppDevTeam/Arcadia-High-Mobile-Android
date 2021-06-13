@@ -5,6 +5,9 @@
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/media_image_fragment_imageView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></com.google.android.material.imageview.ShapeableImageView>
+        android:layout_height="match_parent"
+        android:padding="@dimen/padding_x.5"
+        android:background="@drawable/home_img_shadow_frame"
+        android:elevation="@dimen/padding_x.5"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,7 +6,6 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TableLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -24,7 +23,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.hsappdev.ahs.dataTypes.Article;
 import com.hsappdev.ahs.util.Helper;
 import com.hsappdev.ahs.OnItemClick;
 import com.hsappdev.ahs.R;
@@ -220,7 +218,7 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
             //adjust left/right padding of viewpager2 to determine distance between left and right edges and current page
             //Log.d(TAG, "Dimen value: " + r.getDimension(R.dimen.padding));
             compositePageTransformer.addTransformer(new MarginPageTransformer((int) dp_to_px(2))); //note: conversion between dp and pixel, apply later
-            compositePageTransformer.addTransformer(new ScaleAndFadeTransformer());
+            compositePageTransformer.addTransformer(new ScaleAndFadeTransformer(false));
             featuredPager.setPageTransformer(compositePageTransformer);
 
             mediumPager.setOffscreenPageLimit(3);

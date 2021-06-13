@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="@dimen/padding"
+    android:clipToPadding="true"
     >
 
     <androidx.cardview.widget.CardView
@@ -33,7 +34,8 @@
                 app:layout_constraintDimensionRatio="2:1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toTopOf="@+id/community_article_title" />
+                app:layout_constraintBottom_toTopOf="@+id/community_article_title"
+                android:background="@color/community_activity_article_image_default_img_color"/>
 
             <TextView
                 android:id="@+id/community_article_title"

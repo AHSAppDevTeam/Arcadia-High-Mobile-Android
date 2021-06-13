@@ -21,7 +21,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <FrameLayout
+    <androidx.cardview.widget.CardView
         android:id="@+id/community_frameLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -30,7 +30,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/community_section_name"
-        android:foreground="?android:attr/selectableItemBackground">
+        android:foreground="?android:attr/selectableItemBackground"
+        app:cardCornerRadius="@dimen/padding"
+        android:layout_margin="@dimen/padding_x.5"
+        android:elevation="@dimen/padding_x.5">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/home_news_constraintLayout"
@@ -125,21 +128,22 @@
 
 
         <TextView
-                android:id="@+id/community_section_blurb"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/padding_x.5"
-                android:fontFamily="sans-serif-medium"
-                android:gravity="center"
-                android:text="This is a great section"
-                android:textColor="?attr/titleColor"
-                android:textSize="24sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/image_grid" />
+            android:id="@+id/community_section_blurb"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/padding_x.5"
+            android:fontFamily="sans-serif-medium"
+            android:gravity="center"
+            android:padding="@dimen/padding_x.5"
+            android:text="This is a great section"
+            android:textColor="?attr/titleColor"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/image_grid" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </FrameLayout>
+    </androidx.cardview.widget.CardView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

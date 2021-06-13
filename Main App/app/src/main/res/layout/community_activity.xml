@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/community_activity_background"
     tools:context=".CommunityActivity"
-    android:background="@drawable/community_activity_background">
+    android:fitsSystemWindows="true">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -13,37 +14,72 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        >
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <ImageButton
-                android:id="@+id/community_activity_home_button"
-                android:layout_width="@dimen/cornerIconSize"
-                android:layout_height="@dimen/cornerIconSize"
-                android:src="@drawable/profile_darkmode_ic"
-                android:tint="@color/white"
-                android:background="@drawable/icon_circle"
-                android:foreground="?attr/actionBarItemBackground"
-                />
-        </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/community_activity_home_button"
+                    android:layout_width="@dimen/cornerIconSize"
+                    android:layout_height="@dimen/cornerIconSize"
+                    android:background="@drawable/icon_circle"
+                    android:foreground="?attr/actionBarItemBackground"
+                    android:src="@drawable/activity_navigation_back_arrow"
+                    android:tint="@color/white" />
+
+                <TextView
+                    android:id="@+id/community_activity_category_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/heavybold_lightregular"
+                    android:gravity="center|left"
+                    android:paddingLeft="@dimen/padding"
+                    android:text="Local News"
+                    android:textColor="@color/white"
+                    android:textSize="22sp" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/sfprodisplay_bold"
+                android:paddingLeft="@dimen/padding"
+                android:text="Arcadia, CA"
+                android:textColor="@color/white"
+                android:textSize="32sp"
+                android:textStyle="bold" />
+            <TextView
+                android:paddingLeft="@dimen/padding"
+                android:id="@+id/community_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/mediumbold_lightregular"
+                android:includeFontPadding="false"
+                android:lineSpacingExtra="0dp"
+                android:text="Month "
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/home_title"
+                tools:layout_conversion_absoluteHeight="34dp"
+                tools:layout_conversion_absoluteWidth="86dp" />
             <LinearLayout
                 android:id="@+id/community_activity_article_linearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+                android:padding="@dimen/padding"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:padding="@dimen/padding">
+                app:layout_constraintTop_toTopOf="parent">
 
             </LinearLayout>
         </LinearLayout>
