@@ -1,5 +1,6 @@
 package com.hsappdev.ahs.UI.bulletin;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,16 +16,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.hsappdev.ahs.OnItemClick;
 import com.hsappdev.ahs.R;
 import com.hsappdev.ahs.UI.home.ArticleLoader;
 import com.hsappdev.ahs.UI.home.OnArticleLoadedCallback;
-import com.hsappdev.ahs.UI.saved.SavedRecyclerAdapter;
 import com.hsappdev.ahs.dataTypes.Article;
 import com.hsappdev.ahs.dataTypes.Category;
 import com.hsappdev.ahs.util.ScreenUtil;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class BulletinFragment extends Fragment implements CategoriesLoadedCallback, OnArticleLoadedCallback {
@@ -36,6 +36,7 @@ public class BulletinFragment extends Fragment implements CategoriesLoadedCallba
 
     private RecyclerView recyclerView;
     private BulletinRecyclerAdapter adapter;
+    private OnItemClick onArticleClick;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -48,8 +49,14 @@ public class BulletinFragment extends Fragment implements CategoriesLoadedCallba
         return view;
     }
 
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        onArticleClick = (OnItemClick) context;
+    }
+
     private void loadRecyclerView() {
-        adapter = new BulletinRecyclerAdapter();
+        adapter = new BulletinRecyclerAdapter(onArticleClick);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
@@ -167,6 +174,8 @@ public class BulletinFragment extends Fragment implements CategoriesLoadedCallba
                 Article sortedArticle = sortedListRef.get(j);
                 if(filteredArticle.getArticleID().equals(sortedArticle.getArticleID())){
                     isUpdate = true;
+                    sortedListRef.updateItemAt(j, filteredArticle);
+                    Log.d(TAG, "updateView1: " + filteredArticle.getTitle());
                     deleteList.remove(filteredArticle);
                 }
             }
@@ -203,6 +212,7 @@ public class BulletinFragment extends Fragment implements CategoriesLoadedCallba
                 articleList) {
             Log.d(TAG, "onArticleLoaded: " + a.getTitle());
         }
+        updateView();
     }
 }
 class CategoryState {

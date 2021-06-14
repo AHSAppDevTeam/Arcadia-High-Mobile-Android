@@ -63,6 +63,7 @@ public class BulletinCategoryWidget extends CardView implements CategoryLoadedCa
         bgImageView.setBackgroundColor(category.getColor());
         ImageUtil.setImageToView(category.getIconURL(), iconImageView);
         bulletinFragment.registerCategory(this.categoryState);
+        bulletinFragment.updateView();
     }
 
 

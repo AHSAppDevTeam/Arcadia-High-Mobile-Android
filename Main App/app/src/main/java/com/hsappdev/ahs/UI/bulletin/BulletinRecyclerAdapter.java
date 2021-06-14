@@ -10,13 +10,14 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SortedList;
 
+import com.hsappdev.ahs.OnItemClick;
 import com.hsappdev.ahs.R;
-import com.hsappdev.ahs.UI.saved.SavedRecyclerAdapter;
 import com.hsappdev.ahs.dataTypes.Article;
 import com.hsappdev.ahs.util.Helper;
 import com.hsappdev.ahs.util.ScreenUtil;
 
 public class BulletinRecyclerAdapter extends RecyclerView.Adapter<BulletinRecyclerAdapter.BulletinArticleViewHolder> {
+    private final OnItemClick onArticleClick;
     private SortedList<Article> articleSortedList = new SortedList<Article>(Article.class, new SortedList.Callback<Article>() {
         @Override
         public int compare(Article o1, Article o2) {
@@ -30,7 +31,7 @@ public class BulletinRecyclerAdapter extends RecyclerView.Adapter<BulletinRecycl
 
         @Override
         public boolean areContentsTheSame(Article oldItem, Article newItem) {
-            return oldItem.getArticleID().equals(newItem.getArticleID());
+            return oldItem.equals(newItem);
         }
 
         @Override
@@ -52,7 +53,17 @@ public class BulletinRecyclerAdapter extends RecyclerView.Adapter<BulletinRecycl
         public void onMoved(int fromPosition, int toPosition) {
             notifyItemMoved(fromPosition, toPosition);
         }
+
+        @Override
+        public void onChanged(int position, int count, Object payload) {
+            notifyItemRangeChanged(position, count, payload);
+        }
     });
+
+    public BulletinRecyclerAdapter(OnItemClick onArticleClick) {
+        this.onArticleClick = onArticleClick;
+    }
+
 
     @NonNull
     @Override
@@ -63,7 +74,7 @@ public class BulletinRecyclerAdapter extends RecyclerView.Adapter<BulletinRecycl
 
     @Override
     public void onBindViewHolder(@NonNull BulletinArticleViewHolder holder, int position) {
-        holder.setDetails(articleSortedList.get(position));
+        holder.setDetails(articleSortedList.get(position), onArticleClick);
     }
 
     @Override
@@ -86,7 +97,7 @@ public class BulletinRecyclerAdapter extends RecyclerView.Adapter<BulletinRecycl
             this.timeStamp = itemView.findViewById(R.id.saved_article_time);
         }
 
-        public void setDetails(Article article){
+        public void setDetails(Article article, OnItemClick onArticleClick){
             title.setText(article.getTitle());
             Helper.setBoldRegularText(category, article.getCategoryDisplayName(), " Section");
             category.setTextColor(article.getCategoryDisplayColor());
@@ -96,7 +107,7 @@ public class BulletinRecyclerAdapter extends RecyclerView.Adapter<BulletinRecycl
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //onArticleClick.onArticleClicked(article);
+                    onArticleClick.onArticleClicked(article);
                 }
             });
         }
