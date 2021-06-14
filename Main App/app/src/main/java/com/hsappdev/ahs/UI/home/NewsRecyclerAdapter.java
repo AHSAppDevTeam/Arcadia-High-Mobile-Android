@@ -1,5 +1,6 @@
 package com.hsappdev.ahs.UI.home;
 
+import android.app.Activity;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.util.TypedValue;
@@ -35,17 +36,19 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
     private static final String TAG = "NewsRecyclerAdapter";
     private ArrayList<String> categoryIDs;
     private OnItemClick onArticleClick;
+    private final Activity activity;
 
-    public NewsRecyclerAdapter(ArrayList<String> categoryTitles, OnItemClick onArticleClick) {
+    public NewsRecyclerAdapter(ArrayList<String> categoryTitles, OnItemClick onArticleClick, Activity activity) {
         this.categoryIDs = categoryTitles;
         this.onArticleClick = onArticleClick;
+        this.activity = activity;
     }
 
     @NonNull
     @Override
     public FeaturedViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.home_news_section, parent, false);
-        return new FeaturedViewHolder(view);
+        return new FeaturedViewHolder(view, activity);
     }
 
     @Override
@@ -88,12 +91,13 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
         private final TabLayout mediumTabLayout;
         private final TabLayout smallTabLayout;
         private final Resources r;
+        private final Activity activity;
 
         public void setDetails(String categoryTitle, OnItemClick onArticleClick){
             setUpPager();
-            FeaturedArticleAdapter featuredArticleAdapter = new FeaturedArticleAdapter(new ArrayList<String>(), onArticleClick);
-            MediumArticleAdapter mediumArticleAdapter = new MediumArticleAdapter(new ArrayList<String>(), onArticleClick);
-            SmallArticleAdapter smallArticleAdapter = new SmallArticleAdapter(new ArrayList<String>(), onArticleClick);
+            FeaturedArticleAdapter featuredArticleAdapter = new FeaturedArticleAdapter(new ArrayList<String>(), onArticleClick, activity);
+            MediumArticleAdapter mediumArticleAdapter = new MediumArticleAdapter(new ArrayList<String>(), onArticleClick, activity);
+            SmallArticleAdapter smallArticleAdapter = new SmallArticleAdapter(new ArrayList<String>(), onArticleClick, activity);
 
             featuredPager.setAdapter(featuredArticleAdapter);
             mediumPager.setAdapter(mediumArticleAdapter);
@@ -232,7 +236,7 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
             return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,dp, r.getDisplayMetrics());
         }
 
-        public FeaturedViewHolder(@NonNull View itemView){
+        public FeaturedViewHolder(@NonNull View itemView, Activity activity){
             super(itemView);
             r = itemView.getContext().getResources();
 
@@ -244,6 +248,8 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
             featuredTabLayout = itemView.findViewById(R.id.featured_tab_layout);
             mediumTabLayout = itemView.findViewById(R.id.medium_tab_layout);
             smallTabLayout = itemView.findViewById(R.id.small_tab_layout);
+
+            this.activity = activity;
         }
     }
 }

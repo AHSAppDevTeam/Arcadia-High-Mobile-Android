@@ -1,5 +1,6 @@
 package com.hsappdev.ahs.UI.home;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.view.View;
@@ -22,10 +23,10 @@ public class CommunityArticleUnit extends ConstraintLayout implements OnArticleL
 
     final private TextView title;
     final private ImageView image;
-
+    final private Activity activity;
     final Resources r;
 
-    public CommunityArticleUnit(@NonNull Context context, String articleId, OnItemClick onArticleClick) {
+    public CommunityArticleUnit(@NonNull Context context, String articleId, OnItemClick onArticleClick, Activity activity) {
         super(context);
 
         View view = inflate(context, R.layout.comunity_activity_article_unit, this);
@@ -33,6 +34,8 @@ public class CommunityArticleUnit extends ConstraintLayout implements OnArticleL
 
         title = findViewById(R.id.community_article_title);
         image = findViewById(R.id.community_article_image);
+
+        this.activity = activity;
 
         r = getResources();
         setDetails(articleId);
@@ -61,5 +64,10 @@ public class CommunityArticleUnit extends ConstraintLayout implements OnArticleL
         if(article.getImageURLs().length > 0) {
             ImageUtil.setImageToView(article.getImageURLs()[0], image);
         }
+    }
+
+    @Override
+    public boolean isActivityDestroyed() {
+        return activity.isDestroyed();
     }
 }

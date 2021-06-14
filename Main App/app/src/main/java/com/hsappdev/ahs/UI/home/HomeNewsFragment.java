@@ -63,7 +63,7 @@ public class HomeNewsFragment extends Fragment {
 
 
 
-        NewsRecyclerAdapter adapter = new NewsRecyclerAdapter(new ArrayList<String>(), onArticleClick);
+        NewsRecyclerAdapter adapter = new NewsRecyclerAdapter(new ArrayList<String>(), onArticleClick, getActivity());
         RecyclerView recyclerView = view.findViewById(R.id.home_news_recyclerView);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

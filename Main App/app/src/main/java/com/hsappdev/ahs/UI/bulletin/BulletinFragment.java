@@ -66,6 +66,7 @@ public class BulletinFragment extends Fragment implements CategoriesLoadedCallba
 
     private void loadLinearLayoutView() {
         new BulletinIconCategoriesLoader(getContext()).loadCategories(this);
+
     }
 
     public void registerCategory(CategoryState categoryState) {
@@ -119,9 +120,9 @@ public class BulletinFragment extends Fragment implements CategoriesLoadedCallba
 
         for (int i = 0; i < categories.size(); i++) {
             BulletinCategoryWidget category = new BulletinCategoryWidget(getContext(), categories.get(i), this);
-            int p = (int) ScreenUtil.dp_to_px(getResources().getDimension(R.dimen.padding_x_5), getContext());
+            int p = (int) ScreenUtil.dp_to_px(getResources().getDimension(R.dimen.padding), getContext())/4;
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
-                    (int) ScreenUtil.dp_to_px(200, getContext()),
+                    (int) ScreenUtil.dp_to_px(130, getContext()),
                     LinearLayout.LayoutParams.MATCH_PARENT,
                     1.0f
             );
@@ -191,7 +192,6 @@ public class BulletinFragment extends Fragment implements CategoriesLoadedCallba
         }
 
         sortedListRef.endBatchedUpdates();
-        recyclerView.scheduleLayoutAnimation();
     }
 
     @Override
@@ -213,6 +213,11 @@ public class BulletinFragment extends Fragment implements CategoriesLoadedCallba
             Log.d(TAG, "onArticleLoaded: " + a.getTitle());
         }
         updateView();
+    }
+
+    @Override
+    public boolean isActivityDestroyed() {
+        return getActivity().isDestroyed();
     }
 }
 class CategoryState {

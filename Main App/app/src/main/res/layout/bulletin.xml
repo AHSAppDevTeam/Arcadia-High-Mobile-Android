@@ -24,12 +24,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@+id/textView"
-        tools:layout_editor_absoluteX="0dp">
+        tools:layout_editor_absoluteX="0dp"
+        >
 
         <LinearLayout
             android:id="@+id/bulletin_categories_linearLayout"
             android:layout_width="wrap_content"
-            android:layout_height="200dp"
+            android:layout_height="170dp"
             android:orientation="horizontal" />
     </HorizontalScrollView>
 

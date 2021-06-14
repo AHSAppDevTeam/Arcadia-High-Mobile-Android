@@ -7,4 +7,7 @@ public interface OnArticleLoadedCallback {
     Article article = null;
 
     void onArticleLoaded(Article article);
+
+    boolean isActivityDestroyed();
+
 }

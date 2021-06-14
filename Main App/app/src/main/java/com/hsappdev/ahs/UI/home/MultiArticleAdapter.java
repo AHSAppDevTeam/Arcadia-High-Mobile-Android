@@ -1,16 +1,13 @@
 package com.hsappdev.ahs.UI.home;
 
+import android.app.Activity;
 import android.content.res.Resources;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.hsappdev.ahs.OnItemClick;
-import com.hsappdev.ahs.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,12 +20,14 @@ import java.util.List;
 public abstract class MultiArticleAdapter<T extends MultiArticleAdapter.MultiArticleViewHolder> extends RecyclerView.Adapter<T> {
     protected List<String> articleIds;
     protected OnItemClick onArticleClick;
+    protected Activity activity;
 
     public static final int numArticles = 2;
 
-    public MultiArticleAdapter(List<String> articleIds, OnItemClick onArticleClick) {
+    public MultiArticleAdapter(List<String> articleIds, OnItemClick onArticleClick, Activity activity) {
         this.articleIds = articleIds;
         this.onArticleClick = onArticleClick;
+        this.activity = activity;
     }
 
 

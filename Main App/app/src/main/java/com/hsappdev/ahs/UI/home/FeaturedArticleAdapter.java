@@ -1,5 +1,6 @@
 package com.hsappdev.ahs.UI.home;
 
+import android.app.Activity;
 import android.content.res.Resources;
 import android.graphics.PorterDuff;
 import android.util.Log;
@@ -25,10 +26,12 @@ public class FeaturedArticleAdapter extends RecyclerView.Adapter<FeaturedArticle
     private static final String TAG = "FeaturedArticleAdapter";
     private List<String> articleIds;
     private OnItemClick onArticleClick;
+    private Activity activity;
 
-    public FeaturedArticleAdapter(List<String> articleIds, OnItemClick onArticleClick) {
+    public FeaturedArticleAdapter(List<String> articleIds, OnItemClick onArticleClick, Activity activity) {
         this.articleIds = articleIds;
         this.onArticleClick = onArticleClick;
+        this.activity = activity;
     }
 
     // GETTERS AND SETTERS
@@ -58,7 +61,8 @@ public class FeaturedArticleAdapter extends RecyclerView.Adapter<FeaturedArticle
                         parent,
                         false
                 ),
-                onArticleClick
+                onArticleClick,
+                activity
         );
     }
 
@@ -82,8 +86,9 @@ public class FeaturedArticleAdapter extends RecyclerView.Adapter<FeaturedArticle
         final private TextView categoryTextView;
         final private ImageView indicatorImageView;
         private OnItemClick onArticleClick;
+        final private Activity activity;
 
-        public FeaturedArticleViewHolder(@NonNull View itemView, OnItemClick onArticleClick) {
+        public FeaturedArticleViewHolder(@NonNull View itemView, OnItemClick onArticleClick, Activity activity) {
             super(itemView);
             this.r = itemView.getResources();
             this.articleLayout = itemView.findViewById(R.id.home_news_constraintLayout);
@@ -93,6 +98,7 @@ public class FeaturedArticleAdapter extends RecyclerView.Adapter<FeaturedArticle
             this.indicatorImageView = itemView.findViewById(R.id.featured_article_indicator);
             this.timeTextView = itemView.findViewById(R.id.featured_article_time);
             this.onArticleClick = onArticleClick;
+            this.activity = activity;
 
         }
 
@@ -125,6 +131,11 @@ public class FeaturedArticleAdapter extends RecyclerView.Adapter<FeaturedArticle
             categoryTextView.setText(article.getCategoryDisplayName());
             categoryTextView.setTextColor(article.getCategoryDisplayColor());
             indicatorImageView.setColorFilter(article.getCategoryDisplayColor(), PorterDuff.Mode.SRC_OVER);
+        }
+
+        @Override
+        public boolean isActivityDestroyed() {
+            return activity.isDestroyed();
         }
     }
 

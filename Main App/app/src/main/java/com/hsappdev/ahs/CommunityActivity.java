@@ -90,7 +90,7 @@ public class CommunityActivity extends AppCompatActivity implements OnItemClick,
         LinearLayout linearLayout = findViewById(R.id.community_activity_article_linearLayout);
 
         if(articleIds.size() > 0) {
-            CommunityArticleUnit articleUnit = new CommunityArticleUnit(getApplicationContext(), articleIds.get(0), this);
+            CommunityArticleUnit articleUnit = new CommunityArticleUnit(getApplicationContext(), articleIds.get(0), this, this);
             linearLayout.addView(articleUnit);
             articleIds.remove(0);
 
@@ -101,7 +101,7 @@ public class CommunityActivity extends AppCompatActivity implements OnItemClick,
                 intermediateLinearLayout.setWeightSum(gridNum);
                 for (int j = i; j < i + gridNum; j++) {
                     if (j < articleIds.size()) {
-                        CommunityArticleUnit secondaryArticleUnit = new CommunityArticleUnit(getApplicationContext(), articleIds.get(j), this);
+                        CommunityArticleUnit secondaryArticleUnit = new CommunityArticleUnit(getApplicationContext(), articleIds.get(j), this, this);
                         secondaryArticleUnit.setLayoutParams(new LinearLayout.LayoutParams(
                                 LinearLayout.LayoutParams.MATCH_PARENT,
                                 LinearLayout.LayoutParams.WRAP_CONTENT,

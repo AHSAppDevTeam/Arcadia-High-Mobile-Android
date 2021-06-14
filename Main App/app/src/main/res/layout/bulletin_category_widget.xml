@@ -5,14 +5,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     >
 
     <ImageView
         android:id="@+id/bulletin_icon_bg_imageView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@color/blueGradientStart"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,7 +20,7 @@
         android:id="@+id/bulletin_icon_imageView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:padding="@dimen/padding_x.5"
+        android:layout_margin="@dimen/padding_x2"
         app:layout_constraintBottom_toTopOf="@+id/bulletin_icon_text"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
@@ -33,12 +31,12 @@
         android:id="@+id/bulletin_icon_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/sfprodisplay_heavy"
+        android:fontFamily="@font/sfprodisplay_medium"
         android:gravity="center"
         android:padding="@dimen/padding_x.5"
         android:text="Category"
         android:textColor="@color/white"
-        android:textSize="30sp"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

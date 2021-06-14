@@ -1,18 +1,16 @@
 package com.hsappdev.ahs.UI.home;
 
-import android.content.res.Resources;
+import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.hsappdev.ahs.OnItemClick;
 import com.hsappdev.ahs.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class SmallArticleAdapter extends MultiArticleAdapter<SmallArticleAdapter.SmallArticleViewHolder>{
@@ -21,8 +19,8 @@ public class SmallArticleAdapter extends MultiArticleAdapter<SmallArticleAdapter
 
     public static final int numArticles = 2;
 
-    public SmallArticleAdapter(List<String> articleIds, OnItemClick onArticleClick) {
-        super(articleIds, onArticleClick);
+    public SmallArticleAdapter(List<String> articleIds, OnItemClick onArticleClick, Activity activity) {
+        super(articleIds, onArticleClick, activity);
 
     }
 
@@ -35,17 +33,20 @@ public class SmallArticleAdapter extends MultiArticleAdapter<SmallArticleAdapter
                         parent,
                         false
                 ),
-                onArticleClick
+                onArticleClick,
+                activity
         );
     }
 
 
     static class SmallArticleViewHolder extends MultiArticleAdapter.MultiArticleViewHolder{
         private final LinearLayout linearLayout;
+        private final Activity activity;
 
-        public SmallArticleViewHolder(@NonNull View itemView, OnItemClick onArticleClick) {
+        public SmallArticleViewHolder(@NonNull View itemView, OnItemClick onArticleClick, Activity activity) {
             super(itemView, onArticleClick);
             this.linearLayout = itemView.findViewById(R.id.home_news_small_article_linear_layout);
+            this.activity = activity;
 
         }
 
@@ -55,7 +56,7 @@ public class SmallArticleAdapter extends MultiArticleAdapter<SmallArticleAdapter
 
             for(int i=0; i<articlesToAdd.size(); i++){
                 String articleId = articlesToAdd.get(i);
-                SmallArticleUnit smallArticleUnit =  new SmallArticleUnit(itemView.getContext(), articleId, onArticleClick);
+                SmallArticleUnit smallArticleUnit =  new SmallArticleUnit(itemView.getContext(), articleId, onArticleClick, activity);
                 linearLayout.addView(smallArticleUnit);
 
             }

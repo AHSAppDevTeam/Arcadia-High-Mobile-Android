@@ -1,5 +1,6 @@
 package com.hsappdev.ahs.UI.home;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.PorterDuff;
 import android.widget.ImageView;
@@ -17,8 +18,8 @@ public class SmallArticleUnit extends MediumArticleUnit implements OnArticleLoad
     private TextView categoryTextView;
     private ImageView indicatorImageView;
 
-    public SmallArticleUnit(@NonNull Context context, String articleId, OnItemClick onItemClick) {
-        super(context, articleId, onItemClick, R.layout.home_news_small_article);
+    public SmallArticleUnit(@NonNull Context context, String articleId, OnItemClick onItemClick, Activity activity) {
+        super(context, articleId, onItemClick, R.layout.home_news_small_article, activity);
     }
 
     @Override

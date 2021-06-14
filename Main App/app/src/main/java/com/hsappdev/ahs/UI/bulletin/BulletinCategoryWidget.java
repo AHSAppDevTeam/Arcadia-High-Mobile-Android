@@ -3,6 +3,7 @@ package com.hsappdev.ahs.UI.bulletin;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.ImageView;
@@ -44,9 +45,9 @@ public class BulletinCategoryWidget extends CardView implements CategoryLoadedCa
         TypedValue outValue = new TypedValue();
         getContext().getTheme().resolveAttribute(android.R.attr.selectableItemBackground, outValue, true);
         setForeground(r.getDrawable(outValue.resourceId, getContext().getTheme()));
+        setCardElevation(10);
         setClickable(true);
         setFocusable(true);
-
         setDetails();
     }
 
@@ -60,11 +61,37 @@ public class BulletinCategoryWidget extends CardView implements CategoryLoadedCa
         categoryState = new CategoryState(category, isSelected);
         categoryState.setArticleIds(articleIds);
         labelTextView.setText(category.getTitle());
-        bgImageView.setBackgroundColor(category.getColor());
+        setBackground();
         ImageUtil.setImageToView(category.getIconURL(), iconImageView);
         bulletinFragment.registerCategory(this.categoryState);
         bulletinFragment.updateView();
     }
+
+    public void setBackground(){
+        Category category = categoryState.getCategory();
+        GradientDrawable gradientDrawable;
+
+        if(isSelected){
+            gradientDrawable =
+                    new GradientDrawable(
+                            GradientDrawable.Orientation.BOTTOM_TOP,
+                            new int[] {category.getColor(),
+                                    manipulateColor(category.getColor(), 0.7f)}
+                    );
+            labelTextView.setTextColor(r.getColor(R.color.white, getContext().getTheme()));
+        } else {
+            gradientDrawable =
+                    new GradientDrawable(
+                            GradientDrawable.Orientation.TOP_BOTTOM,
+                            new int[] {manipulateColor(category.getColor(), 0.25f),
+                                    manipulateColor(category.getColor(), 0.5f)}
+                    );
+            labelTextView.setTextColor(r.getColor(R.color.white50, getContext().getTheme()));
+        }
+        bgImageView.setBackground(gradientDrawable);
+    }
+
+
 
 
     @Override
@@ -73,13 +100,7 @@ public class BulletinCategoryWidget extends CardView implements CategoryLoadedCa
         categoryState.setSelected(isSelected);
         bulletinFragment.registerCategory(categoryState);
         bulletinFragment.updateView();
-        int normalColor = categoryState.getCategory().getColor();
-        if(isSelected) {
-            int darkerColor = manipulateColor(normalColor, 0.5f);
-            bgImageView.setBackgroundColor(darkerColor);
-        } else {
-            bgImageView.setBackgroundColor(normalColor);
-        }
+        setBackground();
     }
 
     /**

@@ -1,5 +1,6 @@
 package com.hsappdev.ahs.UI.home;
 
+import android.app.Activity;
 import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,8 +19,8 @@ import java.util.List;
 public class MediumArticleAdapter extends MultiArticleAdapter<MediumArticleAdapter.MediumArticleViewHolder>{
     private static final String TAG = "MediumArticleAdapter";
 
-    public MediumArticleAdapter(List<String> articleIds, OnItemClick onArticleClick) {
-        super(articleIds, onArticleClick);
+    public MediumArticleAdapter(List<String> articleIds, OnItemClick onArticleClick, Activity activity) {
+        super(articleIds, onArticleClick, activity);
     }
 
     @NonNull
@@ -36,7 +37,7 @@ public class MediumArticleAdapter extends MultiArticleAdapter<MediumArticleAdapt
     }
 
 
-    static public class MediumArticleViewHolder extends MultiArticleAdapter.MultiArticleViewHolder{
+    public class MediumArticleViewHolder extends MultiArticleAdapter.MultiArticleViewHolder{
         private final LinearLayout linearLayoutLeft;
         private final LinearLayout linearLayoutRight;
 
@@ -55,7 +56,7 @@ public class MediumArticleAdapter extends MultiArticleAdapter<MediumArticleAdapt
 
             for(int i=0; i<articlesToAdd.size(); i++){
                 String articleId = articlesToAdd.get(i);
-                MediumArticleUnit mediumArticleUnit =  new MediumArticleUnit(itemView.getContext(), articleId, onArticleClick);
+                MediumArticleUnit mediumArticleUnit =  new MediumArticleUnit(itemView.getContext(), articleId, onArticleClick, R.layout.home_news_medium_article ,activity);
                 // Alternate back and forth between the left and right linear layout
                 // First start with the left linear layout
                 if(i % 2 == 0) {

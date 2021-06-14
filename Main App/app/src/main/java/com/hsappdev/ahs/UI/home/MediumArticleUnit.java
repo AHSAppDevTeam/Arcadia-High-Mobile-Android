@@ -1,5 +1,6 @@
 package com.hsappdev.ahs.UI.home;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Color;
@@ -34,11 +35,12 @@ public class MediumArticleUnit extends ConstraintLayout implements OnArticleLoad
     final private TextView titleTextView;
     final private TextView timeTextView;
     private OnItemClick onArticleClick;
+    final private Activity activity;
 
     final protected View contentView;
 
 
-    public MediumArticleUnit(@NonNull Context context, String articleId, OnItemClick onItemClick, int layoutID) {
+    public MediumArticleUnit(@NonNull Context context, String articleId, OnItemClick onItemClick, int layoutID, Activity activity) {
         super(context);
         // Inflate view
         View view = inflate(getContext(), layoutID, this);
@@ -50,25 +52,26 @@ public class MediumArticleUnit extends ConstraintLayout implements OnArticleLoad
         this.titleTextView = view.findViewById(R.id.medium_article_name);
         this.timeTextView = view.findViewById(R.id.medium_article_time);
         this.onArticleClick = onItemClick;
+        this.activity = activity;
         contentView = view;
         setDetails(articleId);
     }
 
-    public MediumArticleUnit(@NonNull Context context, String articleId, OnItemClick onItemClick) {
-        super(context);
-        // Inflate view
-        View view = inflate(getContext(), R.layout.home_news_medium_article, this);
-
-        // Get the data
-        this.r = view.getResources();
-        this.articleLayout = view.findViewById(R.id.home_news_constraintLayout);
-        this.articleImage = view.findViewById(R.id.medium_article_image);
-        this.titleTextView = view.findViewById(R.id.medium_article_name);
-        this.timeTextView = view.findViewById(R.id.medium_article_time);
-        this.onArticleClick = onItemClick;
-        contentView = view;
-        setDetails(articleId);
-    }
+//    public MediumArticleUnit(@NonNull Context context, String articleId, OnItemClick onItemClick) {
+//        super(context);
+//        // Inflate view
+//        View view = inflate(getContext(), R.layout.home_news_medium_article, this);
+//
+//        // Get the data
+//        this.r = view.getResources();
+//        this.articleLayout = view.findViewById(R.id.home_news_constraintLayout);
+//        this.articleImage = view.findViewById(R.id.medium_article_image);
+//        this.titleTextView = view.findViewById(R.id.medium_article_name);
+//        this.timeTextView = view.findViewById(R.id.medium_article_time);
+//        this.onArticleClick = onItemClick;
+//        contentView = view;
+//        setDetails(articleId);
+//    }
 
     public void setDetails(String articleId){
         new ArticleLoader().loadArticle(articleId, r, this);
@@ -94,5 +97,10 @@ public class MediumArticleUnit extends ConstraintLayout implements OnArticleLoad
                 onArticleClick.onArticleClicked(article);
             }
         });
+    }
+
+    @Override
+    public boolean isActivityDestroyed() {
+        return activity.isDestroyed();
     }
 }
