@@ -1,8 +1,13 @@
 package com.hsappdev.ahs.UI.bulletin;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.content.res.Resources;
+import android.graphics.BlendMode;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.util.TypedValue;
 import android.view.View;
@@ -10,7 +15,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.cardview.widget.CardView;
+import androidx.core.graphics.drawable.DrawableCompat;
 
 import com.hsappdev.ahs.R;
 import com.hsappdev.ahs.dataTypes.Category;
@@ -72,23 +79,39 @@ public class BulletinCategoryWidget extends CardView implements CategoryLoadedCa
         GradientDrawable gradientDrawable;
 
         if(isSelected){
+            bgImageView.setPadding(0,0,0,0);
+
             gradientDrawable =
                     new GradientDrawable(
-                            GradientDrawable.Orientation.BOTTOM_TOP,
+                            GradientDrawable.Orientation.BR_TL,
                             new int[] {category.getColor(),
                                     manipulateColor(category.getColor(), 0.7f)}
                     );
             labelTextView.setTextColor(r.getColor(R.color.white, getContext().getTheme()));
+            iconImageView.setColorFilter(r.getColor(R.color.white, getContext().getTheme()));
+            bgImageView.setImageDrawable(gradientDrawable);
+            bgImageView.setImageTintList(null);
+
         } else {
-            gradientDrawable =
-                    new GradientDrawable(
-                            GradientDrawable.Orientation.TOP_BOTTOM,
-                            new int[] {manipulateColor(category.getColor(), 0.25f),
-                                    manipulateColor(category.getColor(), 0.5f)}
-                    );
-            labelTextView.setTextColor(r.getColor(R.color.white50, getContext().getTheme()));
+//            gradientDrawable =
+//                    new GradientDrawable(
+//                            GradientDrawable.Orientation.BR_TL,
+//                            new int[] {manipulateColor(category.getColor(), 0.25f),
+//                                    manipulateColor(category.getColor(), 0.5f)}
+//                    );
+            labelTextView.setTextColor(category.getColor());
+            iconImageView.setColorFilter(category.getColor());
+
+            //bgImageView.setBackground();
+            bgImageView.setBackgroundColor(category.getColor());
+
+            //bgImageView.setBackgroundTintBlendMode(BlendMode.MULTIPLY);
+            bgImageView.setPadding(10,10,10,10);
+            bgImageView.setBackgroundTintList(ColorStateList.valueOf(category.getColor()));
+
+            bgImageView.setImageDrawable(r.getDrawable(R.drawable.bulletin_category_icon_unselected_border, getContext().getTheme()));
         }
-        bgImageView.setBackground(gradientDrawable);
+        //bgImageView.setTin(category.getColor());
     }
 
 

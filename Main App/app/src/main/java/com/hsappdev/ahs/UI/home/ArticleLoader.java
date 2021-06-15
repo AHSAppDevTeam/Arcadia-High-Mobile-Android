@@ -75,6 +75,8 @@ public class ArticleLoader {
                         article.setCategoryDisplayColor(color);
                         if(!onArticleLoadedCallback.isActivityDestroyed()) {
                             onArticleLoadedCallback.onArticleLoaded(article);
+                        } else {
+                            ref.removeEventListener(this); // Release resources
                         }
                     }
 

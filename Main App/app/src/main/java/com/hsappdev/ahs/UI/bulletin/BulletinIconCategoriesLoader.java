@@ -65,6 +65,7 @@ public class BulletinIconCategoriesLoader {
                 }
 
                 callback.onCategoryDataLoaded(new Category(categoryId, title, color, iconURL), articleIds);
+
             }
 
             @Override

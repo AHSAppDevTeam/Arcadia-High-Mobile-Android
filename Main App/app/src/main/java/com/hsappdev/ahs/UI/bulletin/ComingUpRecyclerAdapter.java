@@ -16,9 +16,8 @@ import com.hsappdev.ahs.dataTypes.Article;
 import com.hsappdev.ahs.util.Helper;
 import com.hsappdev.ahs.util.ScreenUtil;
 
-public class BulletinRecyclerAdapter extends RecyclerView.Adapter<BulletinRecyclerAdapter.BulletinArticleViewHolder> {
+public class ComingUpRecyclerAdapter extends RecyclerView.Adapter<ComingUpRecyclerAdapter.ComingUpArticleViewHolder> {
     private final OnItemClick onArticleClick;
-    private final int UP_COMING = 1, DEFAULT = 0;
     private SortedList<Article> articleSortedList = new SortedList<Article>(Article.class, new SortedList.Callback<Article>() {
         @Override
         public int compare(Article o1, Article o2) {
@@ -61,25 +60,20 @@ public class BulletinRecyclerAdapter extends RecyclerView.Adapter<BulletinRecycl
         }
     });
 
-    public BulletinRecyclerAdapter(OnItemClick onArticleClick) {
+    public ComingUpRecyclerAdapter(OnItemClick onArticleClick) {
         this.onArticleClick = onArticleClick;
     }
 
 
     @NonNull
     @Override
-    public BulletinArticleViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        if(viewType == DEFAULT) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.saved_article_holder, parent, false);
-            return new BulletinRecyclerAdapter.BulletinArticleViewHolder(view);
-        } else {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.saved_article_holder, parent, false);
-            return new BulletinRecyclerAdapter.ComingUpArticleViewHolder(view);
-        }
+    public ComingUpArticleViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.saved_article_holder, parent, false);
+        return new ComingUpRecyclerAdapter.ComingUpArticleViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull BulletinArticleViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ComingUpArticleViewHolder holder, int position) {
         holder.setDetails(articleSortedList.get(position), onArticleClick);
     }
 
@@ -88,35 +82,13 @@ public class BulletinRecyclerAdapter extends RecyclerView.Adapter<BulletinRecycl
         return articleSortedList.size();
     }
 
-    @Override
-    public int getItemViewType(int position) {
-        if(position < 4){
-            return UP_COMING;
-        }
-        return DEFAULT;
-    }
-
-    public class ComingUpArticleViewHolder extends BulletinArticleViewHolder {
+    public class ComingUpArticleViewHolder extends RecyclerView.ViewHolder{
+        private final TextView title;
+        private final TextView category;
+        private final TextView timeStamp;
+        private final ImageView indicator;
 
         public ComingUpArticleViewHolder(@NonNull View itemView) {
-            super(itemView);
-        }
-
-        @Override
-        public void setDetails(Article article, OnItemClick onArticleClick) {
-            super.setDetails(article, onArticleClick);
-            title.setText(article.getTitle()+" UpComing");
-
-        }
-    }
-
-    public class BulletinArticleViewHolder extends RecyclerView.ViewHolder{
-        protected final TextView title;
-        protected final TextView category;
-        protected final TextView timeStamp;
-        protected final ImageView indicator;
-
-        public BulletinArticleViewHolder(@NonNull View itemView) {
             super(itemView);
 
             this.title = itemView.findViewById(R.id.saved_article_title);
@@ -148,5 +120,4 @@ public class BulletinRecyclerAdapter extends RecyclerView.Adapter<BulletinRecycl
     public void setArticleSortedList(SortedList<Article> articleSortedList) {
         this.articleSortedList = articleSortedList;
     }
-
 }

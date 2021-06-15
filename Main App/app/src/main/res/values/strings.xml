@@ -62,5 +62,6 @@
     <string name="firebaseFunctionsIncrementView">https://us-central1-arcadia-high-mobile.cloudfunctions.net/incrementView</string>
     <string name="student_bulletin_title_text"><b>Student</b> Bulletin</string>
     <string name="db_categories_iconURL">iconURL</string>
+    <string name="bulletin_comming_up_text"><b>Coming</b> Up</string>
 
 </resources>

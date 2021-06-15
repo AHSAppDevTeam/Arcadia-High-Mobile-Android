@@ -34,10 +34,57 @@
             android:orientation="horizontal" />
     </HorizontalScrollView>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/bulletin_articles_recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView" />
+
+<!--    <ScrollView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView">-->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView">
+
+            <TextView
+                android:id="@+id/bulletin_comingUpTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/heavybold_lightregular"
+                android:padding="@dimen/padding"
+                android:text="@string/bulletin_comming_up_text"
+                android:textColor="@color/brightRed"
+                android:textSize="32sp"
+                app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView"
+                tools:layout_editor_absoluteX="0dp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/bulletin_articles_coming_up_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/bulletin_comingUpTextView"
+                tools:layout_editor_absoluteX="0dp"
+                />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/padding"
+                android:text="Default"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@+id/bulletin_articles_coming_up_recycler_view" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/bulletin_articles_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/textView2"
+                tools:layout_editor_absoluteX="-16dp"
+                />
+        </LinearLayout>
+<!--    </ScrollView>-->
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
