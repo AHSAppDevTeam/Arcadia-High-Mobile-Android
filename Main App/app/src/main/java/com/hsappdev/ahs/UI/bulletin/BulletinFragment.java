@@ -35,7 +35,9 @@ public class BulletinFragment extends Fragment implements CategoriesLoadedCallba
     private List<Article> articleList = new ArrayList<>();
 
     private RecyclerView recyclerView;
+    private RecyclerView comingUpRecyclerView;
     private BulletinRecyclerAdapter adapter;
+    private ComingUpRecyclerAdapter comingUpAdapter;
     private OnItemClick onArticleClick;
 
     @Override
@@ -44,6 +46,7 @@ public class BulletinFragment extends Fragment implements CategoriesLoadedCallba
         View view = inflater.inflate(R.layout.bulletin, container, false);
         categoryLinearLayout = view.findViewById(R.id.bulletin_categories_linearLayout);
         recyclerView = view.findViewById(R.id.bulletin_articles_recycler_view);
+        comingUpRecyclerView = view.findViewById(R.id.bulletin_articles_coming_up_recycler_view);
         loadRecyclerView();
         loadLinearLayoutView();
         return view;
@@ -57,11 +60,16 @@ public class BulletinFragment extends Fragment implements CategoriesLoadedCallba
 
     private void loadRecyclerView() {
         adapter = new BulletinRecyclerAdapter(onArticleClick);
+        comingUpAdapter = new ComingUpRecyclerAdapter(onArticleClick);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        LinearLayoutManager commingUpLinearLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapter);
+        comingUpRecyclerView.setLayoutManager(commingUpLinearLayoutManager);
+        comingUpRecyclerView.setAdapter(comingUpAdapter);
     }
 
     private void loadLinearLayoutView() {
@@ -152,6 +160,8 @@ public class BulletinFragment extends Fragment implements CategoriesLoadedCallba
 
         // Perform filtering
         SortedList<Article> sortedListRef = adapter.getArticleSortedList();
+        SortedList<Article> comingUpSortedListRef = comingUpAdapter.getArticleSortedList();
+
         sortedListRef.beginBatchedUpdates();
         List<Article> filteredList = new ArrayList<>();
         for (Article articleToCheck : articleList) {
@@ -190,7 +200,15 @@ public class BulletinFragment extends Fragment implements CategoriesLoadedCallba
         for(Article a : deleteList){
             sortedListRef.remove(a);
         }
-
+        // Get top 4 articles
+        List<Article> articles = new ArrayList<>();
+        for (int i = 0; i < 4; i++) {
+            if(sortedListRef.size()>0) {
+                articles.add(sortedListRef.removeItemAt(0));
+            }
+        }
+        comingUpSortedListRef.clear();
+        comingUpSortedListRef.addAll(articles);
         sortedListRef.endBatchedUpdates();
     }
 

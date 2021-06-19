@@ -52,6 +52,8 @@
                 android:fontFamily="@font/sfprodisplay_bold"
                 android:gravity="start"
                 android:text="Article Name"
+                android:maxLines="2"
+                android:ellipsize="end"
                 android:textAlignment="textStart"
                 android:textColor="?attr/titleColor"
                 android:textSize="24sp"

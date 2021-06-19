@@ -24,20 +24,21 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/padding"
                 android:layout_marginEnd="@dimen/padding"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingTop="@dimen/padding_x.5">
 
                 <ImageView
                     android:id="@+id/imageView"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:alpha="0.15"
+                    android:alpha="1"
                     android:scaleType="fitStart"
 
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintDimensionRatio="1:1"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@android:drawable/presence_video_busy" />
+                    app:srcCompat="@mipmap/logo_full_size" />
 
                 <TextView
                     android:id="@+id/home_title"
@@ -49,7 +50,7 @@
                     android:text="Arcadia"
                     android:textColor="@color/brightRed"
                     android:textSize="36sp"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/imageView"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:layout_conversion_absoluteHeight="43dp"
                     tools:layout_conversion_absoluteWidth="130dp" />
@@ -65,7 +66,7 @@
                     android:text="Month "
                     android:textColor="@color/brightRed"
                     android:textSize="24sp"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/imageView"
                     app:layout_constraintTop_toBottomOf="@+id/home_title"
                     tools:layout_conversion_absoluteHeight="34dp"
                     tools:layout_conversion_absoluteWidth="86dp" />

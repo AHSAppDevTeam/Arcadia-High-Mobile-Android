@@ -5,7 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".UI.bulletin.BulletinFragment">
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/home_scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
     <TextView
         android:id="@+id/textView"
         android:layout_width="match_parent"
@@ -84,6 +92,8 @@
                 tools:layout_editor_absoluteX="-16dp"
                 />
         </LinearLayout>
+</LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 <!--    </ScrollView>-->
 
 
