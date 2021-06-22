@@ -51,8 +51,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="profile_page_header_text">Your Profile</string>
-    <string name="profile_card_default_first_name_text">Name</string>
-    <string name="profile_card_default_last_name_text">Last Name</string>
+    <string name="profile_card_default_given_name_text">Name</string>
+    <string name="profile_card_default_family_name_text">Last Name</string>
     <string name="profile_card_barcode_description">Student ID barcode</string>
     <string name="profile_card_pic_description">Profile picture</string>
     <string name="profile_time_remaining_default_value">30 min</string>

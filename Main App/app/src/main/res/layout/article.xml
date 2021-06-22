@@ -70,7 +70,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/sfprodisplay_regular"
-                android:text="By Firstname Lastname"
+                android:text="By GivenName FamilyName"
                 android:textAlignment="center"
                 android:textColor="?attr/authorTextColor"
                 android:textSize="16sp"

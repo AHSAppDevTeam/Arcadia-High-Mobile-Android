@@ -14,9 +14,6 @@ import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
@@ -73,8 +70,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationC
         NavigationUI.setupWithNavController(navView, navController);
 
         navView.setItemIconTintList(null); // Remove tint from navbar; Required for navbar icons to work
-
-
     }
 
     @Override
