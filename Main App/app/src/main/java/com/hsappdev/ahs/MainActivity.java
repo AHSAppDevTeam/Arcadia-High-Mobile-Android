@@ -34,8 +34,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationC
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        // getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+        //      WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.article);
 
         SettingsManager settingsManager = SettingsManager.getInstance(getApplicationContext());
@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationC
 
     @Override
     public void slideUp(){
-        navView.animate().translationY(0).setDuration(500);
+//        navView.animate().translationY(0).setDuration(500);
             /*view.setVisibility(View.VISIBLE);
             TranslateAnimation animate = new TranslateAnimation(
                     0,                 // fromXDelta
@@ -89,25 +89,21 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationC
             animate.setDuration(500);
             animate.setFillAfter(true);
             view.startAnimation(animate);*/
-
-
     }
 
 
     // slide the view from its current position to below itself
     @Override
     public void slideDown(){
-        navView.animate().translationY(navView.getHeight()).setDuration(500);
-            /*TranslateAnimation animate = new TranslateAnimation(
-                    0,                 // fromXDelta
-                    0,                 // toXDelta
-                    0,                 // fromYDelta
-                    view.getHeight()); // toYDelta
-            animate.setDuration(500);
-            animate.setFillAfter(true);
-            view.startAnimation(animate);*/
-
-
+//        navView.animate().translationY(navView.getHeight()).setDuration(500);
+//            /*TranslateAnimation animate = new TranslateAnimation(
+//                    0,                 // fromXDelta
+//                    0,                 // toXDelta
+//                    0,                 // fromYDelta
+//                    view.getHeight()); // toYDelta
+//            animate.setDuration(500);
+//            animate.setFillAfter(true);
+//            view.startAnimation(animate);*/
     }
 
     @Override
