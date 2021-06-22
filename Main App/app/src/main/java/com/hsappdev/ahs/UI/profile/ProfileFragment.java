@@ -35,7 +35,7 @@ public class ProfileFragment extends Fragment {
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         try {
-             dayNightCallback = (SettingsManager.DayNightCallback) context;
+            dayNightCallback = (SettingsManager.DayNightCallback) context;
         } catch (ClassCastException e) {
             throw new ClassCastException();
         }
@@ -67,6 +67,7 @@ public class ProfileFragment extends Fragment {
 
     private void initProfileCardFragment(View view) {
         profileCardFragment = new ProfileCardFragment();
+
         getActivity().getSupportFragmentManager().beginTransaction()
                 .replace(R.id.profileCardFragmentHolder, profileCardFragment)
                 .commit();

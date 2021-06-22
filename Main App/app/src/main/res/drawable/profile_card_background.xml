@@ -2,7 +2,10 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
         <shape>
-            <solid android:color="@color/profileCardBackground" />
+            <gradient
+                android:startColor="#c76046"
+                android:endColor="#d67d45"
+                android:angle="0" />
             <corners android:radius="@dimen/profile_standard_radius"/>
         </shape>
     </item>

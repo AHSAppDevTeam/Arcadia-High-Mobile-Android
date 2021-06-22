@@ -1,83 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="240dp"
     android:background="@drawable/profile_card_background"
     android:elevation="@dimen/shadowElevation">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
+    <TextView
+        android:id="@+id/profile_card_first_name_textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/padding_x2"
+        android:layout_marginTop="@dimen/padding_x2"
+        android:layout_marginEnd="@dimen/padding_x2"
+        android:fontFamily="@font/mediumbold_lightregular"
+        android:text="@string/profile_card_default_first_name_text"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <LinearLayout
-            android:id="@+id/linearLayout3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="@dimen/padding_x2"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+    <TextView
+        android:id="@+id/profile_card_last_name_textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/padding_x2"
+        android:layout_marginTop="@dimen/padding_x4"
+        android:layout_marginEnd="@dimen/padding_x2"
+        android:fontFamily="@font/mediumbold_lightregular"
+        android:text="@string/profile_card_default_last_name_text"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/profile_card_firstname_textView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/mediumbold_lightregular"
-                android:text="@string/profile_card_default_firstname_text"
-                android:textColor="@color/white"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/profile_card_lastname_textView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/mediumbold_lightregular"
-                android:text="@string/profile_card_default_lastname_text"
-                android:textColor="@color/white"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                app:layout_constraintTop_toBottomOf="@+id/profile_card_firstname_textView"
-                tools:layout_editor_absoluteX="0dp" />
-
-            <ImageView
-                android:id="@+id/profile_card_barcode"
-                android:layout_width="180dp"
-                android:layout_height="50dp"
-                android:layout_marginTop="@dimen/padding_x2"
-                android:src="@drawable/home_img_shadow_frame"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                />
-        </LinearLayout>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
+    <ImageView
+        android:id="@+id/profile_card_barcode_img"
+        android:layout_width="176dp"
+        android:layout_height="68dp"
+        android:layout_marginStart="@dimen/padding_x2"
+        android:layout_marginBottom="@dimen/padding_x2"
+        android:src="@drawable/profile_card_barcode_stripes"
+        android:background="@drawable/profile_card_barcode_bg"
+        android:padding="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:contentDescription="@string/profile_card_barcode_description"/>
 
     <ImageView
         android:id="@+id/profile_card_profile_img"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_margin="@dimen/padding_x.5"
+        android:layout_width="@dimen/profile_photo_radius"
+        android:layout_height="@dimen/profile_photo_radius"
+        android:layout_marginTop="@dimen/padding_x1.5"
+        android:layout_marginEnd="@dimen/padding_x1.5"
+        android:background="@drawable/profile_card_profile_bg"
         android:cropToPadding="true"
+        android:elevation="@dimen/shadowElevation"
         android:padding="@dimen/profile_card_accountImage_padding"
         android:src="@drawable/profile_card_default_profile_pic"
         app:layout_constraintDimensionRatio="1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:background="@drawable/profile_card_profile_bg"
-        android:elevation="@dimen/shadowElevation"/>
-
-
-
+        android:contentDescription="@string/profile_card_pic_description"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
