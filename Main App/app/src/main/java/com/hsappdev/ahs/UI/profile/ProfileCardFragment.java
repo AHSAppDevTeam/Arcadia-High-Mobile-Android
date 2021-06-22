@@ -143,7 +143,7 @@ public class ProfileCardFragment extends Fragment {
     }
 
     public void setPhotoUrl(String photoUrl) {
-        ImageUtil.setImageToView(photoUrl, accountImage);
+        ImageUtil.setCircleImageToView(photoUrl, accountImage);
     }
 
     public void setUserId(String userId) {
