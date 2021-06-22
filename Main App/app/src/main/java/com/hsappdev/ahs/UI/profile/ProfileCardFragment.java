@@ -54,7 +54,9 @@ public class ProfileCardFragment extends Fragment {
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
         GoogleSignInOptions gsOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
+                ,setHostedDomain("students.ausd.net")
                 .build();
+        
         // Build a GoogleSignInClient with the options specified by gso.
         Context context = getActivity();
         gsClient = GoogleSignIn.getClient(context, gsOptions);
