@@ -78,4 +78,17 @@ public class ImageUtil {
 
     }
 
+    public static void setCircleImageToView(String imageUrl, ImageView imageView) {
+        if (imageView instanceof ShapeableImageView) {
+            ShapeableImageView shapeableImageView = (ShapeableImageView) imageView;
+            shapeableImageView.setShapeAppearanceModel(new ShapeAppearanceModel().withCornerSize(ScreenUtil.dp_to_px(imageView.getContext().getResources().getDimension(R.dimen.padding) / 2, imageView.getContext())));
+        }
+        Glide
+                .with(imageView.getContext())
+                .load(imageUrl)
+                .circleCrop()
+                .error(R.drawable.home_img_shadow_frame)
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .into(imageView);
+    }
 }

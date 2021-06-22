@@ -9,36 +9,39 @@ import android.graphics.PixelFormat;
 import android.graphics.drawable.Drawable;
 
 public class BarcodeDrawable extends Drawable {
-    private final Paint blackPaint = new Paint();
+    private static final Paint blackPaint = new Paint();
     private final Path codePath = new Path();
     private final String codeData;
-    private final int userIdLength = 5;
-    private final int codeDigitLength = 6;
-    private final int codeDataLength = ( userIdLength + 2 ) * codeDigitLength;
+    private static final int userIdLength = 5;
+    private static final int codeDigitLength = 6;
+    private static final int codeDataLength = ( userIdLength + 2 ) * codeDigitLength;
+    private static final String codeDelimiter = "1 1001";
+    private static final String[] codeDigits = new String[]{
+            "11 001",
+            "01 110",
+            "10 110",
+            "00 111",
+            "11 010",
+            "01 011",
+            "10 011",
+            "11 100",
+            "01 101",
+            "10 101",
+    };
+    private static final int viewportWidth = 208;
+    private static final int narrowWidth = 2;
+    private static final int wideWidth = 5;
+    private static final int spaceWidth = 2;
 
     public BarcodeDrawable(int userId) {
         // Create path data from id
-        final String codeDelimiter = "1 1001";
         final StringBuilder codeBuilder = new StringBuilder(codeDelimiter);
         for(int i = 0; i < userIdLength; i++){
-            final String[] codeDigits = new String[]{
-                    "11 001",
-                    "01 110",
-                    "10 110",
-                    "00 111",
-                    "11 010",
-                    "01 011",
-                    "10 011",
-                    "11 100",
-                    "01 101",
-                    "10 101",
-            };
             codeBuilder.append(codeDigits[userId % 10]); // Extract unit digit as index
             userId /= 10; // Remove unit digit
         }
         codeBuilder.append(codeDelimiter);
         codeData = codeBuilder.toString();
-
         blackPaint.setColor(Color.BLACK);
     }
 
@@ -50,17 +53,12 @@ public class BarcodeDrawable extends Drawable {
         final float height = getBounds().height();
 
         // Unit length
-        final int viewportWidth = 208;
         final float unit = width / viewportWidth;
 
         // Draw from path data, with horizontal cursor offset set at 0
         float horizontalOffset = 0f;
         for(int i = 0; i < codeDataLength; i++){
             final char type = codeData.charAt(i);
-
-            final int narrowWidth = 2;
-            final int wideWidth = 5;
-            final int spaceWidth = 2;
             final float stripeWidth = unit * (
                 type == ' ' ? spaceWidth :
                 type == '0' ? wideWidth :
@@ -68,15 +66,13 @@ public class BarcodeDrawable extends Drawable {
             );
 
             // draw black line if stripe type is not space
-            if(type != ' ') {
-                codePath.addRect(
-                        horizontalOffset,
-                        0f,
-                        horizontalOffset + stripeWidth,
-                        height,
-                        Path.Direction.CW
-                );
-            }
+            if(type != ' ') codePath.addRect(
+                    horizontalOffset,
+                    0f,
+                    horizontalOffset + stripeWidth,
+                    height,
+                    Path.Direction.CW
+            );
 
             // move cursor rightwards
             final float gapWidth = 2 * unit;
