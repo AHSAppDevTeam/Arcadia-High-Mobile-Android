@@ -51,8 +51,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="profile_page_header_text">Your Profile</string>
-    <string name="profile_card_default_given_name_text">Name</string>
-    <string name="profile_card_default_family_name_text">Last Name</string>
+    <string name="profile_card_default_given_name">Digital ID card:</string>
+    <string name="profile_card_default_family_name">Click to sign in</string>
     <string name="profile_card_barcode_description">Student ID barcode</string>
     <string name="profile_card_pic_description">Profile picture</string>
     <string name="profile_time_remaining_default_value">30 min</string>
@@ -65,5 +65,7 @@
     <string name="student_bulletin_title_text"><b>Student</b> Bulletin</string>
     <string name="db_categories_iconURL">iconURL</string>
     <string name="bulletin_comming_up_text"><b>Coming</b> Up</string>
+    <string name="profile_card_default_photo_url">https://ahs.app/icon.png</string>
+    <string name="profile_card_default_user_id">12345</string>
 
 </resources>
