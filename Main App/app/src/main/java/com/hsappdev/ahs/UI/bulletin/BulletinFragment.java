@@ -63,12 +63,12 @@ public class BulletinFragment extends Fragment implements CategoriesLoadedCallba
         comingUpAdapter = new ComingUpRecyclerAdapter(onArticleClick);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        LinearLayoutManager commingUpLinearLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
+        LinearLayoutManager comingUpLinearLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapter);
-        comingUpRecyclerView.setLayoutManager(commingUpLinearLayoutManager);
+        comingUpRecyclerView.setLayoutManager(comingUpLinearLayoutManager);
         comingUpRecyclerView.setAdapter(comingUpAdapter);
     }
 
@@ -130,7 +130,7 @@ public class BulletinFragment extends Fragment implements CategoriesLoadedCallba
             BulletinCategoryWidget category = new BulletinCategoryWidget(getContext(), categories.get(i), this);
             int p = (int) ScreenUtil.dp_to_px(getResources().getDimension(R.dimen.padding), getContext())/4;
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
-                    (int) ScreenUtil.dp_to_px(130, getContext()),
+                    (int) ScreenUtil.dp_to_px(100, getContext()),
                     LinearLayout.LayoutParams.MATCH_PARENT,
                     1.0f
             );
@@ -235,6 +235,9 @@ public class BulletinFragment extends Fragment implements CategoriesLoadedCallba
 
     @Override
     public boolean isActivityDestroyed() {
+        if(getActivity() == null){
+            return true;
+        }
         return getActivity().isDestroyed();
     }
 }

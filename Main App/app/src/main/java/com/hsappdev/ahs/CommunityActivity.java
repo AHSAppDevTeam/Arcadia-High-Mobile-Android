@@ -89,27 +89,39 @@ public class CommunityActivity extends AppCompatActivity implements OnItemClick,
 
         LinearLayout linearLayout = findViewById(R.id.community_activity_article_linearLayout);
 
+        int p = 40;
         if(articleIds.size() > 0) {
-            CommunityArticleUnit articleUnit = new CommunityArticleUnit(getApplicationContext(), articleIds.get(0), this, this);
-            linearLayout.addView(articleUnit);
+            CommunityArticleUnit articleUnit = new CommunityArticleUnit(getApplicationContext(), articleIds.get(0), this, this, false);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    1.0f
+            );
+            params.setMargins(p, p, p, p);
+            linearLayout.addView(articleUnit, params);
             articleIds.remove(0);
 
         }
+
         if(articleIds.size() > 0) {
             for (int i = 0; i < articleIds.size(); i += gridNum) {
                 LinearLayout intermediateLinearLayout = new LinearLayout(getApplicationContext());
                 intermediateLinearLayout.setWeightSum(gridNum);
                 for (int j = i; j < i + gridNum; j++) {
                     if (j < articleIds.size()) {
-                        CommunityArticleUnit secondaryArticleUnit = new CommunityArticleUnit(getApplicationContext(), articleIds.get(j), this, this);
-                        secondaryArticleUnit.setLayoutParams(new LinearLayout.LayoutParams(
+                        boolean isSmall = articleIds.size() >= i+gridNum;
+                        CommunityArticleUnit secondaryArticleUnit = new CommunityArticleUnit(getApplicationContext(), articleIds.get(j), this, this, isSmall);
+                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                                 LinearLayout.LayoutParams.MATCH_PARENT,
                                 LinearLayout.LayoutParams.WRAP_CONTENT,
                                 1.0f
-                        ));
+                        );
+                        params.setMargins(p, p, p, p);
+                        secondaryArticleUnit.setLayoutParams(params);
                         intermediateLinearLayout.addView(secondaryArticleUnit);
                     }
                 }
+
                 linearLayout.addView(intermediateLinearLayout);
             }
         }

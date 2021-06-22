@@ -106,7 +106,8 @@ public class BulletinCategoryWidget extends CardView implements CategoryLoadedCa
             bgImageView.setBackgroundColor(category.getColor());
 
             //bgImageView.setBackgroundTintBlendMode(BlendMode.MULTIPLY);
-            bgImageView.setPadding(10,10,10,10);
+            int p = 8;
+            bgImageView.setPadding(p,p,p,p);
             bgImageView.setBackgroundTintList(ColorStateList.valueOf(category.getColor()));
 
             bgImageView.setImageDrawable(r.getDrawable(R.drawable.bulletin_category_icon_unselected_border, getContext().getTheme()));

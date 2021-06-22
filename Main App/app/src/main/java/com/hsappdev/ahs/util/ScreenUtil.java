@@ -28,6 +28,15 @@ public class ScreenUtil {
         }
     }
 
+    public static void setPlainHTMLStringToTextView(String html, TextView textView){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            textView.setText(Html.fromHtml(html, Html.FROM_HTML_MODE_COMPACT).toString());
+        } else {
+            textView.setText(Html.fromHtml(html));
+        }
+
+    }
+
     public static void setTimeToTextView(long timestamp, TextView view){
         long time = (long) (System.currentTimeMillis()/1000f);
         Log.d("time", time+"");

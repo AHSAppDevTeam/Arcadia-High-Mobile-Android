@@ -20,12 +20,12 @@
         android:id="@+id/profile_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/padding_x.5"
+        android:layout_marginTop="@dimen/padding"
         android:fontFamily="@font/heavybold_lightregular"
         android:text="@string/profile_page_header_text"
         android:paddingBottom="@dimen/padding"
         android:textColor="@color/brightRed"
-        android:textSize="24sp" />
+        android:textSize="28sp" />
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/profileCardFragmentHolder"
         android:layout_width="match_parent"

@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.hsappdev.ahs.BottomNavigationCallback;
@@ -39,10 +40,6 @@ public class HomeFragment extends Fragment {
     }
 
     private BottomNavigationCallback bottomNavigationViewAdapter;
-
-    // For Featured Articles
-    ViewPager2 featuredArticleViewPager;
-    List<Article> articleList;
 
     @Override
     public void onAttach(@NonNull Context context) {

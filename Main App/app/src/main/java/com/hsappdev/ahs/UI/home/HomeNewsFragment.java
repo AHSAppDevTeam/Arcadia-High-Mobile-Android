@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DataSnapshot;
@@ -29,6 +30,9 @@ public class HomeNewsFragment extends Fragment {
     private static final String TAG = "HomeNewsFragment";
 
     private OnItemClick onArticleClick;
+
+    private ProgressBar progressBar;
+
 
     public HomeNewsFragment() {
         // Required empty public constructor
@@ -61,7 +65,7 @@ public class HomeNewsFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.home_news_fragment, container, false);
 
-
+        progressBar = view.findViewById(R.id.home_page_loading_bar);
 
         NewsRecyclerAdapter adapter = new NewsRecyclerAdapter(new ArrayList<String>(), onArticleClick, getActivity());
         RecyclerView recyclerView = view.findViewById(R.id.home_news_recyclerView);
@@ -83,7 +87,8 @@ public class HomeNewsFragment extends Fragment {
                     categoriesIDs.add(sectionTitle.getValue(String.class));
                 }
                 adapter.addCategoryIDs(categoriesIDs);
-                //Log.d(TAG, "add to category titles");
+
+                progressBar.setVisibility(View.GONE);
             }
 
             @Override

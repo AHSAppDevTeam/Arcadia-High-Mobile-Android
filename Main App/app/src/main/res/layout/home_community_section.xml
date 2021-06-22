@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:grid="http://schemas.android.com/apk/lib/android.support.v7.widget.GridLayout"
-    android:padding="@dimen/padding"
+    android:layout_margin="@dimen/padding"
     >
     <TextView
         android:id="@+id/community_section_name"
@@ -44,8 +44,7 @@
 
         android:background="@drawable/community_section_unit_background"
         android:backgroundTint="?attr/bgColorAccent"
-        android:outlineAmbientShadowColor="@color/bgColor_night"
-        android:outlineSpotShadowColor="@color/bgColor_night"
+
         >
 
         <androidx.cardview.widget.CardView
@@ -138,6 +137,7 @@
             android:text="This is a great section"
             android:textColor="?attr/titleColor"
             android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/image_grid" />

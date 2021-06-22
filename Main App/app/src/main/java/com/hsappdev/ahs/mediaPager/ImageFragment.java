@@ -1,9 +1,11 @@
 package com.hsappdev.ahs.mediaPager;
 
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -26,9 +28,16 @@ public class ImageFragment extends Fragment implements View.OnClickListener{
         String url = getArguments().getString(ImageViewActivity.IMAGE_URL_KEY);
         this.media = new Media(url, false);
         View view = inflater.inflate(R.layout.image_fragment, container, false);
-        ImageUtil.setImageToView(media.getMediaURL(), view.findViewById(R.id.media_image_fragment_imageView));
+        ImageView image = view.findViewById(R.id.media_image_fragment_imageView);
+        ImageUtil.setImageToView(media.getMediaURL(), image);
 
-        view.setOnClickListener(this);
+        TypedValue outValue = new TypedValue();
+        getContext().getTheme().resolveAttribute(android.R.attr.selectableItemBackground, outValue, true);
+        image.setForeground(getResources().getDrawable(outValue.resourceId, getContext().getTheme()));
+        image.setClickable(true);
+        image.setFocusable(true);
+
+        image.setOnClickListener(this);
 
         return view;
     }
