@@ -1,9 +1,10 @@
 package com.hsappdev.ahs.UI.profile;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.Task;
 import com.hsappdev.ahs.R;
 import com.hsappdev.ahs.util.BarcodeDrawable;
 import com.hsappdev.ahs.util.ImageUtil;
@@ -26,22 +29,16 @@ import java.util.regex.Pattern;
 
 public class ProfileCardFragment extends Fragment {
     private static final String TAG = "ProfileCardFragment";
-    private static final Pattern idOfEmail = Pattern.compile("\\b(\\d{5})@students\\.ausd\\.net\\b");
-
-    // Fields
-    private String givenName;
-    private String familyName;
-    private String PhotoUrl;
-    private int userId;
+    private static final Pattern idOfEmail = Pattern.compile("^(\\d{5})@students\\.ausd\\.net$");
 
     private TextView givenNameTextView;
     private TextView familyNameTextView;
     private ImageView barcodeImage;
     private ImageView accountImage;
 
-    private Context context;
-
-    private GoogleSignInClient client;
+    private GoogleSignInClient gsClient;
+    private static final int RC_SIGN_IN = 8888;
+    private Boolean gsSignedIn = false;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -52,81 +49,105 @@ public class ProfileCardFragment extends Fragment {
         barcodeImage = view.findViewById(R.id.profile_card_barcode_img);
         accountImage = view.findViewById(R.id.profile_card_photo_img);
 
-        context = getActivity();
         // Google OAuth
         // Configure sign-in to request the user's ID, email address, and basic
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+        GoogleSignInOptions gsOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
         // Build a GoogleSignInClient with the options specified by gso.
-        client = GoogleSignIn.getClient(context, gso);
+        Context context = getActivity();
+        gsClient = GoogleSignIn.getClient(context, gsOptions);
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(context);
-
-        if ( account != null ) {
-            setDetails(account);
-        } else {
-            setDetails("Giovanna-Xiomara","Carranza-Castellon","https://ahs.app/icon.png",69420);
-        }
+        gsSignedIn = account != null;
+        if(gsSignedIn) setDetails(account);
 
         view.setOnClickListener(new View.OnClickListener() {
-            private static final int RC_SIGN_IN = 42;
-
             @Override
-            public void onClick(View v)
-            {
-                Intent signInIntent = client.getSignInIntent();
-                startActivityForResult(signInIntent, RC_SIGN_IN);
+            public void onClick(View v) {
+                if(gsSignedIn) {
+                    gsClient.signOut();
+                    gsSignedIn = false;
+                    setDetails(0);
+                } else {
+                    Intent signInIntent = gsClient.getSignInIntent();
+                    startActivityForResult(signInIntent, RC_SIGN_IN);
+                }
             }
         });
 
         return view;
     }
-    
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
+        if (requestCode == RC_SIGN_IN) {
+            // The Task returned from this call is always completed, no need to attach
+            // a listener.
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            try {
+                GoogleSignInAccount account = task.getResult(ApiException.class);
+                gsSignedIn = account != null;
+                if(gsSignedIn) setDetails(account);
+            } catch (ApiException error) {
+                // The ApiException status code indicates the detailed failure reason.
+                // Please refer to the GoogleSignInStatusCodes class reference for more information.
+                Log.w(TAG, "signInResult:failed code=" + error.getStatusCode());
+                setDetails(0);
+            }
+        }
+    }
+
     // GETTERS AND SETTERS
-    public void setDetails(String givenName, String familyName, String profilePictureUrl, int userId){
+    public void setDetails(String givenName, String familyName, String photoUrl, String userId){
         setGivenName(givenName);
         setFamilyName(familyName);
-        setPhotoUrl(profilePictureUrl);
+        setPhotoUrl(photoUrl);
         setUserId(userId);
     }
     public void setDetails(GoogleSignInAccount account){
         setGivenName(account.getGivenName());
         setFamilyName(account.getFamilyName());
-        setPhotoUrl(account.getPhotoUrl().toString());
-        setUserId(Integer.parseInt(idOfEmail.matcher(account.getEmail()).toMatchResult().group()));
+        try {
+            setPhotoUrl(account.getPhotoUrl().toString());
+        } catch (NullPointerException error) {
+            Log.d(TAG,"Profile photo does not exist.");
+        }
+        try {
+            setUserId(idOfEmail.matcher(account.getEmail()).group());
+        } catch (NullPointerException error) {
+            Log.d(TAG,"Email does not exist.");
+        } catch (IllegalStateException error) {
+            Log.d(TAG, "Email does not contain ID.");
+        }
+    }
+    public void setDetails(int reset) {
+        Resources res = getResources();
+        setDetails(
+                res.getString(R.string.profile_card_default_given_name),
+                res.getString(R.string.profile_card_default_family_name),
+                res.getString(R.string.profile_card_default_photo_url),
+                res.getString(R.string.profile_card_default_user_id)
+        );
     }
 
-    public String getGivenName() {
-        return givenName;
-    }
     public void setGivenName(String givenName) {
-        this.givenName = givenName;
         givenNameTextView.setText(givenName);
     }
 
-    public String getFamilyName() {
-        return familyName;
-    }
     public void setFamilyName(String familyName) {
-        this.familyName = familyName;
         familyNameTextView.setText(familyName);
     }
 
-    public String getPhotoUrl() {
-        return PhotoUrl;
-    }
-    public void setPhotoUrl(String PhotoUrl) {
-        this.PhotoUrl = PhotoUrl;
-        ImageUtil.setImageToView(PhotoUrl, accountImage);
+    public void setPhotoUrl(String photoUrl) {
+        ImageUtil.setImageToView(photoUrl, accountImage);
     }
 
-    public int getUserId() {
-        return userId;
-    }
-    public void setUserId(int userId) {
-        this.userId = userId;
-        BarcodeDrawable barcodeCanvas = new BarcodeDrawable(userId);
+    public void setUserId(String userId) {
+        BarcodeDrawable barcodeCanvas = new BarcodeDrawable(Integer.parseInt(userId));
         barcodeImage.setImageDrawable(barcodeCanvas);
     }
 }
