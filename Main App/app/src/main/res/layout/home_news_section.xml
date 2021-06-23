@@ -11,23 +11,23 @@
         android:id="@+id/home_news_sectionTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/padding"
-        android:layout_marginEnd="@dimen/padding"
-        android:textSize="24sp"
-        android:textColor="@color/brightRed"
+        android:layout_marginBottom="@dimen/padding_x.5"
+        android:layout_marginHorizontal="@dimen/padding"
         android:fontFamily="@font/heavybold_lightregular"
-        android:text="Section Title" />
+        android:text="@string/article_default_category"
+        android:textColor="@color/brightRed"
+        android:textSize="24sp" />
 
     <androidx.viewpager2.widget.ViewPager2
 
         android:id="@+id/home_featured_carousel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:clipToPadding="false"
+        android:layout_marginStart="@dimen/padding_x2"
+        android:layout_marginEnd="@dimen/padding_x2"
+        android:layout_marginBottom="@dimen/padding"
         android:clipChildren="false"
-        android:paddingLeft="@dimen/padding_x1.5"
-        android:paddingRight="@dimen/padding_x1.5"
-        />
+        android:clipToPadding="false" />
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/featured_tab_layout"
         android:layout_width="match_parent"
@@ -43,8 +43,7 @@
         android:layout_height="wrap_content"
         android:clipToPadding="false"
         android:clipChildren="false"
-        android:paddingLeft="@dimen/padding_x1.5"
-        android:paddingRight="@dimen/padding_x1.5"
+        android:paddingHorizontal="@dimen/padding"
         />
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/medium_tab_layout"
@@ -55,14 +54,12 @@
         app:tabIndicatorHeight="0dp"/>
 
     <androidx.viewpager2.widget.ViewPager2
-
         android:id="@+id/home_small_carousel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clipToPadding="false"
         android:clipChildren="false"
-        android:paddingLeft="@dimen/padding_x1.5"
-        android:paddingRight="@dimen/padding_x1.5"
+        android:paddingHorizontal="@dimen/padding"
         />
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/small_tab_layout"
