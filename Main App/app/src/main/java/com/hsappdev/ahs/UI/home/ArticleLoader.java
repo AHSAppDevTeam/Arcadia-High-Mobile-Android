@@ -52,12 +52,15 @@ public class ArticleLoader {
             ArticleCache testArticle = articleCache.get(i);
             if(testArticle.articleID.equals(articleID)) {
                 foundArticle = true;
+                // registerForCallback is essential for the cache system
+                // it handles whether an article should be taken from cache or from firebase
                 testArticle.registerForCallback(callback);
             }
         }
         if(!foundArticle) {
-            ArticleCache cacheArticle = new ArticleCache(articleID, r);
-            cacheArticle.registerForCallback(callback);
+            // If article is not in the cache, add it to the cache
+            // each articleCache will take care of loading itself
+            ArticleCache cacheArticle = new ArticleCache(articleID, r, callback);
             articleCache.add(cacheArticle);
         }
     }
@@ -74,6 +77,13 @@ public class ArticleLoader {
         public ArticleCache(String articleID, Resources r) {
             this.r = r;
             this.articleID = articleID;
+            loadArticle();
+        }
+
+        public ArticleCache(String articleID, Resources r, OnArticleLoadedCallback callback) {
+            this.r = r;
+            this.articleID = articleID;
+            registerForCallback(callback); // Make sure to do this first before loading articles
             loadArticle();
         }
 
@@ -162,6 +172,8 @@ public class ArticleLoader {
                 registeredCallbacks.add(newCallback);
             }
             if(article != null) {
+                // If the article is already loaded, call the callback
+                // otherwise, wait until the callback is called in the onDataChange() method
                 newCallback.onArticleLoaded(article);
             }
         }
