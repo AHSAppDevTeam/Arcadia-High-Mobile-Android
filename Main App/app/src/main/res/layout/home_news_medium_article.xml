@@ -16,23 +16,20 @@
             android:layout_height="wrap_content"
             android:clipChildren="false"
             android:clipToPadding="false"
-            android:padding="@dimen/padding_x.5">
+            android:layout_marginHorizontal="@dimen/padding_x.5">
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/medium_article_image"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:background="@drawable/home_img_shadow_frame"
-                android:elevation="@dimen/elevation"
-                android:fadingEdgeLength="@dimen/cardview_compat_inset_shadow"
-
+                android:background="@drawable/img_frame_medium"
+                android:elevation="0dp"
                 app:layout_constraintDimensionRatio="1.35"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/medium_article_time"
-                app:shapeAppearanceOverlay="@drawable/home_img_shadow_frame"
-                app:srcCompat="@drawable/home_img_placeholder">
+                app:srcCompat="@drawable/img_frame_large">
 
             </com.google.android.material.imageview.ShapeableImageView>
 <!--            android:outlineAmbientShadowColor="@color/black"-->
@@ -43,25 +40,26 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/sfprodisplay_bold"
                 android:gravity="start"
-                android:text="Title"
-                android:maxLines="2"
+                android:text="@string/article_default_title"
+                android:maxLines="4"
                 android:ellipsize="end"
                 android:textAlignment="textStart"
                 android:textColor="?attr/titleColor"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/medium_article_image" />
+                app:layout_constraintTop_toBottomOf="@+id/medium_article_image"
+                android:layout_margin="@dimen/padding_x.5" />
 
 
             <TextView
                 android:id="@+id/medium_article_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingTop="8dp"
-                android:paddingBottom="8dp"
+                android:paddingHorizontal="@dimen/padding_x.5"
+                android:paddingBottom="@dimen/padding_x.5"
                 android:gravity="center_vertical"
-                android:text="00m ago"
+                android:text="@string/article_default_time"
                 android:textSize="12sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"

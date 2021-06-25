@@ -1,21 +1,11 @@
 package com.hsappdev.ahs.util;
 
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
-import android.view.View;
 import android.widget.ImageView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.MultiTransformation;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
-import com.bumptech.glide.request.RequestOptions;
-import com.bumptech.glide.request.target.CustomViewTarget;
 import com.bumptech.glide.request.target.Target;
-import com.bumptech.glide.request.transition.Transition;
 import com.github.chrisbanes.photoview.PhotoView;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.shape.ShapeAppearanceModel;
@@ -33,7 +23,7 @@ public class ImageUtil {
                 .with(imageView.getContext())
                 .load(imageUrl)
                 .centerCrop()
-                .error(R.drawable.home_img_shadow_frame)
+                .error(R.drawable.img_frame_large)
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(imageView);
 
@@ -48,7 +38,7 @@ public class ImageUtil {
                 .with(imageView.getContext())
                 .load(imageUrl)
                 .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
-                .error(R.drawable.home_img_shadow_frame)
+                .error(R.drawable.img_frame_large)
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(imageView);
 
@@ -59,7 +49,7 @@ public class ImageUtil {
                 .with(imageView.getContext())
                 .load(imageUrl)
                 .transform(new BlurTransformation(100, 3), new CenterCrop())
-                .error(R.drawable.home_img_shadow_frame)
+                .error(R.drawable.img_frame_large)
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(imageView);
 
@@ -72,7 +62,7 @@ public class ImageUtil {
                 .with(imageView.getContext())
                 .load(imageUrl)
                 .centerCrop()
-                .error(R.drawable.home_img_shadow_frame)
+                .error(R.drawable.img_frame_large)
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(imageView);
 
@@ -87,7 +77,7 @@ public class ImageUtil {
                 .with(imageView.getContext())
                 .load(imageUrl)
                 .circleCrop()
-                .error(R.drawable.home_img_shadow_frame)
+                .error(R.drawable.img_frame_large)
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(imageView);
     }
