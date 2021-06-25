@@ -74,7 +74,7 @@ public class CommunityArticleUnit extends CardView implements OnArticleLoadedCal
     }
 
     private void setDetails(String articleId) {
-        new ArticleLoader().loadArticle(articleId, r, this);
+        ArticleLoader.getInstance().getArticle(articleId, r, this);
     }
 
 

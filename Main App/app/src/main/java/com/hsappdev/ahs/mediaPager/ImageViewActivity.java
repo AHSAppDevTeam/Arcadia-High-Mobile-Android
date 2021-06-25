@@ -21,6 +21,7 @@ public class ImageViewActivity extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 //        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 //                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContentView(R.layout.image_view_activity);
 
         String url = getIntent().getStringExtra(IMAGE_URL_KEY);

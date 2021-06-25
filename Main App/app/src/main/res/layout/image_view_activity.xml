@@ -5,7 +5,8 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/bgColor_night"
-    tools:context=".mediaPager.ImageViewActivity">
+    tools:context=".mediaPager.ImageViewActivity"
+    android:fitsSystemWindows="false">
 
     <ImageView
         android:id="@+id/zooming_photo_view_background_img"

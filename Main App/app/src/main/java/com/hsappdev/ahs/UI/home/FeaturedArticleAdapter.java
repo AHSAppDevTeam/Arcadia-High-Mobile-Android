@@ -104,7 +104,7 @@ public class FeaturedArticleAdapter extends RecyclerView.Adapter<FeaturedArticle
 
         public void setDetails(String articleID){
             articleLayout.setOnClickListener(this);
-            new ArticleLoader().loadArticle(articleID, r, this);
+            ArticleLoader.getInstance().getArticle(articleID, r, this);
         }
 
 
