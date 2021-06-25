@@ -9,6 +9,7 @@ import androidx.navigation.ui.NavigationUI;
 
 import android.content.Intent;
 import android.content.res.Resources;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Window;
@@ -70,6 +71,12 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationC
         NavigationUI.setupWithNavController(navView, navController);
 
         navView.setItemIconTintList(null); // Remove tint from navbar; Required for navbar icons to work
+
+        // Handle links from ahs.app
+        Intent appLinkIntent = getIntent();
+        String appLinkAction = appLinkIntent.getAction();
+        Uri appLinkData = appLinkIntent.getData();
+        Log.w(TAG,appLinkData.toString());
     }
 
     @Override

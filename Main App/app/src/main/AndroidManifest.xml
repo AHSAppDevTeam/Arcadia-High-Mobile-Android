@@ -9,13 +9,24 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ArcadiaHighMobile">
-        <activity android:name=".ArticleActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            >
+        <activity
+            android:name=".ArticleActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize">
 
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:scheme="https"
+                    android:host="ahs.app"
+                    android:pathPattern="/.*" />
+            </intent-filter>
         </activity>
-        <activity android:name=".mediaPager.ImageViewActivity"/>
-        <activity android:name=".CommunityActivity"/>
+        <activity android:name=".mediaPager.ImageViewActivity" />
+        <activity android:name=".CommunityActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
