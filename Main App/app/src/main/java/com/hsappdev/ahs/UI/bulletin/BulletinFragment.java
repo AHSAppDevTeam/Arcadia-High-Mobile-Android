@@ -37,7 +37,7 @@ public class BulletinFragment extends Fragment implements CategoriesLoadedCallba
     private RecyclerView recyclerView;
     private RecyclerView comingUpRecyclerView;
     private BulletinRecyclerAdapter adapter;
-    private ComingUpRecyclerAdapter comingUpAdapter;
+    private BulletinRecyclerAdapter comingUpAdapter;
     private OnItemClick onArticleClick;
 
     @Override
@@ -59,8 +59,8 @@ public class BulletinFragment extends Fragment implements CategoriesLoadedCallba
     }
 
     private void loadRecyclerView() {
-        adapter = new BulletinRecyclerAdapter(onArticleClick);
-        comingUpAdapter = new ComingUpRecyclerAdapter(onArticleClick);
+        adapter = new BulletinRecyclerAdapter(onArticleClick, false);
+        comingUpAdapter = new BulletinRecyclerAdapter(onArticleClick, true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         LinearLayoutManager comingUpLinearLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
@@ -207,8 +207,10 @@ public class BulletinFragment extends Fragment implements CategoriesLoadedCallba
                 articles.add(sortedListRef.removeItemAt(0));
             }
         }
+        comingUpSortedListRef.beginBatchedUpdates();
         comingUpSortedListRef.clear();
         comingUpSortedListRef.addAll(articles);
+        comingUpSortedListRef.endBatchedUpdates();
         sortedListRef.endBatchedUpdates();
     }
 

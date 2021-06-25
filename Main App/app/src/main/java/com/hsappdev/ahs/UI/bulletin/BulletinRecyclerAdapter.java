@@ -18,7 +18,11 @@ import com.hsappdev.ahs.util.ScreenUtil;
 
 public class BulletinRecyclerAdapter extends RecyclerView.Adapter<BulletinRecyclerAdapter.BulletinArticleViewHolder> {
     private final OnItemClick onArticleClick;
+    private final boolean isComingUpArticles;
+
     private final int UP_COMING = 1, DEFAULT = 0;
+
+
     private SortedList<Article> articleSortedList = new SortedList<Article>(Article.class, new SortedList.Callback<Article>() {
         @Override
         public int compare(Article o1, Article o2) {
@@ -61,8 +65,9 @@ public class BulletinRecyclerAdapter extends RecyclerView.Adapter<BulletinRecycl
         }
     });
 
-    public BulletinRecyclerAdapter(OnItemClick onArticleClick) {
+    public BulletinRecyclerAdapter(OnItemClick onArticleClick, boolean isComingUpArticles) {
         this.onArticleClick = onArticleClick;
+        this.isComingUpArticles = isComingUpArticles;
     }
 
 
@@ -70,10 +75,10 @@ public class BulletinRecyclerAdapter extends RecyclerView.Adapter<BulletinRecycl
     @Override
     public BulletinArticleViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         if(viewType == DEFAULT) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.saved_article_holder, parent, false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.bulletin_defualt_article_holder, parent, false);
             return new BulletinRecyclerAdapter.BulletinArticleViewHolder(view);
         } else {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.saved_article_holder, parent, false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.bulletin_up_coming_article_holder, parent, false);
             return new BulletinRecyclerAdapter.ComingUpArticleViewHolder(view);
         }
     }
@@ -90,23 +95,25 @@ public class BulletinRecyclerAdapter extends RecyclerView.Adapter<BulletinRecycl
 
     @Override
     public int getItemViewType(int position) {
-        if(position < 4){
+        if(isComingUpArticles){
             return UP_COMING;
         }
         return DEFAULT;
     }
 
     public class ComingUpArticleViewHolder extends BulletinArticleViewHolder {
+        private final TextView number;
 
         public ComingUpArticleViewHolder(@NonNull View itemView) {
             super(itemView);
+            number = itemView.findViewById(R.id.bulletin_article_up_coming_number);
         }
 
         @Override
         public void setDetails(Article article, OnItemClick onArticleClick) {
             super.setDetails(article, onArticleClick);
-            title.setText(article.getTitle()+" UpComing");
-
+            number.setText(Integer.toString(getAdapterPosition()+1));
+            number.setTextColor(article.getCategoryDisplayColor());
         }
     }
 
@@ -129,7 +136,9 @@ public class BulletinRecyclerAdapter extends RecyclerView.Adapter<BulletinRecycl
             title.setText(article.getTitle());
             Helper.setBoldRegularText(category, article.getCategoryDisplayName(), " Section");
             category.setTextColor(article.getCategoryDisplayColor());
-            indicator.setColorFilter(article.getCategoryDisplayColor());
+            if(indicator != null) {
+                indicator.setColorFilter(article.getCategoryDisplayColor());
+            }
             ScreenUtil.setTimeToTextView(article.getTimestamp(), timeStamp);
 
             itemView.setOnClickListener(new View.OnClickListener() {
