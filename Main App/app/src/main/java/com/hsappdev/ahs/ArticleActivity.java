@@ -14,6 +14,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -216,6 +217,12 @@ public class ArticleActivity extends AppCompatActivity implements Adjusting_Text
         articleToolbar.setTitleTextAppearance(this, R.style.ArticleAppBarTitleFont);
         articleToolbar.setTitleTextColor(article.getCategoryDisplayColor());
 
+
+        // Handle links from ahs.app
+        Intent appLinkIntent = getIntent();
+        String appLinkAction = appLinkIntent.getAction();
+        Uri appLinkData = appLinkIntent.getData();
+        Log.w(TAG,appLinkData.toString());
 
     }
 

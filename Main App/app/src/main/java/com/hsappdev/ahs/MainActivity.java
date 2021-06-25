@@ -71,12 +71,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationC
         NavigationUI.setupWithNavController(navView, navController);
 
         navView.setItemIconTintList(null); // Remove tint from navbar; Required for navbar icons to work
-
-        // Handle links from ahs.app
-        Intent appLinkIntent = getIntent();
-        String appLinkAction = appLinkIntent.getAction();
-        Uri appLinkData = appLinkIntent.getData();
-        Log.w(TAG,appLinkData.toString());
     }
 
     @Override

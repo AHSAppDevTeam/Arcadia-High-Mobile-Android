@@ -22,7 +22,7 @@
                 <data
                     android:scheme="https"
                     android:host="ahs.app"
-                    android:pathPattern="/.*" />
+                    android:pathPrefix="/" />
             </intent-filter>
         </activity>
         <activity android:name=".mediaPager.ImageViewActivity" />
