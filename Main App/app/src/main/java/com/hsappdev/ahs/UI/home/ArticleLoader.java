@@ -34,9 +34,9 @@ public class ArticleLoader {
         super();
     }
 
-    public void loadArticle(String articleID, Resources r, OnArticleLoadedCallback onArticleLoadedCallback) {
+    public void loadArticle(String articleID, Resources r, OnArticleLoadedCallback onArticleLoadedCallback, Boolean full) {
         DatabaseReference ref = FirebaseDatabase.getInstance(FirebaseApp.getInstance()).getReference()
-                .child(r.getString(R.string.db_articles))
+                .child(r.getString(full ? R.string.db_articles : R.string.db_snippets))
                 .child(articleID);
         ref.addValueEventListener(new ValueEventListener() {
             @Override
