@@ -1,55 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="240dp"
+    android:layout_height="wrap_content"
     android:background="@drawable/profile_card_background"
     android:elevation="@dimen/shadowElevation">
 
     <TextView
         android:id="@+id/profile_card_given_name_textView"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/padding_x2"
         android:layout_marginTop="@dimen/padding_x2"
-        android:layout_marginEnd="@dimen/padding_x2"
+        android:layout_marginEnd="30dp"
         android:fontFamily="@font/mediumbold_lightregular"
         android:text="@string/profile_card_default_given_name"
         android:textColor="@color/white"
         android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/profile_card_photo_img"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/profile_card_family_name_textView"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/padding_x2"
-        android:layout_marginTop="@dimen/padding_x4"
-        android:layout_marginEnd="@dimen/padding_x2"
+        android:layout_marginEnd="30dp"
         android:fontFamily="@font/mediumbold_lightregular"
         android:text="@string/profile_card_default_family_name"
         android:textColor="@color/white"
         android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/profile_card_photo_img"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/profile_card_given_name_textView" />
 
     <ImageView
         android:id="@+id/profile_card_barcode_img"
         android:layout_width="176dp"
         android:layout_height="68dp"
         android:layout_marginStart="@dimen/padding_x2"
+        android:layout_marginTop="30dp"
         android:layout_marginBottom="@dimen/padding_x2"
-        android:src="@drawable/profile_card_barcode_stripes"
         android:background="@drawable/profile_card_barcode_bg"
+        android:contentDescription="@string/profile_card_barcode_description"
         android:padding="10dp"
+        android:src="@drawable/profile_card_barcode_stripes"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="3"
+        app:layout_constraintEnd_toStartOf="@+id/profile_card_photo_img"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        android:contentDescription="@string/profile_card_barcode_description"/>
+        app:layout_constraintTop_toBottomOf="@+id/profile_card_family_name_textView" />
 
     <ImageView
         android:id="@+id/profile_card_photo_img"
