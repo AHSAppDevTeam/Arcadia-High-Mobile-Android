@@ -23,6 +23,8 @@ import java.util.List;
  * A very useful class that can be used to load an article
  * This class prevents duplicate code and simplifies article loading
  * If there is an update to an article, the callback will be triggered a second time
+ * This class support caching of article data and is very efficient
+ * it prevents unnecessary firebase loading
  * @apiNote
  * ArticleLoader.getInstance().getArticle(String articleID, Resources r, OnArticleLoadedCallback callback)
  * @author Jeffrey Aaron Jeyasingh
