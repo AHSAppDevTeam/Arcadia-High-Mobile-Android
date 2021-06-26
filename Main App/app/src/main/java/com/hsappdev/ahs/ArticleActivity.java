@@ -182,7 +182,7 @@ public class ArticleActivity extends AppCompatActivity implements Adjusting_Text
             public void onClick(View v) {
                 dismissFontWindow();
                 finish();
-                overridePendingTransition(R.anim.empty_animation, R.anim.exit_to_right);
+                // overridePendingTransition(R.anim.empty_animation, R.anim.exit_to_right);
             }
         });
 
@@ -307,7 +307,7 @@ public class ArticleActivity extends AppCompatActivity implements Adjusting_Text
         super.onBackPressed();
         dismissFontWindow();
         // Animation on back press
-        overridePendingTransition(R.anim.empty_animation, R.anim.exit_to_right);
+        // overridePendingTransition(R.anim.empty_animation, R.anim.exit_to_right);
     }
 
     public void adjustFontScale(Configuration config, float scale) {
