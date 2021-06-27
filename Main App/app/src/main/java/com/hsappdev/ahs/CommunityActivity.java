@@ -49,6 +49,7 @@ public class CommunityActivity extends AppCompatActivity implements OnItemClick,
 //        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 //                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.community_activity);
+
         communitySection = getIntent().getParcelableExtra(DATA_KEY);
         r = getResources();
 

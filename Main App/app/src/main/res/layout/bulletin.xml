@@ -60,7 +60,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/heavybold_lightregular"
-                android:padding="@dimen/padding"
+                android:paddingLeft="@dimen/padding"
                 android:text="@string/bulletin_comming_up_text"
                 android:textColor="@color/brightRed"
                 android:textSize="28sp"

@@ -47,6 +47,16 @@ public class ArticleLoader {
         return articleLoader;
     }
 
+    /**
+     * Developer purposes only
+     */
+    public void hardReloadAllArticles() {
+        for (int i = 0; i < articleCache.size(); i++) {
+            ArticleCache article = articleCache.get(i);
+            article.reset();
+        }
+    }
+
     public void getArticle(String articleID, Resources r, OnArticleLoadedCallback callback) {
         // search the cache for the id
         boolean foundArticle = false;
@@ -75,6 +85,8 @@ public class ArticleLoader {
         private List<OnArticleLoadedCallback> registeredCallbacks = new ArrayList<>();
         private final Resources r;
         private final String articleID;
+        private ValueEventListener valueEventListener;
+        private DatabaseReference reference;
 
         public ArticleCache(String articleID, Resources r) {
             this.r = r;
@@ -97,7 +109,8 @@ public class ArticleLoader {
             DatabaseReference ref = FirebaseDatabase.getInstance(FirebaseApp.getInstance()).getReference()
                     .child(r.getString(R.string.db_articles))
                     .child(articleID);
-            ref.addValueEventListener(new ValueEventListener() {
+            reference = ref;
+            ValueEventListener eventListener = new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     String author = snapshot.child(r.getString(R.string.db_articles_author)).getValue(String.class);
@@ -152,7 +165,9 @@ public class ArticleLoader {
                 public void onCancelled(@NonNull DatabaseError error) {
 
                 }
-            });
+            };
+            valueEventListener = eventListener;
+            ref.addValueEventListener(eventListener);
         }
 
         public List<OnArticleLoadedCallback> getRegisteredCallbacks() {
@@ -178,6 +193,12 @@ public class ArticleLoader {
                 // otherwise, wait until the callback is called in the onDataChange() method
                 newCallback.onArticleLoaded(article);
             }
+        }
+
+        public void reset() {
+            article = null;
+            reference.removeEventListener(valueEventListener);
+            loadArticle();
         }
     }
 }

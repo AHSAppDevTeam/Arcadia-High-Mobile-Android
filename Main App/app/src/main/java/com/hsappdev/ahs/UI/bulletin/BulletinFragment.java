@@ -1,6 +1,7 @@
 package com.hsappdev.ahs.UI.bulletin;
 
 import android.content.Context;
+import android.graphics.Rect;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -70,6 +71,38 @@ public class BulletinFragment extends Fragment implements CategoriesLoadedCallba
         recyclerView.setAdapter(adapter);
         comingUpRecyclerView.setLayoutManager(comingUpLinearLayoutManager);
         comingUpRecyclerView.setAdapter(comingUpAdapter);
+
+        addPadding();
+    }
+
+    private void addPadding() {
+        int padding = (int) getResources().getDimension(R.dimen.padding);
+        recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
+            @Override
+            public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
+                super.getItemOffsets(outRect, view, parent, state);
+                outRect.right = padding;
+                outRect.left = padding;
+                if(parent.getChildAdapterPosition(view) == 0){
+                    outRect.top = padding;
+                }
+                outRect.bottom = padding;
+
+            }
+        });
+        comingUpRecyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
+            @Override
+            public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
+                super.getItemOffsets(outRect, view, parent, state);
+                outRect.right = padding;
+                outRect.left = padding;
+                if(parent.getChildAdapterPosition(view) == 0){
+                    outRect.top = padding;
+                }
+                outRect.bottom = padding;
+
+            }
+        });
     }
 
     private void loadLinearLayoutView() {

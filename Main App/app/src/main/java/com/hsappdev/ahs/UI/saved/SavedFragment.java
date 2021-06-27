@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Rect;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -110,6 +111,21 @@ public class SavedFragment extends Fragment {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        int padding = (int) getResources().getDimension(R.dimen.padding);
+        savedRecyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
+            @Override
+            public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
+                super.getItemOffsets(outRect, view, parent, state);
+                outRect.right = padding;
+                outRect.left = padding;
+                if(parent.getChildAdapterPosition(view) == 0){
+                    outRect.top = padding;
+                }
+                outRect.bottom = padding;
 
             }
         });

@@ -65,8 +65,6 @@ public class HomeNewsFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.home_news_fragment, container, false);
 
-        progressBar = view.findViewById(R.id.home_page_loading_bar);
-
         NewsRecyclerAdapter adapter = new NewsRecyclerAdapter(new ArrayList<String>(), onArticleClick, getActivity());
         RecyclerView recyclerView = view.findViewById(R.id.home_news_recyclerView);
         recyclerView.setAdapter(adapter);
@@ -88,7 +86,6 @@ public class HomeNewsFragment extends Fragment {
                 }
                 adapter.addCategoryIDs(categoriesIDs);
 
-                progressBar.setVisibility(View.GONE);
             }
 
             @Override
