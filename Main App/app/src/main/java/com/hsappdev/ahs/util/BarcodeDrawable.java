@@ -10,38 +10,58 @@ import android.graphics.drawable.Drawable;
 
 public class BarcodeDrawable extends Drawable {
     private static final Paint blackPaint = new Paint();
-    private final Path codePath = new Path();
-    private final String codeData;
     private static final int userIdLength = 5;
+
+    // Represent each codeDigit as a 12-bit integer,
+    // with the bits evenly distributed among members
+    // of a size-6 set of narrow bands, wide bands,
+    // and white spaces.
+    //
+    // 00 = 0: white space
+    // 01 = 1: narrow band
+    // 10 = 2: wide band
+
+    private static final int codeDataLength = userIdLength + 2;
     private static final int codeDigitLength = 6;
-    private static final int codeDataLength = ( userIdLength + 2 ) * codeDigitLength;
-    private static final String codeDelimiter = "1 1001";
-    private static final String[] codeDigits = new String[]{
-            "11 001",
-            "01 110",
-            "10 110",
-            "00 111",
-            "11 010",
-            "01 011",
-            "10 011",
-            "11 100",
-            "01 101",
-            "10 101",
+    private static final int codeDelimiter = 0b01_00_01_10_10_01;
+    private static final int[] codeDigits = new int[]{
+        0b01_01_00_10_10_01,
+        0b10_01_00_01_01_10,
+        0b01_10_00_01_01_10,
+        0b10_10_00_01_01_01,
+        0b01_01_00_10_01_10,
+        0b10_01_00_10_01_01,
+        0b01_10_00_10_01_01,
+        0b01_01_00_01_10_10,
+        0b10_01_00_01_10_01,
+        0b01_10_00_01_10_01,
     };
     private static final int viewportWidth = 208;
-    private static final int narrowWidth = 2;
-    private static final int wideWidth = 5;
-    private static final int spaceWidth = 2;
+    private static final int[] stripeWidths = new int[]{
+        2, // white space
+        2, // narrow band
+        5, // wide band
+    };
+
+    private final int[] codeData = new int[codeDataLength];
+    private final Path codePath = new Path();
 
     public BarcodeDrawable(int userId) {
+
         // Create path data from id
-        final StringBuilder codeBuilder = new StringBuilder(codeDelimiter);
-        for(int i = 0; i < userIdLength; i++){
-            codeBuilder.append(codeDigits[userId % 10]); // Extract unit digit as index
-            userId /= 10; // Remove unit digit
+        codeData[0] = codeData[codeDataLength - 1] = codeDelimiter;
+
+        // Go from least to most significant digit
+        for(int i = userIdLength; i > 0; i--){
+
+             // Extract unit digit as index
+            codeData[i] = codeData[userId % 10];
+
+            // Remove unit digit
+            userId /= 10;
         }
-        codeBuilder.append(codeDelimiter);
-        codeData = codeBuilder.toString();
+
+        // Set paint color
         blackPaint.setColor(Color.BLACK);
     }
 
@@ -57,29 +77,38 @@ public class BarcodeDrawable extends Drawable {
 
         // Draw from path data, with horizontal cursor offset set at 0
         float horizontalOffset = 0f;
+
         for(int i = 0; i < codeDataLength; i++){
-            final char type = codeData.charAt(i);
-            final float stripeWidth = unit * (
-                type == ' ' ? spaceWidth :
-                type == '0' ? wideWidth :
-                type == '1' ? narrowWidth : 0
-            );
 
-            // draw black line if stripe type is not space
-            if(type != ' ') codePath.addRect(
-                    horizontalOffset,
-                    0f,
-                    horizontalOffset + stripeWidth,
-                    height,
-                    Path.Direction.CW
-            );
+            final int codeDigit = codeDigits[i];
 
-            // move cursor rightwards
-            final float gapWidth = 2 * unit;
-            horizontalOffset += stripeWidth + gapWidth;
+            for(int j = 0; j < codeDigitLength; j++){
+
+                // Extract stripe from codeDigit
+                final int stripeType = codeDigit >> 2*j & 0b11;
+
+                // Get width of stripe
+                final float stripeWidth = unit * stripeWidths[stripeType];
+
+                // draw black line if stripe type is not space
+                if(type != 0) codePath.addRect(
+                        horizontalOffset,
+                        0f,
+                        horizontalOffset + stripeWidth,
+                        height,
+                        Path.Direction.CW
+                );
+
+                // move cursor rightwards
+                final float gapWidth = 2 * unit;
+                horizontalOffset += stripeWidth + gapWidth;
+
+            }
+
         }
 
         canvas.drawPath(codePath, blackPaint);
+
     }
 
     @Override
