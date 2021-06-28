@@ -73,6 +73,8 @@ public class BarcodeDrawable extends Drawable {
     @Override
     public void draw(Canvas canvas) {
 
+        codePath.reset();
+
         // Get the drawable's bounds
         final float width = getBounds().width();
         final float height = getBounds().height();
@@ -89,7 +91,7 @@ public class BarcodeDrawable extends Drawable {
 
             final short codeDigit = codeData[i];
 
-            for(int j = 0; j < codeDigitLength; j++){
+            for(int j = codeDigitLength-1; j >= 0; j--){
 
                 // Extract stripe from codeDigit
                 final int stripeType = codeDigit >> 2*j & 0b11;
