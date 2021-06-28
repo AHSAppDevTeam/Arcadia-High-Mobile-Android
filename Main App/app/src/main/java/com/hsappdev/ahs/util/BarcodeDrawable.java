@@ -37,7 +37,7 @@ public class BarcodeDrawable extends Drawable {
         0b01_10_00_01_10_01,
     };
     private static final int viewportWidth = 208;
-    private static final int[] stripeWidths = new short[]{
+    private static final int[] stripeWidths = new int[]{
         2, // white space
         2, // narrow band
         5, // wide band
@@ -62,7 +62,7 @@ public class BarcodeDrawable extends Drawable {
         for(int i = userIdLength; i > 0; i--){
 
              // Extract unit digit as index
-            codeData[i] = codeData[userId % 10];
+            codeData[i] = codeDigits[userId % 10];
 
             // Remove unit digit
             userId /= 10;
@@ -87,18 +87,18 @@ public class BarcodeDrawable extends Drawable {
 
         for(int i = 0; i < codeDataLength; i++){
 
-            final short codeDigit = codeDigits[i];
+            final short codeDigit = codeData[i];
 
             for(int j = 0; j < codeDigitLength; j++){
 
                 // Extract stripe from codeDigit
-                final short stripeType = codeDigit >> 2*j & 0b11;
+                final int stripeType = codeDigit >> 2*j & 0b11;
 
                 // Get width of stripe
                 final float stripeWidth = unit * stripeWidths[stripeType];
 
                 // draw black line if stripe type is not space
-                if(type != 0) codePath.addRect(
+                if(stripeType != 0) codePath.addRect(
                         horizontalOffset,
                         0f,
                         horizontalOffset + stripeWidth,
