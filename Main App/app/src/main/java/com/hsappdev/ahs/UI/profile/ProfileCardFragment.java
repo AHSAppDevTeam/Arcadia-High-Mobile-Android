@@ -40,6 +40,8 @@ public class ProfileCardFragment extends Fragment {
     private static final int RC_SIGN_IN = 8888;
     private Boolean gsSignedIn = false;
 
+    private BarcodeDrawable barcodeCanvas = new BarcodeDrawable();
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.profile_card_fragment, container, false);
@@ -149,7 +151,7 @@ public class ProfileCardFragment extends Fragment {
     }
 
     public void setUserId(String userId) {
-        BarcodeDrawable barcodeCanvas = new BarcodeDrawable(Integer.parseInt(userId));
+        barcodeCanvas.setUserId(Integer.parseInt(userId));
         barcodeImage.setImageDrawable(barcodeCanvas);
     }
 }
