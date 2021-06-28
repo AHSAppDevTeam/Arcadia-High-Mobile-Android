@@ -3,6 +3,7 @@ package com.hsappdev.ahs.util;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.target.Target;
@@ -22,6 +23,7 @@ public class ImageUtil {
         Glide
                 .with(imageView.getContext())
                 .load(imageUrl)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .centerCrop()
                 .error(R.drawable.img_frame_large)
                 .transition(DrawableTransitionOptions.withCrossFade())
@@ -37,6 +39,7 @@ public class ImageUtil {
         Glide
                 .with(imageView.getContext())
                 .load(imageUrl)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
                 .error(R.drawable.img_frame_large)
                 .transition(DrawableTransitionOptions.withCrossFade())
@@ -48,10 +51,12 @@ public class ImageUtil {
         Glide
                 .with(imageView.getContext())
                 .load(imageUrl)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .transform(new BlurTransformation(100, 3), new CenterCrop())
                 .error(R.drawable.img_frame_large)
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(imageView);
+
 
     }
 
@@ -61,6 +66,7 @@ public class ImageUtil {
         Glide
                 .with(imageView.getContext())
                 .load(imageUrl)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .centerCrop()
                 .error(R.drawable.img_frame_large)
                 .transition(DrawableTransitionOptions.withCrossFade())
@@ -76,6 +82,7 @@ public class ImageUtil {
         Glide
                 .with(imageView.getContext())
                 .load(imageUrl)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .circleCrop()
                 .error(R.drawable.img_frame_large)
                 .transition(DrawableTransitionOptions.withCrossFade())

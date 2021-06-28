@@ -2,7 +2,7 @@ package com.hsappdev.ahs.UI.home;
 
 import android.app.Activity;
 import android.content.res.Resources;
-import android.graphics.Color;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.CompositePageTransformer;
 import androidx.viewpager2.widget.MarginPageTransformer;
@@ -18,12 +17,7 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.hsappdev.ahs.dataTypes.Category;
 import com.hsappdev.ahs.util.Helper;
 import com.hsappdev.ahs.OnItemClick;
 import com.hsappdev.ahs.R;
@@ -81,8 +75,7 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
     }
 
 
-
-    static class FeaturedViewHolder extends RecyclerView.ViewHolder{
+    static class FeaturedViewHolder extends RecyclerView.ViewHolder implements OnCategoryLoadedCallback {
         private final TextView sectionTitle;
         private final ViewPager2 featuredPager;
         private final ViewPager2 mediumPager;
@@ -92,49 +85,36 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
         private final TabLayout smallTabLayout;
         private final Resources r;
         private final Activity activity;
+        FeaturedArticleAdapter featuredArticleAdapter;
+        MediumArticleAdapter mediumArticleAdapter;
+        SmallArticleAdapter smallArticleAdapter;
 
         public void setDetails(String categoryTitle, OnItemClick onArticleClick){
             setUpPager();
-            FeaturedArticleAdapter featuredArticleAdapter = new FeaturedArticleAdapter(new ArrayList<String>(), onArticleClick, activity);
-            MediumArticleAdapter mediumArticleAdapter = new MediumArticleAdapter(new ArrayList<String>(), onArticleClick, activity);
-            SmallArticleAdapter smallArticleAdapter = new SmallArticleAdapter(new ArrayList<String>(), onArticleClick, activity);
+            featuredArticleAdapter = new FeaturedArticleAdapter(new ArrayList<String>(), onArticleClick, activity);
+            mediumArticleAdapter = new MediumArticleAdapter(new ArrayList<String>(), onArticleClick, activity);
+            smallArticleAdapter = new SmallArticleAdapter(new ArrayList<String>(), onArticleClick, activity);
 
             featuredPager.setAdapter(featuredArticleAdapter);
             mediumPager.setAdapter(mediumArticleAdapter);
             smallPager.setAdapter(smallArticleAdapter);
 
-            DatabaseReference ref = FirebaseDatabase.getInstance(FirebaseApp.getInstance()).getReference()
-                    .child(r.getString(R.string.db_categories))
-                    .child(categoryTitle);
-            boolean isNightModeOn = AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES;
-            ref.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    featuredArticleAdapter.clearAll();
-                    mediumArticleAdapter.clearAll();
-                    smallArticleAdapter.clearAll();
-                    List<String> articleIds = new ArrayList<>();
-                    for(DataSnapshot articleId : snapshot.child(r.getString(R.string.db_categories_articleIds)).getChildren()){
-                        articleIds.add(articleId.getValue(String.class));
-                    }
+           CategoryLoader.getInstance().getCategory(categoryTitle, r, this);
 
-                    articleSortingJunction(articleIds, categoryTitle, featuredArticleAdapter, mediumArticleAdapter, smallArticleAdapter);
 
-                    String title = snapshot.child(r.getString(R.string.db_categories_titles)).getValue(String.class);
-                    int color = Color.parseColor(snapshot.child(r.getString(R.string.db_categories_color)).getValue(String.class));
+        }
 
-                    // set section title
-                    String regularText = " News";
-                    Helper.setBoldRegularText(sectionTitle, title, regularText);
-                    sectionTitle.setTextColor(color);
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-
+        @Override
+        public void onCategoryLoaded(Category category) {
+            featuredArticleAdapter.clearAll();
+            mediumArticleAdapter.clearAll();
+            smallArticleAdapter.clearAll();
+            Log.d(TAG, "onCategoryLoaded: size" + category.getCategoryID() + category.getArticleIds());
+            articleSortingJunction(new ArrayList<>(category.getArticleIds()), category.getTitle(), featuredArticleAdapter, mediumArticleAdapter, smallArticleAdapter);
+            // set section title
+            String regularText = " News";
+            Helper.setBoldRegularText(sectionTitle, category.getTitle(), regularText);
+            sectionTitle.setTextColor(category.getColor());
         }
 
         /**
@@ -168,6 +148,8 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
                     if(articleIds.size() > 0) {
                         mediumArticleAdapter.addArticleId(articleIds.get(0));
                         articleIds.remove(0);
+                    } else {
+                        break;
                     }
                 }
 
@@ -193,6 +175,7 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
 
             if(mediumArticleAdapter.getItemCount() > 1) {
                 mediumTabLayout.setVisibility(View.VISIBLE);
+
                 TabLayoutMediator tabLayoutMediator = new TabLayoutMediator(mediumTabLayout, mediumPager, true, new TabLayoutMediator.TabConfigurationStrategy() {
                     @Override
                     public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) { }
@@ -204,6 +187,7 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
 
             if(smallArticleAdapter.getItemCount() > 1) {
                 smallTabLayout.setVisibility(View.VISIBLE);
+
                 TabLayoutMediator tabLayoutMediator = new TabLayoutMediator(smallTabLayout, smallPager, true, new TabLayoutMediator.TabConfigurationStrategy() {
                     @Override
                     public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) { }
@@ -211,6 +195,7 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
                 tabLayoutMediator.attach();
             } else {
                 smallTabLayout.setVisibility(View.GONE);
+
             }
         }
 

@@ -1,36 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/home_news_medium_article_linear_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:clickable="true"
-    android:focusable="true"
-    >
+    android:orientation="horizontal"
+    android:weightSum="2">
+
     <LinearLayout
-        android:id="@+id/home_news_medium_article_linear_layout"
+        android:id="@+id/home_news_medium_article_linear_layout_left"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:weightSum="2"
-        >
-        <LinearLayout
-            android:id="@+id/home_news_medium_article_linear_layout_left"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_weight="1"
-            >
+        android:layout_weight="1"
+        android:orientation="vertical">
 
-        </LinearLayout>
-        <LinearLayout
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/home_news_medium_article_linear_layout_right"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal"
-            android:layout_weight="1"
-            >
-
-        </LinearLayout>
+        android:layout_weight="1"
+        android:orientation="horizontal">
 
     </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>

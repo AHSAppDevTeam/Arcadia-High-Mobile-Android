@@ -146,9 +146,10 @@ public class ArticleLoader {
                             int color = Color.parseColor(snapshot.child(r.getString(R.string.db_categories_color)).getValue(String.class));
                             article.setCategoryDisplayName(title);
                             article.setCategoryDisplayColor(color);
-                            for(OnArticleLoadedCallback callback : registeredCallbacks)
-                            if(!callback.isActivityDestroyed()) {
-                                callback.onArticleLoaded(article);
+                            for(OnArticleLoadedCallback callback : registeredCallbacks) {
+                                if (!callback.isActivityDestroyed()) {
+                                    callback.onArticleLoaded(article);
+                                }
                             }
                         }
 

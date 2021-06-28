@@ -2,6 +2,7 @@ package com.hsappdev.ahs.UI.home;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -31,7 +32,6 @@ public class HomeNewsFragment extends Fragment {
 
     private OnItemClick onArticleClick;
 
-    private ProgressBar progressBar;
 
 
     public HomeNewsFragment() {
@@ -60,6 +60,7 @@ public class HomeNewsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         Resources r = getResources();
 
         // Inflate the layout for this fragment
@@ -70,29 +71,29 @@ public class HomeNewsFragment extends Fragment {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        DatabaseReference ref = FirebaseDatabase.getInstance(FirebaseApp.getInstance()).getReference()
-                .child(r.getString(R.string.db_locations))
-                .child(r.getString(R.string.db_location_ausdNews))// homepage is default
-                .child(r.getString(R.string.db_locations_catID));
-        //Log.d(TAG, "oncreateview");
-        ref.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                //Log.d(TAG, "data changed");
-                adapter.clearAll(); // if there is an update, prevent duplicate articles
-                ArrayList<String> categoriesIDs = new ArrayList<>();
-                for(DataSnapshot sectionTitle : snapshot.getChildren()) {
-                    categoriesIDs.add(sectionTitle.getValue(String.class));
-                }
-                adapter.addCategoryIDs(categoriesIDs);
+                DatabaseReference ref = FirebaseDatabase.getInstance(FirebaseApp.getInstance()).getReference()
+                        .child(r.getString(R.string.db_locations))
+                        .child(r.getString(R.string.db_location_ausdNews))// homepage is default
+                        .child(r.getString(R.string.db_locations_catID));
+                //Log.d(TAG, "oncreateview");
+                ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        //Log.d(TAG, "data changed");
+                        adapter.clearAll(); // if there is an update, prevent duplicate articles
+                        ArrayList<String> categoriesIDs = new ArrayList<>();
+                        for (DataSnapshot sectionTitle : snapshot.getChildren()) {
+                            categoriesIDs.add(sectionTitle.getValue(String.class));
+                        }
+                        adapter.addCategoryIDs(categoriesIDs);
 
-            }
+                    }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
 
-            }
-        });
+                    }
+                });
 
 
         return view;

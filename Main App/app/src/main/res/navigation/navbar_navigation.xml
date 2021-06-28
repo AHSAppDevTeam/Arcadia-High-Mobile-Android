@@ -9,19 +9,31 @@
         android:id="@+id/navigation_home"
         android:name="com.hsappdev.ahs.UI.home.HomeFragment"
         android:label="@string/navbar_title_home"
-        tools:layout="@layout/home" />
+        tools:layout="@layout/home" >
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_bulletin"
+            app:destination="@id/navigation_bulletin" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_bulletin"
         android:name="com.hsappdev.ahs.UI.bulletin.BulletinFragment"
         android:label="@string/navbar_title_bulletin"
-        tools:layout="@layout/bulletin" />
+        tools:layout="@layout/bulletin" >
+        <action
+            android:id="@+id/action_navigation_bulletin_to_navigation_saved"
+            app:destination="@id/navigation_saved" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_saved"
         android:name="com.hsappdev.ahs.UI.saved.SavedFragment"
         android:label="@string/navbar_title_saved"
-        tools:layout="@layout/saved" />
+        tools:layout="@layout/saved" >
+        <action
+            android:id="@+id/action_navigation_saved_to_navigation_profile"
+            app:destination="@id/navigation_profile" />
+    </fragment>
     <fragment
         android:id="@+id/navigation_profile"
         android:name="com.hsappdev.ahs.UI.profile.ProfileFragment"
