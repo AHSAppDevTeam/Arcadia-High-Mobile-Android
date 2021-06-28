@@ -3,6 +3,7 @@ package com.hsappdev.ahs.UI.profile;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,11 +26,12 @@ import com.hsappdev.ahs.R;
 import com.hsappdev.ahs.util.BarcodeDrawable;
 import com.hsappdev.ahs.util.ImageUtil;
 
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ProfileCardFragment extends Fragment {
     private static final String TAG = "ProfileCardFragment";
-    private static final Pattern idOfEmail = Pattern.compile("^(\\d{5})@students\\.ausd\\.net$");
+    private static final Pattern userIdPattern = Pattern.compile("^(\\d{5})@students\\.ausd\\.net$");
 
     private TextView givenNameTextView;
     private TextView familyNameTextView;
@@ -39,6 +41,8 @@ public class ProfileCardFragment extends Fragment {
     private GoogleSignInClient gsClient;
     private static final int RC_SIGN_IN = 8888;
     private Boolean gsSignedIn = false;
+
+    private final BarcodeDrawable barcodeCanvas = new BarcodeDrawable();
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -64,17 +68,14 @@ public class ProfileCardFragment extends Fragment {
         gsSignedIn = account != null;
         if(gsSignedIn) setDetails(account);
 
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(gsSignedIn) {
-                    gsClient.signOut();
-                    gsSignedIn = false;
-                    setDetails(0);
-                } else {
-                    Intent signInIntent = gsClient.getSignInIntent();
-                    startActivityForResult(signInIntent, RC_SIGN_IN);
-                }
+        view.setOnClickListener(v -> {
+            if(gsSignedIn) {
+                gsClient.signOut();
+                gsSignedIn = false;
+                setDetails();
+            } else {
+                Intent signInIntent = gsClient.getSignInIntent();
+                startActivityForResult(signInIntent, RC_SIGN_IN);
             }
         });
 
@@ -98,7 +99,7 @@ public class ProfileCardFragment extends Fragment {
                 // The ApiException status code indicates the detailed failure reason.
                 // Please refer to the GoogleSignInStatusCodes class reference for more information.
                 Log.w(TAG, "signInResult:failed code=" + error.getStatusCode());
-                setDetails(0);
+                setDetails();
             }
         }
     }
@@ -113,20 +114,16 @@ public class ProfileCardFragment extends Fragment {
     public void setDetails(GoogleSignInAccount account){
         setGivenName(account.getGivenName());
         setFamilyName(account.getFamilyName());
-        try {
-            setPhotoUrl(account.getPhotoUrl().toString());
-        } catch (NullPointerException error) {
-            Log.d(TAG,"Profile photo does not exist.");
-        }
-        try {
-            setUserId(idOfEmail.matcher(account.getEmail()).group());
-        } catch (NullPointerException error) {
-            Log.d(TAG,"Email does not exist.");
-        } catch (IllegalStateException error) {
-            Log.d(TAG, "Email does not contain ID.");
-        }
+
+        Uri photoUrl = account.getPhotoUrl();
+        if(photoUrl != null) setPhotoUrl(photoUrl.toString());
+        else Log.d(TAG,"Profile photo does not exist.");
+
+        Matcher userIdMatcher = userIdPattern.matcher(account.getEmail());
+        if(userIdMatcher.matches()) setUserId(userIdMatcher.group(1));
+        else Log.d(TAG,"Email does not exist.");
     }
-    public void setDetails(int reset) {
+    public void setDetails() {
         Resources res = getResources();
         setDetails(
                 res.getString(R.string.profile_card_default_given_name),
@@ -149,7 +146,8 @@ public class ProfileCardFragment extends Fragment {
     }
 
     public void setUserId(String userId) {
-        BarcodeDrawable barcodeCanvas = new BarcodeDrawable(Integer.parseInt(userId));
+        barcodeCanvas.setUserId(Integer.parseInt(userId));
+        barcodeImage.setImageDrawable(null); // Clear canvas
         barcodeImage.setImageDrawable(barcodeCanvas);
     }
 }
