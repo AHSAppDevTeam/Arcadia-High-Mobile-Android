@@ -1,35 +1,30 @@
 package com.hsappdev.ahs.UI.saved;
 
-import androidx.lifecycle.ViewModelProvider;
-
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Rect;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.hsappdev.ahs.OnItemClick;
 import com.hsappdev.ahs.R;
-import com.hsappdev.ahs.dataTypes.Article;
-import com.hsappdev.ahs.localdb.SavedDatabase;
 import com.hsappdev.ahs.util.Helper;
 
 public class SavedFragment extends Fragment {
@@ -61,10 +56,11 @@ public class SavedFragment extends Fragment {
         super.onAttach(context);
         onArticleClick = (OnItemClick) context;
     }
-
+    private SavedViewModel model;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.saved, container, false);
 
         savedRecyclerView = view.findViewById(R.id.saved_fragment_recycler_view);
@@ -89,9 +85,8 @@ public class SavedFragment extends Fragment {
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 
                             public void onClick(DialogInterface dialog, int whichButton) {
-                                SavedDatabase savedDatabase = SavedDatabase.getInstance(getActivity().getApplicationContext());
-                                savedDatabase.deleteAll();
-                                savedRecyclerAdapter.clearAll();
+                                //SavedDatabase savedDatabase = SavedDatabase.getInstance(getActivity().getApplicationContext());
+                                model.deleteAll();
                                 emptyMsgTextView.setVisibility(View.VISIBLE);
                                 Toast.makeText(getActivity(), "All saved articles cleared", Toast.LENGTH_SHORT).show();
                             }})
@@ -132,12 +127,12 @@ public class SavedFragment extends Fragment {
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(SavedViewModel.class);
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        model = new ViewModelProvider(this).get(SavedViewModel.class);
     }
 
-
+/*
     @Override
     public void onStart() {
         super.onStart();
@@ -156,24 +151,29 @@ public class SavedFragment extends Fragment {
                 Log.d(TAG, "onArticleLoaded: " + article.getArticleID());
             }
         });
-    }
+    }*/
 
     private void setUpRecyclerView() {
         savedRecyclerAdapter = new SavedRecyclerAdapter(onArticleClick);
-        SavedDatabase savedDatabase = SavedDatabase.getInstance(getActivity().getApplicationContext());
+        /*SavedDatabase savedDatabase = SavedDatabase.getInstance(getActivity().getApplicationContext());*/
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
         savedRecyclerView.setLayoutManager(linearLayoutManager);
         savedRecyclerView.setAdapter(savedRecyclerAdapter);
-        savedDatabase.loadAllSavedArticles(new SavedDatabase.ArticleLoadedCallback() {
+
+        model.getAllArticles().observe(getViewLifecycleOwner(), articles -> {
+            savedRecyclerAdapter.replaceAll(articles);
+            emptyMsgTextView.setVisibility(/*(articles.size() == 0) ? View.VISIBLE : */View.GONE);
+        });
+        /*savedDatabase.loadAllSavedArticles(new SavedDatabase.ArticleLoadedCallback() {
             @Override
             public void onArticleLoaded(Article article) {
                 savedRecyclerAdapter.addArticle(article);
                 emptyMsgTextView.setVisibility(View.GONE);
                 Log.d(TAG, "onArticleLoaded: " + article.getArticleID());
             }
-        });
+        });*/
     }
 
 }

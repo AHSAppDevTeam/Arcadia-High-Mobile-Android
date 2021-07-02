@@ -1,16 +1,5 @@
 package com.hsappdev.ahs;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.viewpager2.widget.CompositePageTransformer;
-import androidx.viewpager2.widget.MarginPageTransformer;
-import androidx.viewpager2.widget.ViewPager2;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -26,44 +15,40 @@ import android.widget.PopupWindow;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.viewpager2.widget.CompositePageTransformer;
+import androidx.viewpager2.widget.MarginPageTransformer;
+import androidx.viewpager2.widget.ViewPager2;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.android.gms.tasks.Continuation;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.functions.FirebaseFunctions;
-import com.google.firebase.functions.HttpsCallableResult;
 import com.hsappdev.ahs.UI.home.ScaleAndFadeTransformer;
 import com.hsappdev.ahs.dataTypes.Article;
-import com.hsappdev.ahs.localdb.SavedDatabase;
-import com.hsappdev.ahs.mediaPager.ImageViewActivity;
-import com.hsappdev.ahs.mediaPager.OnImageClick;
-import com.hsappdev.ahs.util.Helper;
-import com.hsappdev.ahs.util.ScreenUtil;
+import com.hsappdev.ahs.localdb.ArticleRepository;
 import com.hsappdev.ahs.mediaPager.ImageVideoAdapter;
+import com.hsappdev.ahs.mediaPager.ImageViewActivity;
 import com.hsappdev.ahs.mediaPager.Media;
+import com.hsappdev.ahs.mediaPager.OnImageClick;
 import com.hsappdev.ahs.mediaPager.YouTubeFragment;
 import com.hsappdev.ahs.mediaPager.YoutubeVideoCallback;
+import com.hsappdev.ahs.util.Helper;
+import com.hsappdev.ahs.util.ScreenUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedOutputStream;
-import java.io.BufferedWriter;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class ArticleActivity extends AppCompatActivity implements Adjusting_TextView.hello, OnImageClick {
 
@@ -85,6 +70,7 @@ public class ArticleActivity extends AppCompatActivity implements Adjusting_Text
 
 
     private ArrayList<Adjusting_TextView.TextSizeCallback> callbackList = new ArrayList<>();
+    ArticleRepository articleRepository;
 
     public ArticleActivity() {
         youtubeVideoCallback = new YoutubeVideoCallback<>();
@@ -95,12 +81,14 @@ public class ArticleActivity extends AppCompatActivity implements Adjusting_Text
         callbackList.add(callback);
     }
 
+    private boolean isArticleSaved;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 //        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 //                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        articleRepository = new ArticleRepository(getApplication()); // note: should be in a view model
         setContentView(R.layout.article);
 
         queue = Volley.newRequestQueue(this);
@@ -187,8 +175,12 @@ public class ArticleActivity extends AppCompatActivity implements Adjusting_Text
         });
 
         final Context context = this;
+        // do async or whatever
+        articleRepository.isArticleSaved(article.getArticleID()).observe(this, isSaved -> {
+            isArticleSaved = isSaved;
+            setSavedIcon(articleToolbar.getMenu().getItem(2), isSaved);
+        });
 
-        setSavedIcon(articleToolbar.getMenu().getItem(2));
         articleToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
@@ -204,7 +196,12 @@ public class ArticleActivity extends AppCompatActivity implements Adjusting_Text
                         recreate();
                         return true;
                     case R.id.article_toolbar_saved:
-                        addToSavedDatabase(item);
+                        if(isArticleSaved)
+                            articleRepository.delete(article.getArticleID());
+                        else
+                            articleRepository.add(article);
+                        isArticleSaved = !isArticleSaved;
+                        setSavedIcon(item, isArticleSaved);
                         return true;
                 }
                 return false;
@@ -275,9 +272,8 @@ public class ArticleActivity extends AppCompatActivity implements Adjusting_Text
         fontBarWindow.showAsDropDown(articleToolbar, padding, padding / 2);
     }
 
-    private void setSavedIcon(MenuItem item) {
-        SavedDatabase savedDatabase = SavedDatabase.getInstance(getApplicationContext());
-        if (savedDatabase.articleIsSaved(article)) {
+    private void setSavedIcon(MenuItem item, boolean isSaved) {
+        if (isSaved) {
             item.setIcon(R.drawable.article_appbar_saved_ic);
             item.setTitle("Don't save this article");
         } else {
@@ -285,16 +281,15 @@ public class ArticleActivity extends AppCompatActivity implements Adjusting_Text
             item.setTitle("Save this article");
         }
     }
-
+/*
     private void addToSavedDatabase(MenuItem item) {
-        SavedDatabase savedDatabase = SavedDatabase.getInstance(getApplicationContext());
-        if (savedDatabase.articleIsSaved(article)) {
-            savedDatabase.remove(article);
+        if (articleRepository.isArticleSaved(article.getArticleID())) {
+            articleRepository.delete(article.getArticleID());
         } else {
-            savedDatabase.add(article);
+            articleRepository.add(article);
         }
         setSavedIcon(item);
-    }
+    }*/
 
     private void dismissFontWindow() {
         if (fontBarWindow != null) {

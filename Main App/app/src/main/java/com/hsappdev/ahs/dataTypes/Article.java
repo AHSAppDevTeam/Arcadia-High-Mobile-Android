@@ -4,14 +4,67 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
 
+@Entity(tableName = ArticleDAO.TABLE_NAME)
 public class Article implements Parcelable {
-    private String articleID, author, title, body, categoryID, categoryDisplayName;
+    public static final String TABLE_NAME = ArticleDAO.TABLE_NAME;
+
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "ID")
+    private int tableID;
+    public int getTableID() {
+        return tableID;
+    }
+    public void setTableID(int tableID) {
+        this.tableID = tableID;
+    }
+
+    public static final String ID = "IDS";
+    @ColumnInfo(name = ID)
+    private String articleID;
+
+    public static final String AUTHOR = "AUTHOR";
+    @ColumnInfo(name = AUTHOR)
+    private String author;
+
+    public static final String TITLE = "TITLE";
+    @ColumnInfo(name = TITLE)
+    private String title;
+
+    public static final String BODY = "BODY";
+    @ColumnInfo(name = BODY)
+    private String body;
+
+    public static final String CAT_ID = "CAT_ID";
+    @ColumnInfo(name = CAT_ID)
+    private String categoryID;
+
+    public static final String CAT_DISP = "CAT_DISP";
+    @ColumnInfo(name = CAT_DISP)
+    private String categoryDisplayName;
+
+    public static final String CAT_DISP_CLR = "CAT_DISP_CLR";
+    @ColumnInfo(name = CAT_DISP_CLR)
     private int categoryDisplayColor;
+
+    public static final String IMG_URLS = "IMG_URLS";
+    @ColumnInfo(name = IMG_URLS)
     private String[] imageURLs;
+
+    public static final String VID_URLS = "VID_URLS";
+    @ColumnInfo(name = VID_URLS)
     private String[] videoURLs;
-    boolean featured;
+
+    public static final String TIME = "TIME";
+    @ColumnInfo(name = TIME)
     long timestamp;
+
+    @Ignore
+    boolean featured;
 
 
     public Article(String articleID, String author, String title, String body, String categoryID, String[] imageURLs, String[] videoURls, boolean featured, long timestamp) {

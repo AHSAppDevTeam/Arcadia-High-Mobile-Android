@@ -53,7 +53,7 @@ public class SavedRecyclerAdapter extends RecyclerView.Adapter<SavedRecyclerAdap
 
             @Override
             public boolean areItemsTheSame(Article item1, Article item2) {
-                return item1.equals(item2);
+                return item1.getArticleID().equals(item2.getArticleID());
             }
 
             @Override
@@ -75,11 +75,7 @@ public class SavedRecyclerAdapter extends RecyclerView.Adapter<SavedRecyclerAdap
 
     public void onSortModeChanged(int sort) {
         sortMode = sort;
-        articleSortedList.beginBatchedUpdates();
-        List<Article> tempArticleHolder = new ArrayList<>(savedArticleList);
-        clearAll();
-        addArticles(tempArticleHolder);
-        articleSortedList.endBatchedUpdates();
+        articleSortedList.replaceAll(savedArticleList);
 
     }
 
@@ -88,6 +84,12 @@ public class SavedRecyclerAdapter extends RecyclerView.Adapter<SavedRecyclerAdap
     public SavedArticleViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.saved_article_holder, parent, false);
         return new SavedRecyclerAdapter.SavedArticleViewHolder(view);
+    }
+
+    public void replaceAll(List<Article> articles) {
+        savedArticleList.clear();
+        savedArticleList.addAll(articles);
+        articleSortedList.replaceAll(savedArticleList);
     }
 
     public void addArticle(Article article){
@@ -108,11 +110,6 @@ public class SavedRecyclerAdapter extends RecyclerView.Adapter<SavedRecyclerAdap
     @Override
     public int getItemCount() {
         return savedArticleList.size();
-    }
-
-    public void clearAll() {
-        savedArticleList.clear();
-        articleSortedList.clear();
     }
 
     public class SavedArticleViewHolder extends RecyclerView.ViewHolder{
