@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SortedList;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +19,7 @@ import android.widget.LinearLayout;
 import com.hsappdev.ahs.OnItemClick;
 import com.hsappdev.ahs.R;
 import com.hsappdev.ahs.cache.ArticleLoader;
-import com.hsappdev.ahs.UI.home.OnArticleLoadedCallback;
+import com.hsappdev.ahs.cache.OnArticleLoadedCallback;
 import com.hsappdev.ahs.dataTypes.Article;
 import com.hsappdev.ahs.dataTypes.Category;
 import com.hsappdev.ahs.util.ScreenUtil;
@@ -144,7 +143,7 @@ public class BulletinFragment extends Fragment implements CategoriesLoadedCallba
                 }
             }
             if(!isArticleUpdate){ // Only set an article loader if it is not set before
-                Log.d(TAG, "registerCategory: loadedArticle "+ categoryState.getArticleIds().get(i));
+                //Log.d(TAG, "registerCategory: loadedArticle "+ categoryState.getArticleIds().get(i));
                 ArticleLoader.getInstance().getArticle(
                         categoryState.getArticleIds().get(i),
                         getResources(),
@@ -156,7 +155,7 @@ public class BulletinFragment extends Fragment implements CategoriesLoadedCallba
 
     @Override
     public void onLoad(List<String> categories) {
-        Log.d(TAG, "onLoad: ");
+        //Log.d(TAG, "onLoad: ");
         //categoryLinearLayout.setWeightSum(categories.size());
 
         for (int i = 0; i < categories.size(); i++) {
@@ -219,7 +218,7 @@ public class BulletinFragment extends Fragment implements CategoriesLoadedCallba
                 if(filteredArticle.getArticleID().equals(sortedArticle.getArticleID())){
                     isUpdate = true;
                     sortedListRef.updateItemAt(j, filteredArticle);
-                    Log.d(TAG, "updateView1: " + filteredArticle.getTitle());
+                    //Log.d(TAG, "updateView1: " + filteredArticle.getTitle());
                     deleteList.remove(filteredArticle);
                 }
             }
@@ -260,10 +259,10 @@ public class BulletinFragment extends Fragment implements CategoriesLoadedCallba
         if(!isArticleUpdate) {
             articleList.add(article);
         }
-        Log.d(TAG, "onArticleLoaded: start list");
+        //Log.d(TAG, "onArticleLoaded: start list");
         for (Article a :
                 articleList) {
-            Log.d(TAG, "onArticleLoaded: " + a.getTitle());
+            //Log.d(TAG, "onArticleLoaded: " + a.getTitle());
         }
         updateView();
     }

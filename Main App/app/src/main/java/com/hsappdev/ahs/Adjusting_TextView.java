@@ -30,7 +30,7 @@ public class Adjusting_TextView extends androidx.appcompat.widget.AppCompatTextV
     private float originalTextSize;
     public void init(Context context) {
         originalTextSize = ScreenUtil.px_to_sp(getTextSize(),context);
-        Log.d(TAG, ScreenUtil.px_to_sp(originalTextSize,context) + "sp");
+        //Log.d(TAG, ScreenUtil.px_to_sp(originalTextSize,context) + "sp");
         try {
             ((hello) context).addTextSizeCallback(new TextSizeCallback() {
                 @Override

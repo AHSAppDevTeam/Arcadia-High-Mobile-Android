@@ -1,4 +1,4 @@
-package com.hsappdev.ahs.UI.home;
+package com.hsappdev.ahs.cache;
 
 import com.hsappdev.ahs.dataTypes.Category;
 

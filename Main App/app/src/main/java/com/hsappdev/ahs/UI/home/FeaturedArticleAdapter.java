@@ -3,7 +3,6 @@ package com.hsappdev.ahs.UI.home;
 import android.app.Activity;
 import android.content.res.Resources;
 import android.graphics.PorterDuff;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.hsappdev.ahs.OnItemClick;
 import com.hsappdev.ahs.R;
 import com.hsappdev.ahs.cache.ArticleLoader;
+import com.hsappdev.ahs.cache.OnArticleLoadedCallback;
 import com.hsappdev.ahs.dataTypes.Article;
 import com.hsappdev.ahs.util.ImageUtil;
 import com.hsappdev.ahs.util.ScreenUtil;
@@ -77,7 +77,7 @@ public class FeaturedArticleAdapter extends RecyclerView.Adapter<FeaturedArticle
         return articleIds.size();
     }
 
-    static class FeaturedArticleViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, OnArticleLoadedCallback{
+    static class FeaturedArticleViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, OnArticleLoadedCallback {
         private Article article;
         final private ConstraintLayout articleLayout;
         final private ImageView articleImage;
@@ -111,7 +111,7 @@ public class FeaturedArticleAdapter extends RecyclerView.Adapter<FeaturedArticle
 
         @Override
         public void onClick(View view) {
-            Log.d(TAG, "article click");
+            //Log.d(TAG, "article click");
             if(article != null)
                 onArticleClick.onArticleClicked(article);
         }

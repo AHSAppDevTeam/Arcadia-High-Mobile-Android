@@ -80,10 +80,10 @@ public class HomeCommunityFragment extends Fragment {
                 communityRecyclerAdapter.clearAll();
                 communitySections.clear(); // Make sure to clear this list
                 for(DataSnapshot child : snapshot.getChildren()){
-                    Log.d(TAG, "onDataChange: " + child.getValue(String.class));
+                    //Log.d(TAG, "onDataChange: " + child.getValue(String.class));
                     communitySections.add(child.getValue(String.class));
                 }
-                Log.d(TAG, "onDataChange: length"+communitySections.size());
+                //Log.d(TAG, "onDataChange: length"+communitySections.size());
                 communityRecyclerAdapter.addCommunitySections(communitySections);
             }
 

@@ -2,7 +2,6 @@ package com.hsappdev.ahs.cache;
 
 import android.content.res.Resources;
 import android.graphics.Color;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -13,7 +12,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hsappdev.ahs.R;
-import com.hsappdev.ahs.UI.home.OnCategoryLoadedCallback;
 import com.hsappdev.ahs.dataTypes.Category;
 
 import java.util.ArrayList;
@@ -83,7 +81,7 @@ public class CategoryLoader {
             ref.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    Log.d(TAG, "load from firebase: " + categoryID);
+                    //Log.d(TAG, "load from firebase: " + categoryID);
                     List<String> articleIds = new ArrayList<>();
                     for(DataSnapshot articleId : snapshot.child(r.getString(R.string.db_categories_articleIds)).getChildren()){
                         articleIds.add(articleId.getValue(String.class));
