@@ -7,6 +7,7 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -50,7 +51,7 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.home_news_featured_section, parent, false);
             return new FeaturedViewHolder(view, activity);
         } else {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.home_news_section, parent, false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.home_news_category_section, parent, false);
             return new CategoryViewHolder(view, activity);
         }
     }
@@ -152,37 +153,30 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     static class CategoryViewHolder extends RecyclerView.ViewHolder implements OnCategoryLoadedCallback {
         private final TextView sectionTitle;
-        private final ViewPager2 featuredPager;
-        private final ViewPager2 mediumPager;
         private final ViewPager2 smallPager;
-        private final TabLayout featuredTabLayout;
-        private final TabLayout mediumTabLayout;
+        private final LinearLayout categoryLinearLayout;
         private final TabLayout smallTabLayout;
         private final Resources r;
         private final Activity activity;
-        FeaturedArticleAdapter featuredArticleAdapter;
-        MediumArticleAdapter mediumArticleAdapter;
+        private OnItemClick onItemClick;
+
         SmallArticleAdapter smallArticleAdapter;
 
         public void setDetails(String categoryTitle, OnItemClick onArticleClick) {
             setUpPager();
-            featuredArticleAdapter = new FeaturedArticleAdapter(new ArrayList<String>(), onArticleClick, activity);
-            mediumArticleAdapter = new MediumArticleAdapter(new ArrayList<String>(), onArticleClick, activity);
+
             smallArticleAdapter = new SmallArticleAdapter(new ArrayList<String>(), onArticleClick, activity);
 
-            featuredPager.setAdapter(featuredArticleAdapter);
-            mediumPager.setAdapter(mediumArticleAdapter);
             smallPager.setAdapter(smallArticleAdapter);
 
             CategoryLoader.getInstance().getCategory(categoryTitle, r, this);
-
+            onItemClick = onArticleClick;
 
         }
 
         @Override
         public void onCategoryLoaded(Category category) {
-            featuredArticleAdapter.clearAll();
-            mediumArticleAdapter.clearAll();
+
             smallArticleAdapter.clearAll();
             Log.d(TAG, "onCategoryLoaded: size" + category.getCategoryID() + category.getArticleIds());
             articleSortingJunction(new ArrayList<>(category.getArticleIds()), category.getTitle(), smallArticleAdapter);
@@ -199,7 +193,8 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
          */
         public void articleSortingJunction(List<String> articleIds,
                                            String categoryTitle,
-                                           SmallArticleAdapter smallArticleAdapter) {
+                                           SmallArticleAdapter smallArticleAdapter
+                                           ) {
             /*
              * Structure
              * > one large article for most recent
@@ -207,7 +202,7 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
              * > rest of articles go into the small viewpager
              * */
             if (articleIds.size() > 0) {
-                setUpLargeArticle(articleIds.get(0));
+                setUpLargeArticle(articleIds.get(0), onItemClick);
                 articleIds.remove(0);
             }
             for (int i = 0; i < MultiArticleAdapter.numArticles; i++) {
@@ -221,40 +216,17 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
             smallArticleAdapter.setArticleIds(articleIds); // Add rest of ids
 
-            setUpTabLayout(featuredArticleAdapter, mediumArticleAdapter, smallArticleAdapter);
+            setUpTabLayout(smallArticleAdapter);
         }
 
-        private void setUpLargeArticle(String articleID) {
-
+        private void setUpLargeArticle(String articleID, OnItemClick onItemClick) {
+            View view = LayoutInflater.from(categoryLinearLayout.getContext()).inflate(R.layout.home_news_featured_article, null, false);
+            LargeArticleUnit articleUnit = new LargeArticleUnit(view, onItemClick, activity);
+            articleUnit.setDetails(articleID);
+            categoryLinearLayout.addView(view);
         }
 
-        private void setUpTabLayout(FeaturedArticleAdapter featuredArticleAdapter,
-                                    MediumArticleAdapter mediumArticleAdapter,
-                                    SmallArticleAdapter smallArticleAdapter) {
-            if (featuredArticleAdapter.getItemCount() > 1) {
-                featuredTabLayout.setVisibility(View.VISIBLE);
-                TabLayoutMediator tabLayoutMediator = new TabLayoutMediator(featuredTabLayout, featuredPager, true, new TabLayoutMediator.TabConfigurationStrategy() {
-                    @Override
-                    public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
-                    }
-                });
-                tabLayoutMediator.attach();
-            } else {
-                featuredTabLayout.setVisibility(View.GONE);
-            }
-
-            if (mediumArticleAdapter.getItemCount() > 1) {
-                mediumTabLayout.setVisibility(View.VISIBLE);
-
-                TabLayoutMediator tabLayoutMediator = new TabLayoutMediator(mediumTabLayout, mediumPager, true, new TabLayoutMediator.TabConfigurationStrategy() {
-                    @Override
-                    public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
-                    }
-                });
-                tabLayoutMediator.attach();
-            } else {
-                mediumTabLayout.setVisibility(View.GONE);
-            }
+        private void setUpTabLayout(SmallArticleAdapter smallArticleAdapter) {
 
             if (smallArticleAdapter.getItemCount() > 1) {
                 smallTabLayout.setVisibility(View.VISIBLE);
@@ -272,7 +244,6 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
 
         public void setUpPager() {
-            featuredPager.setOffscreenPageLimit(3);
 
             CompositePageTransformer compositePageTransformer = new CompositePageTransformer();
             //margin determines distance between two pages
@@ -280,10 +251,7 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             //Log.d(TAG, "Dimen value: " + r.getDimension(R.dimen.padding));
             compositePageTransformer.addTransformer(new MarginPageTransformer((int) dp_to_px(2))); //note: conversion between dp and pixel, apply later
             compositePageTransformer.addTransformer(new ScaleAndFadeTransformer(false));
-            featuredPager.setPageTransformer(compositePageTransformer);
 
-            mediumPager.setOffscreenPageLimit(3);
-            mediumPager.setPageTransformer(new MarginPageTransformer((int) dp_to_px(2)));
 
             smallPager.setOffscreenPageLimit(3);
 
@@ -297,11 +265,9 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             super(itemView);
             r = itemView.getContext().getResources();
 
-            featuredPager = itemView.findViewById(R.id.home_featured_carousel);
             smallPager = itemView.findViewById(R.id.home_small_carousel);
             sectionTitle = itemView.findViewById(R.id.home_news_sectionTitle);
-
-            featuredTabLayout = itemView.findViewById(R.id.featured_tab_layout);
+            categoryLinearLayout = itemView.findViewById(R.id.home_category_linearLayout);
             smallTabLayout = itemView.findViewById(R.id.small_tab_layout);
 
             this.activity = activity;
@@ -311,10 +277,8 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     static class DefaultViewHolder extends RecyclerView.ViewHolder implements OnCategoryLoadedCallback {
         private final TextView sectionTitle;
         private final ViewPager2 featuredPager;
-        private final ViewPager2 mediumPager;
         private final ViewPager2 smallPager;
         private final TabLayout featuredTabLayout;
-        private final TabLayout mediumTabLayout;
         private final TabLayout smallTabLayout;
         private final Resources r;
         private final Activity activity;
@@ -329,7 +293,6 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             smallArticleAdapter = new SmallArticleAdapter(new ArrayList<String>(), onArticleClick, activity);
 
             featuredPager.setAdapter(featuredArticleAdapter);
-            mediumPager.setAdapter(mediumArticleAdapter);
             smallPager.setAdapter(smallArticleAdapter);
 
             CategoryLoader.getInstance().getCategory(categoryTitle, r, this);
@@ -401,18 +364,7 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 featuredTabLayout.setVisibility(View.GONE);
             }
 
-            if (mediumArticleAdapter.getItemCount() > 1) {
-                mediumTabLayout.setVisibility(View.VISIBLE);
 
-                TabLayoutMediator tabLayoutMediator = new TabLayoutMediator(mediumTabLayout, mediumPager, true, new TabLayoutMediator.TabConfigurationStrategy() {
-                    @Override
-                    public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
-                    }
-                });
-                tabLayoutMediator.attach();
-            } else {
-                mediumTabLayout.setVisibility(View.GONE);
-            }
 
             if (smallArticleAdapter.getItemCount() > 1) {
                 smallTabLayout.setVisibility(View.VISIBLE);
@@ -440,9 +392,6 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             compositePageTransformer.addTransformer(new ScaleAndFadeTransformer(false));
             featuredPager.setPageTransformer(compositePageTransformer);
 
-            mediumPager.setOffscreenPageLimit(3);
-            mediumPager.setPageTransformer(new MarginPageTransformer((int) dp_to_px(2)));
-
             smallPager.setOffscreenPageLimit(3);
 
         }
@@ -456,12 +405,10 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             r = itemView.getContext().getResources();
 
             featuredPager = itemView.findViewById(R.id.home_featured_carousel);
-            mediumPager = itemView.findViewById(R.id.home_medium_carousel);
             smallPager = itemView.findViewById(R.id.home_small_carousel);
             sectionTitle = itemView.findViewById(R.id.home_news_sectionTitle);
 
             featuredTabLayout = itemView.findViewById(R.id.featured_tab_layout);
-            mediumTabLayout = itemView.findViewById(R.id.medium_tab_layout);
             smallTabLayout = itemView.findViewById(R.id.small_tab_layout);
 
             this.activity = activity;
