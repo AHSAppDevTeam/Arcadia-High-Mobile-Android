@@ -116,8 +116,7 @@ public class ProfileCardFragment extends Fragment {
         setFamilyName(account.getFamilyName());
 
         Uri photoUrl = account.getPhotoUrl();
-        if(photoUrl != null) setPhotoUrl(photoUrl.toString());
-        else Log.d(TAG,"Profile photo does not exist.");
+        setPhotoUrl(photoUrl == null ? "https://ahs.app/icon.png" : photoUrl.toString());
 
         Matcher userIdMatcher = userIdPattern.matcher(account.getEmail());
         if(userIdMatcher.matches()) setUserId(userIdMatcher.group(1));
