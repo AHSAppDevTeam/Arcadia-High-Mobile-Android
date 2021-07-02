@@ -24,14 +24,17 @@ import com.google.firebase.database.ValueEventListener;
 import com.hsappdev.ahs.BottomNavigationCallback;
 import com.hsappdev.ahs.OnItemClick;
 import com.hsappdev.ahs.R;
+import com.hsappdev.ahs.cache.ArticleCategoryIdLoader;
+import com.hsappdev.ahs.cache.OnCategoryListLoadedCallback;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class HomeNewsFragment extends Fragment {
+public class HomeNewsFragment extends Fragment implements OnCategoryListLoadedCallback {
     private static final String TAG = "HomeNewsFragment";
 
     private OnItemClick onArticleClick;
-
+    private NewsRecyclerAdapter adapter;
 
 
     public HomeNewsFragment() {
@@ -66,34 +69,14 @@ public class HomeNewsFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.home_news_fragment, container, false);
 
-        NewsRecyclerAdapter adapter = new NewsRecyclerAdapter(new ArrayList<String>(), onArticleClick, getActivity());
+       adapter = new NewsRecyclerAdapter(new ArrayList<String>(), onArticleClick, getActivity());
         RecyclerView recyclerView = view.findViewById(R.id.home_news_recyclerView);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        ArticleCategoryIdLoader.loadCategoryList(r, this);
 
-                DatabaseReference ref = FirebaseDatabase.getInstance(FirebaseApp.getInstance()).getReference()
-                        .child(r.getString(R.string.db_locations))
-                        .child(r.getString(R.string.db_location_ausdNews))// homepage is default
-                        .child(r.getString(R.string.db_locations_catID));
-                //Log.d(TAG, "oncreateview");
-                ref.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        //Log.d(TAG, "data changed");
-                        adapter.clearAll(); // if there is an update, prevent duplicate articles
-                        ArrayList<String> categoriesIDs = new ArrayList<>();
-                        for (DataSnapshot sectionTitle : snapshot.getChildren()) {
-                            categoriesIDs.add(sectionTitle.getValue(String.class));
-                        }
-                        adapter.addCategoryIDs(categoriesIDs);
 
-                    }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
 
 
         return view;
@@ -101,5 +84,10 @@ public class HomeNewsFragment extends Fragment {
 
     public void updateCategory(String newCategoryReference) {
 
+    }
+
+    @Override
+    public void categoryListLoaded(List<String> categoryList) {
+        adapter.addCategoryIDs(categoryList);
     }
 }

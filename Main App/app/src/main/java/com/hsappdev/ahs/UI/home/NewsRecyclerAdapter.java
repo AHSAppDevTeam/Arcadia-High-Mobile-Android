@@ -64,7 +64,7 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
         notifyItemInserted(categoryIDs.size()-1);
     }
 
-    public void addCategoryIDs(ArrayList<String> IDs) {
+    public void addCategoryIDs(List<String> IDs) {
         int oldpos = IDs.size();
         this.categoryIDs.addAll(IDs);
         notifyItemRangeInserted(oldpos,this.categoryIDs.size()-1);
