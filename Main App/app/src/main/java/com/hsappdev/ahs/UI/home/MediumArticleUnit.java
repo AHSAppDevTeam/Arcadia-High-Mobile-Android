@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -18,7 +17,7 @@ import com.hsappdev.ahs.dataTypes.Article;
 import com.hsappdev.ahs.util.ImageUtil;
 import com.hsappdev.ahs.util.ScreenUtil;
 
-public class MediumArticleUnit extends LinearLayout implements OnArticleLoadedCallback{
+public class MediumArticleUnit extends ConstraintLayout implements OnArticleLoadedCallback{
     protected Article article;
     final private ConstraintLayout articleLayout;
     final private ImageView articleImage;
