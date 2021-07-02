@@ -10,9 +10,10 @@ import androidx.annotation.NonNull;
 
 import com.hsappdev.ahs.OnItemClick;
 import com.hsappdev.ahs.R;
+import com.hsappdev.ahs.cache.OnArticleLoadedCallback;
 import com.hsappdev.ahs.dataTypes.Article;
 
-public class SmallArticleUnit extends MediumArticleUnit implements OnArticleLoadedCallback{
+public class SmallArticleUnit extends MediumArticleUnit implements OnArticleLoadedCallback {
 
     private TextView timeTextView;
     private TextView categoryTextView;
