@@ -180,7 +180,7 @@ public class BulletinFragment extends Fragment implements CategoriesLoadedCallba
         Explained:
         First we create a list called deleteList, this will store possible articles that will be deleted (most of them wont be).
         Then, we use a for loop to populate the list because SortedList does not support conversion to ArrayList.
-
+        see compareAndUpdateArticleList()
         We prepare a filteredList which contains only the articles that should be displayed.
         The optimization trick is not to track which articles have been deleted but which articles have been found.
         If an article is found (whether update or new), we know it is not deleted so we remove from the delete list.
@@ -205,6 +205,26 @@ public class BulletinFragment extends Fragment implements CategoriesLoadedCallba
                 }
             }
         }
+
+        compareAndUpdateArticleList(sortedListRef, filteredList);
+
+        // Get top 4 articles
+        List<Article> upComingArticles = new ArrayList<>();
+        for (int i = 0; i < 4; i++) {
+            if(sortedListRef.size()>0) {
+                upComingArticles.add(sortedListRef.removeItemAt(0));
+            }
+        }
+        sortedListRef.endBatchedUpdates();
+
+        comingUpSortedListRef.beginBatchedUpdates();
+
+        compareAndUpdateArticleList(comingUpSortedListRef, upComingArticles);
+
+        comingUpSortedListRef.endBatchedUpdates();
+    }
+
+    public void compareAndUpdateArticleList(SortedList<Article> sortedListRef, List<Article> filteredList){
         // Adjust sortedListRef using filteredList
         List<Article> deleteList = new ArrayList<>();
         for (int i = 0; i < sortedListRef.size(); i++) {
@@ -232,18 +252,6 @@ public class BulletinFragment extends Fragment implements CategoriesLoadedCallba
         for(Article a : deleteList){
             sortedListRef.remove(a);
         }
-        // Get top 4 articles
-        List<Article> articles = new ArrayList<>();
-        for (int i = 0; i < 4; i++) {
-            if(sortedListRef.size()>0) {
-                articles.add(sortedListRef.removeItemAt(0));
-            }
-        }
-        comingUpSortedListRef.beginBatchedUpdates();
-        comingUpSortedListRef.clear();
-        comingUpSortedListRef.addAll(articles);
-        comingUpSortedListRef.endBatchedUpdates();
-        sortedListRef.endBatchedUpdates();
     }
 
     @Override
