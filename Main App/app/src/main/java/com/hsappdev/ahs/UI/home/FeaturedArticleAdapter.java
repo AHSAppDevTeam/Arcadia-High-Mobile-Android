@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.hsappdev.ahs.OnItemClick;
 import com.hsappdev.ahs.R;
+import com.hsappdev.ahs.cache.ArticleLoader;
 import com.hsappdev.ahs.dataTypes.Article;
 import com.hsappdev.ahs.util.ImageUtil;
 import com.hsappdev.ahs.util.ScreenUtil;
@@ -49,7 +50,7 @@ public class FeaturedArticleAdapter extends RecyclerView.Adapter<FeaturedArticle
     }
     public void setArticleIds(List<String> articleIds) {
         this.articleIds = articleIds;
-        notifyDataSetChanged();
+        notifyItemRangeInserted(0, articleIds.size());
     }
 
     @NonNull
@@ -118,7 +119,6 @@ public class FeaturedArticleAdapter extends RecyclerView.Adapter<FeaturedArticle
         @Override
         public void onArticleLoaded(Article article) {
             this.article = article;
-
             titleTextView.setText(article.getTitle());
             if(article.getImageURLs().length != 0) { // When there are at least one article, show first image
                 ImageUtil.setImageToView(article.getImageURLs()[0], articleImage);

@@ -22,6 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hsappdev.ahs.OnItemClick;
 import com.hsappdev.ahs.R;
+import com.hsappdev.ahs.cache.CategoryLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,6 +70,7 @@ public class HomeCommunityFragment extends Fragment {
         communityRecyclerAdapter = new CommunityRecyclerAdapter(onCommunityClick);
         recyclerView.setAdapter(communityRecyclerAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+
 
         DatabaseReference ref = FirebaseDatabase.getInstance(FirebaseApp.getInstance()).getReference()
                 .child(r.getString(R.string.db_locations))
