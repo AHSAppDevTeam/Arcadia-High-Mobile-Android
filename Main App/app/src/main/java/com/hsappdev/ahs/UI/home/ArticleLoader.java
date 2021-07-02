@@ -1,4 +1,4 @@
-package com.hsappdev.ahs.cache;
+package com.hsappdev.ahs.UI.home;
 
 import android.content.res.Resources;
 import android.graphics.Color;
@@ -14,11 +14,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hsappdev.ahs.R;
-import com.hsappdev.ahs.UI.home.OnArticleLoadedCallback;
 import com.hsappdev.ahs.dataTypes.Article;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -34,7 +32,9 @@ import java.util.List;
 
 public class ArticleLoader {
 
-    private HashMap<String, ArticleCache> articleCache = new HashMap<>();
+    private List<ArticleCache> articleCache = new ArrayList<>();
+    private List<Boolean> articleListenersSet = new ArrayList<>();
+
 
     private ArticleLoader() { }
 
@@ -59,16 +59,22 @@ public class ArticleLoader {
 
     public void getArticle(String articleID, Resources r, OnArticleLoadedCallback callback) {
         // search the cache for the id
-        ArticleCache cache = articleCache.get(articleID);
-        if(cache != null) {
-            cache.registerForCallback(callback);
-            return;
+        boolean foundArticle = false;
+        for (int i = 0; i < articleCache.size(); i++) {
+            ArticleCache testArticle = articleCache.get(i);
+            if(testArticle.articleID.equals(articleID)) {
+                foundArticle = true;
+                // registerForCallback is essential for the cache system
+                // it handles whether an article should be taken from cache or from firebase
+                testArticle.registerForCallback(callback);
+            }
         }
+        if(!foundArticle) {
             // If article is not in the cache, add it to the cache
             // each articleCache will take care of loading itself
             ArticleCache cacheArticle = new ArticleCache(articleID, r, callback);
-            articleCache.put(articleID, cacheArticle);
-
+            articleCache.add(cacheArticle);
+        }
     }
 
 

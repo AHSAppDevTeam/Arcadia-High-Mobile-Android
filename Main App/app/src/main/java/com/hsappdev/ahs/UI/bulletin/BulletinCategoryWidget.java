@@ -20,13 +20,12 @@ import androidx.cardview.widget.CardView;
 import androidx.core.graphics.drawable.DrawableCompat;
 
 import com.hsappdev.ahs.R;
-import com.hsappdev.ahs.UI.home.OnCategoryLoadedCallback;
 import com.hsappdev.ahs.dataTypes.Category;
 import com.hsappdev.ahs.util.ImageUtil;
 
 import java.util.List;
 
-public class BulletinCategoryWidget extends CardView implements OnCategoryLoadedCallback, View.OnClickListener{
+public class BulletinCategoryWidget extends CardView implements CategoryLoadedCallback, View.OnClickListener{
     final private Resources r;
     final private String categoryId;
     private CategoryState categoryState;
@@ -64,6 +63,16 @@ public class BulletinCategoryWidget extends CardView implements OnCategoryLoaded
         new BulletinIconCategoriesLoader(getContext()).loadCategoryData(categoryId, this);
     }
 
+    @Override
+    public void onCategoryDataLoaded(Category category, List<String> articleIds) {
+        categoryState = new CategoryState(category, isSelected);
+        categoryState.setArticleIds(articleIds);
+        labelTextView.setText(category.getTitle());
+        setBackground();
+        ImageUtil.setImageToView(category.getIconURL(), iconImageView);
+        bulletinFragment.registerCategory(this.categoryState);
+        bulletinFragment.updateView();
+    }
 
     public void setBackground(){
         Category category = categoryState.getCategory();
@@ -106,16 +115,7 @@ public class BulletinCategoryWidget extends CardView implements OnCategoryLoaded
         //bgImageView.setTin(category.getColor());
     }
 
-    @Override
-    public void onCategoryLoaded(Category category) {
-        categoryState = new CategoryState(category, isSelected);
-        categoryState.setArticleIds(category.getArticleIds());
-        labelTextView.setText(category.getTitle());
-        setBackground();
-        ImageUtil.setImageToView(category.getIconURL(), iconImageView);
-        bulletinFragment.registerCategory(this.categoryState);
-        bulletinFragment.updateView();
-    }
+
 
 
     @Override
@@ -143,5 +143,4 @@ public class BulletinCategoryWidget extends CardView implements OnCategoryLoaded
                 Math.min(g,255),
                 Math.min(b,255));
     }
-
 }

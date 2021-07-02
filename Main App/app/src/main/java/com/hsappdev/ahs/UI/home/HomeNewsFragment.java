@@ -26,7 +26,6 @@ import com.hsappdev.ahs.OnItemClick;
 import com.hsappdev.ahs.R;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class HomeNewsFragment extends Fragment {
     private static final String TAG = "HomeNewsFragment";
@@ -58,8 +57,6 @@ public class HomeNewsFragment extends Fragment {
 
     }
 
-    private static List<String> categoryList = new ArrayList<>();
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -73,37 +70,33 @@ public class HomeNewsFragment extends Fragment {
         RecyclerView recyclerView = view.findViewById(R.id.home_news_recyclerView);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        if(categoryList.size() > 0) {
-            createCategories(adapter, categoryList);
-        }else {
-            DatabaseReference ref = FirebaseDatabase.getInstance(FirebaseApp.getInstance()).getReference()
-                    .child(r.getString(R.string.db_locations))
-                    .child(r.getString(R.string.db_location_ausdNews))// homepage is default
-                    .child(r.getString(R.string.db_locations_catID));
-            //Log.d(TAG, "oncreateview");
-            ref.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    for (DataSnapshot sectionTitle : snapshot.getChildren()) {
-                        categoryList.add(sectionTitle.getValue(String.class));
+
+                DatabaseReference ref = FirebaseDatabase.getInstance(FirebaseApp.getInstance()).getReference()
+                        .child(r.getString(R.string.db_locations))
+                        .child(r.getString(R.string.db_location_ausdNews))// homepage is default
+                        .child(r.getString(R.string.db_locations_catID));
+                //Log.d(TAG, "oncreateview");
+                ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        //Log.d(TAG, "data changed");
+                        adapter.clearAll(); // if there is an update, prevent duplicate articles
+                        ArrayList<String> categoriesIDs = new ArrayList<>();
+                        for (DataSnapshot sectionTitle : snapshot.getChildren()) {
+                            categoriesIDs.add(sectionTitle.getValue(String.class));
+                        }
+                        adapter.addCategoryIDs(categoriesIDs);
+
                     }
-                    createCategories(adapter, categoryList);
 
-                }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
+                    }
+                });
 
-                }
-            });
-        }
 
         return view;
-    }
-
-    public void createCategories(NewsRecyclerAdapter adapter, List<String> categoriesIDs){
-        adapter.clearAll(); // if there is an update, prevent duplicate articles
-        adapter.addCategoryIDs(categoriesIDs);
     }
 
     public void updateCategory(String newCategoryReference) {

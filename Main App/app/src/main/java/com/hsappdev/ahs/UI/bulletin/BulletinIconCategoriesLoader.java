@@ -13,8 +13,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hsappdev.ahs.R;
-import com.hsappdev.ahs.UI.home.OnCategoryLoadedCallback;
-import com.hsappdev.ahs.cache.CategoryLoader;
 import com.hsappdev.ahs.dataTypes.Category;
 import com.hsappdev.ahs.util.ScreenUtil;
 
@@ -51,9 +49,30 @@ public class BulletinIconCategoriesLoader {
         });
     }
 
-    public void loadCategoryData(String categoryId, OnCategoryLoadedCallback callback) {
-        CategoryLoader.getInstance().getCategory(categoryId, r, callback);
-    }
+    public void loadCategoryData(String categoryId, CategoryLoadedCallback callback) {
+        DatabaseReference ref = FirebaseDatabase.getInstance(FirebaseApp.getInstance()).getReference()
+                .child(r.getString(R.string.db_categories))
+                .child(categoryId);
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String title = snapshot.child(r.getString(R.string.db_categories_titles)).getValue(String.class);
+                int color = Color.parseColor(snapshot.child(r.getString(R.string.db_categories_color)).getValue(String.class));
+                String iconURL = snapshot.child(r.getString(R.string.db_categories_iconURL)).getValue(String.class);
+                List<String> articleIds = new ArrayList<>();
+                for(DataSnapshot articleId : snapshot.child(r.getString(R.string.db_categories_articleIds)).getChildren()){
+                    articleIds.add(articleId.getValue(String.class));
+                }
 
+                callback.onCategoryDataLoaded(new Category(categoryId, title, color, iconURL), articleIds);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
 
 }

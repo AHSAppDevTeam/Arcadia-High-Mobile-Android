@@ -1,7 +1,8 @@
-package com.hsappdev.ahs.cache;
+package com.hsappdev.ahs.UI.home;
 
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -12,11 +13,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hsappdev.ahs.R;
-import com.hsappdev.ahs.UI.home.OnCategoryLoadedCallback;
 import com.hsappdev.ahs.dataTypes.Category;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -28,8 +27,11 @@ import java.util.List;
  */
 
 public class CategoryLoader {
+    private static final String TAG = "ArticleListLoader";
 
-    private HashMap<String, CategoryCache> articleCache = new HashMap<>();
+    private List<CategoryLoader.CategoryCache> articleCache = new ArrayList<>();
+    private List<Boolean> articleListenersSet = new ArrayList<>();
+
 
     private CategoryLoader() { }
 
@@ -44,19 +46,22 @@ public class CategoryLoader {
 
     public void getCategory(String categoryID, Resources r, OnCategoryLoadedCallback callback) {
         // search the cache for the id
-        CategoryCache categoryCache = articleCache.get(categoryID);
-        if(categoryCache != null) {
-            // registerForCallback is essential for the cache system
-            // it handles whether an article should be taken from cache or from firebase
-            categoryCache.registerForCallback(callback);
-            return;
+        boolean foundArticle = false;
+        for (int i = 0; i < articleCache.size(); i++) {
+            CategoryCache testCategory = articleCache.get(i);
+            if(testCategory.categoryID.equals(categoryID)) {
+                foundArticle = true;
+                // registerForCallback is essential for the cache system
+                // it handles whether an article should be taken from cache or from firebase
+                testCategory.registerForCallback(callback);
+            }
         }
-
+        if(!foundArticle) {
             // If article is not in the cache, add it to the cache
             // each articleCache will take care of loading itself
             CategoryCache cacheArticle = new CategoryCache(categoryID, r, callback);
-            articleCache.put(categoryID, cacheArticle);
-
+            articleCache.add(cacheArticle);
+        }
     }
 
     public class CategoryCache {
@@ -79,6 +84,7 @@ public class CategoryLoader {
             ref.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    Log.d(TAG, "load from firebase: " + categoryID);
                     List<String> articleIds = new ArrayList<>();
                     for(DataSnapshot articleId : snapshot.child(r.getString(R.string.db_categories_articleIds)).getChildren()){
                         articleIds.add(articleId.getValue(String.class));
