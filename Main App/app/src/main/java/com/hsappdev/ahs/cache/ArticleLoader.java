@@ -15,7 +15,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hsappdev.ahs.R;
 import com.hsappdev.ahs.UI.home.OnArticleLoadedCallback;
+import com.hsappdev.ahs.UI.home.OnCategoryLoadedCallback;
 import com.hsappdev.ahs.dataTypes.Article;
+import com.hsappdev.ahs.dataTypes.Category;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -78,7 +80,7 @@ public class ArticleLoader {
 
 
 
-    public class ArticleCache {
+    public class ArticleCache implements OnCategoryLoadedCallback {
         private Article article;
         private List<OnArticleLoadedCallback> registeredCallbacks = new ArrayList<>();
         private final Resources r;
@@ -129,33 +131,10 @@ public class ArticleLoader {
 
                     article = new Article(articleID, author, title, body, category, imageURLs.toArray(new String[0]), videoURLs.toArray(new String[0]), featured, timestamp);
 
-                    Log.d("ArticleLoader", "load from firebase " + articleID);
+                    //Log.d("ArticleLoader", "load from firebase " + articleID);
 
-                    boolean isNightModeOn = AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES;
                     // For Finding The Correct Color and Title for Featured Articles
-                    DatabaseReference ref = FirebaseDatabase.getInstance(FirebaseApp.getInstance()).getReference()
-                            .child(r.getString(R.string.db_categories))
-                            .child(article.getCategoryID());
-                    ref.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            String title = snapshot.child(r.getString(R.string.db_categories_titles)).getValue(String.class);
-
-                            int color = Color.parseColor(snapshot.child(r.getString(R.string.db_categories_color)).getValue(String.class));
-                            article.setCategoryDisplayName(title);
-                            article.setCategoryDisplayColor(color);
-                            for(OnArticleLoadedCallback callback : registeredCallbacks) {
-                                if (!callback.isActivityDestroyed()) {
-                                    callback.onArticleLoaded(article);
-                                }
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-
-                        }
-                    });
+                    CategoryLoader.getInstance().getCategory(article.getCategoryID(), r, ArticleCache.this);
 
 
                 }
@@ -198,6 +177,17 @@ public class ArticleLoader {
             article = null;
             reference.removeEventListener(valueEventListener);
             loadArticle();
+        }
+
+        @Override
+        public void onCategoryLoaded(Category category) {
+            article.setCategoryDisplayName(category.getTitle());
+            article.setCategoryDisplayColor(category.getColor());
+            for(OnArticleLoadedCallback callback : registeredCallbacks) {
+                if (!callback.isActivityDestroyed()) {
+                    callback.onArticleLoaded(article);
+                }
+            }
         }
     }
 }

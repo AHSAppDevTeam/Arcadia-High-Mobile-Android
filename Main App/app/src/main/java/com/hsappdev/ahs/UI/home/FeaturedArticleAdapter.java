@@ -111,7 +111,7 @@ public class FeaturedArticleAdapter extends RecyclerView.Adapter<FeaturedArticle
 
         @Override
         public void onClick(View view) {
-            Log.d(TAG, "article click");
+            //Log.d(TAG, "article click");
             if(article != null)
                 onArticleClick.onArticleClicked(article);
         }

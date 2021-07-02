@@ -110,7 +110,7 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
             featuredArticleAdapter.clearAll();
             mediumArticleAdapter.clearAll();
             smallArticleAdapter.clearAll();
-            Log.d(TAG, "onCategoryLoaded: size" + category.getCategoryID() + category.getArticleIds());
+            //Log.d(TAG, "onCategoryLoaded: size" + category.getCategoryID() + category.getArticleIds());
             articleSortingJunction(new ArrayList<>(category.getArticleIds()), category.getTitle(), featuredArticleAdapter, mediumArticleAdapter, smallArticleAdapter);
             // set section title
             String regularText = " News";

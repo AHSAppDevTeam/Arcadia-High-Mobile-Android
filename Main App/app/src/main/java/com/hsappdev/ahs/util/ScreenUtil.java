@@ -39,7 +39,7 @@ public class ScreenUtil {
 
     public static void setTimeToTextView(long timestamp, TextView view){
         long time = (long) (System.currentTimeMillis()/1000f);
-        Log.d("time", time+"");
+        //Log.d("time", time+"");
         String timeText = "";
 
         final int second = 1, minute = second*60, hour = minute*60, day = hour*24, week = day*7, month = day*30;

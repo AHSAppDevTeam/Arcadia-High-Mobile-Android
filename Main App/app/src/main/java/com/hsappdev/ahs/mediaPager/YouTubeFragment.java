@@ -53,7 +53,7 @@ public class YouTubeFragment extends YouTubePlayerSupportFragmentX implements Yo
         this.youTubePlayer = youTubePlayer;
         youTubePlayer.cueVideo(media.getMediaURL(), lastPlayTime);
         youTubePlayer.setOnFullscreenListener(this);
-        Log.d(TAG, "onInitializationSuccess: ");
+        //Log.d(TAG, "onInitializationSuccess: ");
     }
 
     @Override

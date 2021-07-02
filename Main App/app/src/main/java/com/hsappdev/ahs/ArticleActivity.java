@@ -247,7 +247,7 @@ public class ArticleActivity extends AppCompatActivity implements Adjusting_Text
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 float convertedProgress = ((float) progress) / seekBar.getMax() + 0.5f;
-                Log.d(TAG, String.valueOf(convertedProgress));
+                //Log.d(TAG, String.valueOf(convertedProgress));
                 viewModel.setTextScalar(convertedProgress);
                 fontSizeDisplay.setText(Integer.toString(progress));
             }

@@ -45,7 +45,7 @@ public class CommunityRecyclerAdapter extends RecyclerView.Adapter<CommunityRecy
     public void addCommunitySections(List<String> newSections){
         communitySections.addAll(newSections);
         notifyDataSetChanged();
-        Log.i(TAG, "addCommunitySections: new" + communitySections.size() + " " + newSections.size());
+        //Log.i(TAG, "addCommunitySections: new" + communitySections.size() + " " + newSections.size());
     }
 
 

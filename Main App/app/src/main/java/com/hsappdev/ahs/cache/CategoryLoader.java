@@ -83,7 +83,7 @@ public class CategoryLoader {
             ref.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    Log.d(TAG, "load from firebase: " + categoryID);
+                    //Log.d(TAG, "load from firebase: " + categoryID);
                     List<String> articleIds = new ArrayList<>();
                     for(DataSnapshot articleId : snapshot.child(r.getString(R.string.db_categories_articleIds)).getChildren()){
                         articleIds.add(articleId.getValue(String.class));
