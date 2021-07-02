@@ -19,7 +19,7 @@ import android.widget.LinearLayout;
 
 import com.hsappdev.ahs.OnItemClick;
 import com.hsappdev.ahs.R;
-import com.hsappdev.ahs.UI.home.ArticleLoader;
+import com.hsappdev.ahs.cache.ArticleLoader;
 import com.hsappdev.ahs.UI.home.OnArticleLoadedCallback;
 import com.hsappdev.ahs.dataTypes.Article;
 import com.hsappdev.ahs.dataTypes.Category;

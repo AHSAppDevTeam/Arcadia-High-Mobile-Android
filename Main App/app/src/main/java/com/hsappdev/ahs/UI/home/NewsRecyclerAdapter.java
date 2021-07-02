@@ -17,6 +17,7 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
+import com.hsappdev.ahs.cache.CategoryLoader;
 import com.hsappdev.ahs.dataTypes.Category;
 import com.hsappdev.ahs.util.Helper;
 import com.hsappdev.ahs.OnItemClick;

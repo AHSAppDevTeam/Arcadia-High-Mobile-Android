@@ -1,4 +1,4 @@
-package com.hsappdev.ahs.UI.home;
+package com.hsappdev.ahs.cache;
 
 import android.content.res.Resources;
 import android.graphics.Color;
@@ -13,9 +13,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hsappdev.ahs.R;
+import com.hsappdev.ahs.UI.home.OnCategoryLoadedCallback;
 import com.hsappdev.ahs.dataTypes.Category;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -29,8 +31,7 @@ import java.util.List;
 public class CategoryLoader {
     private static final String TAG = "ArticleListLoader";
 
-    private List<CategoryLoader.CategoryCache> articleCache = new ArrayList<>();
-    private List<Boolean> articleListenersSet = new ArrayList<>();
+    private HashMap<String, CategoryCache> articleCache = new HashMap<>();
 
 
     private CategoryLoader() { }
@@ -46,22 +47,20 @@ public class CategoryLoader {
 
     public void getCategory(String categoryID, Resources r, OnCategoryLoadedCallback callback) {
         // search the cache for the id
-        boolean foundArticle = false;
-        for (int i = 0; i < articleCache.size(); i++) {
-            CategoryCache testCategory = articleCache.get(i);
-            if(testCategory.categoryID.equals(categoryID)) {
-                foundArticle = true;
+        CategoryCache categoryCache = articleCache.get(categoryID);
                 // registerForCallback is essential for the cache system
                 // it handles whether an article should be taken from cache or from firebase
-                testCategory.registerForCallback(callback);
-            }
+        if(categoryCache != null) {
+            categoryCache.registerForCallback(callback);
+            return;
         }
-        if(!foundArticle) {
+
+
             // If article is not in the cache, add it to the cache
             // each articleCache will take care of loading itself
             CategoryCache cacheArticle = new CategoryCache(categoryID, r, callback);
-            articleCache.add(cacheArticle);
-        }
+            articleCache.put(categoryID, cacheArticle);
+
     }
 
     public class CategoryCache {
