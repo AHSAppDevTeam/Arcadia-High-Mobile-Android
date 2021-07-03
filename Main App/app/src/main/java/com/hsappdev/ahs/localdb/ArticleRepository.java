@@ -12,14 +12,28 @@ import java.util.List;
 public class ArticleRepository {
     private ArticleDAO articleDAO;
     private LiveData<List<Article>> allArticles;
+    private LiveData<List<Article>> allSavedArticles;
+    private LiveData<List<Article>> allNotificationArticles;
+
 
     public ArticleRepository(Application application) {
         RoomDatabase db = RoomDatabase.getDatabase(application);
         articleDAO = db.articleDAO();
-        allArticles = articleDAO.getAllSavedArticles();
+        allArticles = articleDAO.getAllArticles();
+        allSavedArticles = articleDAO.getAllSavedArticles();
+        allNotificationArticles = articleDAO.getAllNotificationArticles();
     }
 
     public LiveData<List<Article>> getAllArticles() {return allArticles;}
+
+    public Article getCachedArticle(String id) {
+        List<Article> articleList = articleDAO.getPossibleArticles(id);
+        if(articleList.isEmpty()){
+            return null;
+        } else {
+            return articleList.get(0);
+        }
+    }
 
     public LiveData<Boolean> isArticleSaved(String articleID) {
         return articleDAO.isArticleSaved(articleID);
@@ -37,7 +51,7 @@ public class ArticleRepository {
         RoomDatabase.databaseWriteExecutor.execute(() -> articleDAO.deleteAll());
     }
 
-    public void updateArticle(Article article) {
+    public void updateArticleSimple(Article article) {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -45,9 +59,18 @@ public class ArticleRepository {
                 if (itemsFromDB.isEmpty())
                     add(article);
                 else
-                    articleDAO.updateSaved(article.getArticleID(), article.getIsSaved());
+                    articleDAO.updateArticleSimple(article.getArticleID(), article.getIsSaved(), article.getIsNotification());
             }
         }).start();
 
+    }
+
+
+    public LiveData<List<Article>> getAllSavedArticles() {
+        return allSavedArticles;
+    }
+
+    public LiveData<List<Article>> getAllNotificationArticles() {
+        return allNotificationArticles;
     }
 }

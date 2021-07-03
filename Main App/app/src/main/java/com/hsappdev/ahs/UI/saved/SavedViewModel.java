@@ -16,6 +16,8 @@ public class SavedViewModel extends AndroidViewModel {
     private ArticleRepository repository;
 
     private final LiveData<List<Article>> allArticles;
+    private final LiveData<List<Article>> savedArticles;
+
     public LiveData<List<Article>> getAllArticles() {
         return allArticles;
     }
@@ -24,9 +26,14 @@ public class SavedViewModel extends AndroidViewModel {
         super(application);
         repository = new ArticleRepository(application);
         allArticles = repository.getAllArticles();
+        savedArticles = repository.getAllSavedArticles();
     }
 
     public void deleteAll() {
         repository.deleteAll();
+    }
+
+    public LiveData<List<Article>> getAllSavedArticles() {
+        return savedArticles;
     }
 }

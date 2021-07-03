@@ -72,6 +72,10 @@ public class Article implements Parcelable {
     @ColumnInfo(name = IS_NOTIFICATION)
     int isNotification;
 
+    public static final String IS_VIEWED = "IS_VIEWED";
+    @ColumnInfo(name = IS_VIEWED)
+    int isViewed;
+
     @Ignore
     boolean featured;
 
@@ -127,6 +131,14 @@ public class Article implements Parcelable {
             return new Article[size];
         }
     };
+
+    public int getIsViewed() {
+        return isViewed;
+    }
+
+    public void setIsViewed(int isViewed) {
+        this.isViewed = isViewed;
+    }
 
     public int getIsSaved() {
         return isSaved;

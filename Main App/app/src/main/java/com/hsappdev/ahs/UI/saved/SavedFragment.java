@@ -162,7 +162,7 @@ public class SavedFragment extends Fragment {
         savedRecyclerView.setLayoutManager(linearLayoutManager);
         savedRecyclerView.setAdapter(savedRecyclerAdapter);
 
-        model.getAllArticles().observe(getViewLifecycleOwner(), articles -> {
+        model.getAllSavedArticles().observe(getViewLifecycleOwner(), articles -> {
             savedRecyclerAdapter.replaceAll(articles);
             emptyMsgTextView.setVisibility(/*(articles.size() == 0) ? View.VISIBLE : */View.GONE);
         });
