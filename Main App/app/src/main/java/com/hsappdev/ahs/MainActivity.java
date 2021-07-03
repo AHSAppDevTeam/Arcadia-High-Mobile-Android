@@ -22,7 +22,7 @@ import com.hsappdev.ahs.UI.home.OnSectionClicked;
 import com.hsappdev.ahs.dataTypes.Article;
 import com.hsappdev.ahs.dataTypes.CommunitySection;
 
-public class MainActivity extends AppCompatActivity implements BottomNavigationCallback, SettingsManager.DayNightCallback, OnItemClick, OnSectionClicked {
+public class MainActivity extends AppCompatActivity implements BottomNavigationCallback, SettingsManager.DayNightCallback, OnItemClick, OnSectionClicked, OnNotificationSectionClicked {
 
     private BottomNavigationView navView;
     private static final String TAG = "MainActivity";
@@ -123,6 +123,13 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationC
         startActivity(intent);
         // overridePendingTransition(R.anim.enter_from_right, R.anim.empty_animation);
     }
+
+    @Override
+    public void onNotificationSectionClicked() {
+        Intent intent = new Intent(MainActivity.this, NotificationActivity.class);
+        startActivity(intent);
+    }
+
     //    @Override
 //    public void onWindowFocusChanged(boolean hasFocus) {
 //        super.onWindowFocusChanged(hasFocus);

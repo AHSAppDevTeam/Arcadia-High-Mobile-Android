@@ -16,7 +16,7 @@ public class ArticleRepository {
     public ArticleRepository(Application application) {
         RoomDatabase db = RoomDatabase.getDatabase(application);
         articleDAO = db.articleDAO();
-        allArticles = articleDAO.getAllArticles();
+        allArticles = articleDAO.getAllSavedArticles();
     }
 
     public LiveData<List<Article>> getAllArticles() {return allArticles;}
@@ -35,5 +35,19 @@ public class ArticleRepository {
 
     public void deleteAll() {
         RoomDatabase.databaseWriteExecutor.execute(() -> articleDAO.deleteAll());
+    }
+
+    public void updateArticle(Article article) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                List<Article> itemsFromDB = articleDAO.getPossibleArticles(article.getArticleID());
+                if (itemsFromDB.isEmpty())
+                    add(article);
+                else
+                    articleDAO.updateSaved(article.getArticleID(), article.getIsSaved());
+            }
+        }).start();
+
     }
 }

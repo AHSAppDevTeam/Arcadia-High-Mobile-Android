@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = ArticleDAO.TABLE_NAME)
@@ -63,6 +64,14 @@ public class Article implements Parcelable {
     @ColumnInfo(name = TIME)
     long timestamp;
 
+    public static final String IS_SAVED = "IS_SAVED";
+    @ColumnInfo(name = IS_SAVED)
+    int isSaved;
+
+    public static final String IS_NOTIFICATION = "IS_NOTIFICATION";
+    @ColumnInfo(name = IS_NOTIFICATION)
+    int isNotification;
+
     @Ignore
     boolean featured;
 
@@ -118,6 +127,22 @@ public class Article implements Parcelable {
             return new Article[size];
         }
     };
+
+    public int getIsSaved() {
+        return isSaved;
+    }
+
+    public void setIsSaved(int isSaved) {
+        this.isSaved = isSaved;
+    }
+
+    public int getIsNotification() {
+        return isNotification;
+    }
+
+    public void setIsNotification(int isNotification) {
+        this.isNotification = isNotification;
+    }
 
     public String[] getVideoURLs() {
         return videoURLs;

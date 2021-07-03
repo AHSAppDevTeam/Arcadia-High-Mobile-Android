@@ -82,7 +82,7 @@ public class SavedFragment extends Fragment {
                         .setTitle("Delete Request")
                         .setIcon(R.drawable.article_appbar_not_saved_ic)
                         .setMessage("Do you really want to clear all saved articles?")
-                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
 
                             public void onClick(DialogInterface dialog, int whichButton) {
                                 //SavedDatabase savedDatabase = SavedDatabase.getInstance(getActivity().getApplicationContext());

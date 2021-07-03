@@ -77,5 +77,6 @@
     <string name="logo_description">The Arcadia High Mobile logo: a peacock feather in shades of cardinal and gold.</string>
     <string name="community_title">Community</string>
     <string name="main_title">AUSD News</string>
+    <string name="notifications_section_title"><b>Notifications</b></string>
 
 </resources>

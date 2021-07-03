@@ -178,6 +178,7 @@ public class ArticleActivity extends AppCompatActivity implements Adjusting_Text
         // do async or whatever
         articleRepository.isArticleSaved(article.getArticleID()).observe(this, isSaved -> {
             isArticleSaved = isSaved;
+
             setSavedIcon(articleToolbar.getMenu().getItem(2), isSaved);
         });
 
@@ -197,9 +198,11 @@ public class ArticleActivity extends AppCompatActivity implements Adjusting_Text
                         return true;
                     case R.id.article_toolbar_saved:
                         if(isArticleSaved)
-                            articleRepository.delete(article.getArticleID());
+                            article.setIsSaved(0);
                         else
-                            articleRepository.add(article);
+                            article.setIsSaved(1);
+
+                        articleRepository.updateArticle(article);
                         isArticleSaved = !isArticleSaved;
                         setSavedIcon(item, isArticleSaved);
                         return true;

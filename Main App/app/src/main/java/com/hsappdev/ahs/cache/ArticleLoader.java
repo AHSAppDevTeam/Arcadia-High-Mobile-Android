@@ -3,6 +3,8 @@ package com.hsappdev.ahs.cache;
 import android.content.res.Resources;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DataSnapshot;
@@ -11,8 +13,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hsappdev.ahs.R;
+import com.hsappdev.ahs.UI.saved.SavedViewModel;
 import com.hsappdev.ahs.dataTypes.Article;
 import com.hsappdev.ahs.dataTypes.Category;
+import com.hsappdev.ahs.localdb.ArticleRepository;
 
 import java.util.ArrayList;
 import java.util.HashMap;
