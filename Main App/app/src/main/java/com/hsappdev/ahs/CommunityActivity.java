@@ -5,7 +5,6 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
-import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -22,6 +21,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.hsappdev.ahs.UI.home.CommunityArticleUnit;
 import com.hsappdev.ahs.dataTypes.Article;
 import com.hsappdev.ahs.dataTypes.CommunitySection;
+import com.hsappdev.ahs.db.DatabaseConstants;
 import com.hsappdev.ahs.util.Helper;
 
 import java.text.SimpleDateFormat;
@@ -62,7 +62,7 @@ public class CommunityActivity extends AppCompatActivity implements OnItemClick,
     }
 
     private void loadArticles() {
-        DatabaseReference ref = FirebaseDatabase.getInstance(FirebaseApp.getInstance("database-access")).getReference()
+        DatabaseReference ref = FirebaseDatabase.getInstance(FirebaseApp.getInstance(DatabaseConstants.FIREBASE_REALTIME_DB)).getReference()
                 .child(r.getString(R.string.db_categories))
                 .child(communitySection.getCategoryId());
         ref.addValueEventListener(new ValueEventListener() {

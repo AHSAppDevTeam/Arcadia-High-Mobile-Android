@@ -1,6 +1,5 @@
 package com.hsappdev.ahs;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.navigation.NavController;
@@ -10,18 +9,16 @@ import androidx.navigation.ui.NavigationUI;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Window;
-import android.view.WindowManager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
-import com.google.firebase.messaging.FirebaseMessaging;
 import com.hsappdev.ahs.UI.home.OnSectionClicked;
 import com.hsappdev.ahs.dataTypes.Article;
 import com.hsappdev.ahs.dataTypes.CommunitySection;
 import com.hsappdev.ahs.firebaseMessaging.NotificationSetup;
+import com.hsappdev.ahs.db.DatabaseConstants;
 
 import java.util.Arrays;
 
@@ -54,9 +51,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationC
                 .setApiKey(r.getString(R.string.db_api_key))
                 .setDatabaseUrl(r.getString(R.string.db_url))
                 .build();
-        
-        FirebaseApp.initializeApp(getApplicationContext(), options, "database-access");
 
+        if(FirebaseApp.getApps(getApplicationContext()).size() == 1) {
+            FirebaseApp.initializeApp(getApplicationContext(), options, DatabaseConstants.FIREBASE_REALTIME_DB);
+        }
 
         setContentView(R.layout.activity_main);
 

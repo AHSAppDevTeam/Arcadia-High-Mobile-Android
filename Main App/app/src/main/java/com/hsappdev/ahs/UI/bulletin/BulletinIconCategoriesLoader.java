@@ -14,7 +14,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hsappdev.ahs.R;
 import com.hsappdev.ahs.dataTypes.Category;
-import com.hsappdev.ahs.util.ScreenUtil;
+import com.hsappdev.ahs.db.DatabaseConstants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +27,7 @@ public class BulletinIconCategoriesLoader {
     }
 
     public void loadCategories(CategoriesLoadedCallback callback) {
-        DatabaseReference ref = FirebaseDatabase.getInstance(FirebaseApp.getInstance("database-access")).getReference()
+        DatabaseReference ref = FirebaseDatabase.getInstance(FirebaseApp.getInstance(DatabaseConstants.FIREBASE_REALTIME_DB)).getReference()
                 .child(r.getString(R.string.db_locations))
                 .child(r.getString(R.string.db_location_bulletin))
                 .child(r.getString(R.string.db_locations_catID));
@@ -50,7 +50,7 @@ public class BulletinIconCategoriesLoader {
     }
 
     public void loadCategoryData(String categoryId, CategoryLoadedCallback callback) {
-        DatabaseReference ref = FirebaseDatabase.getInstance(FirebaseApp.getInstance("database-access")).getReference()
+        DatabaseReference ref = FirebaseDatabase.getInstance(FirebaseApp.getInstance(DatabaseConstants.FIREBASE_REALTIME_DB)).getReference()
                 .child(r.getString(R.string.db_categories))
                 .child(categoryId);
         ref.addValueEventListener(new ValueEventListener() {

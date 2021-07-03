@@ -3,8 +3,6 @@ package com.hsappdev.ahs.cache;
 import android.content.res.Resources;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DataSnapshot;
@@ -13,10 +11,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hsappdev.ahs.R;
-import com.hsappdev.ahs.UI.saved.SavedViewModel;
 import com.hsappdev.ahs.dataTypes.Article;
 import com.hsappdev.ahs.dataTypes.Category;
-import com.hsappdev.ahs.localdb.ArticleRepository;
+import com.hsappdev.ahs.db.DatabaseConstants;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -105,7 +102,7 @@ public class ArticleLoader {
         }
 
         public void loadArticle() {
-            DatabaseReference ref = FirebaseDatabase.getInstance(FirebaseApp.getInstance("database-access")).getReference()
+            DatabaseReference ref = FirebaseDatabase.getInstance(FirebaseApp.getInstance(DatabaseConstants.FIREBASE_REALTIME_DB)).getReference()
                     .child(r.getString(R.string.db_articles))
                     .child(articleID);
             reference = ref;

@@ -6,6 +6,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
+import com.hsappdev.ahs.db.DatabaseConstants;
+
 public class HistoryDatabase extends SQLiteOpenHelper {
 
     private static HistoryDatabase dbInstance;
