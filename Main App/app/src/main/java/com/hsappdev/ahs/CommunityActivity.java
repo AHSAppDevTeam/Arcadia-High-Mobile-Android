@@ -62,7 +62,7 @@ public class CommunityActivity extends AppCompatActivity implements OnItemClick,
     }
 
     private void loadArticles() {
-        DatabaseReference ref = FirebaseDatabase.getInstance(FirebaseApp.getInstance()).getReference()
+        DatabaseReference ref = FirebaseDatabase.getInstance(FirebaseApp.getInstance("database-access")).getReference()
                 .child(r.getString(R.string.db_categories))
                 .child(communitySection.getCategoryId());
         ref.addValueEventListener(new ValueEventListener() {

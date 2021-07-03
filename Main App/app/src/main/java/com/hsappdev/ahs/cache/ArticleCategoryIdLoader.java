@@ -24,7 +24,7 @@ public class ArticleCategoryIdLoader {
         if(articleCategoryCache.size() > 0){
             callback.categoryListLoaded(articleCategoryCache);
         } else {
-            DatabaseReference ref = FirebaseDatabase.getInstance(FirebaseApp.getInstance()).getReference()
+            DatabaseReference ref = FirebaseDatabase.getInstance(FirebaseApp.getInstance("database-access")).getReference()
                     .child(r.getString(R.string.db_locations))
                     .child(r.getString(R.string.db_location_ausdNews))// homepage is default
                     .child(r.getString(R.string.db_locations_catID));

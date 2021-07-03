@@ -27,7 +27,7 @@ public class BulletinIconCategoriesLoader {
     }
 
     public void loadCategories(CategoriesLoadedCallback callback) {
-        DatabaseReference ref = FirebaseDatabase.getInstance(FirebaseApp.getInstance()).getReference()
+        DatabaseReference ref = FirebaseDatabase.getInstance(FirebaseApp.getInstance("database-access")).getReference()
                 .child(r.getString(R.string.db_locations))
                 .child(r.getString(R.string.db_location_bulletin))
                 .child(r.getString(R.string.db_locations_catID));
@@ -50,7 +50,7 @@ public class BulletinIconCategoriesLoader {
     }
 
     public void loadCategoryData(String categoryId, CategoryLoadedCallback callback) {
-        DatabaseReference ref = FirebaseDatabase.getInstance(FirebaseApp.getInstance()).getReference()
+        DatabaseReference ref = FirebaseDatabase.getInstance(FirebaseApp.getInstance("database-access")).getReference()
                 .child(r.getString(R.string.db_categories))
                 .child(categoryId);
         ref.addValueEventListener(new ValueEventListener() {

@@ -75,7 +75,7 @@ public class CategoryLoader {
         }
 
         public void loadCategory() {
-            DatabaseReference ref = FirebaseDatabase.getInstance(FirebaseApp.getInstance()).getReference()
+            DatabaseReference ref = FirebaseDatabase.getInstance(FirebaseApp.getInstance("database-access")).getReference()
                     .child(r.getString(R.string.db_categories))
                     .child(categoryID);
             ref.addValueEventListener(new ValueEventListener() {

@@ -105,7 +105,7 @@ public class ArticleLoader {
         }
 
         public void loadArticle() {
-            DatabaseReference ref = FirebaseDatabase.getInstance(FirebaseApp.getInstance()).getReference()
+            DatabaseReference ref = FirebaseDatabase.getInstance(FirebaseApp.getInstance("database-access")).getReference()
                     .child(r.getString(R.string.db_articles))
                     .child(articleID);
             reference = ref;

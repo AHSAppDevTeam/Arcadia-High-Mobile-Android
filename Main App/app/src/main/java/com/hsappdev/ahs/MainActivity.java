@@ -21,6 +21,9 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import com.hsappdev.ahs.UI.home.OnSectionClicked;
 import com.hsappdev.ahs.dataTypes.Article;
 import com.hsappdev.ahs.dataTypes.CommunitySection;
+import com.hsappdev.ahs.firebaseMessaging.NotificationSetup;
+
+import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationCallback, SettingsManager.DayNightCallback, OnItemClick, OnSectionClicked, OnNotificationSectionClicked {
 
@@ -33,7 +36,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationC
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         // getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
         //      WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.article);
 
         SettingsManager settingsManager = SettingsManager.getInstance(getApplicationContext());
         boolean nightModeOn = settingsManager.isNightModeOn();
@@ -46,16 +48,15 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationC
 
         Resources r =getResources();
 
+
         FirebaseOptions options = new FirebaseOptions.Builder()
                 .setApplicationId(r.getString(R.string.db_app_id))
                 .setApiKey(r.getString(R.string.db_api_key))
                 .setDatabaseUrl(r.getString(R.string.db_url))
                 .build();
+        
+        FirebaseApp.initializeApp(getApplicationContext(), options, "database-access");
 
-        // prevent weird crashes if firebase app is already initialized
-        if (FirebaseApp.getApps(getApplicationContext()).isEmpty()) {
-            FirebaseApp.initializeApp(getApplicationContext(), options);
-        }
 
         setContentView(R.layout.activity_main);
 
@@ -70,6 +71,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationC
         NavigationUI.setupWithNavController(navView, navController);
 
         navView.setItemIconTintList(null); // Remove tint from navbar; Required for navbar icons to work
+
+        NotificationSetup.setUpNotificationChannel(getResources(), this);
+        String[] channels = new String[]{"Debug", "Draft"};
+        NotificationSetup.subscribe(this, Arrays.asList(channels));
     }
 
     @Override

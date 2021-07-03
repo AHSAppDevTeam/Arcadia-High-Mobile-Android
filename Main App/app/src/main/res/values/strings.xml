@@ -78,5 +78,7 @@
     <string name="community_title">Community</string>
     <string name="main_title">AUSD News</string>
     <string name="notifications_section_title"><b>Notifications</b></string>
+    <string name="notificationChannelID">ahsMobileNotificationChannelID</string>
+    <string name="notificationChannelName">AHS Mobile Notifications</string>
 
 </resources>

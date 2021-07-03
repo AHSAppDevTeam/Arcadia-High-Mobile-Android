@@ -81,7 +81,7 @@ public class CommunityRecyclerAdapter extends RecyclerView.Adapter<CommunityRecy
 
         public void setDetails(String categoryId){
             contentView.setOnClickListener(this);
-            DatabaseReference ref = FirebaseDatabase.getInstance(FirebaseApp.getInstance()).getReference()
+            DatabaseReference ref = FirebaseDatabase.getInstance(FirebaseApp.getInstance("database-access")).getReference()
                     .child(r.getString(R.string.db_categories))
                     .child(categoryId);
             ref.addValueEventListener(new ValueEventListener() {

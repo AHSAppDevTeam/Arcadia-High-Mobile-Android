@@ -70,7 +70,7 @@ public class HomeCommunityFragment extends Fragment {
         recyclerView.setAdapter(communityRecyclerAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
 
-        DatabaseReference ref = FirebaseDatabase.getInstance(FirebaseApp.getInstance()).getReference()
+        DatabaseReference ref = FirebaseDatabase.getInstance(FirebaseApp.getInstance("database-access")).getReference()
                 .child(r.getString(R.string.db_locations))
                 .child("community")
                 .child(r.getString(R.string.db_locations_catID));
