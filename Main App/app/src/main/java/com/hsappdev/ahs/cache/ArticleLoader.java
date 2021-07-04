@@ -2,6 +2,7 @@ package com.hsappdev.ahs.cache;
 
 import android.app.Application;
 import android.content.res.Resources;
+import android.os.Handler;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -41,11 +42,17 @@ public class ArticleLoader {
     private HashMap<String, ArticleCache> articleCache = new HashMap<>();
     private Application application;
     private ArticleRepository articleRepository;
-    private List<Article> localDBArticleList = new ArrayList<>();
 
     private ArticleLoader(Application application) {
         this.application = application;
         articleRepository = new ArticleRepository(application);
+
+        // For one time on app launch, clean up unused articles
+        trimUnusedArticles();
+    }
+
+    private void trimUnusedArticles() {
+        new Handler().post(new LocalDBArticleTrimmer());
     }
 
     private static ArticleLoader articleLoader;
@@ -96,13 +103,9 @@ public class ArticleLoader {
         private ValueEventListener valueEventListener;
         private DatabaseReference reference;
         private volatile boolean isInDatabase = false;
+        private volatile boolean hasFirebaseLoadFinished = false;
 
-        public ArticleCache(String articleID, Resources r) {
-            this.r = r;
-            this.articleID = articleID;
-            startDBLoad();
-            loadArticle();
-        }
+
 
         public ArticleCache(String articleID, Resources r, OnArticleLoadedCallback callback) {
             this.r = r;
@@ -112,18 +115,14 @@ public class ArticleLoader {
             loadArticle();
         }
 
-        public ArticleCache(String articleID, Resources r, OnArticleLoadedCallback callback, Article article) {
-            this(articleID, r);
-            this.article = article;
-            registerForCallback(callback);
-            startDBLoad();
-            loadArticle();
-        }
 
         private void startDBLoad() {
             articleRepository.getArticle(articleID).observeForever(new Observer<Article>() {
                 @Override
                 public void onChanged(Article article) {
+                    if(hasFirebaseLoadFinished){
+                        return;
+                    }
                     if(article != null) {
                         isInDatabase = true;
                         ArticleCache.this.article = article;
@@ -232,6 +231,10 @@ public class ArticleLoader {
                     callback.onArticleLoaded(article);
                 }
             }
+            hasFirebaseLoadFinished = true;
+            // If firebase is faster and the article is loaded from firebase
+            // we set this var to make sure that the latest data from firebase is not updated with old
+            // data from the cache
 
             if(!isInDatabase){
                 articleRepository.add(article);
