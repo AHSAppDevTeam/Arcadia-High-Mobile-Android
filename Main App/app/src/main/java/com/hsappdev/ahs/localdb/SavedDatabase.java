@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import androidx.annotation.Nullable;
 
 import com.hsappdev.ahs.dataTypes.Article;
+import com.hsappdev.ahs.db.DatabaseConstants;
 
 import org.json.JSONArray;
 import org.json.JSONException;

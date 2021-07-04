@@ -57,7 +57,7 @@ public class CategoryViewHolder extends RecyclerView.ViewHolder implements OnCat
     public void onCategoryLoaded(Category category) {
 
         smallArticleAdapter.clearAll();
-        Log.d(TAG, "onCategoryLoaded: size" + category.getCategoryID() + category.getArticleIds());
+        //Log.d(TAG, "onCategoryLoaded: size" + category.getCategoryID() + category.getArticleIds());
         articleSortingJunction(new ArrayList<>(category.getArticleIds()), category.getTitle(), smallArticleAdapter);
         // set section title
         String regularText = " News";

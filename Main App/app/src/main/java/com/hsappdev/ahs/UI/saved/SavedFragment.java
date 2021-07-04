@@ -82,7 +82,7 @@ public class SavedFragment extends Fragment {
                         .setTitle("Delete Request")
                         .setIcon(R.drawable.article_appbar_not_saved_ic)
                         .setMessage("Do you really want to clear all saved articles?")
-                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
 
                             public void onClick(DialogInterface dialog, int whichButton) {
                                 //SavedDatabase savedDatabase = SavedDatabase.getInstance(getActivity().getApplicationContext());
@@ -162,7 +162,7 @@ public class SavedFragment extends Fragment {
         savedRecyclerView.setLayoutManager(linearLayoutManager);
         savedRecyclerView.setAdapter(savedRecyclerAdapter);
 
-        model.getAllArticles().observe(getViewLifecycleOwner(), articles -> {
+        model.getAllSavedArticles().observe(getViewLifecycleOwner(), articles -> {
             savedRecyclerAdapter.replaceAll(articles);
             emptyMsgTextView.setVisibility(/*(articles.size() == 0) ? View.VISIBLE : */View.GONE);
         });

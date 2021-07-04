@@ -2,6 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.hsappdev.ahs">
 
+    <queries>
+        <intent>
+            <action android:name="com.google.android.youtube.api.service.START" />
+        </intent>
+    </queries>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,13 +15,27 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ArcadiaHighMobile">
-        <activity android:name=".ArticleActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            >
 
-        </activity>
-        <activity android:name=".mediaPager.ImageViewActivity"/>
-        <activity android:name=".CommunityActivity"/>
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_launcher_foreground" />
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/black" />
+        <service
+            android:name=".firebaseMessaging.CustomFirebaseMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <activity android:name=".NotificationActivity"></activity>
+        <activity
+            android:name=".ArticleActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"></activity>
+        <activity android:name=".mediaPager.ImageViewActivity" />
+        <activity android:name=".CommunityActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,11 +44,5 @@
             </intent-filter>
         </activity>
     </application>
-
-    <queries>
-        <intent>
-            <action android:name="com.google.android.youtube.api.service.START" />
-        </intent>
-    </queries>
 
 </manifest>

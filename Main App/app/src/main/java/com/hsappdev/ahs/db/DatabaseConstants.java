@@ -1,4 +1,4 @@
-package com.hsappdev.ahs.localdb;
+package com.hsappdev.ahs.db;
 
 public class DatabaseConstants {
     // Change this value to clear sql lite database if needed
@@ -7,5 +7,7 @@ public class DatabaseConstants {
     public static final String SAVED_TABLE = "new_saved_table";
     public static final String VIEWS_TABLE = "views_table";
 
+
+    public static final String FIREBASE_REALTIME_DB = "database-access";
 
 }

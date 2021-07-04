@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NewsRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    //List<List<Article>> articlesList = new ArrayList<>();
     private static final String TAG = "NewsRecyclerAdapter";
 
     private static final int FEATURED = 0;

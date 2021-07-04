@@ -1,7 +1,6 @@
 package com.hsappdev.ahs.cache;
 
 import android.content.res.Resources;
-import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 
@@ -12,9 +11,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hsappdev.ahs.R;
+import com.hsappdev.ahs.db.DatabaseConstants;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class ArticleCategoryIdLoader {
@@ -24,7 +23,7 @@ public class ArticleCategoryIdLoader {
         if(articleCategoryCache.size() > 0){
             callback.categoryListLoaded(articleCategoryCache);
         } else {
-            DatabaseReference ref = FirebaseDatabase.getInstance(FirebaseApp.getInstance()).getReference()
+            DatabaseReference ref = FirebaseDatabase.getInstance(FirebaseApp.getInstance(DatabaseConstants.FIREBASE_REALTIME_DB)).getReference()
                     .child(r.getString(R.string.db_locations))
                     .child(r.getString(R.string.db_location_ausdNews))// homepage is default
                     .child(r.getString(R.string.db_locations_catID));

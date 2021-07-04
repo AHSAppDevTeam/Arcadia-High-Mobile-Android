@@ -65,7 +65,7 @@ public class MediumArticleUnit extends ConstraintLayout implements OnArticleLoad
 //    }
 
     public void setDetails(String articleId){
-        ArticleLoader.getInstance().getArticle(articleId, r, this);
+        ArticleLoader.getInstance(activity.getApplication()).getArticle(articleId, r, this);
     }
 
 

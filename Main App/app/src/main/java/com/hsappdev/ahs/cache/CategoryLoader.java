@@ -13,6 +13,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hsappdev.ahs.R;
 import com.hsappdev.ahs.dataTypes.Category;
+import com.hsappdev.ahs.db.DatabaseConstants;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -75,7 +76,7 @@ public class CategoryLoader {
         }
 
         public void loadCategory() {
-            DatabaseReference ref = FirebaseDatabase.getInstance(FirebaseApp.getInstance()).getReference()
+            DatabaseReference ref = FirebaseDatabase.getInstance(FirebaseApp.getInstance(DatabaseConstants.FIREBASE_REALTIME_DB)).getReference()
                     .child(r.getString(R.string.db_categories))
                     .child(categoryID);
             ref.addValueEventListener(new ValueEventListener() {

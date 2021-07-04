@@ -2,7 +2,6 @@ package com.hsappdev.ahs.UI.home;
 
 import android.content.res.Resources;
 import android.graphics.Color;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +19,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hsappdev.ahs.R;
 import com.hsappdev.ahs.dataTypes.CommunitySection;
+import com.hsappdev.ahs.db.DatabaseConstants;
 import com.hsappdev.ahs.util.Helper;
 import com.hsappdev.ahs.util.ImageUtil;
 
@@ -81,7 +81,7 @@ public class CommunityRecyclerAdapter extends RecyclerView.Adapter<CommunityRecy
 
         public void setDetails(String categoryId){
             contentView.setOnClickListener(this);
-            DatabaseReference ref = FirebaseDatabase.getInstance(FirebaseApp.getInstance()).getReference()
+            DatabaseReference ref = FirebaseDatabase.getInstance(FirebaseApp.getInstance(DatabaseConstants.FIREBASE_REALTIME_DB)).getReference()
                     .child(r.getString(R.string.db_categories))
                     .child(categoryId);
             ref.addValueEventListener(new ValueEventListener() {

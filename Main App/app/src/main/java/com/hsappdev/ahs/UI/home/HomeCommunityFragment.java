@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,8 +19,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.hsappdev.ahs.OnItemClick;
 import com.hsappdev.ahs.R;
+import com.hsappdev.ahs.db.DatabaseConstants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,7 +69,7 @@ public class HomeCommunityFragment extends Fragment {
         recyclerView.setAdapter(communityRecyclerAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
 
-        DatabaseReference ref = FirebaseDatabase.getInstance(FirebaseApp.getInstance()).getReference()
+        DatabaseReference ref = FirebaseDatabase.getInstance(FirebaseApp.getInstance(DatabaseConstants.FIREBASE_REALTIME_DB)).getReference()
                 .child(r.getString(R.string.db_locations))
                 .child("community")
                 .child(r.getString(R.string.db_locations_catID));

@@ -47,7 +47,7 @@ public class LargeArticleUnit implements View.OnClickListener, OnArticleLoadedCa
 
     public void setDetails(String articleID){
         articleLayout.setOnClickListener(this);
-        ArticleLoader.getInstance().getArticle(articleID, r, this);
+        ArticleLoader.getInstance(activity.getApplication()).getArticle(articleID, r, this);
     }
 
 

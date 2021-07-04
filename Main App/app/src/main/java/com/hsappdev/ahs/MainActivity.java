@@ -1,6 +1,5 @@
 package com.hsappdev.ahs;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.navigation.NavController;
@@ -10,19 +9,20 @@ import androidx.navigation.ui.NavigationUI;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Window;
-import android.view.WindowManager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
-import com.google.firebase.messaging.FirebaseMessaging;
 import com.hsappdev.ahs.UI.home.OnSectionClicked;
 import com.hsappdev.ahs.dataTypes.Article;
 import com.hsappdev.ahs.dataTypes.CommunitySection;
+import com.hsappdev.ahs.firebaseMessaging.NotificationSetup;
+import com.hsappdev.ahs.db.DatabaseConstants;
 
-public class MainActivity extends AppCompatActivity implements BottomNavigationCallback, SettingsManager.DayNightCallback, OnItemClick, OnSectionClicked {
+import java.util.Arrays;
+
+public class MainActivity extends AppCompatActivity implements BottomNavigationCallback, SettingsManager.DayNightCallback, OnItemClick, OnSectionClicked, OnNotificationSectionClicked {
 
     private BottomNavigationView navView;
     private static final String TAG = "MainActivity";
@@ -33,7 +33,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationC
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         // getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
         //      WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.article);
 
         SettingsManager settingsManager = SettingsManager.getInstance(getApplicationContext());
         boolean nightModeOn = settingsManager.isNightModeOn();
@@ -46,15 +45,15 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationC
 
         Resources r =getResources();
 
+
         FirebaseOptions options = new FirebaseOptions.Builder()
                 .setApplicationId(r.getString(R.string.db_app_id))
                 .setApiKey(r.getString(R.string.db_api_key))
                 .setDatabaseUrl(r.getString(R.string.db_url))
                 .build();
 
-        // prevent weird crashes if firebase app is already initialized
-        if (FirebaseApp.getApps(getApplicationContext()).isEmpty()) {
-            FirebaseApp.initializeApp(getApplicationContext(), options);
+        if(FirebaseApp.getApps(getApplicationContext()).size() == 1) {
+            FirebaseApp.initializeApp(getApplicationContext(), options, DatabaseConstants.FIREBASE_REALTIME_DB);
         }
 
         setContentView(R.layout.activity_main);
@@ -70,6 +69,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationC
         NavigationUI.setupWithNavController(navView, navController);
 
         navView.setItemIconTintList(null); // Remove tint from navbar; Required for navbar icons to work
+
+        NotificationSetup.setUpNotificationChannel(getResources(), this);
+        String[] channels = new String[]{"Debug", "Draft"};
+        NotificationSetup.subscribe(this, Arrays.asList(channels));
     }
 
     @Override
@@ -123,6 +126,13 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationC
         startActivity(intent);
         // overridePendingTransition(R.anim.enter_from_right, R.anim.empty_animation);
     }
+
+    @Override
+    public void onNotificationSectionClicked() {
+        Intent intent = new Intent(MainActivity.this, NotificationActivity.class);
+        startActivity(intent);
+    }
+
     //    @Override
 //    public void onWindowFocusChanged(boolean hasFocus) {
 //        super.onWindowFocusChanged(hasFocus);

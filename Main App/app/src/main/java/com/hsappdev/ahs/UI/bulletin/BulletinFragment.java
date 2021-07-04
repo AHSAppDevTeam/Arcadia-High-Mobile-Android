@@ -144,7 +144,7 @@ public class BulletinFragment extends Fragment implements CategoriesLoadedCallba
             }
             if(!isArticleUpdate){ // Only set an article loader if it is not set before
                 //Log.d(TAG, "registerCategory: loadedArticle "+ categoryState.getArticleIds().get(i));
-                ArticleLoader.getInstance().getArticle(
+                ArticleLoader.getInstance(getActivity().getApplication()).getArticle(
                         categoryState.getArticleIds().get(i),
                         getResources(),
                         this);

@@ -1,8 +1,11 @@
 package com.hsappdev.ahs.cache;
 
+import android.app.Application;
 import android.content.res.Resources;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.Observer;
 
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DataSnapshot;
@@ -13,6 +16,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.hsappdev.ahs.R;
 import com.hsappdev.ahs.dataTypes.Article;
 import com.hsappdev.ahs.dataTypes.Category;
+import com.hsappdev.ahs.db.DatabaseConstants;
+import com.hsappdev.ahs.localdb.ArticleRepository;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,16 +36,23 @@ import java.util.List;
 
 public class ArticleLoader {
 
+    private static final String TAG = "ArticleLoader";
+
     private HashMap<String, ArticleCache> articleCache = new HashMap<>();
+    private Application application;
+    private ArticleRepository articleRepository;
+    private List<Article> localDBArticleList = new ArrayList<>();
 
-
-    private ArticleLoader() { }
+    private ArticleLoader(Application application) {
+        this.application = application;
+        articleRepository = new ArticleRepository(application);
+    }
 
     private static ArticleLoader articleLoader;
 
-    public static ArticleLoader getInstance() {
+    public static ArticleLoader getInstance(Application application) {
         if(articleLoader == null){
-            articleLoader = new ArticleLoader();
+            articleLoader = new ArticleLoader(application);
         }
         return articleLoader;
     }
@@ -56,6 +68,7 @@ public class ArticleLoader {
     }
 
     public void getArticle(String articleID, Resources r, OnArticleLoadedCallback callback) {
+        Log.d(TAG, "getArticle: ask to load");
         // search the cache for the id
         ArticleCache article = articleCache.get(articleID);
         // registerForCallback is essential for the cache system
@@ -82,10 +95,12 @@ public class ArticleLoader {
         private final String articleID;
         private ValueEventListener valueEventListener;
         private DatabaseReference reference;
+        private volatile boolean isInDatabase = false;
 
         public ArticleCache(String articleID, Resources r) {
             this.r = r;
             this.articleID = articleID;
+            startDBLoad();
             loadArticle();
         }
 
@@ -93,21 +108,54 @@ public class ArticleLoader {
             this.r = r;
             this.articleID = articleID;
             registerForCallback(callback); // Make sure to do this first before loading articles
+            startDBLoad();
             loadArticle();
         }
+
+        public ArticleCache(String articleID, Resources r, OnArticleLoadedCallback callback, Article article) {
+            this(articleID, r);
+            this.article = article;
+            registerForCallback(callback);
+            startDBLoad();
+            loadArticle();
+        }
+
+        private void startDBLoad() {
+            articleRepository.getArticle(articleID).observeForever(new Observer<Article>() {
+                @Override
+                public void onChanged(Article article) {
+                    if(article != null) {
+                        isInDatabase = true;
+                        ArticleCache.this.article = article;
+
+                        Log.d(TAG, "onCategoryLoaded: " + article.toString());
+
+                        for (OnArticleLoadedCallback callback : registeredCallbacks) {
+                            if (!callback.isActivityDestroyed()) {
+                                callback.onArticleLoaded(article);
+                            }
+                        }
+                        Log.d(TAG, "onChanged: db load");
+                    }
+
+                }
+            });
+        }
+
 
         public Article getArticle() {
             return article;
         }
 
         public void loadArticle() {
-            DatabaseReference ref = FirebaseDatabase.getInstance(FirebaseApp.getInstance()).getReference()
+            DatabaseReference ref = FirebaseDatabase.getInstance(FirebaseApp.getInstance(DatabaseConstants.FIREBASE_REALTIME_DB)).getReference()
                     .child(r.getString(R.string.db_articles))
                     .child(articleID);
             reference = ref;
             ValueEventListener eventListener = new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    Log.d(TAG, "onDataChange: firebase load");
                     String author = snapshot.child(r.getString(R.string.db_articles_author)).getValue(String.class);
                     String title = snapshot.child(r.getString(R.string.db_articles_title)).getValue(String.class);
                     String body = snapshot.child(r.getString(R.string.db_articles_body)).getValue(String.class);
@@ -161,6 +209,7 @@ public class ArticleLoader {
             if(!isAlreadyRegistered) {
                 registeredCallbacks.add(newCallback);
             }
+
             if(article != null) {
                 // If the article is already loaded, call the callback
                 // otherwise, wait until the callback is called in the onDataChange() method
@@ -182,6 +231,24 @@ public class ArticleLoader {
                 if (!callback.isActivityDestroyed()) {
                     callback.onArticleLoaded(article);
                 }
+            }
+
+            if(!isInDatabase){
+                articleRepository.add(article);
+            }
+
+            if(article != null) {
+                articleRepository.updateArticleFull(articleID,
+                        article.getAuthor(),
+                        article.getTitle(),
+                        article.getBody(),
+                        article.getCategoryID(),
+                        article.getImageURLs(),
+                        article.getVideoURLs(),
+                        article.getTimestamp(),
+                        article.getCategoryDisplayName(),
+                        article.getCategoryDisplayColor()
+                );
             }
         }
     }

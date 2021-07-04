@@ -15,10 +15,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.hsappdev.ahs.BottomNavigationCallback;
+import com.hsappdev.ahs.OnNotificationSectionClicked;
 import com.hsappdev.ahs.util.Helper;
 import com.hsappdev.ahs.R;
 import com.hsappdev.ahs.dataTypes.Article;
@@ -32,7 +34,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class HomeFragment extends Fragment {
 
     private static final String TAG = "HomeFragment";
-    private HomeViewModel mViewModel;
     private Fragment homeNewsFragment, communityFragment;
 
     public static HomeFragment newInstance() {
@@ -40,12 +41,16 @@ public class HomeFragment extends Fragment {
     }
 
     private BottomNavigationCallback bottomNavigationViewAdapter;
+    private OnNotificationSectionClicked onNotificationSectionClicked;
+
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         try {
             bottomNavigationViewAdapter = (BottomNavigationCallback) context;
+            onNotificationSectionClicked = (OnNotificationSectionClicked) context;
+
         } catch (ClassCastException e) {
             throw new ClassCastException();
         }
@@ -101,25 +106,25 @@ public class HomeFragment extends Fragment {
                     .hide(communityFragment)
                     .commit();
         });
-        AtomicBoolean hasAddedCommunityFrag = new AtomicBoolean(false);
+
         communitySelector.setOnSelectedListener(() -> {
             news_tab_selected = 1;
             ausdNewsSelector.setSelected(false);
-            /*if(hasAddedCommunityFrag.get())*/
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left)
-                        .show(communityFragment)
-                        .hide(homeNewsFragment)
-                        .commit();
-            /*else {
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left)
-                        .add(R.id.home_news_fragment_holder, communityFragment)
-                        .show(communityFragment)
-                        .hide(homeNewsFragment)
-                        .commit();
-                hasAddedCommunityFrag.set(true);
-            }*/
+            getActivity().getSupportFragmentManager().beginTransaction()
+                    .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left)
+                    .show(communityFragment)
+                    .hide(homeNewsFragment)
+                    .commit();
+
+        });
+
+        // Notification Button
+        Button notifButton = view.findViewById(R.id.home_notification_button);
+        notifButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onNotificationSectionClicked.onNotificationSectionClicked();
+            }
         });
 
         TextView dateText = view.findViewById(R.id.home_date);
@@ -129,14 +134,6 @@ public class HomeFragment extends Fragment {
 
         return view;
     }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
-        // TODO: Use the ViewModel
-    }
-
 
 
 
