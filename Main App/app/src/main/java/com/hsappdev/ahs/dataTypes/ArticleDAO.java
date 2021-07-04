@@ -18,6 +18,9 @@ public interface ArticleDAO {
     @Query("SELECT * from " + Article.TABLE_NAME + " WHERE IDS= :ID")
     List<Article> getPossibleArticles(String ID);
 
+    @Query("SELECT * FROM " + Article.TABLE_NAME + " WHERE IDS = :ID")
+    LiveData<Article> getArticle(String ID);
+
     @Query("UPDATE " + Article.TABLE_NAME + " SET "
             + Article.IS_SAVED + " = :newSavedValue,"
             + Article.IS_NOTIFICATION + " = :newNotificationValue" +
@@ -44,6 +47,19 @@ public interface ArticleDAO {
 
     @Query("DELETE FROM " + Article.TABLE_NAME)
     void deleteAll();
+
+    @Query("UPDATE " + Article.TABLE_NAME + " SET "
+            + Article.AUTHOR + " = :author,"
+            + Article.TITLE + " = :title,"
+            + Article.BODY + " = :body,"
+            + Article.CAT_ID + " = :categoryID,"
+//            + Article.IMG_URLS + " = :imageURLs,"
+//            + Article.VID_URLS + " = :videoURLs,"
+            + Article.TIME + " = :timestamp,"
+            + Article.CAT_DISP + " = :categoryDisplayName,"
+            + Article.CAT_DISP_CLR + " = :categoryDisplayColor"
+            + " WHERE IDS = :articleID")
+    void updateArticleFull(String articleID, String author, String title, String body, String categoryID, /*String[] imageURLs, String[] videoURLs,*/ long timestamp, String categoryDisplayName, int categoryDisplayColor);
 
 
 }

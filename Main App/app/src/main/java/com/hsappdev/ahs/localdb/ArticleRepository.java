@@ -43,12 +43,20 @@ public class ArticleRepository {
         RoomDatabase.databaseWriteExecutor.execute(() -> articleDAO.add(articles));
     }
 
+    public LiveData<Article> getArticle(String ID) {
+        return articleDAO.getArticle(ID);
+    }
+
     public void delete(String articleID) {
         RoomDatabase.databaseWriteExecutor.execute(() -> articleDAO.delete(articleID));
     }
 
     public void deleteAll() {
         RoomDatabase.databaseWriteExecutor.execute(() -> articleDAO.deleteAll());
+    }
+
+    public void updateArticleFull(String articleID, String author, String title, String body, String categoryID, String[] imageURLs, String[] videoURLs, long timestamp, String categoryDisplayName, int categoryDisplayColor) {
+        RoomDatabase.databaseWriteExecutor.execute(() -> articleDAO.updateArticleFull(articleID, author, title, body, categoryID,/* imageURLs, videoURLs,*/ timestamp, categoryDisplayName, categoryDisplayColor));
     }
 
     public void updateArticleSimple(Article article) {
