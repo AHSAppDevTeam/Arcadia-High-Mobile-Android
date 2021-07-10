@@ -168,13 +168,13 @@ public class HomeFragment extends Fragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setView(new SearchInterface(getContext(), getLayoutInflater(), getActivity().getApplication(), onItemClick));
         dialog = builder.create();
-        Window window = dialog.getWindow();
-        WindowManager.LayoutParams layoutParams = window.getAttributes();
-        layoutParams.gravity = Gravity.TOP;
-
-        // Get the selectors y coordinate
-        int y = (int) (selectorLinearLayout.getY()+selectorLinearLayout.getHeight());
-        layoutParams.y = y;
+//        Window window = dialog.getWindow();
+//        WindowManager.LayoutParams layoutParams = window.getAttributes();
+//        layoutParams.gravity = Gravity.TOP;
+//
+//        // Get the selectors y coordinate
+//        int y = (int) (selectorLinearLayout.getY()+selectorLinearLayout.getHeight());
+//        layoutParams.y = y;
 
     }
 

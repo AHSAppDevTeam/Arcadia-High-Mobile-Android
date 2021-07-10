@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import androidx.lifecycle.Observer;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -49,7 +50,11 @@ public class SearchInterface extends LinearLayout {
         searchView.setSearchInterface(this);
 
         searchRecyclerAdapter = new SearchRecyclerAdapter(onItemClick);
-        searchRecycler.setLayoutManager(new LinearLayoutManager(searchRecycler.getContext(), LinearLayoutManager.VERTICAL, false));
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(searchRecycler.getContext(), LinearLayoutManager.VERTICAL, false);
+        searchRecycler.setLayoutManager(layoutManager);
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(searchRecycler.getContext(),
+                DividerItemDecoration.VERTICAL);
+        searchRecycler.addItemDecoration(dividerItemDecoration);
         searchRecycler.setAdapter(searchRecyclerAdapter);
 
     }

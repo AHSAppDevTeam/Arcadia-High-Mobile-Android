@@ -55,6 +55,11 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<SearchRecyclerAd
 
     public void onUpdate(String query) {
         query = query.toLowerCase();
+        if(query.isEmpty()){
+            filteredArticleList.clear();
+            notifyDataSetChanged();
+            return;
+        }
         List<Article> tempList = new ArrayList<>();
         // Cannot use removeIf syntax, not supported on all platforms
         for(Article a : searchArticleList){

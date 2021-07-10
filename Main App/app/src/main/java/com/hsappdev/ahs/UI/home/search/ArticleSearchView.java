@@ -21,6 +21,7 @@ public class ArticleSearchView extends SearchView implements SearchView.OnQueryT
     public void setUp(){
         this.setOnQueryTextListener(this);
         this.setIconifiedByDefault(false);
+        this.setQueryHint("Search");
         this.requestFocus();
     }
 
