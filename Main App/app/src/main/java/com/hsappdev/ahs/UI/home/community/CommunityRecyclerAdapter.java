@@ -1,4 +1,4 @@
-package com.hsappdev.ahs.UI.home;
+package com.hsappdev.ahs.UI.home.community;
 
 import android.content.res.Resources;
 import android.graphics.Color;
@@ -18,6 +18,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hsappdev.ahs.R;
+import com.hsappdev.ahs.UI.home.OnSectionClicked;
 import com.hsappdev.ahs.dataTypes.CommunitySection;
 import com.hsappdev.ahs.db.DatabaseConstants;
 import com.hsappdev.ahs.util.Helper;

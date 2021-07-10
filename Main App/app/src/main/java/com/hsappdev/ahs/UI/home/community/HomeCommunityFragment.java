@@ -1,4 +1,4 @@
-package com.hsappdev.ahs.UI.home;
+package com.hsappdev.ahs.UI.home.community;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -20,6 +20,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hsappdev.ahs.R;
+import com.hsappdev.ahs.UI.home.OnSectionClicked;
+import com.hsappdev.ahs.UI.home.community.CommunityRecyclerAdapter;
 import com.hsappdev.ahs.db.DatabaseConstants;
 
 import java.util.ArrayList;
@@ -71,7 +73,7 @@ public class HomeCommunityFragment extends Fragment {
 
         DatabaseReference ref = FirebaseDatabase.getInstance(FirebaseApp.getInstance(DatabaseConstants.FIREBASE_REALTIME_DB)).getReference()
                 .child(r.getString(R.string.db_locations))
-                .child("community")
+                .child(r.getString(R.string.db_location_community))
                 .child(r.getString(R.string.db_locations_catID));
         ref.addValueEventListener(new ValueEventListener() {
             @Override

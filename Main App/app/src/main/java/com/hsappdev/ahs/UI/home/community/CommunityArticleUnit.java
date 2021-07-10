@@ -1,4 +1,4 @@
-package com.hsappdev.ahs.UI.home;
+package com.hsappdev.ahs.UI.home.community;
 
 import android.app.Activity;
 import android.content.Context;

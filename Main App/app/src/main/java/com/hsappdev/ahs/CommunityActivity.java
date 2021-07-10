@@ -18,7 +18,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.hsappdev.ahs.UI.home.CommunityArticleUnit;
+import com.hsappdev.ahs.UI.home.community.CommunityArticleUnit;
 import com.hsappdev.ahs.dataTypes.Article;
 import com.hsappdev.ahs.dataTypes.CommunitySection;
 import com.hsappdev.ahs.db.DatabaseConstants;

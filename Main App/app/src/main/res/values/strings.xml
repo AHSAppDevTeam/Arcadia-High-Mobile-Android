@@ -18,6 +18,8 @@
     <!-- ausdNews in location branch -->
     <string name="db_location_ausdNews">homepage</string>
     <string name="db_location_bulletin">bulletin</string>
+    <string name="db_location_community">community</string>
+
     <!-- sections in ausdNews -->
     <string name="db_locations_catID">categoryIDs</string>
 

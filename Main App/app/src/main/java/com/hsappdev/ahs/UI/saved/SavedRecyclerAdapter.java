@@ -104,7 +104,9 @@ public class SavedRecyclerAdapter extends RecyclerView.Adapter<SavedRecyclerAdap
 
     @Override
     public void onBindViewHolder(@NonNull SavedArticleViewHolder holder, int position) {
-        holder.setDetails(articleSortedList.get(position));
+        if(position < articleSortedList.size()) {
+            holder.setDetails(articleSortedList.get(position));
+        }
     }
 
     @Override

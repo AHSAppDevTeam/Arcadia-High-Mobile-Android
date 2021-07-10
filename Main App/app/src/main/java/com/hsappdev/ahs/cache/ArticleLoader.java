@@ -30,6 +30,7 @@ import java.util.List;
  * If there is an update to an article, the callback will be triggered a second time
  * This class support caching of article data and is very efficient
  * it prevents unnecessary firebase loading
+ * New! Also stores articles to cache so articles can be loaded offline
  * @apiNote
  * ArticleLoader.getInstance().getArticle(String articleID, Resources r, OnArticleLoadedCallback callback)
  * @author Jeffrey Aaron Jeyasingh
@@ -52,7 +53,7 @@ public class ArticleLoader {
     }
 
     private void trimUnusedArticles() {
-        new Handler().post(new LocalDBArticleTrimmer());
+        //new Handler().post(new LocalDBArticleTrimmer(r));
     }
 
     private static ArticleLoader articleLoader;
@@ -70,7 +71,9 @@ public class ArticleLoader {
     public void hardReloadAllArticles() {
         for (int i = 0; i < articleCache.size(); i++) {
             ArticleCache article = articleCache.get(i);
-            article.reset();
+            if (article != null) {
+                article.reset();
+            }
         }
     }
 

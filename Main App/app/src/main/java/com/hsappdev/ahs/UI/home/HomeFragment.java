@@ -1,40 +1,51 @@
 package com.hsappdev.ahs.UI.home;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.widget.NestedScrollView;
-import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.viewpager2.widget.ViewPager2;
 
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.ProgressBar;
+import android.widget.CompoundButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import com.hsappdev.ahs.BottomNavigationCallback;
+import com.hsappdev.ahs.OnItemClick;
 import com.hsappdev.ahs.OnNotificationSectionClicked;
+import com.hsappdev.ahs.UI.home.community.HomeCommunityFragment;
+import com.hsappdev.ahs.UI.home.search.ArticleSearchView;
+import com.hsappdev.ahs.UI.home.search.SearchInterface;
 import com.hsappdev.ahs.util.Helper;
 import com.hsappdev.ahs.R;
-import com.hsappdev.ahs.dataTypes.Article;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.List;
 import java.util.Locale;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class HomeFragment extends Fragment {
 
     private static final String TAG = "HomeFragment";
     private Fragment homeNewsFragment, communityFragment;
+    private boolean isSearchSelected = false;
+    private AlertDialog dialog;
+    private LinearLayout selectorLinearLayout;
 
     public static HomeFragment newInstance() {
         return new HomeFragment();
@@ -42,6 +53,7 @@ public class HomeFragment extends Fragment {
 
     private BottomNavigationCallback bottomNavigationViewAdapter;
     private OnNotificationSectionClicked onNotificationSectionClicked;
+    private OnItemClick onItemClick;
 
 
     @Override
@@ -50,6 +62,7 @@ public class HomeFragment extends Fragment {
         try {
             bottomNavigationViewAdapter = (BottomNavigationCallback) context;
             onNotificationSectionClicked = (OnNotificationSectionClicked) context;
+            onItemClick = (OnItemClick) context;
 
         } catch (ClassCastException e) {
             throw new ClassCastException();
@@ -70,7 +83,9 @@ public class HomeFragment extends Fragment {
                 .hide(communityFragment)
                 .commit();
 
-        NestedScrollView scrollView = view.findViewById(R.id.home_scrollView);
+        selectorLinearLayout = view.findViewById(R.id.home_selector_linear_layout);
+
+                NestedScrollView scrollView = view.findViewById(R.id.home_scrollView);
         final float scrollAnimBuffer = 4;
         scrollView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
             float y = 0;
@@ -94,6 +109,7 @@ public class HomeFragment extends Fragment {
 
         TextViewSelector ausdNewsSelector = view.findViewById(R.id.home_ausdNews_selector),
                 communitySelector = view.findViewById(R.id.home_community_selector);
+        ImageView searchSelector = view.findViewById(R.id.home_search_selector);
         Helper.setBoldRegularText(ausdNewsSelector, "AUSD", " News");
 
 
@@ -117,6 +133,19 @@ public class HomeFragment extends Fragment {
                     .commit();
 
         });
+        createDialog();
+        searchSelector.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.show();
+            }
+        });
+//        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+//            @Override
+//            public void onDismiss(DialogInterface dialog) {
+//                searchSelector.setSelected(false);
+//            }
+//        });
 
         // Notification Button
         Button notifButton = view.findViewById(R.id.home_notification_button);
@@ -135,6 +164,19 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
+    private void createDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setView(new SearchInterface(getContext(), getLayoutInflater(), getActivity().getApplication(), onItemClick));
+        dialog = builder.create();
+        Window window = dialog.getWindow();
+        WindowManager.LayoutParams layoutParams = window.getAttributes();
+        layoutParams.gravity = Gravity.TOP;
+
+        // Get the selectors y coordinate
+        int y = (int) (selectorLinearLayout.getY()+selectorLinearLayout.getHeight());
+        layoutParams.y = y;
+
+    }
 
 
 }
