@@ -166,15 +166,10 @@ public class HomeFragment extends Fragment {
 
     private void createDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setView(new SearchInterface(getContext(), getLayoutInflater(), getActivity().getApplication(), onItemClick));
+        SearchInterface searchInterface = new SearchInterface(getLayoutInflater(), getActivity().getApplication(), onItemClick);
+        builder.setView(searchInterface.getView());
         dialog = builder.create();
-//        Window window = dialog.getWindow();
-//        WindowManager.LayoutParams layoutParams = window.getAttributes();
-//        layoutParams.gravity = Gravity.TOP;
-//
-//        // Get the selectors y coordinate
-//        int y = (int) (selectorLinearLayout.getY()+selectorLinearLayout.getHeight());
-//        layoutParams.y = y;
+        dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
     }
 

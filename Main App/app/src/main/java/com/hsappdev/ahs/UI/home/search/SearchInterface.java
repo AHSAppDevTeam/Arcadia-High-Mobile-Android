@@ -22,15 +22,16 @@ import com.hsappdev.ahs.localdb.ArticleRepository;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchInterface extends LinearLayout {
+public class SearchInterface {
     private RecyclerView searchRecycler;
     private SearchRecyclerAdapter searchRecyclerAdapter;
     private ArticleRepository articleRepository;
 
+    private View view;
+
     private static final String TAG = "SearchInterface";
 
-    public SearchInterface(Context context, LayoutInflater layoutInflater, Application application, OnItemClick onItemClick) {
-        super(context);
+    public SearchInterface(LayoutInflater layoutInflater, Application application, OnItemClick onItemClick) {
         articleRepository = new ArticleRepository(application);
         articleRepository.getAllArticles().observeForever(new Observer<List<Article>>() {
             @Override
@@ -43,8 +44,8 @@ public class SearchInterface extends LinearLayout {
     }
 
     public void createView(LayoutInflater layoutInflater, OnItemClick onItemClick){
-        View view = layoutInflater.inflate(R.layout.search_bar_dialog, this, true);
-
+        View view = layoutInflater.inflate(R.layout.search_bar_dialog, null, false);
+        this.view = view;
         searchRecycler = view.findViewById(R.id.search_recyclerView);
         ArticleSearchView searchView = view.findViewById(R.id.article_searchView);
         searchView.setSearchInterface(this);
@@ -63,4 +64,7 @@ public class SearchInterface extends LinearLayout {
         searchRecyclerAdapter.onUpdate(query);
     }
 
+    public View getView() {
+        return view;
+    }
 }
