@@ -168,14 +168,14 @@ public class ArticleLoader {
             articleRepository.getArticle(articleID).observeForever(new Observer<Article>() {
                 @Override
                 public void onChanged(Article articleN) {
-                    if(hasFirebaseLoadFinished){
-                        article.setIsViewed(articleN.getIsViewed());
-                        article.setIsSaved(articleN.getIsSaved());
-                        article.setIsNotification(articleN.getIsNotification());
-                        return;
-                    }
                     if(articleN != null) {
                         isInDatabase = true;
+                        if(hasFirebaseLoadFinished){
+                            article.setIsViewed(articleN.getIsViewed());
+                            article.setIsSaved(articleN.getIsSaved());
+                            article.setIsNotification(articleN.getIsNotification());
+                            return;
+                        }
                         ArticleCache.this.article = articleN;
 
                         Log.d(TAG, "onCategoryLoaded: " + articleN.toString());
