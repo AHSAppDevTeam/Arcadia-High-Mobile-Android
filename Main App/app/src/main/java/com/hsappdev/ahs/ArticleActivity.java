@@ -111,8 +111,9 @@ public class ArticleActivity extends AppCompatActivity implements Adjusting_Text
         title.setText(article.getTitle());
         author.setText("By " + article.getAuthor());
         ScreenUtil.setHTMLStringToTextView(article.getBody(), body);
-
-        incrementViews(article.getArticleID());
+        if(article.getIsViewed() == 0) { // if it is not viewed
+            incrementViews(article.getArticleID());
+        }
 
         // Media ViewPager2
         mediaViewPager = findViewById(R.id.mediaViewPager);
@@ -221,6 +222,9 @@ public class ArticleActivity extends AppCompatActivity implements Adjusting_Text
     private void incrementViews(String articleID) {
         final String url = getString(R.string.firebaseFunctionsIncrementView);
         final JSONObject jsonBody;
+        article.setIsViewed(1); // 1 == true (SQL lite does not support boolean)
+        // Save the article
+        articleRepository.add(article);
         try {
             jsonBody = new JSONObject("{\"data\":{\"id\":\""+articleID+"\"}}");
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, jsonBody,null, null);

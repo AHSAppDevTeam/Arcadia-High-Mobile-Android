@@ -203,6 +203,7 @@ public class ArticleLoader {
                     String title = snapshot.child(r.getString(R.string.db_articles_title)).getValue(String.class);
                     String body = snapshot.child(r.getString(R.string.db_articles_body)).getValue(String.class);
                     String category = snapshot.child(r.getString(R.string.db_articles_categoryID)).getValue(String.class);
+                    String isViewed = snapshot.child(r.getString(R.string.db_articles_categoryID)).getValue(String.class);
                     ArrayList<String> imageURLs = new ArrayList<>();
                     ArrayList<String> videoURLs = new ArrayList<>();
                     for(DataSnapshot imageURL: snapshot.child(r.getString(R.string.db_articles_imageURLs)).getChildren()) {

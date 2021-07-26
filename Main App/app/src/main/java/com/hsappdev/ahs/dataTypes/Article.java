@@ -118,6 +118,9 @@ public class Article implements Parcelable {
         videoURLs = in.createStringArray();
         featured = in.readByte() != 0;
         timestamp = in.readLong();
+        isSaved = in.readInt();
+        isNotification = in.readInt();
+        isViewed = in.readInt();
         in.readParcelable(ClassLoader.getSystemClassLoader());
     }
 
@@ -263,6 +266,9 @@ public class Article implements Parcelable {
         parcel.writeStringArray(videoURLs);
         parcel.writeByte((byte) (featured ? 1 : 0));
         parcel.writeLong(timestamp);
+        parcel.writeInt(isSaved);
+        parcel.writeInt(isNotification);
+        parcel.writeInt(isViewed);
     }
 
     @NonNull
