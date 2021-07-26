@@ -26,14 +26,14 @@ public class ArticleRepository {
 
     public LiveData<List<Article>> getAllArticles() {return allArticles;}
 
-    public Article getCachedArticle(String id) {
-        List<Article> articleList = articleDAO.getPossibleArticles(id);
-        if(articleList.isEmpty()){
-            return null;
-        } else {
-            return articleList.get(0);
-        }
-    }
+//    public Article getCachedArticle(String id) {
+//        List<Article> articleList = articleDAO.getPossibleArticles(id);
+//        if(articleList.isEmpty()){
+//            return null;
+//        } else {
+//            return articleList.get(0);
+//        }
+//    }
 
     public LiveData<Boolean> isArticleSaved(String articleID) {
         return articleDAO.isArticleSaved(articleID);

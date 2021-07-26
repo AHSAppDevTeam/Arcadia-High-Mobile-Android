@@ -14,7 +14,6 @@ import androidx.room.PrimaryKey;
 public class Article implements Parcelable {
     public static final String TABLE_NAME = ArticleDAO.TABLE_NAME;
 
-    @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "ID")
     private int tableID;
     public int getTableID() {
@@ -25,7 +24,9 @@ public class Article implements Parcelable {
     }
 
     public static final String ID = "IDS";
+    @PrimaryKey
     @ColumnInfo(name = ID)
+    @NonNull
     private String articleID;
 
     public static final String AUTHOR = "AUTHOR";

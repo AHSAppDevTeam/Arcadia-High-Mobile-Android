@@ -87,7 +87,7 @@ public class CategoryViewHolder extends RecyclerView.ViewHolder implements OnCat
         List<String> mediumArticleIds = new ArrayList<>();
         for (int i = 0; i < MultiArticleAdapter.numArticles; i++) {
             if (articleIds.size() > 0) {
-                mediumArticleIds.add(articleIds.get(i));
+                mediumArticleIds.add(articleIds.get(0));
                 articleIds.remove(0);
             } else {
                 break;

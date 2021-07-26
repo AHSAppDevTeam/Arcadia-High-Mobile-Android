@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationC
         navView.setItemIconTintList(null); // Remove tint from navbar; Required for navbar icons to work
 
         NotificationSetup.setUpNotificationChannel(getResources(), this);
-        String[] channels = new String[]{"Debug", "Draft"};
+        String[] channels = new String[]{"Debug", "Drafts"};
         NotificationSetup.subscribe(this, Arrays.asList(channels));
     }
 

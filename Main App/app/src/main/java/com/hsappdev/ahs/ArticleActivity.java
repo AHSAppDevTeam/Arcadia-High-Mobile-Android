@@ -201,7 +201,7 @@ public class ArticleActivity extends AppCompatActivity implements Adjusting_Text
                         else
                             article.setIsSaved(1);
 
-                        articleRepository.updateArticleSimple(article);
+                        articleRepository.add(article);
                         isArticleSaved = !isArticleSaved;
                         setSavedIcon(item, isArticleSaved);
                         return true;

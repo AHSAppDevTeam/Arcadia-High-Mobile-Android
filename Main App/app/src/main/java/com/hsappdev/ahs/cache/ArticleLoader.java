@@ -47,10 +47,28 @@ public class ArticleLoader {
     private ArticleLoader(Application application) {
         this.application = application;
         articleRepository = new ArticleRepository(application);
-
+//        // Start article load
+//        loadArticlesFromDB();
         // For one time on app launch, clean up unused articles
         trimUnusedArticles();
     }
+
+    long start;
+//
+//    private void loadArticlesFromDB() {
+//        start = System.currentTimeMillis();
+//        articleRepository.getAllArticles().observeForever(new Observer<List<Article>>() {
+//            @Override
+//            public void onChanged(List<Article> articleList) {
+//                for(Article a : articleList) {
+//                    ArticleCache ac = articleCache.get(a.getArticleID());
+//                    if(ac != null) {
+//                        ac.onDBLoad(a);
+//                    }
+//                }
+//            }
+//        });
+//    }
 
     private void trimUnusedArticles() {
         //new Handler().post(new LocalDBArticleTrimmer(r));
@@ -119,25 +137,48 @@ public class ArticleLoader {
         }
 
 
+//        private void onDBLoad(Article article) {
+//            if(hasFirebaseLoadFinished){
+//                return;
+//            }
+//            if(article != null) {
+//                isInDatabase = true;
+//                ArticleCache.this.article = article;
+//
+//                Log.d(TAG, "onCategoryLoaded: " + article.toString());
+//
+//                for (OnArticleLoadedCallback callback : registeredCallbacks) {
+//                    if (!callback.isActivityDestroyed()) {
+//                        callback.onArticleLoaded(article);
+//                    }
+//                }
+//                Log.d(TAG, "onChanged: db load " + (System.currentTimeMillis()-start));
+//            }
+//        }
+
+
         private void startDBLoad() {
             articleRepository.getArticle(articleID).observeForever(new Observer<Article>() {
                 @Override
-                public void onChanged(Article article) {
+                public void onChanged(Article articleN) {
                     if(hasFirebaseLoadFinished){
+                        article.setIsViewed(articleN.getIsViewed());
+                        article.setIsSaved(articleN.getIsSaved());
+                        article.setIsNotification(articleN.getIsNotification());
                         return;
                     }
-                    if(article != null) {
+                    if(articleN != null) {
                         isInDatabase = true;
-                        ArticleCache.this.article = article;
+                        ArticleCache.this.article = articleN;
 
-                        Log.d(TAG, "onCategoryLoaded: " + article.toString());
+                        Log.d(TAG, "onCategoryLoaded: " + articleN.toString());
 
                         for (OnArticleLoadedCallback callback : registeredCallbacks) {
                             if (!callback.isActivityDestroyed()) {
-                                callback.onArticleLoaded(article);
+                                callback.onArticleLoaded(articleN);
                             }
                         }
-                        Log.d(TAG, "onChanged: db load");
+                        Log.d(TAG, "onChanged: db load " + (System.currentTimeMillis()-start));
                     }
 
                 }
@@ -174,7 +215,20 @@ public class ArticleLoader {
 
                     long timestamp =  snapshot.child(r.getString(R.string.db_articles_timestamp)).getValue(long.class);
 
-                    article = new Article(articleID, author, title, body, category, imageURLs.toArray(new String[0]), videoURLs.toArray(new String[0]), featured, timestamp);
+                    if(article == null)
+                        article = new Article(articleID, author, title, body, category, imageURLs.toArray(new String[0]), videoURLs.toArray(new String[0]), featured, timestamp);
+                    else {
+                        // Prevent losing the notif, saved, and viewed flags
+                        article.setAuthor(author);
+                        article.setTitle(title);
+                        article.setBody(body);
+                        article.setCategoryID(category);
+                        article.setImageURLs(imageURLs.toArray(new String[0]));
+                        article.setVideoURLs(videoURLs.toArray(new String[0]));
+                        article.setFeatured(featured);
+                        article.setTimestamp(timestamp);
+
+                    }
 
                     //Log.d("ArticleLoader", "load from firebase " + articleID);
 
@@ -244,17 +298,8 @@ public class ArticleLoader {
             }
 
             if(article != null) {
-                articleRepository.updateArticleFull(articleID,
-                        article.getAuthor(),
-                        article.getTitle(),
-                        article.getBody(),
-                        article.getCategoryID(),
-                        article.getImageURLs(),
-                        article.getVideoURLs(),
-                        article.getTimestamp(),
-                        article.getCategoryDisplayName(),
-                        article.getCategoryDisplayColor()
-                );
+                System.out.println("reload");
+                articleRepository.add(article);
             }
         }
     }
