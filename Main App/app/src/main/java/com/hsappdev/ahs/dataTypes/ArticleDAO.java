@@ -15,12 +15,22 @@ public interface ArticleDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void add(Article... articles);
 
+    /**
+     * This method is here for testing purposes only
+     * @param ID
+     * @return
+     */
+    @Deprecated
     @Query("SELECT * from " + Article.TABLE_NAME + " WHERE IDS= :ID")
     List<Article> getPossibleArticles(String ID);
 
     @Query("SELECT * FROM " + Article.TABLE_NAME + " WHERE IDS = :ID")
     LiveData<Article> getArticle(String ID);
 
+    /**
+     * This method is here for testing purposes only
+     */
+    @Deprecated
     @Query("UPDATE " + Article.TABLE_NAME + " SET "
             + Article.IS_SAVED + " = :newSavedValue,"
             + Article.IS_NOTIFICATION + " = :newNotificationValue" +
@@ -47,7 +57,10 @@ public interface ArticleDAO {
 
     @Query("DELETE FROM " + Article.TABLE_NAME)
     void deleteAll();
-
+    /**
+     * This method is here for testing purposes only
+     */
+    @Deprecated
     @Query("UPDATE " + Article.TABLE_NAME + " SET "
             + Article.AUTHOR + " = :author,"
             + Article.TITLE + " = :title,"

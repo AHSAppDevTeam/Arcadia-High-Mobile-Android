@@ -53,7 +53,7 @@ public class ArticleActivity extends AppCompatActivity implements Adjusting_Text
 
     private static final String TAG = "ArticleActivity";
 
-    static final String data_KEY = "0";
+    public static final String data_KEY = "0";
     private boolean fontBarIsOpen = false;
     private final int FONT_BAR_MIN = 18;
     private final int FONT_BAR_MAX = 54;

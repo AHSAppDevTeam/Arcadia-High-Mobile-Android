@@ -9,6 +9,7 @@ import androidx.navigation.ui.NavigationUI;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Window;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -70,9 +71,20 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationC
 
         navView.setItemIconTintList(null); // Remove tint from navbar; Required for navbar icons to work
 
+        ////////////////// NOTIFICATIONS //////////////////
+
         NotificationSetup.setUpNotificationChannel(getResources(), this);
         String[] channels = new String[]{"Debug", "Drafts"};
         NotificationSetup.subscribe(this, Arrays.asList(channels));
+
+        // Handle notification when it is clicked
+        if (getIntent().getExtras() != null) {
+            Log.d(TAG, "onCreate: handle notifications");
+            for (String key : getIntent().getExtras().keySet()) {
+                Object value = getIntent().getExtras().get(key);
+                Log.d(TAG, "Key: " + key + " Value: " + value);
+            }
+        }
     }
 
     @Override

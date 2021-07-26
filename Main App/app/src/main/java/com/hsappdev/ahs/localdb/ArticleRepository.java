@@ -55,23 +55,31 @@ public class ArticleRepository {
         RoomDatabase.databaseWriteExecutor.execute(() -> articleDAO.deleteAll());
     }
 
-    public void updateArticleFull(String articleID, String author, String title, String body, String categoryID, String[] imageURLs, String[] videoURLs, long timestamp, String categoryDisplayName, int categoryDisplayColor) {
-        RoomDatabase.databaseWriteExecutor.execute(() -> articleDAO.updateArticleFull(articleID, author, title, body, categoryID,/* imageURLs, videoURLs,*/ timestamp, categoryDisplayName, categoryDisplayColor));
-    }
+//    /**
+//     * This method is here for testing purposes only
+//     */
+//    @Deprecated
+//    public void updateArticleFull(String articleID, String author, String title, String body, String categoryID, String[] imageURLs, String[] videoURLs, long timestamp, String categoryDisplayName, int categoryDisplayColor) {
+//        RoomDatabase.databaseWriteExecutor.execute(() -> articleDAO.updateArticleFull(articleID, author, title, body, categoryID,/* imageURLs, videoURLs,*/ timestamp, categoryDisplayName, categoryDisplayColor));
+//    }
 
-    public void updateArticleSimple(Article article) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                List<Article> itemsFromDB = articleDAO.getPossibleArticles(article.getArticleID());
-                if (itemsFromDB.isEmpty())
-                    add(article);
-                else
-                    articleDAO.updateArticleSimple(article.getArticleID(), article.getIsSaved(), article.getIsNotification());
-            }
-        }).start();
-
-    }
+//    /**
+//     * This method is here for testing purposes only
+//     */
+//    @Deprecated
+//    public void updateArticleSimple(Article article) {
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                List<Article> itemsFromDB = articleDAO.getPossibleArticles(article.getArticleID());
+//                if (itemsFromDB.isEmpty())
+//                    add(article);
+//                else
+//                    articleDAO.updateArticleSimple(article.getArticleID(), article.getIsSaved(), article.getIsNotification());
+//            }
+//        }).start();
+//
+//    }
 
 
     public LiveData<List<Article>> getAllSavedArticles() {

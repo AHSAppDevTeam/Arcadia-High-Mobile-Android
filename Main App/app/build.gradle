@@ -44,12 +44,9 @@ dependencies {
     implementation files('libs/YouTubeAndroidPlayerApi.jar')
 
     // Import the BoM for the Firebase platform
-    implementation platform('com.google.firebase:firebase-bom:28.1.0')
-    implementation 'com.google.firebase:firebase-database' // for firebase functions
-    implementation 'com.google.firebase:firebase-messaging'
-    implementation 'com.google.firebase:firebase-analytics'
-    implementation 'com.google.firebase:firebase-functions'
-    implementation 'com.google.firebase:firebase-installations'
+    implementation 'com.google.firebase:firebase-database:20.0.1'
+    implementation 'com.google.firebase:firebase-messaging:22.0.0'
+    implementation 'com.google.firebase:firebase-analytics:19.0.0'
 
     // Room components
     implementation "androidx.room:room-runtime:$rootProject.roomVersion"

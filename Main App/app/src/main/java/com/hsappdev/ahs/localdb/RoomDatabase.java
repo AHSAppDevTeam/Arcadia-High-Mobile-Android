@@ -16,7 +16,7 @@ import com.hsappdev.ahs.dataTypes.ArticleDAO;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {Article.class}, version = 7, exportSchema = false)
+@Database(entities = {Article.class}, version = 6, exportSchema = false)
 @TypeConverters(Converters.class)
 public abstract class RoomDatabase extends androidx.room.RoomDatabase {
 

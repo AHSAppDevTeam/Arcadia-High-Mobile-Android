@@ -3,6 +3,7 @@ package com.hsappdev.ahs.cache;
 import android.app.Application;
 import android.content.res.Resources;
 import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -158,6 +159,12 @@ public class ArticleLoader {
 
 
         private void startDBLoad() {
+            if(Looper.getMainLooper().getThread() != Thread.currentThread()) {
+                // If we are not on the main thread, we cannot call observe forever
+                // so we fall back to firebase loading
+                return;
+            }
+
             articleRepository.getArticle(articleID).observeForever(new Observer<Article>() {
                 @Override
                 public void onChanged(Article articleN) {

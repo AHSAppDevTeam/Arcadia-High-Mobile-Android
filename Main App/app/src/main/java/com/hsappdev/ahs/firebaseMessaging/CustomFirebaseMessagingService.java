@@ -1,5 +1,6 @@
 package com.hsappdev.ahs.firebaseMessaging;
 
+import android.app.Application;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -16,11 +17,24 @@ import androidx.core.app.NotificationCompat;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+import com.hsappdev.ahs.ArticleActivity;
 import com.hsappdev.ahs.MainActivity;
+import com.hsappdev.ahs.NotificationActivity;
 import com.hsappdev.ahs.R;
+import com.hsappdev.ahs.cache.ArticleLoader;
+import com.hsappdev.ahs.cache.OnArticleLoadedCallback;
+import com.hsappdev.ahs.dataTypes.Article;
+import com.hsappdev.ahs.localdb.ArticleRepository;
+
+import java.util.Map;
 
 public class CustomFirebaseMessagingService extends FirebaseMessagingService {
     private static final String TAG = "CustomFirebaseMessaging";
+
+    private ArticleRepository articleRepository;
+    public CustomFirebaseMessagingService() {
+        articleRepository = new ArticleRepository(getApplication());
+    }
 
     @Override
     public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
@@ -29,23 +43,43 @@ public class CustomFirebaseMessagingService extends FirebaseMessagingService {
         // Check if message contains a data payload.
         if (remoteMessage.getData().size() > 0) {
             Log.d(TAG, "Message data payload: " + remoteMessage.getData());
+            Map<String, String> dataMap = remoteMessage.getData();
+            String articleID = dataMap.get("articleID");
+            ArticleLoader.getInstance((Application) getApplicationContext()).getArticle(articleID, getResources(), new OnArticleLoadedCallback() {
+                private boolean isFirstTime = false;
+                @Override
+                public void onArticleLoaded(Article article) {
+                    article.setIsNotification(1); // 1 == true
+                    articleRepository.add(article);
+                    RemoteMessage.Notification notification = remoteMessage.getNotification();
+                    sendNotification(notification.getTitle(),
+                            notification.getBody(),
+                            getResources(),
+                            article);
+                    isFirstTime = true; // used to mimic activity destruction and remove this listener
+                }
 
-
+                @Override
+                public boolean isActivityDestroyed() {
+                    return isFirstTime;
+                }
+            });
         }
 
-        // Check if message contains a notification payload.
-        if (remoteMessage.getNotification() != null) {
-            Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
-            RemoteMessage.Notification notification = remoteMessage.getNotification();
-            sendNotification(notification.getTitle(), notification.getBody(), getResources());
-        }
     }
 
-    private void sendNotification(String title, String messageBody, Resources r) {
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent,
-                PendingIntent.FLAG_ONE_SHOT);
+    private void sendNotification(String title, String messageBody, Resources r, Article article) {
+        Intent intent;
+        if(article != null) {
+            // if there is an article, show it
+            intent = new Intent(this, ArticleActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            intent.putExtra(ArticleActivity.data_KEY, article);
+        } else {
+            // else show the notif page
+            intent = new Intent(this, NotificationActivity.class);
+        }
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
 
         String channelId = r.getString(R.string.notificationChannelID);
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
@@ -69,7 +103,7 @@ public class CustomFirebaseMessagingService extends FirebaseMessagingService {
             notificationManager.createNotificationChannel(channel);
         }
 
-        notificationManager.notify((int) (Math.random()*10), notificationBuilder.build());
+        notificationManager.notify(article.getArticleID().hashCode(), notificationBuilder.build());
     }
 
     @Override
