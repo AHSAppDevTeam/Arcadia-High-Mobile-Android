@@ -26,12 +26,21 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * A very useful class that can be used to load an article
- * This class prevents duplicate code and simplifies article loading
- * If there is an update to an article, the callback will be triggered a second time
- * This class support caching of article data and is very efficient
- * it prevents unnecessary firebase loading
- * New! Also stores articles to cache so articles can be loaded offline
+ * A very useful class that can be used to load an article <br>
+ * This class prevents duplicate code and simplifies article loading <br>
+ * If there is an update to an article, the callback will be triggered a second time <br>
+ * This class support caching of article data and is very efficient <br>
+ * it prevents unnecessary firebase loading <br>
+ * New! Also stores articles to cache so articles can be loaded offline <br><br>
+ * How the ArticleLoader works:
+ * <ol>
+ *     <li>When an article is asked for through the {@link #getArticle(String, Resources, OnArticleLoadedCallback)}
+ *     method, both firebase and sqlite article loading are launched simultaneously</li>
+ *     <li>The db is usually faster and its (possibly outdated) article value to the callback</li>
+ *     <li>After firebase load finishes, its data is used to update the article in the database</li>
+ * </ol>
+ *
+ *
  * @apiNote
  * ArticleLoader.getInstance().getArticle(String articleID, Resources r, OnArticleLoadedCallback callback)
  * @author Jeffrey Aaron Jeyasingh
