@@ -3,6 +3,7 @@ package com.hsappdev.ahs.UI.profile;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,9 +14,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.android.material.switchmaterial.SwitchMaterial;
+import com.hsappdev.ahs.ArticleActivity;
+import com.hsappdev.ahs.MainActivity;
+import com.hsappdev.ahs.NotificationSettingsActivity;
 import com.hsappdev.ahs.R;
 import com.hsappdev.ahs.SettingsManager;
 import com.hsappdev.ahs.util.Helper;
@@ -62,6 +67,14 @@ public class ProfileFragment extends Fragment {
             dayNightCallback.onNewMode(b);
         });
 
+        LinearLayout notificationSettingBtn = view.findViewById(R.id.profile_notifications_btn);
+        notificationSettingBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), NotificationSettingsActivity.class);
+                startActivity(intent);
+            }
+        });
         return view;
     }
 
@@ -77,7 +90,6 @@ public class ProfileFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
-        // TODO: Use the ViewModel
     }
 
 }

@@ -82,7 +82,7 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<SearchRecyclerAd
                     }
 
                     // check if contains the word
-                    if(word.contains(qWord) && qWord.length() > 3) {
+                    if(word.contains(qWord) && (qWord.length() > 3 || qWords.length == 1)) {
                         tempList.add(a);
                         continue articleSearchLoop;
                     }

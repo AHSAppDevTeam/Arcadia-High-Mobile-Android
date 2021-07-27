@@ -82,5 +82,7 @@
     <string name="notifications_section_title"><b>Notifications</b></string>
     <string name="notificationChannelID">ahsMobileNotificationChannelID</string>
     <string name="notificationChannelName">AHS Mobile Notifications</string>
+    <string name="isFirstTimeAppLoad">isFirstTimeAppLoad</string>
+    <string name="notifications_settings_header">Notification Settings</string>
 
 </resources>

@@ -1,5 +1,8 @@
 package com.hsappdev.ahs.util;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
@@ -8,6 +11,8 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.SortedList;
 
+import com.hsappdev.ahs.MainActivity;
+import com.hsappdev.ahs.R;
 import com.hsappdev.ahs.dataTypes.Article;
 
 public class Helper {
@@ -52,4 +57,15 @@ public class Helper {
         return costs[b.length()];
     }
 
+    public static boolean isFirstTimeAppLoad(MainActivity mainActivity, Resources r) {
+        SharedPreferences sharedPref = mainActivity.getPreferences(Context.MODE_PRIVATE);
+        boolean firstTime = sharedPref.getBoolean(r.getString(R.string.isFirstTimeAppLoad), true);
+        // Set value to false
+        if(firstTime) {
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putBoolean(r.getString(R.string.isFirstTimeAppLoad), false);
+            editor.apply();
+        }
+        return firstTime;
+    }
 }

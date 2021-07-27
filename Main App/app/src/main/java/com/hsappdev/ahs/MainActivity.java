@@ -73,18 +73,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationC
 
         ////////////////// NOTIFICATIONS //////////////////
 
-        NotificationSetup.setUpNotificationChannel(getResources(), this);
-        String[] channels = new String[]{"Debug", "Drafts"};
-        NotificationSetup.subscribe(this, Arrays.asList(channels));
+        NotificationSetup.setUp(getResources(), this);
 
-        // Handle notification when it is clicked
-        if (getIntent().getExtras() != null) {
-            Log.d(TAG, "onCreate: handle notifications");
-            for (String key : getIntent().getExtras().keySet()) {
-                Object value = getIntent().getExtras().get(key);
-                Log.d(TAG, "Key: " + key + " Value: " + value);
-            }
-        }
+
     }
 
     @Override
