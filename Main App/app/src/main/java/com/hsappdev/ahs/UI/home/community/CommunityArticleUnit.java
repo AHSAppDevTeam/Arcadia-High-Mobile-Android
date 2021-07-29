@@ -62,12 +62,9 @@ public class CommunityArticleUnit extends CardView implements OnArticleLoadedCal
 
         setDetails(articleId);
 
-        setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(article != null) {
-                    onArticleClick.onArticleClicked(article);
-                }
+        setOnClickListener(v -> {
+            if(article != null) {
+                onArticleClick.onArticleClicked(article);
             }
         });
 

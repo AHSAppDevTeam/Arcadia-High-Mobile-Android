@@ -5,30 +5,36 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".NotificationSettingsActivity">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context=".UI.profile.ProfileFragment"
-        android:layout_marginLeft="@dimen/padding"
-        android:layout_marginRight="@dimen/padding"
-        android:paddingBottom="@dimen/navbar_height">
+        tools:context=".UI.profile.ProfileFragment">
 
-    <TextView
-        android:id="@+id/notification_settings_header"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/padding"
-        android:fontFamily="@font/heavybold_lightregular"
-        android:text="@string/notifications_settings_header"
-        android:paddingBottom="@dimen/padding"
-        android:textColor="@color/brightRed"
-        android:textSize="28sp" />
-        <LinearLayout
-            android:id="@+id/notification_settings_controls"
+        <TextView
+            android:id="@+id/notification_settings_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" />
-    </LinearLayout>
+            android:layout_marginLeft="@dimen/padding"
+            android:layout_marginTop="@dimen/padding"
+            android:layout_marginRight="@dimen/padding"
+            android:fontFamily="@font/heavybold_lightregular"
+            android:text="@string/notifications_settings_header"
+            android:textColor="@color/brightRed"
+            android:textSize="28sp" />
 
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/notification_settings_controls"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/padding"
+                android:layout_marginRight="@dimen/padding"
+                android:orientation="vertical" />
+        </ScrollView>
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

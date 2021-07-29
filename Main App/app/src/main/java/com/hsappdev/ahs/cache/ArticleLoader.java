@@ -24,6 +24,8 @@ import com.hsappdev.ahs.localdb.ArticleRepository;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * A very useful class that can be used to load an article <br>
@@ -96,6 +98,7 @@ public class ArticleLoader {
     /**
      * Developer purposes only
      */
+
     public void hardReloadAllArticles() {
         for (int i = 0; i < articleCache.size(); i++) {
             ArticleCache article = articleCache.get(i);

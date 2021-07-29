@@ -1,6 +1,7 @@
 package com.hsappdev.ahs.cache;
 
 import android.content.res.Resources;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -17,6 +18,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ArticleCategoryIdLoader {
+
+    private static final String TAG = "ArticleCategoryIdLoader";
+    
     public static List<String> articleCategoryCache = new ArrayList<>();
 
     public static void loadCategoryList(Resources r, OnCategoryListLoadedCallback callback){
@@ -46,4 +50,30 @@ public class ArticleCategoryIdLoader {
             });
         }
     }
+
+    public static void loadSpecificCategoryList(Resources r, OnCategoryListLoadedCallback callback, String name){
+        DatabaseReference ref = FirebaseDatabase.getInstance(FirebaseApp.getInstance(DatabaseConstants.FIREBASE_REALTIME_DB)).getReference()
+                .child(r.getString(R.string.db_locations))
+                .child(name)// homepage is default
+                .child(r.getString(R.string.db_locations_catID));
+
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                ArrayList<String> categoriesIDs = new ArrayList<>();
+                for (DataSnapshot sectionTitle : snapshot.getChildren()) {
+                    categoriesIDs.add(sectionTitle.getValue(String.class));
+                }
+                callback.categoryListLoaded(categoriesIDs);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+    }
+
 }
