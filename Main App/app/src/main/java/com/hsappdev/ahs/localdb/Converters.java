@@ -8,6 +8,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public class Converters {
     private static final String JSON_str = "iPaths";
@@ -29,9 +31,26 @@ public class Converters {
     }
 
     @TypeConverter
+    public static List<String> fromStringList(String string) {
+        return Arrays.asList(fromString(string));
+    }
+
+    @TypeConverter
     public static String fromArray(String[] array) {
         JSONObject json = new JSONObject();
         JSONArray jsonArray = new JSONArray(new ArrayList<>(Arrays.asList(array)));
+        try {
+            json.put(JSON_str,jsonArray);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return json.toString();
+    }
+
+    @TypeConverter
+    public static String fromArrayList(List<String> array) {
+        JSONObject json = new JSONObject();
+        JSONArray jsonArray = new JSONArray(array);
         try {
             json.put(JSON_str,jsonArray);
         } catch (JSONException e) {

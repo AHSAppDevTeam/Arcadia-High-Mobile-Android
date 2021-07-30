@@ -12,15 +12,19 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.hsappdev.ahs.dataTypes.Article;
 import com.hsappdev.ahs.dataTypes.ArticleDAO;
+import com.hsappdev.ahs.dataTypes.Category;
+import com.hsappdev.ahs.dataTypes.CategoryDAO;
+import com.hsappdev.ahs.db.DatabaseConstants;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {Article.class}, version = 6, exportSchema = false)
+@Database(entities = {Article.class, Category.class}, version = 7, exportSchema = false)
 @TypeConverters(Converters.class)
 public abstract class RoomDatabase extends androidx.room.RoomDatabase {
 
     public abstract ArticleDAO articleDAO();
+    public abstract CategoryDAO categoryDAO();
 
     private static volatile RoomDatabase INSTANCE;
     private static final int NUM_THREADS = 4; // idk, this was in the example
@@ -32,11 +36,12 @@ public abstract class RoomDatabase extends androidx.room.RoomDatabase {
                 if(INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             RoomDatabase.class,
-                            Article.TABLE_NAME)
+                            DatabaseConstants.DATABASE_NAME)
                             .addMigrations(MIGRATION_2_3)
                             .addMigrations(MIGRATION_3_4)
                             .addMigrations(MIGRATION_4_5)
                             .addMigrations(MIGRATION_5_6)
+                            .addMigrations(MIGRATION_6_7)
                             .build();
                 }
             }
@@ -237,6 +242,24 @@ public abstract class RoomDatabase extends androidx.room.RoomDatabase {
                     Article.CAT_DISP_CLR +
                     " FROM "  + table_name_placeholder + ";");
             database.execSQL("DROP TABLE "  + table_name_placeholder);
+        }
+    };
+
+    /**
+     * CREATION OF CATEGORY LOCAL CACHE
+     */
+    static final Migration MIGRATION_6_7 = new Migration(6,7) {
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase database) {
+            database.execSQL("CREATE TABLE " + Category.TABLE_NAME +
+                    "(" +
+                    Category.ID + " TEXT PRIMARY KEY," +
+                    Category.TITLE + " TEXT," +
+                    Category.IMG_URL + " TEXT," +
+                    Category.ARTICLE_IDS + " TEXT," +
+                    Category.CLR + " INTEGER NOT NULL DEFAULT 0" +
+                    ");"
+            );
         }
     };
 }

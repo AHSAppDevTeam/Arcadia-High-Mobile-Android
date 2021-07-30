@@ -10,4 +10,5 @@ public class DatabaseConstants {
 
     public static final String FIREBASE_REALTIME_DB = "database-access";
 
+    public static final String DATABASE_NAME = "AHS_MOBILE_DB";
 }
