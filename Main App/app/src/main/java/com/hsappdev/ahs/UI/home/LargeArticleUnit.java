@@ -13,13 +13,13 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.hsappdev.ahs.OnItemClick;
 import com.hsappdev.ahs.R;
-import com.hsappdev.ahs.cache.ArticleLoader;
-import com.hsappdev.ahs.cache.OnArticleLoadedCallback;
+import com.hsappdev.ahs.cache.ArticleLoaderBackend;
+import com.hsappdev.ahs.cache.LoadableCallback;
 import com.hsappdev.ahs.dataTypes.Article;
 import com.hsappdev.ahs.util.ImageUtil;
 import com.hsappdev.ahs.util.ScreenUtil;
 
-public class LargeArticleUnit implements View.OnClickListener, OnArticleLoadedCallback {
+public class LargeArticleUnit implements View.OnClickListener, LoadableCallback {
     private static final String TAG = "LargeArticleUnit";
     private Article article;
     final private ConstraintLayout articleLayout;
@@ -47,7 +47,7 @@ public class LargeArticleUnit implements View.OnClickListener, OnArticleLoadedCa
 
     public void setDetails(String articleID){
         articleLayout.setOnClickListener(this);
-        ArticleLoader.getInstance(activity.getApplication()).getArticle(articleID, r, this);
+        ArticleLoaderBackend.getInstance(activity.getApplication()).getCacheObject(articleID, r, this);
     }
 
 
@@ -58,9 +58,10 @@ public class LargeArticleUnit implements View.OnClickListener, OnArticleLoadedCa
             onArticleClick.onArticleClicked(article);
     }
 
+
     @Override
-    public void onArticleLoaded(Article article) {
-        this.article = article;
+    public <T> void onLoaded(T articleN) {
+        this.article = (Article) articleN;
         titleTextView.setText(article.getTitle());
         if(article.getImageURLs().length != 0) { // When there are at least one article, show first image
             ImageUtil.setImageToView(article.getImageURLs()[0], articleImage);

@@ -10,8 +10,10 @@ import androidx.room.Ignore;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
+import com.hsappdev.ahs.cache.LoadableType;
+
 @Entity(tableName = ArticleDAO.TABLE_NAME)
-public class Article implements Parcelable {
+public class Article implements Parcelable, LoadableType {
     public static final String TABLE_NAME = ArticleDAO.TABLE_NAME;
 
     @ColumnInfo(name = "ID")
@@ -80,6 +82,9 @@ public class Article implements Parcelable {
     @Ignore
     boolean featured;
 
+    public Article(){
+
+    }
 
     public Article(String articleID, String author, String title, String body, String categoryID, String[] imageURLs, String[] videoURls, boolean featured, long timestamp) {
         this.articleID = articleID;
@@ -284,5 +289,10 @@ public class Article implements Parcelable {
                 "featured: \t" + featured + "\n" +
                 "timestamp: \t" + timestamp + "\n" +
                 "color: \t" + categoryDisplayColor + "\n";
+    }
+
+    @Override
+    public LoadableType getInstance() {
+        return new Article();
     }
 }

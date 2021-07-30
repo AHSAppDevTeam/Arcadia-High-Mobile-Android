@@ -1,7 +1,6 @@
 package com.hsappdev.ahs.cache;
 
 import android.content.res.Resources;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -12,6 +11,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hsappdev.ahs.R;
+import com.hsappdev.ahs.cache.deprecated.OnCategoryListLoadedCallback;
 import com.hsappdev.ahs.db.DatabaseConstants;
 
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package com.hsappdev.ahs.cache;
+package com.hsappdev.ahs.cache.deprecated;
 
 import android.content.res.Resources;
 import android.graphics.Color;
@@ -12,6 +12,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hsappdev.ahs.R;
+import com.hsappdev.ahs.cache.CategoryLoaderBackend;
 import com.hsappdev.ahs.dataTypes.Category;
 import com.hsappdev.ahs.db.DatabaseConstants;
 
@@ -27,6 +28,7 @@ import java.util.List;
  * @author Jeffrey Aaron Jeyasingh
  */
 
+@Deprecated
 public class CategoryLoader {
     private static final String TAG = "ArticleListLoader";
 
@@ -37,6 +39,7 @@ public class CategoryLoader {
 
     private static CategoryLoader articleLoader;
 
+
     public static CategoryLoader getInstance() {
         if(articleLoader == null){
             articleLoader = new CategoryLoader();
@@ -44,6 +47,11 @@ public class CategoryLoader {
         return articleLoader;
     }
 
+    @Deprecated
+    /**
+     * Use CategoryLoaderBackend instead
+     * @see CategoryLoaderBackend
+     */
     public void getCategory(String categoryID, Resources r, OnCategoryLoadedCallback callback) {
         // search the cache for the id
         CategoryCache categoryCache = articleCache.get(categoryID);

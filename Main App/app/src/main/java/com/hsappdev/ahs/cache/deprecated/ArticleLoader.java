@@ -1,8 +1,7 @@
-package com.hsappdev.ahs.cache;
+package com.hsappdev.ahs.cache.deprecated;
 
 import android.app.Application;
 import android.content.res.Resources;
-import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 
@@ -24,8 +23,6 @@ import com.hsappdev.ahs.localdb.ArticleRepository;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 /**
  * A very useful class that can be used to load an article <br>
@@ -47,7 +44,7 @@ import java.util.concurrent.Executors;
  * ArticleLoader.getInstance().getArticle(String articleID, Resources r, OnArticleLoadedCallback callback)
  * @author Jeffrey Aaron Jeyasingh
  */
-
+@Deprecated
 public class ArticleLoader {
 
     private static final String TAG = "ArticleLoader";
@@ -108,6 +105,7 @@ public class ArticleLoader {
         }
     }
 
+    @Deprecated
     public void getArticle(String articleID, Resources r, OnArticleLoadedCallback callback) {
         Log.d(TAG, "getArticle: ask to load");
         // search the cache for the id

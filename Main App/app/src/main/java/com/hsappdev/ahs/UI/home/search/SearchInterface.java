@@ -1,11 +1,9 @@
 package com.hsappdev.ahs.UI.home.search;
 
 import android.app.Application;
-import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.LinearLayout;
 
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -14,12 +12,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.hsappdev.ahs.OnItemClick;
 import com.hsappdev.ahs.R;
-import com.hsappdev.ahs.UI.saved.SavedRecyclerAdapter;
-import com.hsappdev.ahs.cache.ArticleLoader;
 import com.hsappdev.ahs.dataTypes.Article;
 import com.hsappdev.ahs.localdb.ArticleRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class SearchInterface {

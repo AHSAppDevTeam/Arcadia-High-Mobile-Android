@@ -13,13 +13,13 @@ import androidx.cardview.widget.CardView;
 
 import com.hsappdev.ahs.OnItemClick;
 import com.hsappdev.ahs.R;
-import com.hsappdev.ahs.cache.ArticleLoader;
-import com.hsappdev.ahs.cache.OnArticleLoadedCallback;
+import com.hsappdev.ahs.cache.ArticleLoaderBackend;
+import com.hsappdev.ahs.cache.LoadableCallback;
 import com.hsappdev.ahs.dataTypes.Article;
 import com.hsappdev.ahs.util.ImageUtil;
 import com.hsappdev.ahs.util.ScreenUtil;
 
-public class CommunityArticleUnit extends CardView implements OnArticleLoadedCallback {
+public class CommunityArticleUnit extends CardView implements LoadableCallback {
 
     final private View contentView;
     private Article article;
@@ -71,13 +71,15 @@ public class CommunityArticleUnit extends CardView implements OnArticleLoadedCal
     }
 
     private void setDetails(String articleId) {
-        ArticleLoader.getInstance(activity.getApplication()).getArticle(articleId, r, this);
+        ArticleLoaderBackend.getInstance(activity.getApplication()).getCacheObject(articleId, r, this);
     }
 
 
+
+
     @Override
-    public void onArticleLoaded(Article article) {
-        this.article = article;
+    public <T> void onLoaded(T articleN) {
+        this.article = (Article) articleN;
 
         title.setText(article.getTitle());
         ScreenUtil.setTimeToTextView(article.getTimestamp(), time);

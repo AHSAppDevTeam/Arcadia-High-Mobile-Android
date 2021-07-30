@@ -1,8 +1,10 @@
 package com.hsappdev.ahs.dataTypes;
 
+import com.hsappdev.ahs.cache.LoadableType;
+
 import java.util.List;
 
-public class Category {
+public class Category implements LoadableType {
     private String categoryID, title, iconURL;
     int color;
     private List<String> articleIds;
@@ -20,6 +22,10 @@ public class Category {
         this.color = color;
         this.iconURL = iconURL;
         this.articleIds = articleIds;
+    }
+
+    public Category() {
+
     }
 
     public String getCategoryID() {
@@ -60,5 +66,10 @@ public class Category {
 
     public void setArticleIds(List<String> articleIds) {
         this.articleIds = articleIds;
+    }
+
+    @Override
+    public LoadableType getInstance() {
+        return new Category();
     }
 }

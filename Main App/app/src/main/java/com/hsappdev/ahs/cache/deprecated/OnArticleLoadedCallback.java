@@ -1,7 +1,7 @@
-package com.hsappdev.ahs.cache;
+package com.hsappdev.ahs.cache.deprecated;
 
 import com.hsappdev.ahs.dataTypes.Article;
-
+@Deprecated
 public interface OnArticleLoadedCallback {
 
     Article article = null;

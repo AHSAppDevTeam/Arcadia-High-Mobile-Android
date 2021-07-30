@@ -2,7 +2,6 @@ package com.hsappdev.ahs.UI.home;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,19 +12,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.hsappdev.ahs.BottomNavigationCallback;
 import com.hsappdev.ahs.OnItemClick;
 import com.hsappdev.ahs.R;
 import com.hsappdev.ahs.cache.ArticleCategoryIdLoader;
-import com.hsappdev.ahs.cache.OnCategoryListLoadedCallback;
+import com.hsappdev.ahs.cache.deprecated.OnCategoryListLoadedCallback;
 
 import java.util.ArrayList;
 import java.util.List;

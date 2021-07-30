@@ -10,10 +10,8 @@ import androidx.annotation.NonNull;
 
 import com.hsappdev.ahs.OnItemClick;
 import com.hsappdev.ahs.R;
-import com.hsappdev.ahs.cache.OnArticleLoadedCallback;
-import com.hsappdev.ahs.dataTypes.Article;
 
-public class SmallArticleUnit extends MediumArticleUnit implements OnArticleLoadedCallback {
+public class SmallArticleUnit extends MediumArticleUnit {
 
     private TextView timeTextView;
     private TextView categoryTextView;
@@ -24,8 +22,8 @@ public class SmallArticleUnit extends MediumArticleUnit implements OnArticleLoad
     }
 
     @Override
-    public void onArticleLoaded(Article article) {
-        super.onArticleLoaded(article);
+    public <T> void onLoaded(T articleObj) {
+        super.onLoaded(articleObj);
         timeTextView = contentView.findViewById(R.id.medium_article_time);
         categoryTextView = contentView.findViewById(R.id.medium_article_category);
         indicatorImageView = contentView.findViewById(R.id.medium_article_indicator);
@@ -33,6 +31,20 @@ public class SmallArticleUnit extends MediumArticleUnit implements OnArticleLoad
         categoryTextView.setText(article.getCategoryDisplayName());
         categoryTextView.setTextColor(article.getCategoryDisplayColor());
         indicatorImageView.setColorFilter(article.getCategoryDisplayColor(), PorterDuff.Mode.SRC_OVER);
-
     }
+
+//    @Override
+//    public void onArticleLoaded(Article article) {
+//        super.onArticleLoaded(article);
+//        timeTextView = contentView.findViewById(R.id.medium_article_time);
+//        categoryTextView = contentView.findViewById(R.id.medium_article_category);
+//        indicatorImageView = contentView.findViewById(R.id.medium_article_indicator);
+//
+//        categoryTextView.setText(article.getCategoryDisplayName());
+//        categoryTextView.setTextColor(article.getCategoryDisplayColor());
+//        indicatorImageView.setColorFilter(article.getCategoryDisplayColor(), PorterDuff.Mode.SRC_OVER);
+//
+//    }
+
+
 }

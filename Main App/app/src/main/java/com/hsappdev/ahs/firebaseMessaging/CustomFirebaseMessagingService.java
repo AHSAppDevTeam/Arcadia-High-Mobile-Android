@@ -18,11 +18,10 @@ import androidx.core.app.NotificationCompat;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.hsappdev.ahs.ArticleActivity;
-import com.hsappdev.ahs.MainActivity;
 import com.hsappdev.ahs.NotificationActivity;
 import com.hsappdev.ahs.R;
-import com.hsappdev.ahs.cache.ArticleLoader;
-import com.hsappdev.ahs.cache.OnArticleLoadedCallback;
+import com.hsappdev.ahs.cache.ArticleLoaderBackend;
+import com.hsappdev.ahs.cache.LoadableCallback;
 import com.hsappdev.ahs.dataTypes.Article;
 import com.hsappdev.ahs.localdb.ArticleRepository;
 
@@ -45,10 +44,11 @@ public class CustomFirebaseMessagingService extends FirebaseMessagingService {
             Log.d(TAG, "Message data payload: " + remoteMessage.getData());
             Map<String, String> dataMap = remoteMessage.getData();
             String articleID = dataMap.get("articleID");
-            ArticleLoader.getInstance((Application) getApplicationContext()).getArticle(articleID, getResources(), new OnArticleLoadedCallback() {
+            ArticleLoaderBackend.getInstance((Application) getApplicationContext()).getCacheObject(articleID, getResources(), new LoadableCallback() {
                 private boolean isFirstTime = false;
                 @Override
-                public void onArticleLoaded(Article article) {
+                public <T> void onLoaded(T articleN) {
+                    Article article = (Article) articleN;
                     article.setIsNotification(1); // 1 == true
                     articleRepository.add(article);
                     RemoteMessage.Notification notification = remoteMessage.getNotification();

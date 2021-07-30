@@ -1,17 +1,11 @@
 package com.hsappdev.ahs.cache;
 
 import android.content.res.Resources;
-import android.os.Process;
-import android.util.Log;
 
-import com.hsappdev.ahs.R;
+import com.hsappdev.ahs.cache.deprecated.OnCategoryLoadedCallback;
 import com.hsappdev.ahs.dataTypes.Category;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
-public class LocalDBArticleTrimmer implements Runnable, OnCategoryLoadedCallback{
+public class LocalDBArticleTrimmer implements Runnable, OnCategoryLoadedCallback {
     private static final String TAG = "LocalDBArticleTrimmer";
     private final Resources r;
 

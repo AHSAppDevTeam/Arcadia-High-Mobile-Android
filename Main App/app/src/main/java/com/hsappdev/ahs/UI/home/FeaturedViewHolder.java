@@ -16,14 +16,14 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.hsappdev.ahs.OnItemClick;
 import com.hsappdev.ahs.R;
-import com.hsappdev.ahs.cache.CategoryLoader;
-import com.hsappdev.ahs.cache.OnCategoryLoadedCallback;
+import com.hsappdev.ahs.cache.CategoryLoaderBackend;
+import com.hsappdev.ahs.cache.LoadableCallback;
 import com.hsappdev.ahs.dataTypes.Category;
 import com.hsappdev.ahs.util.Helper;
 
 import java.util.ArrayList;
 
-public class FeaturedViewHolder extends RecyclerView.ViewHolder implements OnCategoryLoadedCallback {
+public class FeaturedViewHolder extends RecyclerView.ViewHolder implements LoadableCallback {
     private final TextView sectionTitle;
     private final ViewPager2 featuredPager;
     private final TabLayout featuredTabLayout;
@@ -46,7 +46,8 @@ public class FeaturedViewHolder extends RecyclerView.ViewHolder implements OnCat
         featuredArticleAdapter = new FeaturedArticleAdapter(new ArrayList<String>(), onArticleClick, activity);
         featuredPager.setAdapter(featuredArticleAdapter);
 
-        CategoryLoader.getInstance().getCategory(categoryTitle, r, this);
+        //CategoryLoader.getInstance().getCategory(categoryTitle, r, this);
+        CategoryLoaderBackend.getInstance(activity.getApplication()).getCacheObject(categoryTitle, r, this);
     }
 
     public void setUpPager(){
@@ -66,8 +67,36 @@ public class FeaturedViewHolder extends RecyclerView.ViewHolder implements OnCat
         return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics());
     }
 
+//    @Override
+//    public void onCategoryLoaded(Category category) {
+//        featuredArticleAdapter.clearAll();
+//        /*
+//         * Structure
+//         * > single carousel for all articles
+//         * */
+//        featuredArticleAdapter.setArticleIds(category.getArticleIds());
+//
+//        String regularText = " News";
+//        Helper.setBoldRegularText(sectionTitle, category.getTitle(), regularText);
+//        sectionTitle.setTextColor(category.getColor());
+//
+//        // Set up tab layout
+//        if (featuredArticleAdapter.getItemCount() > 1) {
+//            featuredTabLayout.setVisibility(View.VISIBLE);
+//            TabLayoutMediator tabLayoutMediator = new TabLayoutMediator(featuredTabLayout, featuredPager, true, new TabLayoutMediator.TabConfigurationStrategy() {
+//                @Override
+//                public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
+//                }
+//            });
+//            tabLayoutMediator.attach();
+//        } else {
+//            featuredTabLayout.setVisibility(View.GONE);
+//        }
+//    }
+
     @Override
-    public void onCategoryLoaded(Category category) {
+    public <T> void onLoaded(T article) {
+        Category category = (Category) article;
         featuredArticleAdapter.clearAll();
         /*
          * Structure
@@ -91,5 +120,10 @@ public class FeaturedViewHolder extends RecyclerView.ViewHolder implements OnCat
         } else {
             featuredTabLayout.setVisibility(View.GONE);
         }
+    }
+
+    @Override
+    public boolean isActivityDestroyed() {
+        return activity.isDestroyed();
     }
 }

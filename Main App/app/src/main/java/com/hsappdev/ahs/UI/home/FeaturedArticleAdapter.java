@@ -15,8 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.hsappdev.ahs.OnItemClick;
 import com.hsappdev.ahs.R;
-import com.hsappdev.ahs.cache.ArticleLoader;
-import com.hsappdev.ahs.cache.OnArticleLoadedCallback;
+import com.hsappdev.ahs.cache.ArticleLoaderBackend;
+import com.hsappdev.ahs.cache.LoadableCallback;
 import com.hsappdev.ahs.dataTypes.Article;
 import com.hsappdev.ahs.util.ImageUtil;
 import com.hsappdev.ahs.util.ScreenUtil;
@@ -77,7 +77,7 @@ public class FeaturedArticleAdapter extends RecyclerView.Adapter<FeaturedArticle
         return articleIds.size();
     }
 
-    static class FeaturedArticleViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, OnArticleLoadedCallback {
+    static class FeaturedArticleViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, LoadableCallback {
         private Article article;
         final private ConstraintLayout articleLayout;
         final private ImageView articleImage;
@@ -105,7 +105,7 @@ public class FeaturedArticleAdapter extends RecyclerView.Adapter<FeaturedArticle
 
         public void setDetails(String articleID){
             articleLayout.setOnClickListener(this);
-            ArticleLoader.getInstance(activity.getApplication()).getArticle(articleID, r, this);
+            ArticleLoaderBackend.getInstance(activity.getApplication()).getCacheObject(articleID, r, this);
         }
 
 
@@ -116,9 +116,10 @@ public class FeaturedArticleAdapter extends RecyclerView.Adapter<FeaturedArticle
                 onArticleClick.onArticleClicked(article);
         }
 
+
         @Override
-        public void onArticleLoaded(Article article) {
-            this.article = article;
+        public <T> void onLoaded(T articleN) {
+            this.article = (Article) articleN;
 
             titleTextView.setText(article.getTitle());
             if(article.getImageURLs().length != 0) { // When there are at least one article, show first image

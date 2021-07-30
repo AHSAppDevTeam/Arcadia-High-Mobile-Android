@@ -10,24 +10,15 @@ import android.os.Build;
 import android.util.Log;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.hsappdev.ahs.MainActivity;
-import com.hsappdev.ahs.NotificationSettingsActivity;
 import com.hsappdev.ahs.R;
 import com.hsappdev.ahs.cache.ArticleCategoryIdLoader;
-import com.hsappdev.ahs.cache.OnCategoryListLoadedCallback;
-import com.hsappdev.ahs.dataTypes.Article;
-import com.hsappdev.ahs.util.Helper;
+import com.hsappdev.ahs.cache.deprecated.OnCategoryListLoadedCallback;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.function.Consumer;
 
 public class NotificationSetup {
 
@@ -137,14 +128,17 @@ public class NotificationSetup {
         ArticleCategoryIdLoader.loadSpecificCategoryList(r, categoryList -> {
             Log.d(TAG, "categoryListLoaded1: " + categoryList.size());
             allCategories.addAll(categoryList);
+            homeChannels.clear();
             homeChannels.addAll(categoryList);
             ArticleCategoryIdLoader.loadSpecificCategoryList(r, categoryList1 -> {
                 Log.d(TAG, "categoryListLoaded2: " + categoryList1.size());
                 allCategories.addAll(categoryList1);
+                bulletinChannels.clear();
                 bulletinChannels.addAll(categoryList1);
                 ArticleCategoryIdLoader.loadSpecificCategoryList(r, categoryList11 -> {
                     Log.d(TAG, "categoryListLoaded3: " + categoryList11.size());
                     allCategories.addAll(categoryList11);
+                    communityChannels.clear();
                     communityChannels.addAll(categoryList11);
                     callback.categoryListLoaded(allCategories);
                 }, r.getString(R.string.db_location_community));

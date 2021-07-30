@@ -3,6 +3,7 @@ package com.hsappdev.ahs.UI.home;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -12,13 +13,13 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.hsappdev.ahs.OnItemClick;
 import com.hsappdev.ahs.R;
-import com.hsappdev.ahs.cache.ArticleLoader;
-import com.hsappdev.ahs.cache.OnArticleLoadedCallback;
+import com.hsappdev.ahs.cache.ArticleLoaderBackend;
+import com.hsappdev.ahs.cache.LoadableCallback;
 import com.hsappdev.ahs.dataTypes.Article;
 import com.hsappdev.ahs.util.ImageUtil;
 import com.hsappdev.ahs.util.ScreenUtil;
 
-public class MediumArticleUnit extends ConstraintLayout implements OnArticleLoadedCallback {
+public class MediumArticleUnit extends ConstraintLayout implements LoadableCallback {
     protected Article article;
     final private ConstraintLayout articleLayout;
     final private ImageView articleImage;
@@ -30,6 +31,7 @@ public class MediumArticleUnit extends ConstraintLayout implements OnArticleLoad
 
     final protected View contentView;
 
+    private static final String TAG = "MediumArticleUnit";
 
     public MediumArticleUnit(@NonNull Context context, String articleId, OnItemClick onItemClick, int layoutID, Activity activity) {
         super(context);
@@ -64,34 +66,65 @@ public class MediumArticleUnit extends ConstraintLayout implements OnArticleLoad
 //        setDetails(articleId);
 //    }
 
-    public void setDetails(String articleId){
-        ArticleLoader.getInstance(activity.getApplication()).getArticle(articleId, r, this);
+    public void setDetails(String articleId) {
+        //ArticleLoader.getInstance(activity.getApplication()).getArticle(articleId, r, this);
+        ArticleLoaderBackend.getInstance(activity.getApplication()).getCacheObject(articleId, r, this);
+
     }
 
 
+//    @Override
+//    public void onArticleLoaded(Article article) {
+//        this.article = article;
+//
+//        titleTextView.setText(article.getTitle());
+//        ScreenUtil.setTimeToTextView(article.getTimestamp(), timeTextView);
+//        if(article.getImageURLs().length != 0){
+//            ImageUtil.setImageToSmallView(article.getImageURLs()[0], articleImage);
+//        } else if(article.getVideoURLs().length != 0){
+//            ImageUtil.setImageToSmallView(ImageUtil.getYoutubeThumbnail(article.getVideoURLs()[0]), articleImage);
+//        }
+//
+//        contentView.setOnClickListener(new View.OnClickListener(){
+//
+//            @Override
+//            public void onClick(View v) {
+//                onArticleClick.onArticleClicked(article);
+//            }
+//        });
+//    }
+
     @Override
-    public void onArticleLoaded(Article article) {
-        this.article = article;
-        
+    public <T> void onLoaded(T articleObj) {
+
+        Log.d(TAG, "onLoaded: 1234" + articleObj.toString());
+        this.article = (Article) articleObj;
+
         titleTextView.setText(article.getTitle());
         ScreenUtil.setTimeToTextView(article.getTimestamp(), timeTextView);
-        if(article.getImageURLs().length != 0){
+        if (article.getImageURLs().length != 0) {
             ImageUtil.setImageToSmallView(article.getImageURLs()[0], articleImage);
-        } else if(article.getVideoURLs().length != 0){
+        } else if (article.getVideoURLs().length != 0) {
             ImageUtil.setImageToSmallView(ImageUtil.getYoutubeThumbnail(article.getVideoURLs()[0]), articleImage);
         }
 
-        contentView.setOnClickListener(new View.OnClickListener(){
+        contentView.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 onArticleClick.onArticleClicked(article);
             }
         });
+
     }
 
     @Override
     public boolean isActivityDestroyed() {
         return activity.isDestroyed();
     }
+
+//    @Override
+//    public boolean isActivityDestroyed() {
+//        return activity.isDestroyed();
+//    }
 }

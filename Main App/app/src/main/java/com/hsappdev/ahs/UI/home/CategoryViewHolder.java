@@ -2,8 +2,6 @@ package com.hsappdev.ahs.UI.home;
 
 import android.app.Activity;
 import android.content.res.Resources;
-import android.util.Log;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -11,24 +9,21 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager2.widget.CompositePageTransformer;
-import androidx.viewpager2.widget.MarginPageTransformer;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.hsappdev.ahs.OnItemClick;
 import com.hsappdev.ahs.R;
-import com.hsappdev.ahs.cache.CategoryLoader;
-import com.hsappdev.ahs.cache.OnCategoryLoadedCallback;
-import com.hsappdev.ahs.dataTypes.Article;
+import com.hsappdev.ahs.cache.CategoryLoaderBackend;
+import com.hsappdev.ahs.cache.LoadableCallback;
 import com.hsappdev.ahs.dataTypes.Category;
 import com.hsappdev.ahs.util.Helper;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CategoryViewHolder extends RecyclerView.ViewHolder implements OnCategoryLoadedCallback {
+public class CategoryViewHolder extends RecyclerView.ViewHolder implements LoadableCallback {
     private static final String TAG = "CategoryViewHolder";
 
     private final TextView sectionTitle;
@@ -50,20 +45,10 @@ public class CategoryViewHolder extends RecyclerView.ViewHolder implements OnCat
 
         smallPager.setAdapter(smallArticleAdapter);
 
-        CategoryLoader.getInstance().getCategory(categoryTitle, r, this);
+        //CategoryLoader.getInstance().getCategory(categoryTitle, r, this);
+        CategoryLoaderBackend.getInstance(activity.getApplication()).getCacheObject(categoryTitle, r, this);
     }
 
-    @Override
-    public void onCategoryLoaded(Category category) {
-
-        smallArticleAdapter.clearAll();
-        //Log.d(TAG, "onCategoryLoaded: size" + category.getCategoryID() + category.getArticleIds());
-        articleSortingJunction(new ArrayList<>(category.getArticleIds()), category.getTitle(), smallArticleAdapter);
-        // set section title
-        String regularText = " News";
-        Helper.setBoldRegularText(sectionTitle, category.getTitle(), regularText);
-        sectionTitle.setTextColor(category.getColor());
-    }
 
     /**
      * Sort articles into the correct categories
@@ -154,5 +139,22 @@ public class CategoryViewHolder extends RecyclerView.ViewHolder implements OnCat
         smallTabLayout = itemView.findViewById(R.id.small_tab_layout);
 
         this.activity = activity;
+    }
+
+    @Override
+    public <T> void onLoaded(T article) {
+        Category category = (Category) article;
+        smallArticleAdapter.clearAll();
+        //Log.d(TAG, "onCategoryLoaded: size" + category.getCategoryID() + category.getArticleIds());
+        articleSortingJunction(new ArrayList<>(category.getArticleIds()), category.getTitle(), smallArticleAdapter);
+        // set section title
+        String regularText = " News";
+        Helper.setBoldRegularText(sectionTitle, category.getTitle(), regularText);
+        sectionTitle.setTextColor(category.getColor());
+    }
+
+    @Override
+    public boolean isActivityDestroyed() {
+        return activity.isDestroyed();
     }
 }

@@ -15,8 +15,10 @@ public class ArticleRepository {
     private LiveData<List<Article>> allSavedArticles;
     private LiveData<List<Article>> allNotificationArticles;
 
+    private Application application;
 
     public ArticleRepository(Application application) {
+        this.application = application;
         RoomDatabase db = RoomDatabase.getDatabase(application);
         articleDAO = db.articleDAO();
         allArticles = articleDAO.getAllArticles();
@@ -88,5 +90,9 @@ public class ArticleRepository {
 
     public LiveData<List<Article>> getAllNotificationArticles() {
         return allNotificationArticles;
+    }
+
+    public Application getApplication() {
+        return application;
     }
 }

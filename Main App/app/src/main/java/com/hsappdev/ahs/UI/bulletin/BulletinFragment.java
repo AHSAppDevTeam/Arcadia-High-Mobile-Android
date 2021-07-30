@@ -18,8 +18,8 @@ import android.widget.LinearLayout;
 
 import com.hsappdev.ahs.OnItemClick;
 import com.hsappdev.ahs.R;
-import com.hsappdev.ahs.cache.ArticleLoader;
-import com.hsappdev.ahs.cache.OnArticleLoadedCallback;
+import com.hsappdev.ahs.cache.ArticleLoaderBackend;
+import com.hsappdev.ahs.cache.LoadableCallback;
 import com.hsappdev.ahs.dataTypes.Article;
 import com.hsappdev.ahs.dataTypes.Category;
 import com.hsappdev.ahs.util.ScreenUtil;
@@ -27,7 +27,7 @@ import com.hsappdev.ahs.util.ScreenUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BulletinFragment extends Fragment implements CategoriesLoadedCallback, OnArticleLoadedCallback {
+public class BulletinFragment extends Fragment implements CategoriesLoadedCallback, LoadableCallback {
     private static final String TAG = "BulletinFragment";
 
     private LinearLayout categoryLinearLayout;
@@ -144,7 +144,7 @@ public class BulletinFragment extends Fragment implements CategoriesLoadedCallba
             }
             if(!isArticleUpdate){ // Only set an article loader if it is not set before
                 //Log.d(TAG, "registerCategory: loadedArticle "+ categoryState.getArticleIds().get(i));
-                ArticleLoader.getInstance(getActivity().getApplication()).getArticle(
+                ArticleLoaderBackend.getInstance(getActivity().getApplication()).getCacheObject(
                         categoryState.getArticleIds().get(i),
                         getResources(),
                         this);
@@ -255,7 +255,8 @@ public class BulletinFragment extends Fragment implements CategoriesLoadedCallba
     }
 
     @Override
-    public void onArticleLoaded(Article article) {
+    public <T> void onLoaded(T articleN) {
+        Article article = (Article) articleN;
         String articleId = article.getArticleID();
         boolean isArticleUpdate = false;
         for (int j = 0; j < articleList.size(); j++) {
