@@ -9,6 +9,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 public class Converters {
@@ -32,7 +33,7 @@ public class Converters {
 
     @TypeConverter
     public static List<String> fromStringList(String string) {
-        return Arrays.asList(fromString(string));
+        return new ArrayList<>(Arrays.asList(fromString(string))); // Arrays.asList returns a FIXED list, it needs to be mutable
     }
 
     @TypeConverter

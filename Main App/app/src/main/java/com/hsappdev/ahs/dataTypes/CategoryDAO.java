@@ -14,7 +14,7 @@ public interface CategoryDAO {
     void add(Category... articles);
 
     @Query("SELECT * FROM " + Category.TABLE_NAME + " WHERE " + Category.ID + " = :ID")
-    LiveData<Category> getArticle(String ID);
+    LiveData<Category> getCategory(String ID);
 
     @Query("DELETE FROM " + Category.TABLE_NAME + " WHERE " + Category.ID + " = :ID")
     void delete(String ID);

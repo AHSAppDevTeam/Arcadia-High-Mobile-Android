@@ -12,18 +12,24 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.hsappdev.ahs.R;
 import com.hsappdev.ahs.dataTypes.Category;
 import com.hsappdev.ahs.db.DatabaseConstants;
+import com.hsappdev.ahs.localdb.CategoryRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryLoadableCache extends LoadableCache<Category> {
-    public CategoryLoadableCache(String articleID, Resources r, LoadableCallback callback) {
-        super(articleID, r, callback);
+    private final CategoryRepository categoryRepository;
+    public CategoryLoadableCache(String articleID, Resources r, LoadableCallback callback, CategoryRepository categoryRepository) {
+        super(articleID, r);
+        this.categoryRepository = categoryRepository;
+        registerForCallback(callback); // Make sure to do this first before loading categories
+        startDataBaseLoad();
+        startFirebaseLoad();
     }
 
     @Override
     protected LiveData<Category> getDatabaseLiveDataRef() {
-        return null;
+        return categoryRepository.getCategory(articleID);
     }
 
     @Override
@@ -41,7 +47,7 @@ public class CategoryLoadableCache extends LoadableCache<Category> {
 
     @Override
     protected void addCacheToDatabase() {
-
+        categoryRepository.add(article);
     }
 
     @Override
