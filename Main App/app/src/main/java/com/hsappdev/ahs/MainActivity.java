@@ -16,6 +16,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.hsappdev.ahs.UI.home.OnSectionClicked;
+import com.hsappdev.ahs.cache.ArticleCategoryIdLoader;
 import com.hsappdev.ahs.dataTypes.Article;
 import com.hsappdev.ahs.dataTypes.CommunitySection;
 import com.hsappdev.ahs.firebaseMessaging.NotificationSetup;

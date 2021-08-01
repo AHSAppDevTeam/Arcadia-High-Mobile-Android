@@ -22,12 +22,15 @@ import com.google.firebase.database.ValueEventListener;
 import com.hsappdev.ahs.R;
 import com.hsappdev.ahs.UI.home.OnSectionClicked;
 import com.hsappdev.ahs.UI.home.community.CommunityRecyclerAdapter;
+import com.hsappdev.ahs.cache.CategoryListLoaderBackend;
+import com.hsappdev.ahs.cache.LoadableCallback;
+import com.hsappdev.ahs.dataTypes.CategoryList;
 import com.hsappdev.ahs.db.DatabaseConstants;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeCommunityFragment extends Fragment {
+public class HomeCommunityFragment extends Fragment implements LoadableCallback {
 
     private static final String TAG = "HomeCommunityFragment";
 
@@ -65,36 +68,28 @@ public class HomeCommunityFragment extends Fragment {
         View view = inflater.inflate(R.layout.home_community_fragment, container, false);
 
         r = view.getResources();
-        List<String> communitySections = new ArrayList<>();
         recyclerView = view.findViewById(R.id.home_community_recyclerview);
         communityRecyclerAdapter = new CommunityRecyclerAdapter(onCommunityClick);
         recyclerView.setAdapter(communityRecyclerAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
 
-        DatabaseReference ref = FirebaseDatabase.getInstance(FirebaseApp.getInstance(DatabaseConstants.FIREBASE_REALTIME_DB)).getReference()
-                .child(r.getString(R.string.db_locations))
-                .child(r.getString(R.string.db_location_community))
-                .child(r.getString(R.string.db_locations_catID));
-        ref.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                communityRecyclerAdapter.clearAll();
-                communitySections.clear(); // Make sure to clear this list
-                for(DataSnapshot child : snapshot.getChildren()){
-                    //Log.d(TAG, "onDataChange: " + child.getValue(String.class));
-                    communitySections.add(child.getValue(String.class));
-                }
-                //Log.d(TAG, "onDataChange: length"+communitySections.size());
-                communityRecyclerAdapter.addCommunitySections(communitySections);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
         this.contentView = view;
+
+        CategoryListLoaderBackend
+        .getInstance(getActivity().getApplication())
+        .getCacheObject(r.getString(R.string.db_location_community), r, this);
         return view;
+    }
+
+    @Override
+    public <T> void onLoaded(T article) {
+        CategoryList categoryList = (CategoryList) article;
+        communityRecyclerAdapter.clearAll();
+        communityRecyclerAdapter.addCommunitySections(categoryList.getCategoryList());
+    }
+
+    @Override
+    public boolean isActivityDestroyed() {
+        return getActivity().isDestroyed();
     }
 }

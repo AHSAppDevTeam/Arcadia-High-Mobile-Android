@@ -14,17 +14,20 @@ import com.hsappdev.ahs.dataTypes.Article;
 import com.hsappdev.ahs.dataTypes.ArticleDAO;
 import com.hsappdev.ahs.dataTypes.Category;
 import com.hsappdev.ahs.dataTypes.CategoryDAO;
+import com.hsappdev.ahs.dataTypes.CategoryList;
+import com.hsappdev.ahs.dataTypes.CategoryListDAO;
 import com.hsappdev.ahs.db.DatabaseConstants;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {Article.class, Category.class}, version = 7, exportSchema = false)
+@Database(entities = {Article.class, Category.class, CategoryList.class}, version = 7, exportSchema = false)
 @TypeConverters(Converters.class)
 public abstract class RoomDatabase extends androidx.room.RoomDatabase {
 
     public abstract ArticleDAO articleDAO();
     public abstract CategoryDAO categoryDAO();
+    public abstract CategoryListDAO categoryListDAO();
 
     private static volatile RoomDatabase INSTANCE;
     private static final int NUM_THREADS = 4; // idk, this was in the example
@@ -42,6 +45,7 @@ public abstract class RoomDatabase extends androidx.room.RoomDatabase {
                             .addMigrations(MIGRATION_4_5)
                             .addMigrations(MIGRATION_5_6)
                             .addMigrations(MIGRATION_6_7)
+                            .addMigrations(MIGRATION_7_8)
                             .build();
                 }
             }
@@ -258,6 +262,21 @@ public abstract class RoomDatabase extends androidx.room.RoomDatabase {
                     Category.IMG_URL + " TEXT," +
                     Category.ARTICLE_IDS + " TEXT," +
                     Category.CLR + " INTEGER NOT NULL DEFAULT 0" +
+                    ");"
+            );
+        }
+    };
+
+    /**
+     * CREATION OF CATEGORY LIST LOCAL CACHE
+     */
+    static final Migration MIGRATION_7_8 = new Migration(7,8) {
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase database) {
+            database.execSQL("CREATE TABLE " + CategoryList.TABLE_NAME +
+                    "(" +
+                    CategoryList.ID + " TEXT PRIMARY KEY," +
+                    CategoryList.CATEGORY_IDS + " TEXT" +
                     ");"
             );
         }

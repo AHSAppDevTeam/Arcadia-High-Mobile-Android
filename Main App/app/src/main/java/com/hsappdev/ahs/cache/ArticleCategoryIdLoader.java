@@ -25,7 +25,8 @@ public class ArticleCategoryIdLoader {
 
     public static void loadCategoryList(Resources r, OnCategoryListLoadedCallback callback){
         if(articleCategoryCache.size() > 0){
-            callback.categoryListLoaded(articleCategoryCache);
+            if(callback != null)
+                callback.categoryListLoaded(articleCategoryCache);
         } else {
             DatabaseReference ref = FirebaseDatabase.getInstance(FirebaseApp.getInstance(DatabaseConstants.FIREBASE_REALTIME_DB)).getReference()
                     .child(r.getString(R.string.db_locations))
@@ -40,7 +41,8 @@ public class ArticleCategoryIdLoader {
                         categoriesIDs.add(sectionTitle.getValue(String.class));
                     }
                     articleCategoryCache = categoriesIDs;
-                    callback.categoryListLoaded(articleCategoryCache);
+                    if(callback != null)
+                        callback.categoryListLoaded(articleCategoryCache);
                 }
 
                 @Override

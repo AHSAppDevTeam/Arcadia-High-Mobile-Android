@@ -2,6 +2,8 @@ package com.hsappdev.ahs.util;
 
 import android.widget.ImageView;
 
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
@@ -20,10 +22,10 @@ public class ImageUtil {
             ShapeableImageView shapeableImageView = (ShapeableImageView) imageView;
             shapeableImageView.setShapeAppearanceModel(new ShapeAppearanceModel().withCornerSize(ScreenUtil.dp_to_px(imageView.getContext().getResources().getDimension(R.dimen.padding) / 2, imageView.getContext())));
         }
+
         Glide
                 .with(imageView.getContext())
                 .load(imageUrl)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .centerCrop()
                 .error(R.drawable.img_frame_large)
                 .transition(DrawableTransitionOptions.withCrossFade())
@@ -39,7 +41,6 @@ public class ImageUtil {
         Glide
                 .with(imageView.getContext())
                 .load(imageUrl)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
                 .error(R.drawable.img_frame_large)
                 .transition(DrawableTransitionOptions.withCrossFade())
@@ -51,7 +52,6 @@ public class ImageUtil {
         Glide
                 .with(imageView.getContext())
                 .load(imageUrl)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .transform(new BlurTransformation(100, 3), new CenterCrop())
                 .error(R.drawable.img_frame_large)
                 .transition(DrawableTransitionOptions.withCrossFade())
@@ -66,7 +66,6 @@ public class ImageUtil {
         Glide
                 .with(imageView.getContext())
                 .load(imageUrl)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .centerCrop()
                 .error(R.drawable.img_frame_large)
                 .transition(DrawableTransitionOptions.withCrossFade())
@@ -82,7 +81,6 @@ public class ImageUtil {
         Glide
                 .with(imageView.getContext())
                 .load(imageUrl)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .circleCrop()
                 .error(R.drawable.img_frame_large)
                 .transition(DrawableTransitionOptions.withCrossFade())

@@ -64,7 +64,7 @@ public class NotificationSetup {
                             if (!task.isSuccessful()) {
                                 msg = failureMSG + channel;
                             }
-                            Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show();
                         });
             }
         }

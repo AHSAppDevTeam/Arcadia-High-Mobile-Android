@@ -3,9 +3,12 @@ package com.hsappdev.ahs.util;
 import android.content.Context;
 import android.os.Build;
 import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.util.TypedValue;
 import android.widget.TextView;
+
+import androidx.core.text.HtmlCompat;
 
 import com.hsappdev.ahs.R;
 
@@ -21,11 +24,8 @@ public class ScreenUtil {
     }
 
     public static void setHTMLStringToTextView(String html, TextView textView){
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            textView.setText(Html.fromHtml(html, Html.FROM_HTML_SEPARATOR_LINE_BREAK_PARAGRAPH));
-        } else {
-            textView.setText(Html.fromHtml(html));
-        }
+        textView.setText(HtmlCompat.fromHtml(html, HtmlCompat.FROM_HTML_SEPARATOR_LINE_BREAK_PARAGRAPH));
+        textView.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
     public static void setPlainHTMLStringToTextView(String html, TextView textView){

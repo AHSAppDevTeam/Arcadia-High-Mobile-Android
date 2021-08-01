@@ -16,12 +16,17 @@ import android.view.ViewGroup;
 import com.hsappdev.ahs.OnItemClick;
 import com.hsappdev.ahs.R;
 import com.hsappdev.ahs.cache.ArticleCategoryIdLoader;
+import com.hsappdev.ahs.cache.CategoryListLoaderBackend;
+import com.hsappdev.ahs.cache.LoadableCallback;
 import com.hsappdev.ahs.cache.deprecated.OnCategoryListLoadedCallback;
+import com.hsappdev.ahs.dataTypes.Category;
+import com.hsappdev.ahs.dataTypes.CategoryList;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-public class HomeNewsFragment extends Fragment implements OnCategoryListLoadedCallback {
+public class HomeNewsFragment extends Fragment implements LoadableCallback {
     private static final String TAG = "HomeNewsFragment";
 
     private OnItemClick onArticleClick;
@@ -64,21 +69,20 @@ public class HomeNewsFragment extends Fragment implements OnCategoryListLoadedCa
         RecyclerView recyclerView = view.findViewById(R.id.home_news_recyclerView);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        ArticleCategoryIdLoader.loadCategoryList(r, this);
-
-
-
-
-
+        CategoryListLoaderBackend.getInstance(getActivity().getApplication()).getCacheObject(r.getString(R.string.db_location_ausdNews), r, this);
         return view;
     }
 
-    public void updateCategory(String newCategoryReference) {
+    @Override
+    public <T> void onLoaded(T article) {
+        CategoryList categoryList = (CategoryList) article;
+        adapter.clearAll();
+        adapter.addCategoryIDs(categoryList.getCategoryList());
 
     }
 
     @Override
-    public void categoryListLoaded(List<String> categoryList) {
-        adapter.addCategoryIDs(categoryList);
+    public boolean isActivityDestroyed() {
+        return getActivity().isDestroyed();
     }
 }
