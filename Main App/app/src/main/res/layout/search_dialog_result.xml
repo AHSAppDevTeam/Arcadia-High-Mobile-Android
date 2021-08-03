@@ -3,7 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/padding_x.5">
 
     <TextView
         android:id="@+id/search_dialog_result_textView"
@@ -17,6 +18,6 @@
         android:focusable="true"
         android:clickable="true"
         android:maxLines="1"
-        android:ellipsize="end"/>
+        android:ellipsize="end" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

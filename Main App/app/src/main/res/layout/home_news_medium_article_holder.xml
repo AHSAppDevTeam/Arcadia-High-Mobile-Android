@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
+    android:paddingVertical="@dimen/padding"
     android:weightSum="2">
 
     <LinearLayout
@@ -12,10 +13,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        >
 
     </LinearLayout>
-
+    <Space
+        android:layout_width="@dimen/padding"
+        android:layout_height="match_parent"
+        />
     <LinearLayout
         android:id="@+id/home_news_medium_article_linear_layout_right"
         android:layout_width="match_parent"

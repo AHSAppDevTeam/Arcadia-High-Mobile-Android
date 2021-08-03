@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.hsappdev.ahs.ArticleActivity;
+import com.hsappdev.ahs.CalendarActivity;
 import com.hsappdev.ahs.MainActivity;
 import com.hsappdev.ahs.NotificationSettingsActivity;
 import com.hsappdev.ahs.R;
@@ -68,12 +69,15 @@ public class ProfileFragment extends Fragment {
         });
 
         LinearLayout notificationSettingBtn = view.findViewById(R.id.profile_notifications_btn);
-        notificationSettingBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), NotificationSettingsActivity.class);
-                startActivity(intent);
-            }
+        notificationSettingBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), NotificationSettingsActivity.class);
+            startActivity(intent);
+        });
+
+        LinearLayout calendarBtn = view.findViewById(R.id.profile_calendar_btn);
+        calendarBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), CalendarActivity.class);
+            startActivity(intent);
         });
         return view;
     }

@@ -13,7 +13,7 @@
     <dimen name="padding_x1.5">22.5dp</dimen>
     <dimen name="padding_x2">30dp</dimen>
     <dimen name="elevation">5dp</dimen>
-    <dimen name="shadowElevation">15dp</dimen>
+    <dimen name="shadowElevation">3dp</dimen>
 
     <dimen name="cornerIconSize">48dp</dimen>
 

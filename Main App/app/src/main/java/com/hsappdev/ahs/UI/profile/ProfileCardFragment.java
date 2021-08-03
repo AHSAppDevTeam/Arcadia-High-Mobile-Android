@@ -2,6 +2,7 @@ package com.hsappdev.ahs.UI.profile;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
@@ -32,6 +33,9 @@ import java.util.regex.Pattern;
 public class ProfileCardFragment extends Fragment {
     private static final String TAG = "ProfileCardFragment";
     private static final Pattern userIdPattern = Pattern.compile("^(\\d{5})@students\\.ausd\\.net$");
+
+    private static final String photoUrlID = "PHOTO_URL_ID";
+
 
     private TextView givenNameTextView;
     private TextView familyNameTextView;
@@ -141,6 +145,10 @@ public class ProfileCardFragment extends Fragment {
     }
 
     public void setPhotoUrl(String photoUrl) {
+        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString(photoUrlID, photoUrl);
+        editor.apply();
         ImageUtil.setCircleImageToView(photoUrl, accountImage);
     }
 

@@ -5,6 +5,7 @@ import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.Space;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -86,7 +87,7 @@ public class CategoryViewHolder extends RecyclerView.ViewHolder implements Loada
     }
 
     private void setUpLargeArticle(String articleID, OnItemClick onItemClick) {
-        View view = LayoutInflater.from(categoryLinearLayout.getContext()).inflate(R.layout.home_news_featured_article, null, false);
+        View view = LayoutInflater.from(categoryLinearLayout.getContext()).inflate(R.layout.home_news_category_article, null, false);
         LargeArticleUnit articleUnit = new LargeArticleUnit(view, onItemClick, activity);
         articleUnit.setDetails(articleID);
         categoryLinearLayout.addView(view);
@@ -94,8 +95,29 @@ public class CategoryViewHolder extends RecyclerView.ViewHolder implements Loada
 
     private void setUpMediumArticles(List<String> articles, OnItemClick onItemClick){
         LinearLayout intermediateLinearLayout = new LinearLayout(categoryLinearLayout.getContext());
+
         for(String article : articles){
             MediumArticleUnit unit = new MediumArticleUnit(categoryLinearLayout.getContext(), article, onItemClick, R.layout.home_news_medium_article, activity);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    1.0f
+            );
+            unit.setLayoutParams(params);
+            intermediateLinearLayout.addView(unit);
+            // Add Divider
+            if(!article.equals(articles.get(articles.size()-1)) || articles.size() == 1) { // if not the last article
+                Space space = new Space(categoryLinearLayout.getContext());
+                LinearLayout.LayoutParams spaceParams = new LinearLayout.LayoutParams(
+                        r.getDimensionPixelSize(R.dimen.padding),
+                        LinearLayout.LayoutParams.MATCH_PARENT
+                );
+                space.setLayoutParams(spaceParams);
+                intermediateLinearLayout.addView(space);
+            }
+        }
+        if(articles.size() == 1) { // if there is only one article, add an empty article
+            View unit = new View(categoryLinearLayout.getContext());
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT,

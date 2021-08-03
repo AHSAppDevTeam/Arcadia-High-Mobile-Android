@@ -90,7 +90,7 @@ public class CommunityActivity extends AppCompatActivity implements OnItemClick,
 
         LinearLayout linearLayout = findViewById(R.id.community_activity_article_linearLayout);
 
-        int p = 40;
+        int p = 20;
         if(articleIds.size() > 0) {
             CommunityArticleUnit articleUnit = new CommunityArticleUnit(getApplicationContext(), articleIds.get(0), this, this, false);
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(

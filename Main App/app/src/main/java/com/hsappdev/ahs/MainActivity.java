@@ -15,6 +15,7 @@ import android.view.Window;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
+import com.google.firebase.messaging.RemoteMessage;
 import com.hsappdev.ahs.UI.home.OnSectionClicked;
 import com.hsappdev.ahs.cache.ArticleCategoryIdLoader;
 import com.hsappdev.ahs.dataTypes.Article;
@@ -76,6 +77,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationC
 
         NotificationSetup.setUp(getResources(), this);
 
+        // FIXME: REMOVE THIS WHEN DEPLOYING THE APP
+        if(BuildConfig.DEBUG) {
+            NotificationSetup.subscribe(this, "Drafts");
+        }
 
     }
 

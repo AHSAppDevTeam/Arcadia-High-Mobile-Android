@@ -84,5 +84,6 @@
     <string name="notificationChannelName">AHS Mobile Notifications</string>
     <string name="isFirstTimeAppLoad">isFirstTimeAppLoad</string>
     <string name="notifications_settings_header">Notification Settings</string>
+    <string name="calendar_section_title"><b>Your</b> Schedule</string>
 
 </resources>

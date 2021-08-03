@@ -1,6 +1,7 @@
 package com.hsappdev.ahs.cache;
 
 import android.content.res.Resources;
+import android.os.Looper;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -154,6 +155,11 @@ public abstract class LoadableCache<T extends LoadableType> {
     void startDataBaseLoad() {
         LiveData<T> liveData = getDatabaseLiveDataRef();
         if(liveData == null) return;
+        if(Looper.getMainLooper().getThread() != Thread.currentThread()) {
+            // If we are not on the main thread, we cannot call observe forever
+            // so we fall back to firebase loading
+            return;
+        }
         liveData.observeForever(new Observer<T>() {
             @Override
             public void onChanged(T articleN) {

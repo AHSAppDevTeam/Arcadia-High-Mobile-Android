@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DividerItemDecoration;
 
 import com.hsappdev.ahs.OnItemClick;
 import com.hsappdev.ahs.R;
@@ -58,7 +59,6 @@ public class SmallArticleAdapter extends MultiArticleAdapter<SmallArticleAdapter
                 String articleId = articlesToAdd.get(i);
                 SmallArticleUnit smallArticleUnit =  new SmallArticleUnit(itemView.getContext(), articleId, onArticleClick, activity);
                 linearLayout.addView(smallArticleUnit);
-
             }
         }
 

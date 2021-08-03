@@ -8,6 +8,7 @@
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent"
     android:foreground="?attr/selectableItemBackground"
+    android:paddingVertical="@dimen/padding"
     >
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -16,7 +17,7 @@
             android:layout_height="wrap_content"
             android:clipChildren="false"
             android:clipToPadding="false"
-            android:layout_marginHorizontal="@dimen/padding_x.5">
+            >
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/medium_article_image"
@@ -56,12 +57,10 @@
                 android:id="@+id/medium_article_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingHorizontal="@dimen/padding_x.5"
-                android:paddingBottom="@dimen/padding_x.5"
                 android:gravity="center_vertical"
+                android:paddingBottom="@dimen/padding_x.5"
                 android:text="@string/article_default_time"
                 android:textSize="12sp"
-                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>

@@ -51,7 +51,7 @@ public class CommunityArticleUnit extends CardView implements LoadableCallback {
         int p = 10;
         setPadding(p, p, p, p);
         setRadius(r.getDimension(R.dimen.padding));
-        setCardElevation(20);
+        setCardElevation(10);
         TypedValue outValue = new TypedValue();
         getContext().getTheme().resolveAttribute(android.R.attr.selectableItemBackground, outValue, true);
         setForeground(r.getDrawable(outValue.resourceId, getContext().getTheme()));
