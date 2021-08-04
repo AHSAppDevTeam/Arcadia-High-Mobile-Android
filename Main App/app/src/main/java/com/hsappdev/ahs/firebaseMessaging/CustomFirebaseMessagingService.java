@@ -32,13 +32,14 @@ public class CustomFirebaseMessagingService extends FirebaseMessagingService {
 
     private ArticleRepository articleRepository;
     public CustomFirebaseMessagingService() {
-        articleRepository = new ArticleRepository(getApplication());
+
     }
 
     @Override
     public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
         Log.d(TAG, "From: " + remoteMessage.getFrom());
-
+        if(articleRepository == null)
+            articleRepository = new ArticleRepository(getApplication());
         // Check if message contains a data payload.
         if (remoteMessage.getData().size() > 0) {
             Log.d(TAG, "Message data payload: " + remoteMessage.getData());
@@ -50,7 +51,7 @@ public class CustomFirebaseMessagingService extends FirebaseMessagingService {
                 public <T> void onLoaded(T articleN) {
                     Article article = (Article) articleN;
                     article.setIsNotification(1); // 1 == true
-                    articleRepository.add(article);
+                    //articleRepository.add(article);
                     RemoteMessage.Notification notification = remoteMessage.getNotification();
                     sendNotification(notification.getTitle(),
                             notification.getBody(),

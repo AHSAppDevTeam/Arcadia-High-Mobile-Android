@@ -16,6 +16,5 @@
         android:gravity="center"
         android:textColor="?attr/titleColor"
         android:textSize="16sp"
-        android:textStyle="bold"
         tools:text="22" />
 </androidx.constraintlayout.widget.ConstraintLayout>
