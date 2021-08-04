@@ -4,9 +4,10 @@ import android.app.Application;
 import android.content.res.Resources;
 import android.util.Log;
 
+import com.hsappdev.ahs.dataTypes.Article;
 import com.hsappdev.ahs.localdb.ArticleRepository;
 
-public class ArticleLoaderBackend extends LoaderBackend<ArticleLoadableCache>{
+public class ArticleLoaderBackend extends LoaderBackend<ArticleLoadableCache, Article>{
     private ArticleRepository articleRepository;
 
     private static ArticleLoaderBackend articleLoaderBackend;
@@ -29,7 +30,7 @@ public class ArticleLoaderBackend extends LoaderBackend<ArticleLoadableCache>{
     }
 
     @Override
-    protected ArticleLoadableCache getLoadableCacheInstance(String articleID, Resources r, LoadableCallback callback) {
+    protected ArticleLoadableCache getLoadableCacheInstance(String articleID, Resources r, LoadableCallback<Article> callback) {
         Log.d(TAG, "init: " + articleRepository);
         return new ArticleLoadableCache(articleID, r, callback, articleRepository);
     }

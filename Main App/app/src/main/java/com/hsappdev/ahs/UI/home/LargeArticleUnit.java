@@ -15,11 +15,12 @@ import com.hsappdev.ahs.OnItemClick;
 import com.hsappdev.ahs.R;
 import com.hsappdev.ahs.cache.ArticleLoaderBackend;
 import com.hsappdev.ahs.cache.LoadableCallback;
+import com.hsappdev.ahs.cache.callbacks.ArticleLoadableCallback;
 import com.hsappdev.ahs.dataTypes.Article;
 import com.hsappdev.ahs.util.ImageUtil;
 import com.hsappdev.ahs.util.ScreenUtil;
 
-public class LargeArticleUnit implements View.OnClickListener, LoadableCallback {
+public class LargeArticleUnit implements View.OnClickListener, ArticleLoadableCallback {
     private static final String TAG = "LargeArticleUnit";
     private Article article;
     final private ConstraintLayout articleLayout;
@@ -60,8 +61,8 @@ public class LargeArticleUnit implements View.OnClickListener, LoadableCallback 
 
 
     @Override
-    public <T> void onLoaded(T articleN) {
-        this.article = (Article) articleN;
+    public void onLoaded(Article articleN) {
+        this.article = articleN;
         titleTextView.setText(article.getTitle());
         if(article.getImageURLs().length != 0) { // When there are at least one article, show first image
             ImageUtil.setImageToView(article.getImageURLs()[0], articleImage);

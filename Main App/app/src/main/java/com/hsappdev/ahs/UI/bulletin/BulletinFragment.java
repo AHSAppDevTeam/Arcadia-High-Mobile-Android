@@ -19,7 +19,7 @@ import android.widget.LinearLayout;
 import com.hsappdev.ahs.OnItemClick;
 import com.hsappdev.ahs.R;
 import com.hsappdev.ahs.cache.ArticleLoaderBackend;
-import com.hsappdev.ahs.cache.LoadableCallback;
+import com.hsappdev.ahs.cache.callbacks.ArticleLoadableCallback;
 import com.hsappdev.ahs.dataTypes.Article;
 import com.hsappdev.ahs.dataTypes.Category;
 import com.hsappdev.ahs.util.ScreenUtil;
@@ -27,7 +27,7 @@ import com.hsappdev.ahs.util.ScreenUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BulletinFragment extends Fragment implements CategoriesLoadedCallback, LoadableCallback {
+public class BulletinFragment extends Fragment implements CategoriesLoadedCallback, ArticleLoadableCallback {
     private static final String TAG = "BulletinFragment";
 
     private LinearLayout categoryLinearLayout;
@@ -255,7 +255,7 @@ public class BulletinFragment extends Fragment implements CategoriesLoadedCallba
     }
 
     @Override
-    public <T> void onLoaded(T articleN) {
+    public void onLoaded(Article articleN) {
         Article article = (Article) articleN;
         String articleId = article.getArticleID();
         boolean isArticleUpdate = false;
@@ -268,13 +268,10 @@ public class BulletinFragment extends Fragment implements CategoriesLoadedCallba
         if(!isArticleUpdate) {
             articleList.add(article);
         }
-        //Log.d(TAG, "onArticleLoaded: start list");
-        for (Article a :
-                articleList) {
-            //Log.d(TAG, "onArticleLoaded: " + a.getTitle());
-        }
+
         updateView();
     }
+
 
     @Override
     public boolean isActivityDestroyed() {

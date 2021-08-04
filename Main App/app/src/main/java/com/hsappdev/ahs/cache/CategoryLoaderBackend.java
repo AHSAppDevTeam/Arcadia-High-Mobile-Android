@@ -3,9 +3,10 @@ package com.hsappdev.ahs.cache;
 import android.app.Application;
 import android.content.res.Resources;
 
+import com.hsappdev.ahs.dataTypes.Category;
 import com.hsappdev.ahs.localdb.CategoryRepository;
 
-public class CategoryLoaderBackend extends LoaderBackend<CategoryLoadableCache>{
+public class CategoryLoaderBackend extends LoaderBackend<CategoryLoadableCache, Category>{
 
     private static CategoryLoaderBackend categoryLoaderBackend;
     private CategoryRepository categoryRepository;
@@ -28,7 +29,7 @@ public class CategoryLoaderBackend extends LoaderBackend<CategoryLoadableCache>{
     }
 
     @Override
-    protected CategoryLoadableCache getLoadableCacheInstance(String articleID, Resources r, LoadableCallback callback) {
+    protected CategoryLoadableCache getLoadableCacheInstance(String articleID, Resources r, LoadableCallback<Category> callback) {
         return new CategoryLoadableCache(articleID, r, callback, categoryRepository);
     }
 }

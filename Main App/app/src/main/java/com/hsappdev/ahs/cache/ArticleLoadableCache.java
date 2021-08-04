@@ -1,7 +1,6 @@
 package com.hsappdev.ahs.cache;
 
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
@@ -18,10 +17,10 @@ import com.hsappdev.ahs.localdb.ArticleRepository;
 
 import java.util.ArrayList;
 
-public class ArticleLoadableCache extends LoadableCache<Article> implements LoadableCallback{
+public class ArticleLoadableCache extends LoadableCache<Article> implements LoadableCallback<Category> {
     private final ArticleRepository articleRepository;
     private static final String TAG = "ArticleLoadableCache";
-    public ArticleLoadableCache(String articleID, Resources r, LoadableCallback callback, ArticleRepository articleRepository) {
+    public ArticleLoadableCache(String articleID, Resources r, LoadableCallback<Article> callback, ArticleRepository articleRepository) {
         super(articleID, r);
         this.articleRepository = articleRepository;
         registerForCallback(callback); // Make sure to do this first before loading articles
@@ -100,8 +99,7 @@ public class ArticleLoadableCache extends LoadableCache<Article> implements Load
     }
 
     @Override
-    public <T> void onLoaded(T articleN) {
-        Category category = (Category) articleN;
+    public void onLoaded(Category category) {
         article.setCategoryDisplayName(category.getTitle());
         article.setCategoryDisplayColor(category.getColor());
         finalizeFirebaseLoad(); // MAKE SURE TO CALL THIS

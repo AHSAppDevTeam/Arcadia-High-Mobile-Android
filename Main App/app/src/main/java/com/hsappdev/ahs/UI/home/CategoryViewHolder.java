@@ -16,15 +16,20 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.hsappdev.ahs.OnItemClick;
 import com.hsappdev.ahs.R;
+import com.hsappdev.ahs.UI.bulletin.CategoryLoadedCallback;
 import com.hsappdev.ahs.cache.CategoryLoaderBackend;
 import com.hsappdev.ahs.cache.LoadableCallback;
+import com.hsappdev.ahs.cache.callbacks.ArticleLoadableCallback;
+import com.hsappdev.ahs.cache.callbacks.CategoryLoadableCallback;
+import com.hsappdev.ahs.dataTypes.Article;
 import com.hsappdev.ahs.dataTypes.Category;
+import com.hsappdev.ahs.localdb.SavedDatabase;
 import com.hsappdev.ahs.util.Helper;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CategoryViewHolder extends RecyclerView.ViewHolder implements LoadableCallback {
+public class CategoryViewHolder extends RecyclerView.ViewHolder implements CategoryLoadableCallback {
     private static final String TAG = "CategoryViewHolder";
 
     private final TextView sectionTitle;
@@ -164,8 +169,7 @@ public class CategoryViewHolder extends RecyclerView.ViewHolder implements Loada
     }
 
     @Override
-    public <T> void onLoaded(T article) {
-        Category category = (Category) article;
+    public void onLoaded(Category category) {
         smallArticleAdapter.clearAll();
         //Log.d(TAG, "onCategoryLoaded: size" + category.getCategoryID() + category.getArticleIds());
         articleSortingJunction(new ArrayList<>(category.getArticleIds()), category.getTitle(), smallArticleAdapter);

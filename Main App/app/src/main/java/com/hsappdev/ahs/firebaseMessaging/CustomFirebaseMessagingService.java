@@ -22,6 +22,7 @@ import com.hsappdev.ahs.NotificationActivity;
 import com.hsappdev.ahs.R;
 import com.hsappdev.ahs.cache.ArticleLoaderBackend;
 import com.hsappdev.ahs.cache.LoadableCallback;
+import com.hsappdev.ahs.cache.callbacks.ArticleLoadableCallback;
 import com.hsappdev.ahs.dataTypes.Article;
 import com.hsappdev.ahs.localdb.ArticleRepository;
 
@@ -45,11 +46,10 @@ public class CustomFirebaseMessagingService extends FirebaseMessagingService {
             Log.d(TAG, "Message data payload: " + remoteMessage.getData());
             Map<String, String> dataMap = remoteMessage.getData();
             String articleID = dataMap.get("articleID");
-            ArticleLoaderBackend.getInstance((Application) getApplicationContext()).getCacheObject(articleID, getResources(), new LoadableCallback() {
+            ArticleLoaderBackend.getInstance((Application) getApplicationContext()).getCacheObject(articleID, getResources(), new ArticleLoadableCallback() {
                 private boolean isFirstTime = false;
                 @Override
-                public <T> void onLoaded(T articleN) {
-                    Article article = (Article) articleN;
+                public void onLoaded(Article article) {
                     article.setIsNotification(1); // 1 == true
                     //articleRepository.add(article);
                     RemoteMessage.Notification notification = remoteMessage.getNotification();

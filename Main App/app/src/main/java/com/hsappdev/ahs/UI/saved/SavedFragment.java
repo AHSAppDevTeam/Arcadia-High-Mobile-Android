@@ -3,6 +3,7 @@ package com.hsappdev.ahs.UI.saved;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.util.Log;
@@ -94,13 +95,15 @@ public class SavedFragment extends Fragment {
             }
         });
         String[] items = new String[]{NEWEST, OLDEST};
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity().getApplicationContext(), R.layout.default_spinner_layout, items);
+        ArrayAdapter adapter = ArrayAdapter.createFromResource(getContext(), R.array.saved_pager_spinner_options, R.layout.default_spinner_layout);
+        adapter.setDropDownViewResource(R.layout.default_spinner_layout);
         sortBySpinner.setAdapter(adapter);
         sortBySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Log.d(TAG, "onItemSelected: " + position);
                 sortMode = position;
+                //((TextView) parent.getChildAt(0)).setTextColor(Color.BLUE);
                 savedRecyclerAdapter.onSortModeChanged(sortMode);
             }
 
@@ -110,7 +113,9 @@ public class SavedFragment extends Fragment {
             }
         });
 
-        int padding = (int) getResources().getDimension(R.dimen.padding);
+        //sortBySpinner.setSelection(0, true);
+
+        int padding = (int) getResources().getDimensionPixelSize(R.dimen.padding);
         savedRecyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
             @Override
             public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {

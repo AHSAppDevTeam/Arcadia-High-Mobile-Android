@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 
 import com.hsappdev.ahs.OnItemClick;
 import com.hsappdev.ahs.R;
+import com.hsappdev.ahs.dataTypes.Article;
 
 public class SmallArticleUnit extends MediumArticleUnit {
 
@@ -22,7 +23,7 @@ public class SmallArticleUnit extends MediumArticleUnit {
     }
 
     @Override
-    public <T> void onLoaded(T articleObj) {
+    public void onLoaded(Article articleObj) {
         super.onLoaded(articleObj);
         timeTextView = contentView.findViewById(R.id.medium_article_time);
         categoryTextView = contentView.findViewById(R.id.medium_article_category);

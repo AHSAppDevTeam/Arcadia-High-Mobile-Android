@@ -15,11 +15,12 @@ import com.hsappdev.ahs.OnItemClick;
 import com.hsappdev.ahs.R;
 import com.hsappdev.ahs.cache.ArticleLoaderBackend;
 import com.hsappdev.ahs.cache.LoadableCallback;
+import com.hsappdev.ahs.cache.callbacks.ArticleLoadableCallback;
 import com.hsappdev.ahs.dataTypes.Article;
 import com.hsappdev.ahs.util.ImageUtil;
 import com.hsappdev.ahs.util.ScreenUtil;
 
-public class CommunityArticleUnit extends CardView implements LoadableCallback {
+public class CommunityArticleUnit extends CardView implements ArticleLoadableCallback {
 
     final private View contentView;
     private Article article;
@@ -78,9 +79,8 @@ public class CommunityArticleUnit extends CardView implements LoadableCallback {
 
 
     @Override
-    public <T> void onLoaded(T articleN) {
-        this.article = (Article) articleN;
-
+    public  void onLoaded(Article articleN) {
+        this.article = articleN;
         title.setText(article.getTitle());
         ScreenUtil.setTimeToTextView(article.getTimestamp(), time);
         if(!isSmall) {

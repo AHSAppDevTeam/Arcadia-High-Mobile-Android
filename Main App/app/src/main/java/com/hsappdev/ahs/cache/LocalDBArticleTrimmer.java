@@ -7,14 +7,16 @@ import android.util.Log;
 import androidx.lifecycle.Observer;
 
 import com.hsappdev.ahs.R;
-import com.hsappdev.ahs.cache.deprecated.OnCategoryLoadedCallback;
+import com.hsappdev.ahs.cache.callbacks.CategoryListLoadableCallback;
+import com.hsappdev.ahs.cache.callbacks.CategoryLoadableCallback;
 import com.hsappdev.ahs.dataTypes.Article;
 import com.hsappdev.ahs.dataTypes.Category;
+import com.hsappdev.ahs.dataTypes.CategoryList;
 import com.hsappdev.ahs.localdb.ArticleRepository;
 
 import java.util.List;
 
-public class LocalDBArticleTrimmer implements Runnable, LoadableCallback {
+public class LocalDBArticleTrimmer implements Runnable, CategoryLoadableCallback {
     private static final String TAG = "LocalDBArticleTrimmer";
     private final Resources r;
     private final Application application;
@@ -38,8 +40,7 @@ public class LocalDBArticleTrimmer implements Runnable, LoadableCallback {
 
 
     @Override
-    public <T> void onLoaded(T article) {
-        Category category = (Category) article;
+    public void onLoaded(Category category) {
         List<String> articleIds = category.getArticleIds();
         articleRepository.getAllArticles().observeForever(new Observer<List<Article>>() {
             @Override

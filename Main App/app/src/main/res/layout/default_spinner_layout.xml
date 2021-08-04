@@ -2,7 +2,6 @@
 
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@android:id/text1"
-    style="?attr/spinnerDropDownItemStyle"
     android:gravity="center"
     android:singleLine="true"
     android:layout_width="match_parent"

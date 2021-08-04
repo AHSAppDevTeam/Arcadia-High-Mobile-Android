@@ -9,18 +9,16 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.hsappdev.ahs.R;
-import com.hsappdev.ahs.dataTypes.Category;
 import com.hsappdev.ahs.dataTypes.CategoryList;
 import com.hsappdev.ahs.db.DatabaseConstants;
 import com.hsappdev.ahs.localdb.CategoryListRepository;
-import com.hsappdev.ahs.localdb.CategoryRepository;
 
 import java.util.ArrayList;
 
 public class CategoryListLoadableCache extends LoadableCache<CategoryList> {
 
     private final CategoryListRepository categoryListRepository;
-    public CategoryListLoadableCache(String articleID, Resources r, LoadableCallback callback, CategoryListRepository categoryListRepository) {
+    public CategoryListLoadableCache(String articleID, Resources r, LoadableCallback<CategoryList> callback, CategoryListRepository categoryListRepository) {
         super(articleID, r);
         this.categoryListRepository = categoryListRepository;
         registerForCallback(callback); // Make sure to do this first before loading categories

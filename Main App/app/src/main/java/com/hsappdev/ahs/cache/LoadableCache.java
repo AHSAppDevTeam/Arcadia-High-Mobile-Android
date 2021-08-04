@@ -21,7 +21,7 @@ public abstract class LoadableCache<T extends LoadableType> {
     private static final String TAG = "LoadableCache";
 
     protected T article;
-    protected List<LoadableCallback> registeredCallbacks = new ArrayList<LoadableCallback>();
+    protected List<LoadableCallback<T>> registeredCallbacks = new ArrayList<>();
     protected final Resources r;
     protected final String articleID;
     protected ValueEventListener valueEventListener;
@@ -34,7 +34,7 @@ public abstract class LoadableCache<T extends LoadableType> {
         this.articleID = articleID;
     }
 
-    public LoadableCache(String articleID, Resources r, LoadableCallback callback) {
+    public LoadableCache(String articleID, Resources r, LoadableCallback<T> callback) {
         this(articleID, r);
         registerForCallback(callback); // Make sure to do this first before loading articles
         startDataBaseLoad();
@@ -52,9 +52,9 @@ public abstract class LoadableCache<T extends LoadableType> {
     }
 
 
-    public void registerForCallback(LoadableCallback newCallback) {
+    public void registerForCallback(LoadableCallback<T> newCallback) {
         boolean isAlreadyRegistered = false;
-        for(LoadableCallback callback : registeredCallbacks){
+        for(LoadableCallback<T> callback : registeredCallbacks){
             if(callback.equals(newCallback)){
                 isAlreadyRegistered = true;
             }
@@ -101,7 +101,7 @@ public abstract class LoadableCache<T extends LoadableType> {
     protected abstract T getArticleInstance();
 
     protected void finalizeFirebaseLoad() {
-        for(LoadableCallback callback : registeredCallbacks) {
+        for(LoadableCallback<T> callback : registeredCallbacks) {
             if (!callback.isActivityDestroyed()) {
                 callback.onLoaded(article);
             }
@@ -173,7 +173,7 @@ public abstract class LoadableCache<T extends LoadableType> {
 
                     Log.d(TAG, "onCategoryLoaded: " + articleN.toString());
 
-                    for (LoadableCallback callback : registeredCallbacks) {
+                    for (LoadableCallback<T> callback : registeredCallbacks) {
                         if (!callback.isActivityDestroyed()) {
                             callback.onLoaded(articleN);
                         }

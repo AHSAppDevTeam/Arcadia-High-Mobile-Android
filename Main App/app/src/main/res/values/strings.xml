@@ -86,4 +86,10 @@
     <string name="notifications_settings_header">Notification Settings</string>
     <string name="calendar_section_title"><b>Your</b> Schedule</string>
 
+    <array name="saved_pager_spinner_options">
+        <item>Newest</item>
+        <item>Oldest</item>
+
+    </array>
+
 </resources>

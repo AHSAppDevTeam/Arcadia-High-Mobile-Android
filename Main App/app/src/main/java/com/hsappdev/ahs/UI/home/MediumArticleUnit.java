@@ -15,11 +15,12 @@ import com.hsappdev.ahs.OnItemClick;
 import com.hsappdev.ahs.R;
 import com.hsappdev.ahs.cache.ArticleLoaderBackend;
 import com.hsappdev.ahs.cache.LoadableCallback;
+import com.hsappdev.ahs.cache.callbacks.ArticleLoadableCallback;
 import com.hsappdev.ahs.dataTypes.Article;
 import com.hsappdev.ahs.util.ImageUtil;
 import com.hsappdev.ahs.util.ScreenUtil;
 
-public class MediumArticleUnit extends ConstraintLayout implements LoadableCallback {
+public class MediumArticleUnit extends ConstraintLayout implements ArticleLoadableCallback {
     protected Article article;
     final private ConstraintLayout articleLayout;
     final private ImageView articleImage;
@@ -95,10 +96,10 @@ public class MediumArticleUnit extends ConstraintLayout implements LoadableCallb
 //    }
 
     @Override
-    public <T> void onLoaded(T articleObj) {
+    public void onLoaded(Article articleN) {
 
-        Log.d(TAG, "onLoaded: 1234" + articleObj.toString());
-        this.article = (Article) articleObj;
+        Log.d(TAG, "onLoaded: 1234" + articleN.toString());
+        this.article = articleN;
 
         titleTextView.setText(article.getTitle());
         ScreenUtil.setTimeToTextView(article.getTimestamp(), timeTextView);

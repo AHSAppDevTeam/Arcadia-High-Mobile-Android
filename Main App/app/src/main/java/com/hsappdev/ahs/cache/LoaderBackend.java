@@ -4,11 +4,9 @@ import android.app.Application;
 import android.content.res.Resources;
 import android.util.Log;
 
-import com.hsappdev.ahs.localdb.ArticleRepository;
-
 import java.util.HashMap;
 
-public abstract class LoaderBackend<T extends LoadableCache> {
+public abstract class LoaderBackend<T extends LoadableCache<A>, A extends LoadableType> {
 
     protected static final String TAG = "LoaderBackend";
 
@@ -22,7 +20,7 @@ public abstract class LoaderBackend<T extends LoadableCache> {
 
     protected abstract void init();
 
-    public void getCacheObject(String articleID, Resources r, LoadableCallback callback) {
+    public void getCacheObject(String articleID, Resources r, LoadableCallback<A> callback) {
         Log.d(TAG, "getArticle: ask to load");
         // search the cache for the id
         T article = articleCache.get(articleID);
@@ -40,5 +38,5 @@ public abstract class LoaderBackend<T extends LoadableCache> {
 
     }
 
-    protected abstract T getLoadableCacheInstance(String articleID, Resources r, LoadableCallback callback);
+    protected abstract T getLoadableCacheInstance(String articleID, Resources r, LoadableCallback<A> callback);
 }

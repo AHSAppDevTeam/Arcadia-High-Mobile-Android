@@ -18,12 +18,14 @@ import com.hsappdev.ahs.OnItemClick;
 import com.hsappdev.ahs.R;
 import com.hsappdev.ahs.cache.CategoryLoaderBackend;
 import com.hsappdev.ahs.cache.LoadableCallback;
+import com.hsappdev.ahs.cache.callbacks.ArticleLoadableCallback;
+import com.hsappdev.ahs.cache.callbacks.CategoryLoadableCallback;
 import com.hsappdev.ahs.dataTypes.Category;
 import com.hsappdev.ahs.util.Helper;
 
 import java.util.ArrayList;
 
-public class FeaturedViewHolder extends RecyclerView.ViewHolder implements LoadableCallback {
+public class FeaturedViewHolder extends RecyclerView.ViewHolder implements CategoryLoadableCallback {
     private final TextView sectionTitle;
     private final ViewPager2 featuredPager;
     private final TabLayout featuredTabLayout;
@@ -95,8 +97,7 @@ public class FeaturedViewHolder extends RecyclerView.ViewHolder implements Loada
 //    }
 
     @Override
-    public <T> void onLoaded(T article) {
-        Category category = (Category) article;
+    public void onLoaded(Category category) {
         featuredArticleAdapter.clearAll();
         /*
          * Structure

@@ -19,7 +19,7 @@ import java.util.List;
 
 public class CategoryLoadableCache extends LoadableCache<Category> {
     private final CategoryRepository categoryRepository;
-    public CategoryLoadableCache(String articleID, Resources r, LoadableCallback callback, CategoryRepository categoryRepository) {
+    public CategoryLoadableCache(String articleID, Resources r, LoadableCallback<Category> callback, CategoryRepository categoryRepository) {
         super(articleID, r);
         this.categoryRepository = categoryRepository;
         registerForCallback(callback); // Make sure to do this first before loading categories

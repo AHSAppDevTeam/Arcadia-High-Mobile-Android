@@ -15,18 +15,14 @@ import android.view.ViewGroup;
 
 import com.hsappdev.ahs.OnItemClick;
 import com.hsappdev.ahs.R;
-import com.hsappdev.ahs.cache.ArticleCategoryIdLoader;
 import com.hsappdev.ahs.cache.CategoryListLoaderBackend;
 import com.hsappdev.ahs.cache.LoadableCallback;
-import com.hsappdev.ahs.cache.deprecated.OnCategoryListLoadedCallback;
-import com.hsappdev.ahs.dataTypes.Category;
+import com.hsappdev.ahs.cache.callbacks.CategoryListLoadableCallback;
 import com.hsappdev.ahs.dataTypes.CategoryList;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
-public class HomeNewsFragment extends Fragment implements LoadableCallback {
+public class HomeNewsFragment extends Fragment implements CategoryListLoadableCallback {
     private static final String TAG = "HomeNewsFragment";
 
     private OnItemClick onArticleClick;
@@ -74,8 +70,7 @@ public class HomeNewsFragment extends Fragment implements LoadableCallback {
     }
 
     @Override
-    public <T> void onLoaded(T article) {
-        CategoryList categoryList = (CategoryList) article;
+    public void onLoaded(CategoryList categoryList) {
         adapter.clearAll();
         adapter.addCategoryIDs(categoryList.getCategoryList());
 

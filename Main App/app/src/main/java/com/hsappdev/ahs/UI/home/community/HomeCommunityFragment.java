@@ -13,24 +13,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.hsappdev.ahs.R;
 import com.hsappdev.ahs.UI.home.OnSectionClicked;
-import com.hsappdev.ahs.UI.home.community.CommunityRecyclerAdapter;
 import com.hsappdev.ahs.cache.CategoryListLoaderBackend;
 import com.hsappdev.ahs.cache.LoadableCallback;
+import com.hsappdev.ahs.cache.callbacks.CategoryListLoadableCallback;
 import com.hsappdev.ahs.dataTypes.CategoryList;
-import com.hsappdev.ahs.db.DatabaseConstants;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class HomeCommunityFragment extends Fragment implements LoadableCallback {
+public class HomeCommunityFragment extends Fragment implements CategoryListLoadableCallback {
 
     private static final String TAG = "HomeCommunityFragment";
 
@@ -82,8 +72,7 @@ public class HomeCommunityFragment extends Fragment implements LoadableCallback 
     }
 
     @Override
-    public <T> void onLoaded(T article) {
-        CategoryList categoryList = (CategoryList) article;
+    public void onLoaded(CategoryList categoryList) {
         communityRecyclerAdapter.clearAll();
         communityRecyclerAdapter.addCommunitySections(categoryList.getCategoryList());
     }
