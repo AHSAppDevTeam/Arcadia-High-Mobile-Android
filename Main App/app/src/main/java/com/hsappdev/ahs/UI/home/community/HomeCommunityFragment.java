@@ -1,5 +1,6 @@
 package com.hsappdev.ahs.UI.home.community;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -34,7 +35,7 @@ public class HomeCommunityFragment extends Fragment implements CategoryListLoada
 
     }
 
-
+    private Activity hostActivity;
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
@@ -43,6 +44,7 @@ public class HomeCommunityFragment extends Fragment implements CategoryListLoada
         } catch (ClassCastException e) {
             throw new ClassCastException();
         }
+        hostActivity = (Activity) context;
     }
 
     @Override
@@ -79,6 +81,6 @@ public class HomeCommunityFragment extends Fragment implements CategoryListLoada
 
     @Override
     public boolean isActivityDestroyed() {
-        return getActivity().isDestroyed();
+        return hostActivity.isDestroyed();
     }
 }

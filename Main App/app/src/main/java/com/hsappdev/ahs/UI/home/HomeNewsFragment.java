@@ -1,5 +1,6 @@
 package com.hsappdev.ahs.UI.home;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -16,7 +17,6 @@ import android.view.ViewGroup;
 import com.hsappdev.ahs.OnItemClick;
 import com.hsappdev.ahs.R;
 import com.hsappdev.ahs.cache.CategoryListLoaderBackend;
-import com.hsappdev.ahs.cache.LoadableCallback;
 import com.hsappdev.ahs.cache.callbacks.CategoryListLoadableCallback;
 import com.hsappdev.ahs.dataTypes.CategoryList;
 
@@ -33,6 +33,7 @@ public class HomeNewsFragment extends Fragment implements CategoryListLoadableCa
         // Required empty public constructor
     }
 
+    private Activity hostActivity;
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
@@ -41,6 +42,7 @@ public class HomeNewsFragment extends Fragment implements CategoryListLoadableCa
         } catch (ClassCastException e) {
             throw new ClassCastException();
         }
+        hostActivity = (Activity) context;
     }
 
  //MainActivity -> HomeFragment (home page) ->
@@ -78,6 +80,6 @@ public class HomeNewsFragment extends Fragment implements CategoryListLoadableCa
 
     @Override
     public boolean isActivityDestroyed() {
-        return getActivity().isDestroyed();
+        return hostActivity.isDestroyed();
     }
 }
