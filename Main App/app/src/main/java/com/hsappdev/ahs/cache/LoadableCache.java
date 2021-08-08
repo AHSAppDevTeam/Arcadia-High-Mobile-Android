@@ -163,6 +163,7 @@ public abstract class LoadableCache<T extends LoadableType> {
         liveData.observeForever(new Observer<T>() {
             @Override
             public void onChanged(T articleN) {
+                Log.d(ArticleLoadableCache.TAG, "local database load:: " + articleID);
                 if(articleN != null) {
                     isInDatabase = true;
                     if(hasFirebaseLoadFinished){

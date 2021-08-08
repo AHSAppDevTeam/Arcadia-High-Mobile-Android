@@ -1,8 +1,8 @@
-package com.hsappdev.ahs.cache;
+package com.hsappdev.ahs.cache_new;
 
 import android.content.res.Resources;
-import android.util.Log;
 
+import androidx.core.content.res.ResourcesCompat;
 import androidx.lifecycle.LiveData;
 
 import com.google.firebase.FirebaseApp;
@@ -11,61 +11,37 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.hsappdev.ahs.R;
 import com.hsappdev.ahs.dataTypes.Article;
-import com.hsappdev.ahs.dataTypes.Category;
 import com.hsappdev.ahs.db.DatabaseConstants;
 import com.hsappdev.ahs.localdb.ArticleRepository;
 
 import java.util.ArrayList;
 
-public class ArticleLoadableCache extends LoadableCache<Article> implements LoadableCallback<Category> {
-    private final ArticleRepository articleRepository;
-    public static final String TAG = "ArticleLoadableCache";
-    public ArticleLoadableCache(String articleID, Resources r, LoadableCallback<Article> callback, ArticleRepository articleRepository) {
-        super(articleID, r);
-        this.articleRepository = articleRepository;
-        registerForCallback(callback); // Make sure to do this first before loading articles
-        Log.d(TAG, "start load:: " + articleID);
-        startDataBaseLoad();
-        startFirebaseLoad();
-    }
+public class ArticleLoaderBackEnd extends DataLoaderBackEnd<Article>{
+    private Resources r;
+    private ArticleRepository repository;
 
-
-    @Override
-    protected LiveData<Article> getDatabaseLiveDataRef() {
-        Log.d(TAG, "init2: " + articleRepository);
-
-        return articleRepository.getArticle(articleID);
+    public ArticleLoaderBackEnd(String dataID, Resources resources, ArticleRepository repository) {
+        super(dataID);
+        this.r = resources;
+        this.repository = repository;
+        startDatabaseLoad();
     }
 
     @Override
-    protected DatabaseReference getFirebaseRef() {
+    protected LiveData<Article> getLocalData(String dataID) {
+        return repository.getArticle(dataID);
+    }
+
+    @Override
+    protected DatabaseReference getFirebaseRef(String dataID) {
         DatabaseReference ref = FirebaseDatabase.getInstance(FirebaseApp.getInstance(DatabaseConstants.FIREBASE_REALTIME_DB)).getReference()
                 .child(r.getString(R.string.db_articles))
-                .child(articleID);
+                .child(dataID);
         return ref;
     }
 
-
     @Override
-    protected Article getArticleInstance() {
-        return new Article();
-    }
-
-    @Override
-    protected void addCacheToDatabase() {
-        articleRepository.add(article);
-    }
-
-    @Override
-    protected boolean postFirebaseLoad() {
-        // For Finding The Correct Color and Title for Featured Articles
-        CategoryLoaderBackend.getInstance(articleRepository.getApplication()).getCacheObject(article.getCategoryID(), r, this);
-        return true;
-    }
-
-    @Override
-    protected void extractFirebaseValuesAndSetToObject(DataSnapshot snapshot) {
-        Log.d(TAG, "firebase loaded:: " + articleID);
+    protected Article getData_fromDataSnapshot(DataSnapshot snapshot, String dataID) {
         String author = snapshot.child(r.getString(R.string.db_articles_author)).getValue(String.class);
         String title = snapshot.child(r.getString(R.string.db_articles_title)).getValue(String.class);
         String body = snapshot.child(r.getString(R.string.db_articles_body)).getValue(String.class);
@@ -81,7 +57,9 @@ public class ArticleLoadableCache extends LoadableCache<Article> implements Load
         boolean featured = true;
 
         long timestamp = snapshot.child(r.getString(R.string.db_articles_timestamp)).getValue(long.class);
-        article.setArticleID(articleID);
+
+        Article article = new Article();
+        article.setArticleID(dataID);
         article.setAuthor(author);
         article.setTitle(title);
         article.setBody(body);
@@ -90,25 +68,25 @@ public class ArticleLoadableCache extends LoadableCache<Article> implements Load
         article.setVideoURLs(videoURLs.toArray(new String[0]));
         article.setFeatured(featured);
         article.setTimestamp(timestamp);
-
+        return article;
     }
 
     @Override
-    protected void updateArticleWithAdditionalDatabaseData(Article newArticle) {
-        article.setIsViewed(newArticle.getIsViewed());
-        article.setIsSaved(newArticle.getIsSaved());
-        article.setIsNotification(newArticle.getIsNotification());
+    protected void updateFirebaseData_withLocalData(Article firebaseData, Article localData) {
+        firebaseData.setIsViewed(localData.getIsViewed());
+        firebaseData.setIsSaved(localData.getIsSaved());
+        firebaseData.setIsNotification(localData.getIsNotification());
     }
 
     @Override
-    public void onLoaded(Category category) {
-        article.setCategoryDisplayName(category.getTitle());
-        article.setCategoryDisplayColor(category.getColor());
-        finalizeFirebaseLoad(); // MAKE SURE TO CALL THIS
+    protected void updateFirebaseData_withDefaultLocalAttrs(Article firebaseData) {
+        firebaseData.setIsViewed(0);
+        firebaseData.setIsSaved(0);
+        firebaseData.setIsNotification(0);
     }
 
     @Override
-    public boolean isActivityDestroyed() {
-        return false;
+    protected void updateLocalDatabase(Article data) {
+        repository.add(data);
     }
 }

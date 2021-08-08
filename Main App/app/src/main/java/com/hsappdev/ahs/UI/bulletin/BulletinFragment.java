@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SortedList;
@@ -20,8 +21,11 @@ import com.hsappdev.ahs.OnItemClick;
 import com.hsappdev.ahs.R;
 import com.hsappdev.ahs.cache.ArticleLoaderBackend;
 import com.hsappdev.ahs.cache.callbacks.ArticleLoadableCallback;
+import com.hsappdev.ahs.cache_new.ArticleLoaderBackEnd;
+import com.hsappdev.ahs.cache_new.DataLoaderBackEnd;
 import com.hsappdev.ahs.dataTypes.Article;
 import com.hsappdev.ahs.dataTypes.Category;
+import com.hsappdev.ahs.localdb.ArticleRepository;
 import com.hsappdev.ahs.util.ScreenUtil;
 
 import java.util.ArrayList;
@@ -76,20 +80,12 @@ public class BulletinFragment extends Fragment implements CategoriesLoadedCallba
 
     private void addPadding() {
         int padding = (int) getResources().getDimension(R.dimen.padding);
-        recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
-            @Override
-            public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
-                super.getItemOffsets(outRect, view, parent, state);
-                outRect.right = padding;
-                outRect.left = padding;
-                if(parent.getChildAdapterPosition(view) == 0){
-                    outRect.top = padding;
-                }
-                outRect.bottom = padding;
+        addPadding(recyclerView, padding);
+        addPadding(comingUpRecyclerView, padding);
+    }
 
-            }
-        });
-        comingUpRecyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
+    private void addPadding(RecyclerView recyclerView, int padding) {
+        recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
             @Override
             public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
                 super.getItemOffsets(outRect, view, parent, state);
@@ -144,10 +140,31 @@ public class BulletinFragment extends Fragment implements CategoriesLoadedCallba
             }
             if(!isArticleUpdate){ // Only set an article loader if it is not set before
                 //Log.d(TAG, "registerCategory: loadedArticle "+ categoryState.getArticleIds().get(i));
-                ArticleLoaderBackend.getInstance(getActivity().getApplication()).getCacheObject(
+                ArticleLoaderBackEnd loader = new ArticleLoaderBackEnd(categoryState.getArticleIds().get(i),
+                        getResources(),new ArticleRepository(getActivity().getApplication()));
+                loader.getLiveData().observe(getViewLifecycleOwner(), new Observer<DataLoaderBackEnd.DataWithSource<Article>>() {
+                    @Override
+                    public void onChanged(DataLoaderBackEnd.DataWithSource<Article> articleDataWithSource) {
+                        Article article = articleDataWithSource.getData();
+                        String articleId = article.getArticleID();
+                        boolean isArticleUpdate = false;
+                        for (int j = 0; j < articleList.size(); j++) {
+                            if(articleList.get(j).getArticleID().equals(articleId)){
+                                isArticleUpdate = true;
+                                articleList.set(j, article);
+                            }
+                        }
+                        if(!isArticleUpdate) {
+                            articleList.add(article);
+                        }
+
+                        updateView();
+                    }
+                });
+                /*ArticleLoaderBackend.getInstance(getActivity().getApplication()).getCacheObject(
                         categoryState.getArticleIds().get(i),
                         getResources(),
-                        this);
+                        this);*/
             }
         }
 

@@ -9,14 +9,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.lifecycle.Observer;
 
 import com.hsappdev.ahs.OnItemClick;
 import com.hsappdev.ahs.R;
 import com.hsappdev.ahs.cache.ArticleLoaderBackend;
 import com.hsappdev.ahs.cache.LoadableCallback;
 import com.hsappdev.ahs.cache.callbacks.ArticleLoadableCallback;
+import com.hsappdev.ahs.cache_new.ArticleLoaderBackEnd;
+import com.hsappdev.ahs.cache_new.DataLoaderBackEnd;
 import com.hsappdev.ahs.dataTypes.Article;
+import com.hsappdev.ahs.localdb.ArticleRepository;
 import com.hsappdev.ahs.util.ImageUtil;
 import com.hsappdev.ahs.util.ScreenUtil;
 
@@ -31,9 +36,9 @@ public class LargeArticleUnit implements View.OnClickListener, ArticleLoadableCa
     final private TextView categoryTextView;
     final private ImageView indicatorImageView;
     private OnItemClick onArticleClick;
-    final private Activity activity;
+    final private AppCompatActivity activity;
 
-    public LargeArticleUnit(@NonNull View itemView, OnItemClick onArticleClick, Activity activity) {
+    public LargeArticleUnit(@NonNull View itemView, OnItemClick onArticleClick, AppCompatActivity activity) {
         this.r = itemView.getResources();
         this.articleLayout = itemView.findViewById(R.id.home_news_constraintLayout);
         this.articleImage = itemView.findViewById(R.id.featured_article_image);
@@ -48,7 +53,27 @@ public class LargeArticleUnit implements View.OnClickListener, ArticleLoadableCa
 
     public void setDetails(String articleID){
         articleLayout.setOnClickListener(this);
-        ArticleLoaderBackend.getInstance(activity.getApplication()).getCacheObject(articleID, r, this);
+        ArticleLoaderBackEnd loader = new ArticleLoaderBackEnd(articleID,
+                r,new ArticleRepository(activity.getApplication()));
+        loader.getLiveData().observe(activity, new Observer<DataLoaderBackEnd.DataWithSource<Article>>() {
+            @Override
+            public void onChanged(DataLoaderBackEnd.DataWithSource<Article> articleDataWithSource) {
+                article = articleDataWithSource.getData();
+                titleTextView.setText(article.getTitle());
+                if(article.getImageURLs().length != 0) { // When there are at least one article, show first image
+                    ImageUtil.setImageToView(article.getImageURLs()[0], articleImage);
+                } else if(article.getVideoURLs().length != 0){
+                    ImageUtil.setImageToSmallView(ImageUtil.getYoutubeThumbnail(article.getVideoURLs()[0]), articleImage);
+                }
+
+                ScreenUtil.setTimeToTextView(article.getTimestamp(), timeTextView);
+
+                categoryTextView.setText(article.getCategoryDisplayName());
+                categoryTextView.setTextColor(article.getCategoryDisplayColor());
+                indicatorImageView.setColorFilter(article.getCategoryDisplayColor(), PorterDuff.Mode.SRC_OVER);
+            }
+        });
+        /*ArticleLoaderBackend.getInstance(activity.getApplication()).getCacheObject(articleID, r, this);*/
     }
 
 
