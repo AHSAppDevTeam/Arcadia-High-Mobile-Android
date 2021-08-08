@@ -7,7 +7,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -20,10 +19,7 @@ import com.hsappdev.ahs.UI.home.OnSectionClicked;
 import com.hsappdev.ahs.cache.CategoryListLoaderBackend;
 import com.hsappdev.ahs.cache.LoadableCallback;
 import com.hsappdev.ahs.cache.callbacks.CategoryListLoadableCallback;
-import com.hsappdev.ahs.cache_new.CategoryListLoaderBackEnd;
-import com.hsappdev.ahs.cache_new.DataLoaderBackEnd;
 import com.hsappdev.ahs.dataTypes.CategoryList;
-import com.hsappdev.ahs.localdb.CategoryListRepository;
 
 public class HomeCommunityFragment extends Fragment implements CategoryListLoadableCallback {
 
@@ -71,21 +67,9 @@ public class HomeCommunityFragment extends Fragment implements CategoryListLoada
 
         this.contentView = view;
 
-        CategoryListLoaderBackEnd loader = new CategoryListLoaderBackEnd(
-                r.getString(R.string.db_location_community),
-                r,
-                new CategoryListRepository(getActivity().getApplication()));
-        loader.getLiveData().observe(getViewLifecycleOwner(), new Observer<DataLoaderBackEnd.DataWithSource<CategoryList>>() {
-            @Override
-            public void onChanged(DataLoaderBackEnd.DataWithSource<CategoryList> categoryListDataWithSource) {
-                CategoryList categoryList = categoryListDataWithSource.getData();
-                communityRecyclerAdapter.clearAll();
-                communityRecyclerAdapter.addCommunitySections(categoryList.getCategoryList());
-            }
-        });
-        /*CategoryListLoaderBackend
+        CategoryListLoaderBackend
         .getInstance(getActivity().getApplication())
-        .getCacheObject(r.getString(R.string.db_location_community), r, this);*/
+        .getCacheObject(r.getString(R.string.db_location_community), r, this);
         return view;
     }
 

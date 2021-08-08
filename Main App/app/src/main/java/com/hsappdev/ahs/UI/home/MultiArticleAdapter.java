@@ -5,7 +5,6 @@ import android.content.res.Resources;
 import android.view.View;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.hsappdev.ahs.OnItemClick;
@@ -21,11 +20,11 @@ import java.util.List;
 public abstract class MultiArticleAdapter<T extends MultiArticleAdapter.MultiArticleViewHolder> extends RecyclerView.Adapter<T> {
     protected List<String> articleIds;
     protected OnItemClick onArticleClick;
-    protected AppCompatActivity activity;
+    protected Activity activity;
 
     public static final int numArticles = 2;
 
-    public MultiArticleAdapter(List<String> articleIds, OnItemClick onArticleClick, AppCompatActivity activity) {
+    public MultiArticleAdapter(List<String> articleIds, OnItemClick onArticleClick, Activity activity) {
         this.articleIds = articleIds;
         this.onArticleClick = onArticleClick;
         this.activity = activity;

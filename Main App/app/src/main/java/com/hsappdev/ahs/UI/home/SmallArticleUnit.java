@@ -7,7 +7,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.hsappdev.ahs.OnItemClick;
 import com.hsappdev.ahs.R;
@@ -19,7 +18,7 @@ public class SmallArticleUnit extends MediumArticleUnit {
     private TextView categoryTextView;
     private ImageView indicatorImageView;
 
-    public SmallArticleUnit(@NonNull Context context, String articleId, OnItemClick onItemClick, AppCompatActivity activity) {
+    public SmallArticleUnit(@NonNull Context context, String articleId, OnItemClick onItemClick, Activity activity) {
         super(context, articleId, onItemClick, R.layout.home_news_small_article, activity);
     }
 

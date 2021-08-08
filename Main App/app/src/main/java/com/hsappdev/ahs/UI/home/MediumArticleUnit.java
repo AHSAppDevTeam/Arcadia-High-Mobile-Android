@@ -3,26 +3,20 @@ package com.hsappdev.ahs.UI.home;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
-import android.graphics.PorterDuff;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.lifecycle.Observer;
 
 import com.hsappdev.ahs.OnItemClick;
 import com.hsappdev.ahs.R;
 import com.hsappdev.ahs.cache.ArticleLoaderBackend;
 import com.hsappdev.ahs.cache.LoadableCallback;
 import com.hsappdev.ahs.cache.callbacks.ArticleLoadableCallback;
-import com.hsappdev.ahs.cache_new.ArticleLoaderBackEnd;
-import com.hsappdev.ahs.cache_new.DataLoaderBackEnd;
 import com.hsappdev.ahs.dataTypes.Article;
-import com.hsappdev.ahs.localdb.ArticleRepository;
 import com.hsappdev.ahs.util.ImageUtil;
 import com.hsappdev.ahs.util.ScreenUtil;
 
@@ -34,13 +28,13 @@ public class MediumArticleUnit extends ConstraintLayout implements ArticleLoadab
     final private TextView titleTextView;
     final private TextView timeTextView;
     private OnItemClick onArticleClick;
-    final private AppCompatActivity activity;
+    final private Activity activity;
 
     final protected View contentView;
 
     private static final String TAG = "MediumArticleUnit";
 
-    public MediumArticleUnit(@NonNull Context context, String articleId, OnItemClick onItemClick, int layoutID, AppCompatActivity activity) {
+    public MediumArticleUnit(@NonNull Context context, String articleId, OnItemClick onItemClick, int layoutID, Activity activity) {
         super(context);
         // Inflate view
         View view = inflate(getContext(), layoutID, this);
@@ -75,30 +69,7 @@ public class MediumArticleUnit extends ConstraintLayout implements ArticleLoadab
 
     public void setDetails(String articleId) {
         //ArticleLoader.getInstance(activity.getApplication()).getArticle(articleId, r, this);
-        ArticleLoaderBackEnd loader = new ArticleLoaderBackEnd(articleId,
-                r,new ArticleRepository(activity.getApplication()));
-        loader.getLiveData().observe(activity, new Observer<DataLoaderBackEnd.DataWithSource<Article>>() {
-            @Override
-            public void onChanged(DataLoaderBackEnd.DataWithSource<Article> articleDataWithSource) {
-                article = articleDataWithSource.getData();
-                titleTextView.setText(article.getTitle());
-                ScreenUtil.setTimeToTextView(article.getTimestamp(), timeTextView);
-                if (article.getImageURLs().length != 0) {
-                    ImageUtil.setImageToSmallView(article.getImageURLs()[0], articleImage);
-                } else if (article.getVideoURLs().length != 0) {
-                    ImageUtil.setImageToSmallView(ImageUtil.getYoutubeThumbnail(article.getVideoURLs()[0]), articleImage);
-                }
-
-                contentView.setOnClickListener(new View.OnClickListener() {
-
-                    @Override
-                    public void onClick(View v) {
-                        onArticleClick.onArticleClicked(article);
-                    }
-                });
-            }
-        });
-        /*ArticleLoaderBackend.getInstance(activity.getApplication()).getCacheObject(articleId, r, this);*/
+        ArticleLoaderBackend.getInstance(activity.getApplication()).getCacheObject(articleId, r, this);
 
     }
 

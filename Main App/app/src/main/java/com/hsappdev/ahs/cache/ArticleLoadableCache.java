@@ -19,12 +19,11 @@ import java.util.ArrayList;
 
 public class ArticleLoadableCache extends LoadableCache<Article> implements LoadableCallback<Category> {
     private final ArticleRepository articleRepository;
-    public static final String TAG = "ArticleLoadableCache";
+    private static final String TAG = "ArticleLoadableCache";
     public ArticleLoadableCache(String articleID, Resources r, LoadableCallback<Article> callback, ArticleRepository articleRepository) {
         super(articleID, r);
         this.articleRepository = articleRepository;
         registerForCallback(callback); // Make sure to do this first before loading articles
-        Log.d(TAG, "start load:: " + articleID);
         startDataBaseLoad();
         startFirebaseLoad();
     }
@@ -65,7 +64,6 @@ public class ArticleLoadableCache extends LoadableCache<Article> implements Load
 
     @Override
     protected void extractFirebaseValuesAndSetToObject(DataSnapshot snapshot) {
-        Log.d(TAG, "firebase loaded:: " + articleID);
         String author = snapshot.child(r.getString(R.string.db_articles_author)).getValue(String.class);
         String title = snapshot.child(r.getString(R.string.db_articles_title)).getValue(String.class);
         String body = snapshot.child(r.getString(R.string.db_articles_body)).getValue(String.class);

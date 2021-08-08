@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.hsappdev.ahs.OnItemClick;
@@ -23,9 +22,9 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     private ArrayList<String> categoryIDs;
     private OnItemClick onArticleClick;
-    private final AppCompatActivity activity;
+    private final Activity activity;
 
-    public NewsRecyclerAdapter(ArrayList<String> categoryTitles, OnItemClick onArticleClick, AppCompatActivity activity) {
+    public NewsRecyclerAdapter(ArrayList<String> categoryTitles, OnItemClick onArticleClick, Activity activity) {
         this.categoryIDs = categoryTitles;
         this.onArticleClick = onArticleClick;
         this.activity = activity;

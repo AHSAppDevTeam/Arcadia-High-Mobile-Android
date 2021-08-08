@@ -9,19 +9,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
-import androidx.lifecycle.Observer;
 
 import com.hsappdev.ahs.OnItemClick;
 import com.hsappdev.ahs.R;
 import com.hsappdev.ahs.cache.ArticleLoaderBackend;
 import com.hsappdev.ahs.cache.LoadableCallback;
 import com.hsappdev.ahs.cache.callbacks.ArticleLoadableCallback;
-import com.hsappdev.ahs.cache_new.ArticleLoaderBackEnd;
-import com.hsappdev.ahs.cache_new.DataLoaderBackEnd;
 import com.hsappdev.ahs.dataTypes.Article;
-import com.hsappdev.ahs.localdb.ArticleRepository;
 import com.hsappdev.ahs.util.ImageUtil;
 import com.hsappdev.ahs.util.ScreenUtil;
 
@@ -35,12 +30,12 @@ public class CommunityArticleUnit extends CardView implements ArticleLoadableCal
     final private TextView time;
 
     final private ImageView image;
-    final private AppCompatActivity activity;
+    final private Activity activity;
     final Resources r;
 
     final boolean isSmall;
 
-    public CommunityArticleUnit(@NonNull Context context, String articleId, OnItemClick onArticleClick, AppCompatActivity activity, boolean isSmall) {
+    public CommunityArticleUnit(@NonNull Context context, String articleId, OnItemClick onArticleClick, Activity activity, boolean isSmall) {
         super(context);
 
         View view = inflate(context, R.layout.comunity_activity_article_unit, this);
@@ -77,26 +72,7 @@ public class CommunityArticleUnit extends CardView implements ArticleLoadableCal
     }
 
     private void setDetails(String articleId) {
-        ArticleLoaderBackEnd loader = new ArticleLoaderBackEnd(articleId,
-                getResources(),new ArticleRepository(activity.getApplication()));
-        loader.getLiveData().observe(activity, new Observer<DataLoaderBackEnd.DataWithSource<Article>>() {
-            @Override
-            public void onChanged(DataLoaderBackEnd.DataWithSource<Article> articleDataWithSource) {
-                article = articleDataWithSource.getData();
-                title.setText(article.getTitle());
-                ScreenUtil.setTimeToTextView(article.getTimestamp(), time);
-                if(!isSmall) {
-                    description.setVisibility(View.VISIBLE);
-                    ScreenUtil.setPlainHTMLStringToTextView(article.getBody(), description);
-                } else {
-                    description.setVisibility(View.GONE);
-                }
-                if(article.getImageURLs().length > 0) {
-                    ImageUtil.setImageToView(article.getImageURLs()[0], image);
-                }
-            }
-        });
-        /*ArticleLoaderBackend.getInstance(activity.getApplication()).getCacheObject(articleId, r, this);*/
+        ArticleLoaderBackend.getInstance(activity.getApplication()).getCacheObject(articleId, r, this);
     }
 
 
