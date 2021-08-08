@@ -49,7 +49,10 @@ dependencies {
     // Import the BoM for the Firebase platform
     implementation 'com.google.firebase:firebase-database:20.0.1'
     implementation 'com.google.firebase:firebase-messaging:22.0.0'
+    implementation 'com.google.firebase:firebase-crashlytics:18.2.0'
     implementation 'com.google.firebase:firebase-analytics:19.0.0'
+    apply plugin: 'com.google.firebase.crashlytics'
+
 
     // Room components
     implementation "androidx.room:room-runtime:$rootProject.roomVersion"
