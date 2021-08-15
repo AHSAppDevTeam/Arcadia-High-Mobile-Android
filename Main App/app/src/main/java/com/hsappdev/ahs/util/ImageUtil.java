@@ -26,9 +26,9 @@ public class ImageUtil {
         Glide
                 .with(imageView.getContext())
                 .load(imageUrl)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .centerCrop()
                 .error(R.drawable.img_frame_large)
-                .transition(DrawableTransitionOptions.withCrossFade())
                 .into(imageView);
 
     }

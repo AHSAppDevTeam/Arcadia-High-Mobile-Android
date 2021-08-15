@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationC
 
         NotificationSetup.setUp(getResources(), this);
 
-        // FIXME: REMOVE THIS WHEN DEPLOYING THE APP
+        // TODO: REMOVE THIS WHEN DEPLOYING THE APP
         if(BuildConfig.DEBUG) {
             NotificationSetup.subscribe(this, "Drafts");
         }

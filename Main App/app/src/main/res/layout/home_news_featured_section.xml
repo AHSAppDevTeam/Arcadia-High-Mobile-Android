@@ -16,15 +16,16 @@
         android:fontFamily="@font/heavybold_lightregular"
         android:text="@string/article_default_category"
         android:textColor="@color/brightRed"
-        android:textSize="24sp" />
+        android:textSize="24sp"
+        android:paddingStart="@dimen/padding_x.5"/>
 
     <androidx.viewpager2.widget.ViewPager2
 
         android:id="@+id/home_featured_carousel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingStart="@dimen/padding_x2"
-        android:paddingEnd="@dimen/padding_x2"
+        android:paddingStart="@dimen/padding"
+        android:paddingEnd="@dimen/padding"
         android:clipChildren="false"
         android:clipToPadding="false"/>
     <com.google.android.material.tabs.TabLayout

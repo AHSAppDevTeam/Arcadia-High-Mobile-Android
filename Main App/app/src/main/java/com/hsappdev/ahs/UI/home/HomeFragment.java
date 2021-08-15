@@ -170,6 +170,7 @@ public class HomeFragment extends Fragment {
         builder.setView(searchInterface.getView());
         dialog = builder.create();
         dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        dialog.getWindow().setGravity(Gravity.TOP);
 
     }
 
