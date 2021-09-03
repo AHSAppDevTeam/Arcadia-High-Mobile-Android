@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.Space;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -59,6 +60,12 @@ public class SmallArticleAdapter extends MultiArticleAdapter<SmallArticleAdapter
                 String articleId = articlesToAdd.get(i);
                 SmallArticleUnit smallArticleUnit =  new SmallArticleUnit(itemView.getContext(), articleId, onArticleClick, activity);
                 linearLayout.addView(smallArticleUnit);
+                if(i%2 ==0) {
+                    // add padding
+                    Space space = new Space(itemView.getContext());
+                    space.setMinimumHeight(r.getDimensionPixelSize(R.dimen.padding));
+                    linearLayout.addView(space);
+                }
             }
         }
 

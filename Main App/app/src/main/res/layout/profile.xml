@@ -36,38 +36,40 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+<!-- These buttons will be used in the next release -->
+<!--    <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:paddingTop="@dimen/padding"-->
+<!--        android:paddingBottom="@dimen/padding">-->
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="@dimen/padding"
-        android:paddingBottom="@dimen/padding">
+<!--        <com.hsappdev.ahs.UI.profile.IconButton-->
+<!--            android:id="@+id/iconButton"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:background="@drawable/profile_schedule_btn_bg"-->
+<!--            android:textAllCaps="false"-->
+<!--            android:textStyle="bold"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+<!--            custom:icon="@drawable/profile_schedule_ic"-->
+<!--            custom:text="Schedule"-->
+<!--            android:visibility="gone"/>-->
 
-        <com.hsappdev.ahs.UI.profile.IconButton
-            android:id="@+id/iconButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/profile_schedule_btn_bg"
-            android:textAllCaps="false"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            custom:icon="@drawable/profile_schedule_ic"
-            custom:text="Schedule" />
-
-        <com.hsappdev.ahs.UI.profile.IconButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/profile_payment_btn_bg"
-            android:textAllCaps="false"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            custom:icon="@drawable/profile_payment_ic"
-            custom:text="Payment" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+<!--        <com.hsappdev.ahs.UI.profile.IconButton-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:background="@drawable/profile_payment_btn_bg"-->
+<!--            android:textAllCaps="false"-->
+<!--            android:textStyle="bold"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+<!--            custom:icon="@drawable/profile_payment_ic"-->
+<!--            custom:text="Payment"-->
+<!--            android:visibility="gone"/>-->
+<!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
     <LinearLayout
         android:id="@+id/profile_calendar_btn"
         android:layout_width="match_parent"

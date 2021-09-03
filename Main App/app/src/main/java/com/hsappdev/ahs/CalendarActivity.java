@@ -42,4 +42,4 @@ public class CalendarActivity extends AppCompatActivity {
         calendarBackend = CalendarBackend.getInstance(findViewById(R.id.calendarView));
         calendarBackend.setUp();
     }
-}
+}//

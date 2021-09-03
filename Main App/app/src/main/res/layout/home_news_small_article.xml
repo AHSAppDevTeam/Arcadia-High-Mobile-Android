@@ -9,7 +9,6 @@
     app:layout_constraintTop_toTopOf="parent"
     android:foreground="?attr/selectableItemBackground"
     android:orientation="horizontal"
-    android:paddingVertical="@dimen/padding_x.5"
     >
 
     <com.google.android.material.imageview.ShapeableImageView
@@ -43,20 +42,21 @@
         android:id="@+id/medium_article_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/padding_x.75"
+        android:ellipsize="end"
         android:fontFamily="@font/sfprodisplay_bold"
         android:gravity="start"
-        android:text="@string/article_default_title"
         android:maxLines="2"
-        android:ellipsize="end"
+        android:paddingHorizontal="@dimen/padding_x.5"
+        android:text="@string/article_default_title"
         android:textAlignment="textStart"
         android:textColor="?attr/titleColor"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/medium_article_image"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:padding="@dimen/padding_x.5"

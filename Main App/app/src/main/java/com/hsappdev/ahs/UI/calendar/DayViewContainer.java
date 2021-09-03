@@ -66,11 +66,11 @@ public class DayViewContainer extends ViewContainer {
     private void setDateText(int day) {
         dayText.setText(Integer.toString(day));
         // TODO: TESTING
-        calendarBackend.loadWeekData(calendarBackend.getWeekIds().get(getWeekOfYear()), this);
+        calendarBackend.loadWeekData(calendarBackend.getWeekIds().get(getWeekOfYear()+1), this);
 
     }
     private int getWeekOfYear() {
-        WeekFields weekFields = WeekFields.of(Locale.US);
+        WeekFields weekFields = WeekFields.of(Locale.ENGLISH);
         return date.get(weekFields.weekOfWeekBasedYear());
     }
 
