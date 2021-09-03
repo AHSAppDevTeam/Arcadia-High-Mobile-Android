@@ -8,6 +8,7 @@ import android.view.View;
 import com.hsappdev.ahs.UI.calendar.DayViewContainer;
 import com.hsappdev.ahs.UI.calendar.MonthHeaderContainer;
 import com.hsappdev.ahs.UI.calendar.calendarBackend.CalendarBackend;
+import com.hsappdev.ahs.UI.calendar.newCalendar.CalendarBackendNew;
 import com.kizitonwose.calendarview.CalendarView;
 import com.kizitonwose.calendarview.model.CalendarDay;
 import com.kizitonwose.calendarview.model.CalendarMonth;
@@ -29,7 +30,7 @@ import java.util.Locale;
 
 public class CalendarActivity extends AppCompatActivity {
 
-    CalendarBackend calendarBackend;
+    CalendarBackendNew calendarBackend;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +40,6 @@ public class CalendarActivity extends AppCompatActivity {
     }
 
     private void setUpCustomCalendar() {
-        calendarBackend = CalendarBackend.getInstance(findViewById(R.id.calendarView));
-        calendarBackend.setUp();
+        calendarBackend = CalendarBackendNew.getInstance(findViewById(R.id.calendarView));
     }
 }//
