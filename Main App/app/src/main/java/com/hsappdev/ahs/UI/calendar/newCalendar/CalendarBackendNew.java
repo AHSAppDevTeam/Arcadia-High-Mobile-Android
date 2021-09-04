@@ -35,11 +35,13 @@ public class CalendarBackendNew {
 
     private static CalendarBackendNew calendarBackend;
     private final CalendarView calendarView;
+    private ScheduleRenderer scheduleRenderer;
+
 
     private HashMap<Integer, Week> weekIds = new HashMap<>();
 
-    public static CalendarBackendNew getInstance(CalendarView calendarView) {
-        calendarBackend = new CalendarBackendNew(calendarView); // new fresh instance
+    public static CalendarBackendNew getInstance(CalendarView calendarView, ScheduleRenderer scheduleRenderer) {
+        calendarBackend = new CalendarBackendNew(calendarView, scheduleRenderer); // new fresh instance
         return calendarBackend;
     }
 
@@ -47,8 +49,9 @@ public class CalendarBackendNew {
         return calendarBackend;
     }
 
-    private CalendarBackendNew(CalendarView calendarView) {
+    private CalendarBackendNew(CalendarView calendarView, ScheduleRenderer scheduleRenderer) {
         this.calendarView = calendarView;
+        this.scheduleRenderer = scheduleRenderer;
         setUpCalendarLibrary();
         setUp();
     }
@@ -125,7 +128,7 @@ public class CalendarBackendNew {
 
             @Override
             public void bind(@NotNull DayViewContainer viewContainer, @NotNull CalendarDay calendarDay) {
-                viewContainer.updateView(calendarDay);
+                viewContainer.updateView(calendarDay, scheduleRenderer);
             }
         });
         YearMonth currentMonth = YearMonth.now();

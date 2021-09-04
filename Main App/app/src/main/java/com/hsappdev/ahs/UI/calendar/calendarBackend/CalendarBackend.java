@@ -15,6 +15,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.hsappdev.ahs.R;
 import com.hsappdev.ahs.UI.calendar.DayViewContainer;
 import com.hsappdev.ahs.UI.calendar.MonthHeaderContainer;
+import com.hsappdev.ahs.UI.calendar.newCalendar.ScheduleRenderer;
 import com.hsappdev.ahs.db.DatabaseConstants;
 import com.kizitonwose.calendarview.CalendarView;
 import com.kizitonwose.calendarview.model.CalendarDay;
@@ -43,11 +44,14 @@ public class CalendarBackend {
     private List<String> weekIds = new ArrayList<>();
     private final Resources r;
 
+    private ScheduleRenderer scheduleRenderer;
+
+
     private static CalendarBackend calendarBackend;
 
-    public static CalendarBackend getInstance(CalendarView calendarView) {
+    public static CalendarBackend getInstance(CalendarView calendarView, ScheduleRenderer scheduleRenderer) {
         if(calendarBackend == null) {
-            calendarBackend = new CalendarBackend(calendarView);
+            calendarBackend = new CalendarBackend(calendarView, scheduleRenderer);
         }
         return calendarBackend;
     }
@@ -56,8 +60,9 @@ public class CalendarBackend {
         return calendarBackend;
     }
 
-    private CalendarBackend(CalendarView calendarView) {
+    private CalendarBackend(CalendarView calendarView, ScheduleRenderer scheduleRenderer) {
         this.calendarView = calendarView;
+        this.scheduleRenderer = scheduleRenderer;
         r = calendarView.getResources();
     }
 
