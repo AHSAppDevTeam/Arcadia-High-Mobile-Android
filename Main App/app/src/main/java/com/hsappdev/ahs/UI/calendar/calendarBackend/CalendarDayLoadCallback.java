@@ -1,7 +1,7 @@
 package com.hsappdev.ahs.UI.calendar.calendarBackend;
 
 public interface CalendarDayLoadCallback {
-    void onDataLoad(Day requestedDay);
+    void onCalendarDayLoad(Day requestedDay);
 
     int getRequestedDate();
 }

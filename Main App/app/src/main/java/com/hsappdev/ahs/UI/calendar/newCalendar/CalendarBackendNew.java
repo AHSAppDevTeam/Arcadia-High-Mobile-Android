@@ -13,7 +13,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hsappdev.ahs.UI.calendar.DayViewContainer;
 import com.hsappdev.ahs.UI.calendar.MonthHeaderContainer;
-import com.hsappdev.ahs.UI.calendar.calendarBackend.CalendarBackend;
 import com.hsappdev.ahs.UI.calendar.calendarBackend.CalendarDayLoadCallback;
 import com.hsappdev.ahs.UI.calendar.calendarBackend.Day;
 import com.hsappdev.ahs.UI.calendar.calendarBackend.Week;
@@ -28,9 +27,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.time.DayOfWeek;
 import java.time.YearMonth;
-import java.time.temporal.WeekFields;
 import java.util.HashMap;
-import java.util.Locale;
 
 public class CalendarBackendNew {
 
@@ -72,7 +69,7 @@ public class CalendarBackendNew {
             weekIds.get(weekNumber).getCallbacks().add(dayViewContainer);
         } else {
             // return the data
-            dayViewContainer.onDataLoad(requestedDate);
+            dayViewContainer.onCalendarDayLoad(requestedDate);
             Log.d(TAG, "registerForCallback: " + weekIds.get(weekNumber).getWeekId());
         }
     }

@@ -1,7 +1,5 @@
 package com.hsappdev.ahs.UI.calendar.calendarBackend;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 
 import com.google.firebase.FirebaseApp;
@@ -12,7 +10,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hsappdev.ahs.db.DatabaseConstants;
 
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -45,7 +42,7 @@ public class Week {
                     dayNum++;
                 }
                 for(CalendarDayLoadCallback callback : callbacks) {
-                    callback.onDataLoad(dayList.get(callback.getRequestedDate()));
+                    callback.onCalendarDayLoad(dayList.get(callback.getRequestedDate()));
                 }
                 // clear list
                 callbacks.clear();

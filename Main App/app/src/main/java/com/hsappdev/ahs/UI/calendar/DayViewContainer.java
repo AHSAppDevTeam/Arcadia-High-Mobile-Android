@@ -7,7 +7,9 @@ import android.widget.TextView;
 import com.hsappdev.ahs.R;
 import com.hsappdev.ahs.UI.calendar.calendarBackend.CalendarBackend;
 import com.hsappdev.ahs.UI.calendar.calendarBackend.CalendarDayLoadCallback;
+import com.hsappdev.ahs.UI.calendar.calendarBackend.CalendarScheduleLoadCallback;
 import com.hsappdev.ahs.UI.calendar.calendarBackend.Day;
+import com.hsappdev.ahs.UI.calendar.calendarBackend.Schedule;
 import com.hsappdev.ahs.UI.calendar.newCalendar.CalendarBackendNew;
 import com.kizitonwose.calendarview.model.CalendarDay;
 import com.kizitonwose.calendarview.ui.ViewContainer;
@@ -20,7 +22,7 @@ import java.time.temporal.IsoFields;
 import java.time.temporal.WeekFields;
 import java.util.Locale;
 
-public class DayViewContainer extends ViewContainer implements CalendarDayLoadCallback {
+public class DayViewContainer extends ViewContainer implements CalendarDayLoadCallback, CalendarScheduleLoadCallback {
 
     private static final String TAG = "DayViewContainer";
 
@@ -40,8 +42,9 @@ public class DayViewContainer extends ViewContainer implements CalendarDayLoadCa
     }
 
 
-    public void onDataLoad(Day requestedDate) {
+    public void onCalendarDayLoad(Day requestedDate) {
         dayText.setText(requestedDate.getScheduleId());
+        requestedDate.loadSchedule(this);
     }
 
     @Override
@@ -59,5 +62,10 @@ public class DayViewContainer extends ViewContainer implements CalendarDayLoadCa
 
     private int getDayOfWeek() {
         return date.getDayOfWeek().getValue();
+    }
+
+    @Override
+    public void onCalendarScheduleLoad(Schedule schedule) {
+        dayText.setText(schedule.getIconURL());
     }
 }
