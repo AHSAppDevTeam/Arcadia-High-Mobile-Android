@@ -14,7 +14,9 @@ import com.kizitonwose.calendarview.ui.ViewContainer;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.temporal.IsoFields;
 import java.time.temporal.WeekFields;
 import java.util.Locale;
 
@@ -50,9 +52,9 @@ public class DayViewContainer extends ViewContainer implements CalendarDayLoadCa
 
     // Helper
     private int getWeekOfYear() {
-        WeekFields weekFields = WeekFields.of(Locale.US);
-        Log.d(TAG, "getWeekOfYear: " + LocalDate.now().get(WeekFields.of(Locale.US).weekOfYear()));
-        return date.get(weekFields.weekOfWeekBasedYear())-1;
+        WeekFields weekFields = WeekFields.of(DayOfWeek.MONDAY, 4);
+        Log.d(TAG, "getWeekOfYear: " + LocalDate.now().get(IsoFields.WEEK_OF_WEEK_BASED_YEAR));
+        return date.get(IsoFields.WEEK_OF_WEEK_BASED_YEAR);
     }
 
     private int getDayOfWeek() {
