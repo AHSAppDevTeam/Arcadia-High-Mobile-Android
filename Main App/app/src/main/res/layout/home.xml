@@ -92,11 +92,11 @@
 
                 <com.hsappdev.ahs.UI.home.TextViewSelector
                     android:id="@+id/home_ausdNews_selector"
-                    android:elevation="@dimen/shadowElevation"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_weight="2"
                     android:background="@drawable/home_ausdnews_bg_active"
-                    app:backgroundInactive="@drawable/home_ausdnews_bg_inactive"
+                    android:elevation="@dimen/shadowElevation"
                     android:fontFamily="@font/sfprodisplay_regular"
                     android:foreground="@drawable/home_ripple_masked"
                     android:gravity="center"
@@ -106,12 +106,12 @@
                     android:paddingBottom="@dimen/padding_x.5"
                     android:text="@string/main_title"
                     android:textColor="@color/white"
-                    app:textColorInactive="@color/brightRed"
-                    app:selected="true"
                     android:textSize="16sp"
+                    app:backgroundInactive="@drawable/home_ausdnews_bg_inactive"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    android:layout_weight="2"/>
+                    app:selected="true"
+                    app:textColorInactive="@color/brightRed" />
 
                 <Space
                     android:layout_width="0dp"
