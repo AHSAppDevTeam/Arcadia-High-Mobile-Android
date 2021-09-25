@@ -3,28 +3,44 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:padding="@dimen/padding_x1.5"
+    android:paddingTop="@dimen/padding"
+    android:paddingHorizontal="@dimen/padding_x.5"
     >
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:elevation="@dimen/shadowElevation"
     android:background="@drawable/img_frame_large"
+    android:backgroundTint="?attr/bgColor"
+    android:clipToPadding="false"
 
     >
+
+    <TextView
+        android:id="@+id/schedule_period_bubble_text_header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/heavybold_lightregular"
+        android:padding="@dimen/padding_x.5"
+        android:text="Loading..."
+        android:textColor="?attr/titleColor"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/schedule_period_bubble_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Loading..."
+        android:fontFamily="@font/mediumbold_lightregular"
         android:padding="@dimen/padding_x.5"
+        android:text="Loading..."
         android:textColor="?attr/titleColor"
         android:textSize="18sp"
-        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

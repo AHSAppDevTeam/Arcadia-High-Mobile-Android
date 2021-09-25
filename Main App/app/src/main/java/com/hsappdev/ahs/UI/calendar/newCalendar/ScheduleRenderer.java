@@ -48,7 +48,9 @@ public class ScheduleRenderer {
         LayoutInflater layoutInflater = LayoutInflater.from(view.getContext());
         View bubble = layoutInflater.inflate(R.layout.schedule_period_bubble, null, false);
         TextView timestampText = bubble.findViewById(R.id.schedule_period_bubble_text);
-        timestampText.setText(String.format("Period %d %s to %s", periodNum, getDisplayTime(timestampStart), getDisplayTime(timestampEnd)));
+        TextView periodText = bubble.findViewById(R.id.schedule_period_bubble_text_header);
+        timestampText.setText(String.format("%s to %s", getDisplayTime(timestampStart), getDisplayTime(timestampEnd)));
+        periodText.setText(String.format("Period %d", periodNum));
         return bubble;
     }
 }

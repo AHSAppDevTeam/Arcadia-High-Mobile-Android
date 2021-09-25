@@ -37,7 +37,8 @@
         <activity android:name=".NotificationActivity" />
         <activity
             android:name=".ArticleActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize" />
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            />
         <activity android:name=".mediaPager.ImageViewActivity" />
         <activity android:name=".CommunityActivity" />
         <activity android:name=".MainActivity">
