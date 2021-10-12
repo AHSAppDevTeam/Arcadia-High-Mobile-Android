@@ -51,7 +51,7 @@ public class CustomFirebaseMessagingService extends FirebaseMessagingService {
                 @Override
                 public void onLoaded(Article article) {
                     article.setIsNotification(1); // 1 == true
-                    //articleRepository.add(article);
+                    articleRepository.add(article); // To save the notification
                     RemoteMessage.Notification notification = remoteMessage.getNotification();
                     sendNotification(notification.getTitle(),
                             notification.getBody(),

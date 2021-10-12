@@ -51,20 +51,25 @@ public class NotificationSetup {
     }
 
     public static void subscribe(Activity activity, String channel) {
-        subscribe(activity, Collections.singletonList(channel));
+        subscribe(activity, Collections.singletonList(channel), true);
     }
-    public static void subscribe(Activity activity, List<String> channels) {
+    public static void subscribe(Activity activity, List<String> channel) {
+        subscribe(activity, channel, false);
+    }
+    public static void subscribe(Activity activity, List<String> channels, boolean showConfirmation) {
         for(String channel : channels) {
             // Make sure channel is selected
             if(getIfChannelIsEnabled(channel, activity)) {
                 Log.d(TAG, "subscribe: " + channel);
                 FirebaseMessaging.getInstance().subscribeToTopic(channel)
                         .addOnCompleteListener(task -> {
-                            String msg = successMSG + channel;
-                            if (!task.isSuccessful()) {
-                                msg = failureMSG + channel;
+                            if(showConfirmation) {
+                                String msg = successMSG + channel;
+                                if (!task.isSuccessful()) {
+                                    msg = failureMSG + channel;
+                                }
+                                Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show();
                             }
-                            //Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show();
                         });
             }
         }
