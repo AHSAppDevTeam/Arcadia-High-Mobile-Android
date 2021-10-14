@@ -91,8 +91,7 @@ public class NotificationSetup {
 
     public static boolean getIfChannelIsEnabled(String channelName, Activity activity) {
         SharedPreferences sharedPref = activity.getPreferences(Context.MODE_PRIVATE);
-        boolean firstTime = sharedPref.getBoolean(channelPrefix.concat(channelName), true);
-        return firstTime;
+        return sharedPref.getBoolean(channelPrefix.concat(channelName), true);
     }
 
     public static void setIfChannelIsEnabled(String channelName, boolean value, Activity activity) {

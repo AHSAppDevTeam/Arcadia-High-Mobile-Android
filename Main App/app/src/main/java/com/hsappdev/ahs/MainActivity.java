@@ -59,6 +59,13 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationC
             FirebaseApp.initializeApp(getApplicationContext(), options, DatabaseConstants.FIREBASE_REALTIME_DB);
         }
 
+        if (getIntent().getExtras() != null) {
+            for (String key : getIntent().getExtras().keySet()) {
+                Object value = getIntent().getExtras().get(key);
+                Log.d(TAG, "Key: " + key + " Value: " + value);
+            }
+        }
+
         setContentView(R.layout.activity_main);
 
         navView = findViewById(R.id.nav_view);
