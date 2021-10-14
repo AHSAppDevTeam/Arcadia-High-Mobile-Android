@@ -6,6 +6,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
+import android.app.Application;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -18,10 +19,13 @@ import com.google.firebase.FirebaseOptions;
 import com.google.firebase.messaging.RemoteMessage;
 import com.hsappdev.ahs.UI.home.OnSectionClicked;
 import com.hsappdev.ahs.cache.ArticleCategoryIdLoader;
+import com.hsappdev.ahs.cache.ArticleLoaderBackend;
+import com.hsappdev.ahs.cache.callbacks.ArticleLoadableCallback;
 import com.hsappdev.ahs.dataTypes.Article;
 import com.hsappdev.ahs.dataTypes.CommunitySection;
 import com.hsappdev.ahs.firebaseMessaging.NotificationSetup;
 import com.hsappdev.ahs.db.DatabaseConstants;
+import com.hsappdev.ahs.localdb.ArticleRepository;
 
 import java.util.Arrays;
 
@@ -58,12 +62,24 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationC
         if(FirebaseApp.getApps(getApplicationContext()).size() == 1) {
             FirebaseApp.initializeApp(getApplicationContext(), options, DatabaseConstants.FIREBASE_REALTIME_DB);
         }
-
+        ArticleRepository articleRepository = new ArticleRepository(this.getApplication());
         if (getIntent().getExtras() != null) {
-            for (String key : getIntent().getExtras().keySet()) {
-                Object value = getIntent().getExtras().get(key);
-                Log.d(TAG, "Key: " + key + " Value: " + value);
-            }
+            String articleID = (String) getIntent().getExtras().get("articleID");
+            ArticleLoaderBackend.getInstance((Application) getApplicationContext()).getCacheObject(articleID, getResources(), new ArticleLoadableCallback() {
+                private boolean isFirstTime = false;
+                @Override
+                public void onLoaded(Article article) {
+                    article.setIsNotification(1); // 1 == true
+                    articleRepository.add(article); // To save the notification
+                    onArticleClicked(article);
+                    isFirstTime = true; // used to mimic activity destruction and remove this listener
+                }
+
+                @Override
+                public boolean isActivityDestroyed() {
+                    return isFirstTime;
+                }
+            });
         }
 
         setContentView(R.layout.activity_main);
