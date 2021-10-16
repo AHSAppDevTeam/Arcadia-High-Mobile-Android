@@ -164,7 +164,7 @@ public class BulletinFragment extends Fragment implements CategoriesLoadedCallba
         //categoryLinearLayout.setWeightSum(categories.size());
 
         for (int i = 0; i < categories.size(); i++) {
-            BulletinCategoryWidget category = new BulletinCategoryWidget(getContext(), categories.get(i), this);
+            BulletinCategoryWidget category = new BulletinCategoryWidget(getContext(), categories.get(i), this, this.getActivity());
             int p = (int) ScreenUtil.dp_to_px(getResources().getDimension(R.dimen.padding), getContext())/4;
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                     (int) ScreenUtil.dp_to_px(100, getContext()),
