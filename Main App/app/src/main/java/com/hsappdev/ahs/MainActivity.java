@@ -125,7 +125,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationC
     // slide the view from its current position to below itself
     @Override
     public void slideDown(){
-//        navView.animate().translationY(navView.getHeight()).setDuration(500);
+        navView.animate().translationY(navView.getHeight()).setDuration(500);
 //            /*TranslateAnimation animate = new TranslateAnimation(
 //                    0,                 // fromXDelta
 //                    0,                 // toXDelta

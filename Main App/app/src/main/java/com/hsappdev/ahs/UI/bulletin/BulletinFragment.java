@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.hsappdev.ahs.OnItemClick;
 import com.hsappdev.ahs.R;
@@ -40,6 +41,8 @@ public class BulletinFragment extends Fragment implements CategoriesLoadedCallba
     private BulletinRecyclerAdapter comingUpAdapter;
     private OnItemClick onArticleClick;
 
+    private TextView defaultHeader;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -47,6 +50,8 @@ public class BulletinFragment extends Fragment implements CategoriesLoadedCallba
         categoryLinearLayout = view.findViewById(R.id.bulletin_categories_linearLayout);
         recyclerView = view.findViewById(R.id.bulletin_articles_recycler_view);
         comingUpRecyclerView = view.findViewById(R.id.bulletin_articles_coming_up_recycler_view);
+        defaultHeader = view.findViewById(R.id.bulletin_default_text_view);
+
         loadRecyclerView();
         loadLinearLayoutView();
         return view;
@@ -196,14 +201,25 @@ public class BulletinFragment extends Fragment implements CategoriesLoadedCallba
 
         sortedListRef.beginBatchedUpdates();
         List<Article> filteredList = new ArrayList<>();
-        for (Article articleToCheck : articleList) {
-            for (CategoryState state : categoryList) {
-                if(articleToCheck.getCategoryID().equals(state.getCategory().getCategoryID())){
-                    if(state.isSelected()){
-                        filteredList.add(articleToCheck);
+        if(!areAnyCategoriesChecked()){
+            filteredList.addAll(articleList);
+        } else {
+            for (Article articleToCheck : articleList) {
+                for (CategoryState state : categoryList) {
+                    if (articleToCheck.getCategoryID().equals(state.getCategory().getCategoryID())) {
+                        if (state.isSelected()) {
+                            filteredList.add(articleToCheck);
+                        }
                     }
                 }
             }
+        }
+
+        if(filteredList.size() <= 4) {
+            // There is no default section, hide it
+            defaultHeader.setVisibility(View.GONE);
+        } else {
+            defaultHeader.setVisibility(View.VISIBLE);
         }
 
         compareAndUpdateArticleList(sortedListRef, filteredList);
@@ -222,6 +238,13 @@ public class BulletinFragment extends Fragment implements CategoriesLoadedCallba
         compareAndUpdateArticleList(comingUpSortedListRef, upComingArticles);
 
         comingUpSortedListRef.endBatchedUpdates();
+    }
+
+    private boolean areAnyCategoriesChecked() {
+        for (CategoryState state : categoryList) {
+            if(state.isSelected()) return true;
+        }
+        return false;
     }
 
     public void compareAndUpdateArticleList(SortedList<Article> sortedListRef, List<Article> filteredList){

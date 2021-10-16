@@ -41,6 +41,7 @@
     <color name="profileOptionThemeModeIconBg">#5856d6</color>
     <color name="community_activity_start_gradient_color">#5fa4a9</color>
     <color name="community_activity_article_image_default_img_color">#d3bdbd</color>
+    <color name="bulletin_up_coming_standard_color">#d8853d</color>
 
 
 </resources>
