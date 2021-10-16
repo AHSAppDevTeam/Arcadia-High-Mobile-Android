@@ -39,7 +39,7 @@
         <LinearLayout
             android:id="@+id/bulletin_categories_linearLayout"
             android:layout_width="wrap_content"
-            android:layout_height="150dp"
+            android:layout_height="100dp"
             android:orientation="horizontal" />
     </HorizontalScrollView>
 

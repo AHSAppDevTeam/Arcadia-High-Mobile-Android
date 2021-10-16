@@ -14,155 +14,163 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:clipChildren="false">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/linearLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/padding"
-                android:orientation="vertical">
-
-                <Button
-                    android:id="@+id/home_notification_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Notif"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-
-                <ImageView
-                    android:id="@+id/imageView"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:alpha="1"
-                    android:scaleType="fitStart"
-
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintDimensionRatio="1:1"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@mipmap/logo_full_size"
-                    android:contentDescription="@string/logo_description"/>
-
-                <TextView
-                    android:id="@+id/home_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/sfprodisplay_bold"
-                    android:includeFontPadding="false"
-                    android:lineSpacingExtra="0dp"
-                    android:text="@string/home_title"
-                    android:textColor="@color/brightRed"
-                    android:textSize="36sp"
-                    app:layout_constraintStart_toEndOf="@+id/imageView"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:layout_conversion_absoluteHeight="43dp"
-                    tools:layout_conversion_absoluteWidth="130dp" />
-
-
-                <TextView
-                    android:id="@+id/home_date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/mediumbold_lightregular"
-                    android:includeFontPadding="false"
-                    android:lineSpacingExtra="0dp"
-                    android:text="@string/home_default_month"
-                    android:textColor="@color/brightRed"
-                    android:textSize="24sp"
-                    app:layout_constraintStart_toEndOf="@+id/imageView"
-                    app:layout_constraintTop_toBottomOf="@+id/home_title"
-                    tools:layout_conversion_absoluteHeight="34dp"
-                    tools:layout_conversion_absoluteWidth="86dp" />
-
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
+            android:clipChildren="false"
+            android:orientation="vertical">
 
             <LinearLayout
-                android:id="@+id/home_selector_linear_layout"
+                android:id="@+id/home_title_bar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/padding"
-                android:layout_marginTop="@dimen/padding"
-                android:layout_marginEnd="@dimen/padding">
+                android:orientation="vertical"
+                >
 
-                <com.hsappdev.ahs.UI.home.TextViewSelector
-                    android:id="@+id/home_ausdNews_selector"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:background="@drawable/home_ausdnews_bg_active"
-                    android:elevation="@dimen/shadowElevation"
-                    android:fontFamily="@font/sfprodisplay_regular"
-                    android:foreground="@drawable/home_ripple_masked"
-                    android:gravity="center"
-                    android:paddingStart="@dimen/padding"
-                    android:paddingTop="@dimen/padding_x.5"
-                    android:paddingEnd="@dimen/padding"
-                    android:paddingBottom="@dimen/padding_x.5"
-                    android:text="@string/main_title"
-                    android:textColor="@color/white"
-                    android:textSize="16sp"
-                    app:backgroundInactive="@drawable/home_ausdnews_bg_inactive"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:selected="true"
-                    app:textColorInactive="@color/brightRed" />
-
-                <Space
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:layout_weight="1" >
-                </Space>
-
-                <com.hsappdev.ahs.UI.home.TextViewSelector
-                    android:id="@+id/home_community_selector"
-                    android:elevation="@dimen/shadowElevation"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/home_community_bg_active"
-                    app:backgroundInactive="@drawable/home_community_bg_inactive"
-                    android:fontFamily="@font/sfprodisplay_regular"
-                    android:foreground="@drawable/home_ripple_masked"
-                    android:gravity="center"
-                    android:paddingStart="@dimen/padding"
-                    android:paddingTop="@dimen/padding_x.5"
-                    android:paddingEnd="@dimen/padding"
-                    android:paddingBottom="@dimen/padding_x.5"
-                    android:text="@string/community_title"
-                    android:textColor="@color/white"
-                    app:textColorInactive="@color/teal"
-                    app:selected="false"
-                    android:textSize="16sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toEndOf="@+id/home_ausdNews_selector"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:layout_weight="2"/>
-                <Space
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:layout_weight="1" >
-                </Space>
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent">
+                    android:id="@+id/linearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/padding"
+                    android:orientation="vertical">
 
-                    <ImageView
-                        android:id="@+id/home_search_selector"
+                    <Button
+                        android:id="@+id/home_notification_button"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/home_search_icon"
-                        android:foreground="?attr/selectableItemBackgroundBorderless"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintDimensionRatio="1:1"
+                        android:layout_height="wrap_content"
+                        android:text="Notif"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <ImageView
+                        android:id="@+id/imageView"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:alpha="1"
+                        android:contentDescription="@string/logo_description"
+
+                        android:scaleType="fitStart"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintDimensionRatio="1:1"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@mipmap/logo_full_size" />
+
+                    <TextView
+                        android:id="@+id/home_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/sfprodisplay_bold"
+                        android:includeFontPadding="false"
+                        android:lineSpacingExtra="0dp"
+                        android:text="@string/home_title"
+                        android:textColor="@color/brightRed"
+                        android:textSize="24sp"
+                        app:layout_constraintStart_toEndOf="@+id/imageView"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:layout_conversion_absoluteHeight="43dp"
+                        tools:layout_conversion_absoluteWidth="130dp" />
+
+
+                    <TextView
+                        android:id="@+id/home_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/mediumbold_lightregular"
+                        android:includeFontPadding="false"
+                        android:lineSpacingExtra="0dp"
+                        android:text="@string/home_default_month"
+                        android:textColor="@color/brightRed"
+                        android:textSize="16sp"
+                        app:layout_constraintStart_toEndOf="@+id/imageView"
+                        app:layout_constraintTop_toBottomOf="@+id/home_title"
+                        tools:layout_conversion_absoluteHeight="34dp"
+                        tools:layout_conversion_absoluteWidth="86dp" />
+
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/home_selector_linear_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/padding"
+                    android:layout_marginTop="@dimen/padding_x.25"
+                    android:layout_marginEnd="@dimen/padding">
+
+                    <com.hsappdev.ahs.UI.home.TextViewSelector
+                        android:id="@+id/home_ausdNews_selector"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:background="@drawable/home_ausdnews_bg_active"
+                        android:elevation="@dimen/shadowElevation"
+                        android:fontFamily="@font/sfprodisplay_regular"
+                        android:foreground="@drawable/home_ripple_masked"
+                        android:gravity="center"
+                        android:paddingStart="@dimen/padding"
+                        android:paddingTop="@dimen/padding_x.5"
+                        android:paddingEnd="@dimen/padding"
+                        android:paddingBottom="@dimen/padding_x.5"
+                        android:text="@string/main_title"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        app:backgroundInactive="@drawable/home_ausdnews_bg_inactive"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:selected="true"
+                        app:textColorInactive="@color/brightRed" />
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_weight="1"></Space>
+
+                    <com.hsappdev.ahs.UI.home.TextViewSelector
+                        android:id="@+id/home_community_selector"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:background="@drawable/home_community_bg_active"
+                        android:elevation="@dimen/shadowElevation"
+                        android:fontFamily="@font/sfprodisplay_regular"
+                        android:foreground="@drawable/home_ripple_masked"
+                        android:gravity="center"
+                        android:paddingStart="@dimen/padding"
+                        android:paddingTop="@dimen/padding_x.5"
+                        android:paddingEnd="@dimen/padding"
+                        android:paddingBottom="@dimen/padding_x.5"
+                        android:text="@string/community_title"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        app:backgroundInactive="@drawable/home_community_bg_inactive"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="1.0"
+                        app:layout_constraintStart_toEndOf="@+id/home_ausdNews_selector"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:selected="false"
+                        app:textColorInactive="@color/teal" />
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_weight="1"></Space>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent">
+
+                        <ImageView
+                            android:id="@+id/home_search_selector"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:foreground="?attr/selectableItemBackgroundBorderless"
+                            android:src="@drawable/home_search_icon"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintDimensionRatio="1:1"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </LinearLayout>
             </LinearLayout>
 
             <androidx.fragment.app.FragmentContainerView
@@ -170,8 +178,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/padding"
-                android:layout_marginBottom="@dimen/navbar_height"
-                >
+                android:layout_marginBottom="@dimen/navbar_height">
 
             </androidx.fragment.app.FragmentContainerView>
         </LinearLayout>
