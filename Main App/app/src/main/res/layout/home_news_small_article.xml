@@ -16,7 +16,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@drawable/img_frame_small"
-        android:elevation="0dp"
+        android:elevation="@dimen/shadowElevation"
 
         android:fadingEdgeLength="@dimen/cardview_compat_inset_shadow"
         app:layout_constraintDimensionRatio="1.5"
