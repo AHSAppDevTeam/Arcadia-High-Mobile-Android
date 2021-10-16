@@ -45,8 +45,6 @@ public abstract class LoadableCache<T extends LoadableType> {
 
     protected abstract DatabaseReference getFirebaseRef();
 
-    //abstract public T getInstance(Resources r, String articleID);
-
     public T getArticle() {
         return article;
     }
