@@ -54,7 +54,9 @@
                 app:cv_scrollMode="paged"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/guideline5"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:cv_orientation="horizontal"/>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ScrollView
