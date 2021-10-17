@@ -1,28 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="DesignSurface">
-    <option name="filePathToZoomLevelMap">
-      <map>
-        <entry key="..\:/Users/Jeffrey/Documents/Coding/Android/Arcadia-High-Mobile-Android/Main App/app/src/main/res/drawable/bulletin_up_coming_ring.xml" value="0.2875" />
-        <entry key="..\:/Users/Jeffrey/Documents/Coding/Android/Arcadia-High-Mobile-Android/Main App/app/src/main/res/layout/activity_calendar.xml" value="0.2713541666666667" />
-        <entry key="..\:/Users/Jeffrey/Documents/Coding/Android/Arcadia-High-Mobile-Android/Main App/app/src/main/res/layout/activity_notification_settings.xml" value="0.2713541666666667" />
-        <entry key="..\:/Users/Jeffrey/Documents/Coding/Android/Arcadia-High-Mobile-Android/Main App/app/src/main/res/layout/article.xml" value="0.2713541666666667" />
-        <entry key="..\:/Users/Jeffrey/Documents/Coding/Android/Arcadia-High-Mobile-Android/Main App/app/src/main/res/layout/bulletin.xml" value="0.2713541666666667" />
-        <entry key="..\:/Users/Jeffrey/Documents/Coding/Android/Arcadia-High-Mobile-Android/Main App/app/src/main/res/layout/bulletin_category_widget.xml" value="0.2713541666666667" />
-        <entry key="..\:/Users/Jeffrey/Documents/Coding/Android/Arcadia-High-Mobile-Android/Main App/app/src/main/res/layout/bulletin_defualt_article_holder.xml" value="0.2957427536231884" />
-        <entry key="..\:/Users/Jeffrey/Documents/Coding/Android/Arcadia-High-Mobile-Android/Main App/app/src/main/res/layout/bulletin_up_coming_article_holder.xml" value="0.47357293868921774" />
-        <entry key="..\:/Users/Jeffrey/Documents/Coding/Android/Arcadia-High-Mobile-Android/Main App/app/src/main/res/layout/home.xml" value="0.2713541666666667" />
-        <entry key="..\:/Users/Jeffrey/Documents/Coding/Android/Arcadia-High-Mobile-Android/Main App/app/src/main/res/layout/home_news_medium_article.xml" value="0.2713541666666667" />
-        <entry key="..\:/Users/Jeffrey/Documents/Coding/Android/Arcadia-High-Mobile-Android/Main App/app/src/main/res/layout/home_news_medium_article_holder.xml" value="0.2713541666666667" />
-        <entry key="..\:/Users/Jeffrey/Documents/Coding/Android/Arcadia-High-Mobile-Android/Main App/app/src/main/res/layout/home_news_small_article.xml" value="0.2713541666666667" />
-        <entry key="..\:/Users/Jeffrey/Documents/Coding/Android/Arcadia-High-Mobile-Android/Main App/app/src/main/res/layout/notification_settings_header.xml" value="0.2713541666666667" />
-        <entry key="..\:/Users/Jeffrey/Documents/Coding/Android/Arcadia-High-Mobile-Android/Main App/app/src/main/res/layout/profile.xml" value="0.2713541666666667" />
-        <entry key="..\:/Users/Jeffrey/Documents/Coding/Android/Arcadia-High-Mobile-Android/Main App/app/src/main/res/layout/saved.xml" value="0.2713541666666667" />
-      </map>
-    </option>
-  </component>
-  <component name="ExternalStorageConfigurationManager" enabled="true" />
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
