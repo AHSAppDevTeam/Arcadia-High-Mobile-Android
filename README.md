@@ -3,4 +3,4 @@ The official source code for Arcadia High Mobile (avaliable on Google Play). Inc
 
 Languages used for Android include - Java
 
-Contact us at: ahsappdeveloper@gmail.com
+Contact us at: dev@ahs.app
