@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.hsappdev.ahs.OnItemClick;
@@ -20,7 +19,7 @@ import java.util.List;
 public class MediumArticleAdapter extends MultiArticleAdapter<MediumArticleAdapter.MediumArticleViewHolder>{
     private static final String TAG = "MediumArticleAdapter";
 
-    public MediumArticleAdapter(List<String> articleIds, OnItemClick onArticleClick, AppCompatActivity activity) {
+    public MediumArticleAdapter(List<String> articleIds, OnItemClick onArticleClick, Activity activity) {
         super(articleIds, onArticleClick, activity);
     }
 

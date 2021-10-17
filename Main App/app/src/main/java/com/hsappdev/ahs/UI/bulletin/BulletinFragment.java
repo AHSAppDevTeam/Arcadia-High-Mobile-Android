@@ -7,7 +7,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SortedList;
@@ -16,16 +15,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.hsappdev.ahs.OnItemClick;
 import com.hsappdev.ahs.R;
 import com.hsappdev.ahs.cache.ArticleLoaderBackend;
 import com.hsappdev.ahs.cache.callbacks.ArticleLoadableCallback;
-import com.hsappdev.ahs.cache_new.ArticleLoaderBackEnd;
-import com.hsappdev.ahs.cache_new.DataLoaderBackEnd;
 import com.hsappdev.ahs.dataTypes.Article;
 import com.hsappdev.ahs.dataTypes.Category;
-import com.hsappdev.ahs.localdb.ArticleRepository;
 import com.hsappdev.ahs.util.ScreenUtil;
 
 import java.util.ArrayList;
@@ -44,6 +41,8 @@ public class BulletinFragment extends Fragment implements CategoriesLoadedCallba
     private BulletinRecyclerAdapter comingUpAdapter;
     private OnItemClick onArticleClick;
 
+    private TextView defaultHeader;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -51,6 +50,8 @@ public class BulletinFragment extends Fragment implements CategoriesLoadedCallba
         categoryLinearLayout = view.findViewById(R.id.bulletin_categories_linearLayout);
         recyclerView = view.findViewById(R.id.bulletin_articles_recycler_view);
         comingUpRecyclerView = view.findViewById(R.id.bulletin_articles_coming_up_recycler_view);
+        defaultHeader = view.findViewById(R.id.bulletin_default_text_view);
+
         loadRecyclerView();
         loadLinearLayoutView();
         return view;
@@ -80,12 +81,20 @@ public class BulletinFragment extends Fragment implements CategoriesLoadedCallba
 
     private void addPadding() {
         int padding = (int) getResources().getDimension(R.dimen.padding);
-        addPadding(recyclerView, padding);
-        addPadding(comingUpRecyclerView, padding);
-    }
-
-    private void addPadding(RecyclerView recyclerView, int padding) {
         recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
+            @Override
+            public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
+                super.getItemOffsets(outRect, view, parent, state);
+                outRect.right = padding;
+                outRect.left = padding;
+                if(parent.getChildAdapterPosition(view) == 0){
+                    outRect.top = padding;
+                }
+                outRect.bottom = padding;
+
+            }
+        });
+        comingUpRecyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
             @Override
             public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
                 super.getItemOffsets(outRect, view, parent, state);
@@ -140,31 +149,10 @@ public class BulletinFragment extends Fragment implements CategoriesLoadedCallba
             }
             if(!isArticleUpdate){ // Only set an article loader if it is not set before
                 //Log.d(TAG, "registerCategory: loadedArticle "+ categoryState.getArticleIds().get(i));
-                ArticleLoaderBackEnd loader = new ArticleLoaderBackEnd(categoryState.getArticleIds().get(i),
-                        getResources(),new ArticleRepository(getActivity().getApplication()));
-                loader.getLiveData().observe(getViewLifecycleOwner(), new Observer<DataLoaderBackEnd.DataWithSource<Article>>() {
-                    @Override
-                    public void onChanged(DataLoaderBackEnd.DataWithSource<Article> articleDataWithSource) {
-                        Article article = articleDataWithSource.getData();
-                        String articleId = article.getArticleID();
-                        boolean isArticleUpdate = false;
-                        for (int j = 0; j < articleList.size(); j++) {
-                            if(articleList.get(j).getArticleID().equals(articleId)){
-                                isArticleUpdate = true;
-                                articleList.set(j, article);
-                            }
-                        }
-                        if(!isArticleUpdate) {
-                            articleList.add(article);
-                        }
-
-                        updateView();
-                    }
-                });
-                /*ArticleLoaderBackend.getInstance(getActivity().getApplication()).getCacheObject(
+                ArticleLoaderBackend.getInstance(getActivity().getApplication()).getCacheObject(
                         categoryState.getArticleIds().get(i),
                         getResources(),
-                        this);*/
+                        this);
             }
         }
 
@@ -176,10 +164,10 @@ public class BulletinFragment extends Fragment implements CategoriesLoadedCallba
         //categoryLinearLayout.setWeightSum(categories.size());
 
         for (int i = 0; i < categories.size(); i++) {
-            BulletinCategoryWidget category = new BulletinCategoryWidget(getContext(), categories.get(i), this);
-            int p = (int) ScreenUtil.dp_to_px(getResources().getDimension(R.dimen.padding), getContext())/4;
+            BulletinCategoryWidget category = new BulletinCategoryWidget(getContext(), categories.get(i), this, this.getActivity());
+            int p = (int) ScreenUtil.dp_to_px(getResources().getDimension(R.dimen.padding), getContext())/8;
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
-                    (int) ScreenUtil.dp_to_px(100, getContext()),
+                    (int) ScreenUtil.dp_to_px(75, getContext()),
                     LinearLayout.LayoutParams.MATCH_PARENT,
                     1.0f
             );
@@ -213,14 +201,25 @@ public class BulletinFragment extends Fragment implements CategoriesLoadedCallba
 
         sortedListRef.beginBatchedUpdates();
         List<Article> filteredList = new ArrayList<>();
-        for (Article articleToCheck : articleList) {
-            for (CategoryState state : categoryList) {
-                if(articleToCheck.getCategoryID().equals(state.getCategory().getCategoryID())){
-                    if(state.isSelected()){
-                        filteredList.add(articleToCheck);
+        if(!areAnyCategoriesChecked()){
+            filteredList.addAll(articleList);
+        } else {
+            for (Article articleToCheck : articleList) {
+                for (CategoryState state : categoryList) {
+                    if (articleToCheck.getCategoryID().equals(state.getCategory().getCategoryID())) {
+                        if (state.isSelected()) {
+                            filteredList.add(articleToCheck);
+                        }
                     }
                 }
             }
+        }
+
+        if(filteredList.size() <= 4) {
+            // There is no default section, hide it
+            defaultHeader.setVisibility(View.GONE);
+        } else {
+            defaultHeader.setVisibility(View.VISIBLE);
         }
 
         compareAndUpdateArticleList(sortedListRef, filteredList);
@@ -239,6 +238,13 @@ public class BulletinFragment extends Fragment implements CategoriesLoadedCallba
         compareAndUpdateArticleList(comingUpSortedListRef, upComingArticles);
 
         comingUpSortedListRef.endBatchedUpdates();
+    }
+
+    private boolean areAnyCategoriesChecked() {
+        for (CategoryState state : categoryList) {
+            if(state.isSelected()) return true;
+        }
+        return false;
     }
 
     public void compareAndUpdateArticleList(SortedList<Article> sortedListRef, List<Article> filteredList){

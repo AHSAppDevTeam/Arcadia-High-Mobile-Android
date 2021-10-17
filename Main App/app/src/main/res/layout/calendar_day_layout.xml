@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/gray"
+    android:background="?attr/bgColor"
     android:clickable="true"
     android:focusable="true"
     android:foreground="?attr/selectableItemBackground">
@@ -11,10 +12,26 @@
     <TextView
         android:id="@+id/calendarDayText"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:fontFamily="@font/heavybold_lightregular"
         android:gravity="center"
         android:textColor="?attr/titleColor"
-        android:textSize="16sp"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/calendarDayInfo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="22" />
+
+    <TextView
+        android:id="@+id/calendarDayInfo"
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:fontFamily="@font/heavybold_lightregular"
+        android:gravity="center"
+        android:textColor="?attr/titleColor"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         tools:text="22" />
 </androidx.constraintlayout.widget.ConstraintLayout>

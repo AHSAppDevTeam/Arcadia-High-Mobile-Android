@@ -4,25 +4,21 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.hsappdev.ahs.OnItemClick;
 import com.hsappdev.ahs.R;
 import com.hsappdev.ahs.cache.CategoryListLoaderBackend;
 import com.hsappdev.ahs.cache.callbacks.CategoryListLoadableCallback;
-import com.hsappdev.ahs.cache_new.CategoryListLoaderBackEnd;
-import com.hsappdev.ahs.cache_new.DataLoaderBackEnd;
 import com.hsappdev.ahs.dataTypes.CategoryList;
-import com.hsappdev.ahs.localdb.CategoryListRepository;
 
 import java.util.ArrayList;
 
@@ -67,25 +63,11 @@ public class HomeNewsFragment extends Fragment implements CategoryListLoadableCa
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.home_news_fragment, container, false);
 
-       adapter = new NewsRecyclerAdapter(new ArrayList<String>(), onArticleClick, (AppCompatActivity) getActivity());
+       adapter = new NewsRecyclerAdapter(new ArrayList<String>(), onArticleClick, getActivity());
         RecyclerView recyclerView = view.findViewById(R.id.home_news_recyclerView);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        CategoryListLoaderBackEnd loader = new CategoryListLoaderBackEnd(
-                r.getString(R.string.db_location_ausdNews),
-                r,
-                new CategoryListRepository(getActivity().getApplication()));
-        loader.getLiveData().observe(getViewLifecycleOwner(), new Observer<DataLoaderBackEnd.DataWithSource<CategoryList>>() {
-            @Override
-            public void onChanged(DataLoaderBackEnd.DataWithSource<CategoryList> categoryListDataWithSource) {
-                CategoryList categoryList = categoryListDataWithSource.getData();
-                adapter.clearAll();
-                adapter.addCategoryIDs(categoryList.getCategoryList());
-            }
-        });
-
-        /*CategoryListLoaderBackend.getInstance(getActivity().getApplication()).getCacheObject(r.getString(R.string.db_location_ausdNews), r, this);*/
+        CategoryListLoaderBackend.getInstance(getActivity().getApplication()).getCacheObject(r.getString(R.string.db_location_ausdNews), r, this);
         return view;
     }
 

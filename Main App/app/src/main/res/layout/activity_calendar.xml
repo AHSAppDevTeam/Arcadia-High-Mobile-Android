@@ -29,10 +29,9 @@
             app:layout_constraintTop_toTopOf="parent" />
 
 
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="300dp">
+            android:layout_height="wrap_content">
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline5"
@@ -41,7 +40,7 @@
                 android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintGuide_begin="150dp"
+                app:layout_constraintGuide_begin="0dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -55,8 +54,21 @@
                 app:cv_scrollMode="paged"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/guideline5"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:cv_orientation="horizontal"/>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/calendar_schedule_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+        </ScrollView>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

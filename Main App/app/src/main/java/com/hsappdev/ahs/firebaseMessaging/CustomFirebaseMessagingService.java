@@ -11,12 +11,9 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.util.Log;
-import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
@@ -26,12 +23,8 @@ import com.hsappdev.ahs.R;
 import com.hsappdev.ahs.cache.ArticleLoaderBackend;
 import com.hsappdev.ahs.cache.LoadableCallback;
 import com.hsappdev.ahs.cache.callbacks.ArticleLoadableCallback;
-import com.hsappdev.ahs.cache_new.ArticleLoaderBackEnd;
-import com.hsappdev.ahs.cache_new.DataLoaderBackEnd;
 import com.hsappdev.ahs.dataTypes.Article;
 import com.hsappdev.ahs.localdb.ArticleRepository;
-import com.hsappdev.ahs.util.ImageUtil;
-import com.hsappdev.ahs.util.ScreenUtil;
 
 import java.util.Map;
 
@@ -53,31 +46,12 @@ public class CustomFirebaseMessagingService extends FirebaseMessagingService {
             Log.d(TAG, "Message data payload: " + remoteMessage.getData());
             Map<String, String> dataMap = remoteMessage.getData();
             String articleID = dataMap.get("articleID");
-
-            /*ArticleLoaderBackEnd loader = new ArticleLoaderBackEnd(articleID,
-                    getResources(),new ArticleRepository(getApplication()));
-            LiveData<DataLoaderBackEnd.DataWithSource<Article>> liveData = loader.getLiveData();
-            liveData.observeForever(new Observer<DataLoaderBackEnd.DataWithSource<Article>>() {
-                @Override
-                public void onChanged(DataLoaderBackEnd.DataWithSource<Article> articleDataWithSource) {
-                    Article article = articleDataWithSource.getData();
-                    article.setIsNotification(1); // 1 == true
-                    //articleRepository.add(article);
-                    RemoteMessage.Notification notification = remoteMessage.getNotification();
-                    sendNotification(notification.getTitle(),
-                            notification.getBody(),
-                            getResources(),
-                            article);
-                    liveData.removeObserver(this);
-                }
-            });*/
-
             ArticleLoaderBackend.getInstance((Application) getApplicationContext()).getCacheObject(articleID, getResources(), new ArticleLoadableCallback() {
                 private boolean isFirstTime = false;
                 @Override
                 public void onLoaded(Article article) {
                     article.setIsNotification(1); // 1 == true
-                    //articleRepository.add(article);
+                    articleRepository.add(article); // To save the notification
                     RemoteMessage.Notification notification = remoteMessage.getNotification();
                     sendNotification(notification.getTitle(),
                             notification.getBody(),

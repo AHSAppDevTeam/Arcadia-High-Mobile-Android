@@ -26,9 +26,9 @@ public class ImageUtil {
         Glide
                 .with(imageView.getContext())
                 .load(imageUrl)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .centerCrop()
                 .error(R.drawable.img_frame_large)
-                .transition(DrawableTransitionOptions.withCrossFade())
                 .into(imageView);
 
     }
@@ -60,16 +60,24 @@ public class ImageUtil {
 
     }
 
+    /**
+     * Deprecated
+     * use setImageToView for consistency
+     * @param imageUrl
+     * @param imageView
+     */
+    @Deprecated
     public static void setImageToSmallView(String imageUrl, ImageView imageView){
-        ShapeableImageView shapeableImageView = (ShapeableImageView) imageView;
-        shapeableImageView.setShapeAppearanceModel(new ShapeAppearanceModel().withCornerSize(ScreenUtil.dp_to_px(imageView.getContext().getResources().getDimension(R.dimen.padding)/4, imageView.getContext())));
-        Glide
-                .with(imageView.getContext())
-                .load(imageUrl)
-                .centerCrop()
-                .error(R.drawable.img_frame_large)
-                .transition(DrawableTransitionOptions.withCrossFade())
-                .into(imageView);
+        setImageToView(imageUrl, imageView);
+//        ShapeableImageView shapeableImageView = (ShapeableImageView) imageView;
+//        shapeableImageView.setShapeAppearanceModel(new ShapeAppearanceModel().withCornerSize(ScreenUtil.dp_to_px(imageView.getContext().getResources().getDimension(R.dimen.padding)/4, imageView.getContext())));
+//        Glide
+//                .with(imageView.getContext())
+//                .load(imageUrl)
+//                .centerCrop()
+//                .error(R.drawable.img_frame_large)
+//                .transition(DrawableTransitionOptions.withCrossFade())
+//                .into(imageView);
 
     }
 

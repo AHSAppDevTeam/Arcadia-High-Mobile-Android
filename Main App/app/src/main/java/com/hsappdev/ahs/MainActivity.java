@@ -6,6 +6,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
+import android.app.Application;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
@@ -20,14 +21,16 @@ import android.widget.Toast;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.messaging.RemoteMessage;
 import com.hsappdev.ahs.UI.home.OnSectionClicked;
 import com.hsappdev.ahs.cache.ArticleCategoryIdLoader;
+import com.hsappdev.ahs.cache.ArticleLoaderBackend;
+import com.hsappdev.ahs.cache.callbacks.ArticleLoadableCallback;
 import com.hsappdev.ahs.dataTypes.Article;
 import com.hsappdev.ahs.dataTypes.CommunitySection;
 import com.hsappdev.ahs.firebaseMessaging.NotificationSetup;
 import com.hsappdev.ahs.db.DatabaseConstants;
+import com.hsappdev.ahs.localdb.ArticleRepository;
 
 import java.util.Arrays;
 
@@ -64,8 +67,25 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationC
         if(FirebaseApp.getApps(getApplicationContext()).size() == 1) {
             FirebaseApp.initializeApp(getApplicationContext(), options, DatabaseConstants.FIREBASE_REALTIME_DB);
         }
+        ArticleRepository articleRepository = new ArticleRepository(this.getApplication());
+        if (getIntent().getExtras() != null) {
+            String articleID = (String) getIntent().getExtras().get("articleID");
+            ArticleLoaderBackend.getInstance((Application) getApplicationContext()).getCacheObject(articleID, getResources(), new ArticleLoadableCallback() {
+                private boolean isFirstTime = false;
+                @Override
+                public void onLoaded(Article article) {
+                    article.setIsNotification(1); // 1 == true
+                    articleRepository.add(article); // To save the notification
+                    onArticleClicked(article);
+                    isFirstTime = true; // used to mimic activity destruction and remove this listener
+                }
 
-        FirebaseDatabase.getInstance(FirebaseApp.getInstance(DatabaseConstants.FIREBASE_REALTIME_DB)).setPersistenceEnabled(true);
+                @Override
+                public boolean isActivityDestroyed() {
+                    return isFirstTime;
+                }
+            });
+        }
 
         setContentView(R.layout.activity_main);
 
@@ -85,7 +105,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationC
 
         NotificationSetup.setUp(getResources(), this);
 
-        // FIXME: REMOVE THIS WHEN DEPLOYING THE APP
+        // TODO: REMOVE THIS WHEN DEPLOYING THE APP
         if(BuildConfig.DEBUG) {
             NotificationSetup.subscribe(this, "Drafts");
         }
@@ -110,7 +130,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationC
     // slide the view from its current position to below itself
     @Override
     public void slideDown(){
-//        navView.animate().translationY(navView.getHeight()).setDuration(500);
+        //navView.animate().translationY(navView.getHeight()).setDuration(500);
 //            /*TranslateAnimation animate = new TranslateAnimation(
 //                    0,                 // fromXDelta
 //                    0,                 // toXDelta

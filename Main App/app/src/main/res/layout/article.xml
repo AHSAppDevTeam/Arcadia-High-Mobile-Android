@@ -20,6 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:paddingTop="@dimen/padding"
             >
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -50,7 +51,7 @@
                 app:tabBackground="@drawable/tab_layout_selector"
                 app:tabGravity="center"
                 app:tabIndicatorHeight="0dp"
-                android:padding="16dp"/>
+                android:paddingHorizontal="16dp"/>
 
             <com.hsappdev.ahs.Adjusting_TextView
                 android:id="@+id/article_title"
@@ -135,7 +136,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:elevation="0dp">
+        android:elevation="4dp">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/article_topAppBar"
@@ -144,7 +145,8 @@
             android:layout_height="@dimen/appBarHeight"
             app:menu="@menu/article_appbar_menu"
             app:navigationIcon="@drawable/activity_navigation_back_arrow"
-            app:title="Some Section" />
+            app:title="Some Section"
+            />
 
     </com.google.android.material.appbar.AppBarLayout>
 

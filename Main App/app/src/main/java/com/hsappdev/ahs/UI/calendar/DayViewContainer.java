@@ -1,90 +1,105 @@
 package com.hsappdev.ahs.UI.calendar;
 
 import android.graphics.Color;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 import com.hsappdev.ahs.R;
 import com.hsappdev.ahs.UI.calendar.calendarBackend.CalendarBackend;
+import com.hsappdev.ahs.UI.calendar.calendarBackend.CalendarDayLoadCallback;
+import com.hsappdev.ahs.UI.calendar.calendarBackend.CalendarScheduleLoadCallback;
 import com.hsappdev.ahs.UI.calendar.calendarBackend.Day;
-import com.hsappdev.ahs.UI.calendar.calendarBackend.Week;
+import com.hsappdev.ahs.UI.calendar.calendarBackend.Schedule;
+import com.hsappdev.ahs.UI.calendar.newCalendar.CalendarBackendNew;
+import com.hsappdev.ahs.UI.calendar.newCalendar.ScheduleRenderer;
 import com.kizitonwose.calendarview.model.CalendarDay;
 import com.kizitonwose.calendarview.model.DayOwner;
 import com.kizitonwose.calendarview.ui.ViewContainer;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.temporal.TemporalField;
+import java.time.temporal.IsoFields;
 import java.time.temporal.WeekFields;
 import java.util.Locale;
 
-public class DayViewContainer extends ViewContainer {
+public class DayViewContainer extends ViewContainer implements CalendarDayLoadCallback, CalendarScheduleLoadCallback, View.OnClickListener {
+
+    private static final String TAG = "DayViewContainer";
+
     private TextView dayText;
+    private TextView dayInfo;
     private LocalDate date;
-    private CalendarDay calendarDay;
 
-    private CalendarBackend calendarBackend;
-    private boolean firebaseLoadFinished = false;
+    private Schedule schedule;
+    private ScheduleRenderer scheduleRenderer;
 
-    public DayViewContainer(@NotNull View view, CalendarBackend calendarBackend) {
+
+    public DayViewContainer(@NotNull View view) {
         super(view);
-        this.calendarBackend = calendarBackend;
         dayText = view.findViewById(R.id.calendarDayText);
-
+        dayInfo = view.findViewById(R.id.calendarDayInfo);
+        view.setOnClickListener(this);
     }
 
-    public void updateView(CalendarDay calendarDay) {
-        this.calendarDay = calendarDay;
+    public void updateView(CalendarDay calendarDay, ScheduleRenderer scheduleRenderer) {
+        this.scheduleRenderer = scheduleRenderer;
         date = calendarDay.getDate();
-        setDateText(date.getDayOfMonth());
-        setDateColor(calendarDay.getOwner() == DayOwner.THIS_MONTH, isDateToday());
-    }
-
-    private void setDateColor(boolean isThisMonth, boolean isDateToday) {
-        if(isThisMonth) {
+        dayText.setText(Integer.toString(calendarDay.getDay()));
+        if(calendarDay.getOwner() == DayOwner.THIS_MONTH){
             dayText.setTextColor(Color.BLACK);
-        } else {
-            dayText.setTextColor(Color.GRAY);
-        }
-        if(isDateToday) {
-            dayText.setBackgroundColor(Color.YELLOW);
+            if(calendarDay.getDay() == getDayOfMonth()) {
+               dayText.setBackgroundColor(Color.YELLOW);
+            } else {
+                dayText.setBackgroundColor(Color.LTGRAY);
+            }
         } else {
             dayText.setBackgroundColor(Color.LTGRAY);
+            dayText.setTextColor(Color.GRAY);
+        }
+        CalendarBackendNew.getInstance().registerForCallback(getWeekOfYear(), getDayOfWeek(), this);
+    }
+
+
+    public void onCalendarDayLoad(Day requestedDate) {
+        //dayText.setText(requestedDate.getScheduleId());
+        requestedDate.loadSchedule(this);
+    }
+
+    @Override
+    public int getRequestedDate() {
+        return getDayOfWeek();
+    }
+
+
+    // Helper
+    private int getWeekOfYear() {
+        WeekFields weekFields = WeekFields.of(DayOfWeek.MONDAY, 4);
+        Log.d(TAG, "getWeekOfYear: " + LocalDate.now().get(IsoFields.WEEK_OF_WEEK_BASED_YEAR));
+        return date.get(IsoFields.WEEK_OF_WEEK_BASED_YEAR);
+    }
+
+    private int getDayOfWeek() {
+        return date.getDayOfWeek().getValue();
+    }
+
+    private int getDayOfMonth() {
+        return LocalDate.now().getDayOfMonth();
+    }
+
+    @Override
+    public void onCalendarScheduleLoad(Schedule schedule) {
+        this.schedule = schedule;
+        dayInfo.setBackgroundColor(Color.parseColor(schedule.getColor()));
+        dayInfo.setText(schedule.getTitle());
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(schedule != null && scheduleRenderer != null) {
+            scheduleRenderer.render(schedule);
         }
     }
-
-    public void onFirebaseLoad(Week week) {
-        firebaseLoadFinished = true;
-        dayText.setText(week.getDayList().get((date.getDayOfWeek().getValue())%7+1).getScheduleId());
-    }
-
-    private boolean isDateToday() {
-        return date.isEqual(LocalDate.now());
-    }
-
-    private void setDateText(int day) {
-        dayText.setText(Integer.toString(day));
-        // TODO: TESTING
-        calendarBackend.loadWeekData(calendarBackend.getWeekIds().get(getWeekOfYear()), this);
-
-    }
-    private int getWeekOfYear() {
-        WeekFields weekFields = WeekFields.of(Locale.US);
-        return date.get(weekFields.weekOfWeekBasedYear());
-    }
-
-//    public void setDate(int date, boolean isDayInMonth, boolean isToday) {
-//        dayText.setText(Integer.toString(date));
-//        if(isDayInMonth) {
-//            dayText.setTextColor(Color.BLACK);
-//        } else {
-//            dayText.setTextColor(Color.GRAY);
-//        }
-//        if(isToday) {
-//            dayText.setBackgroundColor(Color.YELLOW);
-//        } else {
-//            dayText.setBackgroundColor(Color.LTGRAY);
-//        }
-//    }
 }

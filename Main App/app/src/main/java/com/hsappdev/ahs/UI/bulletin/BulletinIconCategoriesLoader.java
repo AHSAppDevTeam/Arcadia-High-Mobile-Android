@@ -1,5 +1,7 @@
 package com.hsappdev.ahs.UI.bulletin;
 
+import android.app.Activity;
+import android.app.Application;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Color;
@@ -13,6 +15,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hsappdev.ahs.R;
+import com.hsappdev.ahs.cache.CategoryLoaderBackend;
+import com.hsappdev.ahs.cache.LoadableCallback;
+import com.hsappdev.ahs.cache.callbacks.CategoryLoadableCallback;
 import com.hsappdev.ahs.dataTypes.Category;
 import com.hsappdev.ahs.db.DatabaseConstants;
 
@@ -49,30 +54,8 @@ public class BulletinIconCategoriesLoader {
         });
     }
 
-    public void loadCategoryData(String categoryId, CategoryLoadedCallback callback) {
-        DatabaseReference ref = FirebaseDatabase.getInstance(FirebaseApp.getInstance(DatabaseConstants.FIREBASE_REALTIME_DB)).getReference()
-                .child(r.getString(R.string.db_categories))
-                .child(categoryId);
-        ref.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String title = snapshot.child(r.getString(R.string.db_categories_titles)).getValue(String.class);
-                int color = Color.parseColor(snapshot.child(r.getString(R.string.db_categories_color)).getValue(String.class));
-                String iconURL = snapshot.child(r.getString(R.string.db_categories_iconURL)).getValue(String.class);
-                List<String> articleIds = new ArrayList<>();
-                for(DataSnapshot articleId : snapshot.child(r.getString(R.string.db_categories_articleIds)).getChildren()){
-                    articleIds.add(articleId.getValue(String.class));
-                }
-
-                callback.onCategoryDataLoaded(new Category(categoryId, title, color, iconURL), articleIds);
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
+    public void loadCategoryData(String categoryId, CategoryLoadableCallback callback, Activity activity) {
+        CategoryLoaderBackend.getInstance(activity.getApplication()).getCacheObject(categoryId, activity.getResources(), callback);
     }
 
 }

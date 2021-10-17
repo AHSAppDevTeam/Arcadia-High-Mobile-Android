@@ -39,7 +39,7 @@
         <LinearLayout
             android:id="@+id/bulletin_categories_linearLayout"
             android:layout_width="wrap_content"
-            android:layout_height="150dp"
+            android:layout_height="100dp"
             android:orientation="horizontal" />
     </HorizontalScrollView>
 
@@ -62,7 +62,7 @@
                 android:fontFamily="@font/heavybold_lightregular"
                 android:paddingLeft="@dimen/padding"
                 android:text="@string/bulletin_comming_up_text"
-                android:textColor="@color/brightRed"
+                android:textColor="@color/bulletin_up_coming_standard_color"
                 android:textSize="28sp"
                 app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView"
                 tools:layout_editor_absoluteX="0dp" />
@@ -76,11 +76,12 @@
                 />
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/bulletin_default_text_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/padding"
                 android:text="Default"
+                android:textAllCaps="true"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintTop_toBottomOf="@+id/bulletin_articles_coming_up_recycler_view" />

@@ -40,8 +40,9 @@
             android:id="@+id/home_news_constraintLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/padding_x.5"
             android:background="@drawable/community_section_unit_background"
+            android:backgroundTint="?attr/bgColorAccent"
+            android:clipToPadding="false"
             >
 
             <androidx.cardview.widget.CardView

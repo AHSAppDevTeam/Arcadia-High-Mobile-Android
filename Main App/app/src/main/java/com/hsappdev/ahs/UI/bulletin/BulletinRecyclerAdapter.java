@@ -113,7 +113,6 @@ public class BulletinRecyclerAdapter extends RecyclerView.Adapter<BulletinRecycl
         public void setDetails(Article article, OnItemClick onArticleClick) {
             super.setDetails(article, onArticleClick);
             number.setText(Integer.toString(getAdapterPosition()+1));
-            number.setTextColor(article.getCategoryDisplayColor());
         }
     }
 

@@ -148,7 +148,7 @@ public class CommunityRecyclerAdapter extends RecyclerView.Adapter<CommunityRecy
 
         @Override
         public void onClick(View v) {
-            onCommunityClick.onClicked(communitySection);
+            if(communitySection != null) {onCommunityClick.onClicked(communitySection);}
         }
     }
 }

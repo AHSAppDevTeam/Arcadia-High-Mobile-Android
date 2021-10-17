@@ -5,6 +5,9 @@
       <config />
     </shared>
   </component>
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="NONE" />
+  </component>
   <component name="BranchesTreeState">
     <expand>
       <path>
@@ -24,10 +27,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3b616bc3-d674-441c-b2d9-e5fc57282456" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Main App/app/src/main/res/drawable/card.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="3b616bc3-d674-441c-b2d9-e5fc57282456" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -42,7 +42,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1pzDN5mJCm4hcVHDzg85ZuCiRvo" />
-  <component name="ProjectLevelVcsManager">
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="ProjectViewState">
@@ -63,6 +63,7 @@
       <method v="2" />
     </configuration>
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -90,19 +91,5 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-  </component>
-  <component name="WindowStateProjectService">
-    <state x="137" y="19" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1624347614378">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state x="137" y="19" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1366.728@0.0.1366.728" timestamp="1624347614378" />
-    <state x="463" y="119" key="FileChooserDialogImpl" timestamp="1624347623188">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state x="463" y="119" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1624347623188" />
-    <state x="263" y="107" key="IDE.errors.dialog" timestamp="1624347466214">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state x="263" y="107" key="IDE.errors.dialog/0.0.1366.728@0.0.1366.728" timestamp="1624347466214" />
   </component>
 </project>

@@ -24,7 +24,7 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:background="@drawable/img_frame_medium"
-                android:elevation="0dp"
+                android:elevation="@dimen/shadowElevation"
                 app:layout_constraintDimensionRatio="1.35"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"

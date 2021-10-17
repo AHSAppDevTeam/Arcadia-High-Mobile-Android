@@ -22,7 +22,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="vertical"
-        android:weightSum="2"
+        android:weightSum="3"
         app:layout_constraintDimensionRatio="2:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -33,14 +33,14 @@
             android:id="@+id/community_article_title"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:ellipsize="end"
             android:gravity="center"
             android:maxLines="3"
-            android:padding="@dimen/padding_x.5"
+            android:padding="@dimen/padding_x.25"
             android:text="Article"
             android:textColor="@color/black"
-            android:textSize="14sp"
+            android:textSize="20sp"
             android:textStyle="bold" />
 
         <TextView
@@ -52,7 +52,7 @@
             android:padding="@dimen/padding_x.5"
             android:text="Description"
             android:textAlignment="viewStart"
-            android:textColor="@color/article_author_text" />
+            android:textColor="@color/black" />
     </LinearLayout>
 
     <TextView
