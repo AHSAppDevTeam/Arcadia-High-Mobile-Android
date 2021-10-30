@@ -41,7 +41,7 @@ public class SmallArticleAdapter extends MultiArticleAdapter<SmallArticleAdapter
     }
 
 
-    static class SmallArticleViewHolder extends MultiArticleAdapter.MultiArticleViewHolder{
+    public static class SmallArticleViewHolder extends MultiArticleAdapter.MultiArticleViewHolder{
         private final LinearLayout linearLayout;
         private final Activity activity;
 

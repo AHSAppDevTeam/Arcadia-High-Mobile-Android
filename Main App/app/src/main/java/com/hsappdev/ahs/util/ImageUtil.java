@@ -29,6 +29,7 @@ public class ImageUtil {
                 .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
                 .centerCrop()
                 .error(R.drawable.img_frame_large)
+                .transition(DrawableTransitionOptions.withCrossFade())
                 .into(imageView);
 
     }

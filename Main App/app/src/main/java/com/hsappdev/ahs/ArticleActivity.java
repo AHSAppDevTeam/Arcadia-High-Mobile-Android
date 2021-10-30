@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -21,6 +22,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.CompositePageTransformer;
 import androidx.viewpager2.widget.MarginPageTransformer;
 import androidx.viewpager2.widget.ViewPager2;
@@ -32,8 +35,19 @@ import com.android.volley.toolbox.Volley;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.hsappdev.ahs.UI.home.ScaleAndFadeTransformer;
+import com.hsappdev.ahs.UI.home.article.RelatedArticleAdapter;
+import com.hsappdev.ahs.UI.saved.SavedRecyclerAdapter;
+import com.hsappdev.ahs.cache.ArticleLoaderBackend;
+import com.hsappdev.ahs.cache.LoadableCallback;
 import com.hsappdev.ahs.dataTypes.Article;
+import com.hsappdev.ahs.db.DatabaseConstants;
 import com.hsappdev.ahs.localdb.ArticleRepository;
 import com.hsappdev.ahs.mediaPager.ImageVideoAdapter;
 import com.hsappdev.ahs.mediaPager.ImageViewActivity;
@@ -48,8 +62,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class ArticleActivity extends AppCompatActivity implements Adjusting_TextView.hello, OnImageClick {
+public class ArticleActivity extends AppCompatActivity implements Adjusting_TextView.hello, OnImageClick, OnItemClick {
 
     private static final String TAG = "ArticleActivity";
 
@@ -58,14 +73,16 @@ public class ArticleActivity extends AppCompatActivity implements Adjusting_Text
     private final int FONT_BAR_MIN = 18;
     private final int FONT_BAR_MAX = 54;
 
-    Article article;
+    private Article article;
 
-    PopupWindow fontBarWindow;
-    ViewPager2 mediaViewPager;
-    TabLayout tabLayout;
+    private PopupWindow fontBarWindow;
+    private ViewPager2 mediaViewPager;
+    private TabLayout tabLayout;
+    private RecyclerView relatedArticles;
+    private RelatedArticleAdapter relatedArticlesAdapter;
     private YoutubeVideoCallback<YouTubeFragment> youtubeVideoCallback;
 
-    RequestQueue queue;
+    private RequestQueue queue;
 
 
     private ArrayList<Adjusting_TextView.TextSizeCallback> callbackList = new ArrayList<>();
@@ -85,8 +102,7 @@ public class ArticleActivity extends AppCompatActivity implements Adjusting_Text
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-//                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         articleRepository = new ArticleRepository(getApplication()); // note: should be in a view model
         setContentView(R.layout.article);
 
@@ -216,6 +232,66 @@ public class ArticleActivity extends AppCompatActivity implements Adjusting_Text
         articleToolbar.setTitleTextAppearance(this, R.style.ArticleAppBarTitleFont);
         articleToolbar.setTitleTextColor(article.getCategoryDisplayColor());
 
+        relatedArticles = findViewById(R.id.article_related_articles);
+        setUpRelatedArticlesSection();
+
+    }
+
+    private void setUpRelatedArticlesSection() {
+        // We need to load related articles from firebase
+        // Related articles constantly change and are not cached for this reason
+        DatabaseReference ref = FirebaseDatabase.getInstance(FirebaseApp.getInstance(DatabaseConstants.FIREBASE_REALTIME_DB)).getReference()
+                .child(getResources().getString(R.string.db_articles))
+                .child(article.getArticleID());
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            boolean hasLoaded = false; // Limit to one load
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(hasLoaded) return;
+                hasLoaded = true;
+                List<String> relatedArticleIds = new ArrayList<>();
+                for (DataSnapshot articleId : snapshot.child(getResources().getString(R.string.db_articles_related_articles)).getChildren()) {
+                    relatedArticleIds.add(articleId.getValue(String.class));
+                    Log.d("relatedArticle", articleId.getValue(String.class));
+                    loadIndividualRelatedArticles(relatedArticleIds);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+    }
+
+    private void loadIndividualRelatedArticles(List<String> relatedArticleIds) {
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(relatedArticles.getContext(), LinearLayoutManager.VERTICAL, false);
+        relatedArticles.setLayoutManager(layoutManager);
+        relatedArticlesAdapter = new RelatedArticleAdapter(relatedArticleIds, this, this);
+        relatedArticles.setAdapter(relatedArticlesAdapter);
+
+//        for(String articleId : relatedArticleIds) {
+//            ArticleLoaderBackend.getInstance(getApplication()).getCacheObject(articleId, getResources(), new LoadableCallback<Article>() {
+//                boolean hasLoaded = false;
+//                @Override
+//                public void onLoaded(Article article) {
+//                    if(!hasLoaded) { // limit to one article load only
+//                        Log.d("relatedArticle1", article.getTitle());
+//                        relatedArticlesAdapter.addArticle(article);
+//                    }
+//                    hasLoaded = true;
+//
+//                }
+//
+//                @Override
+//                public boolean isActivityDestroyed() {
+//                    return hasLoaded; // This causes the article loader to only load the article once
+//                }
+//            });
+//        }
+
 
     }
 
@@ -324,6 +400,13 @@ public class ArticleActivity extends AppCompatActivity implements Adjusting_Text
     public void onImageClick(Media media) {
         Intent intent = new Intent(ArticleActivity.this, ImageViewActivity.class);
         intent.putExtra(ImageViewActivity.IMAGE_URL_KEY, media.getMediaURL());
+        startActivity(intent);
+    }
+
+    @Override
+    public void onArticleClicked(Article article) {
+        Intent intent = new Intent(ArticleActivity.this, ArticleActivity.class);
+        intent.putExtra(ArticleActivity.data_KEY, article);
         startActivity(intent);
     }
 }

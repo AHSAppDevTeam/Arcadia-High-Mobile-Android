@@ -92,6 +92,11 @@
                 android:textSize="18sp"
                 android:textStyle="normal"
                 android:padding="16dp"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/article_related_articles"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/redGradientStart"/>
         </LinearLayout>
     </ScrollView>
 
