@@ -148,7 +148,7 @@ public class HomeFragment extends Fragment {
 //        });
 
         // Notification Button
-        Button notifButton = view.findViewById(R.id.home_notification_button);
+        ImageView notifButton = view.findViewById(R.id.home_notification_button);
         notifButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
