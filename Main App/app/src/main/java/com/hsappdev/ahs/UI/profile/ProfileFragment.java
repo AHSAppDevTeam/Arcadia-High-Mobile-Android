@@ -24,6 +24,7 @@ import com.hsappdev.ahs.MainActivity;
 import com.hsappdev.ahs.NotificationSettingsActivity;
 import com.hsappdev.ahs.R;
 import com.hsappdev.ahs.SettingsManager;
+import com.hsappdev.ahs.TermsAndAgreements;
 import com.hsappdev.ahs.util.Helper;
 
 public class ProfileFragment extends Fragment {
@@ -77,6 +78,12 @@ public class ProfileFragment extends Fragment {
         LinearLayout calendarBtn = view.findViewById(R.id.profile_calendar_btn);
         calendarBtn.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), CalendarActivity.class);
+            startActivity(intent);
+        });
+
+        LinearLayout termsBtn = view.findViewById(R.id.profile_terms_btn);
+        termsBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), TermsAndAgreements.class);
             startActivity(intent);
         });
         return view;

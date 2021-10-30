@@ -15,7 +15,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ArcadiaHighMobile">
-        <activity android:name=".CalendarActivity"></activity>
+        <activity
+            android:name=".TermsAndAgreements"
+            android:exported="true" />
+        <activity android:name=".CalendarActivity" />
         <activity android:name=".NotificationSettingsActivity" />
 
         <meta-data
@@ -37,15 +40,14 @@
         <activity android:name=".NotificationActivity" />
         <activity
             android:name=".ArticleActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            />
+            android:configChanges="orientation|keyboardHidden|screenSize" />
         <activity android:name=".mediaPager.ImageViewActivity" />
         <activity android:name=".CommunityActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
     </application>
