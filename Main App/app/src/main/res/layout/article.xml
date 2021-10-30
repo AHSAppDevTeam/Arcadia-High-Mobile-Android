@@ -92,11 +92,16 @@
                 android:textSize="18sp"
                 android:textStyle="normal"
                 android:padding="16dp"/>
+            <Button
+                android:id="@+id/article_see_more_section_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="See more in"/>
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/article_related_articles"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/redGradientStart"/>
+                android:nestedScrollingEnabled="false"/>
         </LinearLayout>
     </ScrollView>
 

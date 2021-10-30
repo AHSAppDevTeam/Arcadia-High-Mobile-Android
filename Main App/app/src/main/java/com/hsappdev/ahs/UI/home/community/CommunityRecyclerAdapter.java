@@ -98,8 +98,8 @@ public class CommunityRecyclerAdapter extends RecyclerView.Adapter<CommunityRecy
                         thumbURLs.add(thumbURL.getValue(String.class));
                     }
 
-                    communitySection = new CommunitySection(categoryId, title, blurb, color,  isFeatured, thumbURLs.toArray(new String[0]));
-                    categoryTitle.setTextColor(Color.parseColor(communitySection.getDisplayColor()));
+                    communitySection = new CommunitySection(categoryId, title, blurb, Color.parseColor(color),  isFeatured, thumbURLs.toArray(new String[0]));
+                    categoryTitle.setTextColor(communitySection.getDisplayColor());
                     Helper.setBoldRegularText(categoryTitle, communitySection.getCategoryDisplayName(), " News");
                     categoryBlurb.setText(communitySection.getBlurb());
                     setImages();

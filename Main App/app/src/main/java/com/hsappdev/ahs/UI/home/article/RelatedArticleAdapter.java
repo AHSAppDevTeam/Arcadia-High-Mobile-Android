@@ -58,12 +58,18 @@ public class RelatedArticleAdapter extends RecyclerView.Adapter<RelatedArticleAd
     }
 
 
-    public class RelatedArticleViewHolder extends RecyclerView.ViewHolder implements LoadableCallback<Article> {
+    public class RelatedArticleViewHolder extends RecyclerView.ViewHolder implements LoadableCallback<Article>, View.OnClickListener {
         private final TextView title;
+        private final OnItemClick onItemClick;
+        private Article article;
         public RelatedArticleViewHolder(@NonNull View itemView, OnItemClick onArticleClick) {
             super(itemView);
 
+            this.onItemClick = onArticleClick;
+
             title = itemView.findViewById(R.id.medium_article_name);
+
+            itemView.setOnClickListener(this);
         }
 
 
@@ -73,13 +79,21 @@ public class RelatedArticleAdapter extends RecyclerView.Adapter<RelatedArticleAd
 
         @Override
         public void onLoaded(Article article) {
+            this.article = article;
             title.setText(article.getTitle());
-            Log.d("relatedArticle", "onLoaded: " + article.getTitle());
+            Log.d("relatedArticle", "onLoaded: " + article.getTitle() + " this: " + article);
         }
 
         @Override
         public boolean isActivityDestroyed() {
             return activity.isDestroyed();
+        }
+
+        @Override
+        public void onClick(View v) {
+            if(article != null) {
+                onItemClick.onArticleClicked(article);
+            }
         }
     }
 }

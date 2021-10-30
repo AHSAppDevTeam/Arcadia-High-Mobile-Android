@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.SeekBar;
@@ -43,10 +44,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hsappdev.ahs.UI.home.ScaleAndFadeTransformer;
 import com.hsappdev.ahs.UI.home.article.RelatedArticleAdapter;
+import com.hsappdev.ahs.UI.home.community.CommunityArticleUnit;
 import com.hsappdev.ahs.UI.saved.SavedRecyclerAdapter;
 import com.hsappdev.ahs.cache.ArticleLoaderBackend;
 import com.hsappdev.ahs.cache.LoadableCallback;
 import com.hsappdev.ahs.dataTypes.Article;
+import com.hsappdev.ahs.dataTypes.CommunitySection;
 import com.hsappdev.ahs.db.DatabaseConstants;
 import com.hsappdev.ahs.localdb.ArticleRepository;
 import com.hsappdev.ahs.mediaPager.ImageVideoAdapter;
@@ -79,6 +82,7 @@ public class ArticleActivity extends AppCompatActivity implements Adjusting_Text
     private ViewPager2 mediaViewPager;
     private TabLayout tabLayout;
     private RecyclerView relatedArticles;
+    private Button seeMoreSectionButton;
     private RelatedArticleAdapter relatedArticlesAdapter;
     private YoutubeVideoCallback<YouTubeFragment> youtubeVideoCallback;
 
@@ -186,7 +190,7 @@ public class ArticleActivity extends AppCompatActivity implements Adjusting_Text
             public void onClick(View v) {
                 dismissFontWindow();
                 finish();
-                // overridePendingTransition(R.anim.empty_animation, R.anim.exit_to_right);
+                overridePendingTransition(R.anim.empty_animation, R.anim.exit_to_right);
             }
         });
 
@@ -233,11 +237,27 @@ public class ArticleActivity extends AppCompatActivity implements Adjusting_Text
         articleToolbar.setTitleTextColor(article.getCategoryDisplayColor());
 
         relatedArticles = findViewById(R.id.article_related_articles);
+        seeMoreSectionButton = findViewById(R.id.article_see_more_section_button);
         setUpRelatedArticlesSection();
 
     }
 
     private void setUpRelatedArticlesSection() {
+
+        seeMoreSectionButton.setText("See more in " + Helper.getSpanBoldRegularText(article.getCategoryDisplayName(), ""));
+        seeMoreSectionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CommunitySection communitySection = new CommunitySection(article.getCategoryID(),
+                        article.getCategoryDisplayName(),
+                        article.getCategoryDisplayName(),
+                        article.getCategoryDisplayColor(),
+                        article.isFeatured());
+                Intent intent = new Intent(ArticleActivity.this, CommunityActivity.class);
+                intent.putExtra(CommunityActivity.DATA_KEY, communitySection);
+                startActivity(intent);
+            }
+        });
         // We need to load related articles from firebase
         // Related articles constantly change and are not cached for this reason
         DatabaseReference ref = FirebaseDatabase.getInstance(FirebaseApp.getInstance(DatabaseConstants.FIREBASE_REALTIME_DB)).getReference()
@@ -263,6 +283,8 @@ public class ArticleActivity extends AppCompatActivity implements Adjusting_Text
 
             }
         });
+
+
 
     }
 
@@ -384,7 +406,7 @@ public class ArticleActivity extends AppCompatActivity implements Adjusting_Text
         super.onBackPressed();
         dismissFontWindow();
         // Animation on back press
-        // overridePendingTransition(R.anim.empty_animation, R.anim.exit_to_right);
+        overridePendingTransition(R.anim.empty_animation, R.anim.exit_to_right);
     }
 
     public void adjustFontScale(Configuration config, float scale) {
@@ -408,5 +430,7 @@ public class ArticleActivity extends AppCompatActivity implements Adjusting_Text
         Intent intent = new Intent(ArticleActivity.this, ArticleActivity.class);
         intent.putExtra(ArticleActivity.data_KEY, article);
         startActivity(intent);
+        overridePendingTransition(R.anim.enter_from_right, R.anim.empty_animation);
+
     }
 }

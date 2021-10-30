@@ -181,7 +181,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationC
         Intent intent = new Intent(MainActivity.this, ArticleActivity.class);
         intent.putExtra(ArticleActivity.data_KEY, article);
         startActivity(intent);
-        // overridePendingTransition(R.anim.enter_from_right, R.anim.empty_animation);
+        overridePendingTransition(R.anim.enter_from_right, R.anim.empty_animation);
     }
 
     @Override
@@ -189,7 +189,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationC
         Intent intent = new Intent(MainActivity.this, CommunityActivity.class);
         intent.putExtra(CommunityActivity.DATA_KEY, communitySection);
         startActivity(intent);
-        // overridePendingTransition(R.anim.enter_from_right, R.anim.empty_animation);
+        overridePendingTransition(R.anim.enter_from_right, R.anim.empty_animation);
     }
 
     @Override
