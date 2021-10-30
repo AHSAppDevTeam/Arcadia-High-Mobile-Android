@@ -19,6 +19,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hsappdev.ahs.UI.home.community.CommunityArticleUnit;
+import com.hsappdev.ahs.UI.home.community.SingleLineCommunityArticleUnit;
 import com.hsappdev.ahs.dataTypes.Article;
 import com.hsappdev.ahs.dataTypes.CommunitySection;
 import com.hsappdev.ahs.db.DatabaseConstants;
@@ -105,25 +106,39 @@ public class CommunityActivity extends AppCompatActivity implements OnItemClick,
         }
 
         if(articleIds.size() > 0) {
-            for (int i = 0; i < articleIds.size(); i += gridNum) {
+            for (int i = 0; i < Math.min(articleIds.size(), 4); i += gridNum) {
                 LinearLayout intermediateLinearLayout = new LinearLayout(getApplicationContext());
                 intermediateLinearLayout.setWeightSum(gridNum);
                 for (int j = i; j < i + gridNum; j++) {
-                    if (j < articleIds.size()) {
-                        boolean isSmall = articleIds.size() >= i+gridNum;
-                        CommunityArticleUnit secondaryArticleUnit = new CommunityArticleUnit(getApplicationContext(), articleIds.get(j), this, this, isSmall);
-                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                                LinearLayout.LayoutParams.MATCH_PARENT,
-                                LinearLayout.LayoutParams.WRAP_CONTENT,
-                                1.0f
-                        );
-                        params.setMargins(p, p, p, p);
-                        secondaryArticleUnit.setLayoutParams(params);
-                        intermediateLinearLayout.addView(secondaryArticleUnit);
-                    }
+                    CommunityArticleUnit secondaryArticleUnit = new CommunityArticleUnit(getApplicationContext(), articleIds.get(0), this, this, true);
+                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.MATCH_PARENT,
+                            LinearLayout.LayoutParams.WRAP_CONTENT,
+                            1.0f
+                    );
+                    params.setMargins(p, p, p, p);
+                    secondaryArticleUnit.setLayoutParams(params);
+                    intermediateLinearLayout.addView(secondaryArticleUnit);
+                    articleIds.remove(0);
+
                 }
 
                 linearLayout.addView(intermediateLinearLayout);
+            }
+
+            if (articleIds.size() > 0) {
+                for (int n = 0; n < articleIds.size(); n++) {
+                    SingleLineCommunityArticleUnit slimArticleUnit = new SingleLineCommunityArticleUnit(getApplicationContext(), articleIds.get(0), this, this);
+                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.MATCH_PARENT,
+                            LinearLayout.LayoutParams.WRAP_CONTENT,
+                            1.0f
+                    );
+                    params.setMargins(p, p, p, p);
+                    slimArticleUnit.setLayoutParams(params);
+                    linearLayout.addView(slimArticleUnit);
+                    articleIds.remove(0);
+                }
             }
         }
 

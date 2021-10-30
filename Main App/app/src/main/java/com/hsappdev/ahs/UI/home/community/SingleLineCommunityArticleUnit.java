@@ -6,7 +6,6 @@ import android.content.res.Resources;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,36 +14,27 @@ import androidx.cardview.widget.CardView;
 import com.hsappdev.ahs.OnItemClick;
 import com.hsappdev.ahs.R;
 import com.hsappdev.ahs.cache.ArticleLoaderBackend;
-import com.hsappdev.ahs.cache.LoadableCallback;
 import com.hsappdev.ahs.cache.callbacks.ArticleLoadableCallback;
 import com.hsappdev.ahs.dataTypes.Article;
-import com.hsappdev.ahs.util.ImageUtil;
 import com.hsappdev.ahs.util.ScreenUtil;
 
-public class CommunityArticleUnit extends CardView implements ArticleLoadableCallback {
+public class SingleLineCommunityArticleUnit extends CardView implements ArticleLoadableCallback{
 
     final protected View contentView;
     protected Article article;
 
-    private TextView title;
-    private TextView description;
-    private TextView time;
+    private TextView articleTitle;
+    private TextView articleTime;
 
-    private ImageView image;
     final private Activity activity;
     final Resources r;
 
-    final boolean isSmall;
-
-    public CommunityArticleUnit(@NonNull Context context, String articleId, OnItemClick onArticleClick, Activity activity, boolean isSmall) {
+    public SingleLineCommunityArticleUnit(@NonNull Context context, String articleId, OnItemClick onArticleClick, Activity activity) {
         super(context);
-
         View view = getViewToInflate(context, this);
         contentView = view;
 
         r = getResources();
-
-        this.isSmall = isSmall;
 
         getAttributesFromView();
 
@@ -59,14 +49,6 @@ public class CommunityArticleUnit extends CardView implements ArticleLoadableCal
                 onArticleClick.onArticleClicked(article);
             }
         });
-
-    }
-
-    protected void getAttributesFromView() {
-        title = findViewById(R.id.community_article_title);
-        description = findViewById(R.id.community_article_description);
-        time = findViewById(R.id.community_article_time);
-        image = findViewById(R.id.community_article_image);
     }
 
     private void setUpVisualEffects() {
@@ -81,16 +63,19 @@ public class CommunityArticleUnit extends CardView implements ArticleLoadableCal
         setFocusable(true);
     }
 
+    protected void updateUI() {
+        articleTitle.setText(article.getTitle());
+        ScreenUtil.setTimeToTextView(article.getTimestamp(), articleTime);
+    }
+
     protected View getViewToInflate(Context context, ViewGroup root) {
-        return inflate(context, R.layout.comunity_activity_article_unit, root);
+        return inflate(context, R.layout.single_line_community_article_holder, root);
     }
 
-    private void setDetails(String articleId) {
-        ArticleLoaderBackend.getInstance(activity.getApplication()).getCacheObject(articleId, r, this);
+    protected void getAttributesFromView() {
+        articleTitle = contentView.findViewById(R.id.single_line_community_article_title);
+        articleTime = contentView.findViewById(R.id.single_line_community_article_time);
     }
-
-
-
 
     @Override
     public  void onLoaded(Article articleN) {
@@ -98,22 +83,8 @@ public class CommunityArticleUnit extends CardView implements ArticleLoadableCal
         updateUI();
     }
 
-    protected void updateUI() {
-        title.setText(article.getTitle());
-        ScreenUtil.setTimeToTextView(article.getTimestamp(), time);
-        if(!isSmall) {
-            description.setVisibility(View.VISIBLE);
-            ScreenUtil.setPlainHTMLStringToTextView(article.getBody(), description);
-        } else {
-            description.setVisibility(View.GONE);
-        }
-        setImageToView();
-    }
-
-    protected void setImageToView() {
-        if(article.getImageURLs().length > 0) {
-            ImageUtil.setImageToView(article.getImageURLs()[0], image);
-        }
+    private void setDetails(String articleId) {
+        ArticleLoaderBackend.getInstance(activity.getApplication()).getCacheObject(articleId, r, this);
     }
 
     @Override
