@@ -126,9 +126,9 @@ public class BulletinRecyclerAdapter extends RecyclerView.Adapter<BulletinRecycl
             super(itemView);
 
             this.title = itemView.findViewById(R.id.saved_article_title);
-            this.category = itemView.findViewById(R.id.saved_article_category);
-            this.indicator = itemView.findViewById(R.id.saved_article_indicator);
-            this.timeStamp = itemView.findViewById(R.id.saved_article_time);
+            this.category = itemView.findViewById(R.id.notification_article_category);
+            this.indicator = itemView.findViewById(R.id.notification_article_indicator);
+            this.timeStamp = itemView.findViewById(R.id.notification_article_time);
         }
 
         public void setDetails(Article article, OnItemClick onArticleClick){

@@ -120,10 +120,10 @@
                         app:selected="true"
                         app:textColorInactive="@color/brightRed" />
 
-                    <Space
+                    <View
                         android:layout_width="0dp"
                         android:layout_height="1dp"
-                        android:layout_weight="1"></Space>
+                        android:layout_weight="1"></View>
 
                     <com.hsappdev.ahs.UI.home.TextViewSelector
                         android:id="@+id/home_community_selector"
@@ -150,10 +150,10 @@
                         app:selected="false"
                         app:textColorInactive="@color/teal" />
 
-                    <Space
+                    <View
                         android:layout_width="0dp"
                         android:layout_height="1dp"
-                        android:layout_weight="1"></Space>
+                        android:layout_weight="1"></View>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="wrap_content"

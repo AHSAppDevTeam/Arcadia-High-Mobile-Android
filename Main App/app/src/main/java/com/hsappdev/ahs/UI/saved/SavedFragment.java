@@ -3,7 +3,6 @@ package com.hsappdev.ahs.UI.saved;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.Color;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.util.Log;
@@ -43,12 +42,6 @@ public class SavedFragment extends Fragment {
     private Spinner sortBySpinner;
 
 
-    // Sort by options
-    private static final String NEWEST = "Sort by Newest";
-    private static final int NEWEST_ID = 0;
-    private static final String OLDEST = "Sort by Oldest";
-    private static final int OLDEST_ID = 1;
-
     private int sortMode = 0;
 
 
@@ -66,9 +59,9 @@ public class SavedFragment extends Fragment {
 
         savedRecyclerView = view.findViewById(R.id.saved_fragment_recycler_view);
         titleTextView = view.findViewById(R.id.saved_fragment_title);
-        clearAllButton = view.findViewById(R.id.saved_fragment_clear_all);
+        clearAllButton = view.findViewById(R.id.notification_clear_all);
         emptyMsgTextView = view.findViewById(R.id.saved_fragment_empty_message);
-        sortBySpinner = view.findViewById(R.id.saved_fragment_sort_by_spinner);
+        sortBySpinner = view.findViewById(R.id.notification_sort_by_spinner);
         setUpRecyclerView();
         initView();
         return view;
@@ -94,7 +87,6 @@ public class SavedFragment extends Fragment {
                         .setNegativeButton(android.R.string.no, null).show();
             }
         });
-        String[] items = new String[]{NEWEST, OLDEST};
         ArrayAdapter adapter = ArrayAdapter.createFromResource(getContext(), R.array.saved_pager_spinner_options, R.layout.default_spinner_layout);
         adapter.setDropDownViewResource(R.layout.default_spinner_layout);
         sortBySpinner.setAdapter(adapter);

@@ -12,10 +12,8 @@ import androidx.recyclerview.widget.SortedList;
 
 import com.hsappdev.ahs.OnItemClick;
 import com.hsappdev.ahs.R;
-import com.hsappdev.ahs.UI.home.NewsRecyclerAdapter;
 import com.hsappdev.ahs.dataTypes.Article;
 import com.hsappdev.ahs.util.Helper;
-import com.hsappdev.ahs.util.ImageUtil;
 import com.hsappdev.ahs.util.ScreenUtil;
 
 import java.util.ArrayList;
@@ -114,20 +112,21 @@ public class SavedRecyclerAdapter extends RecyclerView.Adapter<SavedRecyclerAdap
         return savedArticleList.size();
     }
 
-    public class SavedArticleViewHolder extends RecyclerView.ViewHolder{
+    public class SavedArticleViewHolder extends RecyclerView.ViewHolder {
 
         private final TextView title;
         private final TextView category;
         private final TextView timeStamp;
         private final ImageView indicator;
 
+
         public SavedArticleViewHolder(@NonNull View itemView) {
             super(itemView);
 
             this.title = itemView.findViewById(R.id.saved_article_title);
-            this.category = itemView.findViewById(R.id.saved_article_category);
-            this.indicator = itemView.findViewById(R.id.saved_article_indicator);
-            this.timeStamp = itemView.findViewById(R.id.saved_article_time);
+            this.category = itemView.findViewById(R.id.notification_article_category);
+            this.indicator = itemView.findViewById(R.id.notification_article_indicator);
+            this.timeStamp = itemView.findViewById(R.id.notification_article_time);
         }
 
         public void setDetails(Article article){
@@ -144,5 +143,6 @@ public class SavedRecyclerAdapter extends RecyclerView.Adapter<SavedRecyclerAdap
                 }
             });
         }
+
     }
 }

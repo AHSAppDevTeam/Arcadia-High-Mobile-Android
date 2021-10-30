@@ -83,6 +83,7 @@ public class ProfileCardFragment extends Fragment {
             }
         });
 
+
         return view;
     }
 

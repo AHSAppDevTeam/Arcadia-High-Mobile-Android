@@ -2,6 +2,7 @@ package com.hsappdev.ahs;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.lifecycle.Observer;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
@@ -33,6 +34,7 @@ import com.hsappdev.ahs.db.DatabaseConstants;
 import com.hsappdev.ahs.localdb.ArticleRepository;
 
 import java.util.Arrays;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationCallback, SettingsManager.DayNightCallback, OnItemClick, OnSectionClicked, OnNotificationSectionClicked {
 
@@ -110,6 +112,32 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationC
             NotificationSetup.subscribe(this, "Drafts");
         }
 
+        setUpNotificationIcon();
+
+    }
+
+    private void setUpNotificationIcon() {
+
+        // First initially setup the notif icon
+        // pretend that all notifs are read
+
+        // TODO: notif button
+
+
+        ArticleRepository articleRepository = new ArticleRepository(getApplication());
+        articleRepository.getAllNotificationArticles().observe(this, articleList -> {
+            boolean isAllRead = true;
+            for (int i = 0; i < articleList.size(); i++) {
+                if(articleList.get(i).getIsViewed() == 0) {
+                    isAllRead = false;
+                }
+            }
+
+            if (!isAllRead) {
+                // show the special icon
+                // TODO: need icons
+            }
+        });
     }
 
     @Override

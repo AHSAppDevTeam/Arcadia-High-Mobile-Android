@@ -1,16 +1,24 @@
 package com.hsappdev.ahs.UI.notification;
 
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SortedList;
 
+import com.google.firebase.database.collection.LLRBNode;
 import com.hsappdev.ahs.OnItemClick;
 import com.hsappdev.ahs.R;
 import com.hsappdev.ahs.dataTypes.Article;
+import com.hsappdev.ahs.util.Helper;
+import com.hsappdev.ahs.util.ScreenUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,7 +84,7 @@ public class NotificationRecyclerAdapter extends RecyclerView.Adapter<Notificati
     @NonNull
     @Override
     public NotificationRecyclerAdapter.NotificationArticleViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.saved_article_holder, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.notification_article_holder, parent, false);
         return new NotificationRecyclerAdapter.NotificationArticleViewHolder(view);
     }
 
@@ -108,15 +116,44 @@ public class NotificationRecyclerAdapter extends RecyclerView.Adapter<Notificati
         return savedArticleList.size();
     }
 
-    public class NotificationArticleViewHolder extends RecyclerView.ViewHolder{
+    public class NotificationArticleViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
+        final private View articleHolderView;
+
+        final private TextView articleTitle;
+        final private TextView articleCategory;
+        final private TextView articleTime;
+        final private ImageView articleCategoryIndicator;
+
+        private Article article;
 
         public NotificationArticleViewHolder(@NonNull View itemView) {
             super(itemView);
-
+            articleHolderView = itemView;
+            articleTitle = itemView.findViewById(R.id.notification_article_title);
+            articleCategory = itemView.findViewById(R.id.notification_article_category);
+            articleTime = itemView.findViewById(R.id.notification_article_time);
+            articleCategoryIndicator = itemView.findViewById(R.id.notification_article_indicator);
         }
 
         public void setDetails(Article article){
+            this.article = article;
+            articleTitle.setText(article.getTitle());
+            Helper.setBoldRegularText(articleCategory, article.getCategoryDisplayName(), "");
+            articleCategory.setTextColor(article.getCategoryDisplayColor());
+            ScreenUtil.setTimeToTextView(article.getTimestamp(), articleTime);
+            articleCategoryIndicator.setColorFilter(article.getCategoryDisplayColor());
+            if(article.getIsViewed()==1) {
+                articleHolderView.setBackgroundTintList(ColorStateList.valueOf(Color.LTGRAY));
+            }
+            articleHolderView.setOnClickListener(this);
+        }
 
+        @Override
+        public void onClick(View view) {
+            if(article != null) {
+                onArticleClick.onArticleClicked(article);
+            }
         }
     }
 

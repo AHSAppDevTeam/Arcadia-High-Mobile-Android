@@ -27,7 +27,7 @@
         android:padding="@dimen/padding_x.5">
 
         <Spinner
-            android:id="@+id/saved_fragment_sort_by_spinner"
+            android:id="@+id/notification_sort_by_spinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="@dimen/padding_x.5"
@@ -38,7 +38,7 @@
             />
 
         <LinearLayout
-            android:id="@+id/saved_fragment_clear_all"
+            android:id="@+id/notification_clear_all"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:background="@drawable/saved_fragment_sortby_btn_bg"
