@@ -26,7 +26,7 @@ public class ImageUtil {
         Glide
                 .with(imageView.getContext())
                 .load(imageUrl)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
                 .centerCrop()
                 .error(R.drawable.img_frame_large)
                 .into(imageView);
