@@ -96,12 +96,15 @@
                 android:id="@+id/article_see_more_section_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="See more in"/>
+                android:text="See more in"
+                android:layout_margin="@dimen/padding"/>
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/article_related_articles"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:nestedScrollingEnabled="false"/>
+                android:nestedScrollingEnabled="false"
+                android:layout_marginBottom="@dimen/padding_x2"
+                />
         </LinearLayout>
     </ScrollView>
 

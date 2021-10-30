@@ -2,10 +2,12 @@ package com.hsappdev.ahs.UI.home.article;
 
 import android.app.Activity;
 import android.app.Application;
+import android.graphics.PorterDuff;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -20,6 +22,8 @@ import com.hsappdev.ahs.UI.saved.SavedRecyclerAdapter;
 import com.hsappdev.ahs.cache.ArticleLoaderBackend;
 import com.hsappdev.ahs.cache.LoadableCallback;
 import com.hsappdev.ahs.dataTypes.Article;
+import com.hsappdev.ahs.util.ImageUtil;
+import com.hsappdev.ahs.util.ScreenUtil;
 
 import java.util.List;
 
@@ -59,15 +63,23 @@ public class RelatedArticleAdapter extends RecyclerView.Adapter<RelatedArticleAd
 
 
     public class RelatedArticleViewHolder extends RecyclerView.ViewHolder implements LoadableCallback<Article>, View.OnClickListener {
-        private final TextView title;
         private final OnItemClick onItemClick;
+        private final ImageView articleImage;
+        private final TextView titleTextView;
+        private final TextView timeTextView;
+        private final TextView categoryTextView;
+        private final ImageView indicatorImageView;
         private Article article;
         public RelatedArticleViewHolder(@NonNull View itemView, OnItemClick onArticleClick) {
             super(itemView);
 
             this.onItemClick = onArticleClick;
 
-            title = itemView.findViewById(R.id.medium_article_name);
+            this.articleImage = itemView.findViewById(R.id.medium_article_image);
+            this.titleTextView = itemView.findViewById(R.id.medium_article_name);
+            this.timeTextView = itemView.findViewById(R.id.medium_article_time);
+            this.categoryTextView = itemView.findViewById(R.id.medium_article_category);
+            this.indicatorImageView = itemView.findViewById(R.id.medium_article_indicator);
 
             itemView.setOnClickListener(this);
         }
@@ -80,7 +92,18 @@ public class RelatedArticleAdapter extends RecyclerView.Adapter<RelatedArticleAd
         @Override
         public void onLoaded(Article article) {
             this.article = article;
-            title.setText(article.getTitle());
+            titleTextView.setText(article.getTitle());
+            if(article.getImageURLs().length != 0) { // When there are at least one article, show first image
+                ImageUtil.setImageToView(article.getImageURLs()[0], articleImage);
+            } else if(article.getVideoURLs().length != 0){
+                ImageUtil.setImageToSmallView(ImageUtil.getYoutubeThumbnail(article.getVideoURLs()[0]), articleImage);
+            }
+
+            ScreenUtil.setTimeToTextView(article.getTimestamp(), timeTextView);
+
+            categoryTextView.setText(article.getCategoryDisplayName());
+            categoryTextView.setTextColor(article.getCategoryDisplayColor());
+            indicatorImageView.setColorFilter(article.getCategoryDisplayColor(), PorterDuff.Mode.SRC_OVER);
             Log.d("relatedArticle", "onLoaded: " + article.getTitle() + " this: " + article);
         }
 

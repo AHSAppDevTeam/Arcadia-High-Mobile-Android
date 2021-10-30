@@ -3,6 +3,7 @@ package com.hsappdev.ahs;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -243,6 +244,21 @@ public class ArticleActivity extends AppCompatActivity implements Adjusting_Text
     }
 
     private void setUpRelatedArticlesSection() {
+
+        int padding = (int) getResources().getDimension(R.dimen.padding);
+        relatedArticles.addItemDecoration(new RecyclerView.ItemDecoration() {
+            @Override
+            public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
+                super.getItemOffsets(outRect, view, parent, state);
+                outRect.right = padding;
+                outRect.left = padding;
+                if(parent.getChildAdapterPosition(view) == 0){
+                    outRect.top = padding;
+                }
+                outRect.bottom = padding;
+
+            }
+        });
 
         seeMoreSectionButton.setText("See more in " + Helper.getSpanBoldRegularText(article.getCategoryDisplayName(), ""));
         seeMoreSectionButton.setOnClickListener(new View.OnClickListener() {
