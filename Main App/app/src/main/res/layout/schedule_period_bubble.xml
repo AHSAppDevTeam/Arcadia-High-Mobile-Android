@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:paddingHorizontal="@dimen/padding">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/divider_guide"
@@ -49,6 +50,7 @@
         android:layout_width="0dp"
         android:layout_height="@dimen/padding_x2"
         android:gravity="center"
+        android:paddingEnd="@dimen/padding"
         android:text="Time Start"
         android:textColor="?attr/titleColor"
         app:layout_constraintEnd_toStartOf="@+id/divider_guide"
@@ -60,6 +62,7 @@
         android:layout_width="0dp"
         android:layout_height="@dimen/padding_x2"
         android:gravity="center"
+        android:paddingEnd="@dimen/padding"
         android:text="Time End"
         android:textColor="?attr/titleColor"
         app:layout_constraintBottom_toBottomOf="parent"

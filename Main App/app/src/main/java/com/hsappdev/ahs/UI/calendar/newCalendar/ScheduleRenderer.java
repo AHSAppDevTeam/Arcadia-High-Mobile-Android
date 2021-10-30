@@ -1,5 +1,6 @@
 package com.hsappdev.ahs.UI.calendar.newCalendar;
 
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.Gravity;
@@ -20,7 +21,7 @@ import org.w3c.dom.Text;
 public class ScheduleRenderer {
 
     private static final String TAG = "ScheduleRenderer";
-    private static final int CELL_SCALE_FACTOR = 4;
+    private static final int CELL_SCALE_FACTOR = 8;
 
     private final LinearLayout view;
     public ScheduleRenderer(LinearLayout view) {
@@ -31,10 +32,12 @@ public class ScheduleRenderer {
         view.removeAllViews();
         view.setOrientation(LinearLayout.VERTICAL);
 
-        TextView title = new TextView(view.getContext());
+        LayoutInflater layoutInflater = LayoutInflater.from(view.getContext());
+        View header = layoutInflater.inflate(R.layout.schedule_title_header, null, false);
+        TextView title = header.findViewById(R.id.schedule_title_header);
         title.setText(schedule.getTitle());
-        title.setTextSize(30f);
-        view.addView(title);
+
+        view.addView(header);
         Log.d(TAG, "render: "+ schedule.getTimestamps().size());
         for (int i = 0; i < schedule.getTimestamps().size(); i+=2) {
             int timestampStart = schedule.getTimestamps().get(i);
