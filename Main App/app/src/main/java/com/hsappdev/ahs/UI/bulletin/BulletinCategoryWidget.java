@@ -117,7 +117,7 @@ public class BulletinCategoryWidget extends CardView implements CategoryLoadable
             bgImageView.setBackgroundColor(category.getColor());
 
             //bgImageView.setBackgroundTintBlendMode(BlendMode.MULTIPLY);
-            int p = 8;
+            int p = 4;
             bgImageView.setPadding(p,p,p,p);
             bgImageView.setBackgroundTintList(ColorStateList.valueOf(category.getColor()));
 
