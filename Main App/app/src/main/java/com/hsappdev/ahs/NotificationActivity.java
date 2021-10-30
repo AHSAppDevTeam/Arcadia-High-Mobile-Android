@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -29,6 +30,7 @@ public class NotificationActivity extends AppCompatActivity implements OnItemCli
     
     private ArticleRepository articleRepository;
     private RecyclerView recyclerView;
+    private ImageButton homeButton;
     private NotificationRecyclerAdapter notificationRecyclerAdapter;
 
     private int sortMode = 0;
@@ -44,10 +46,18 @@ public class NotificationActivity extends AppCompatActivity implements OnItemCli
 
         clearAllButton = findViewById(R.id.notification_clear_all);
         sortBySpinner = findViewById(R.id.notification_sort_by_spinner);
-
+        homeButton = findViewById(R.id.notification_activity_home_button);
         setUpRecyclerView();
 
         loadNotifsFromDatabase();
+
+        homeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
     }
 
     private void setUpRecyclerView() {

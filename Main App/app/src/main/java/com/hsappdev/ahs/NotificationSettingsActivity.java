@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CompoundButton;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -14,6 +15,9 @@ import com.hsappdev.ahs.util.Helper;
 
 public class NotificationSettingsActivity extends AppCompatActivity {
     LinearLayout controlLayout;
+
+    private ImageButton homeButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +50,15 @@ public class NotificationSettingsActivity extends AppCompatActivity {
         for(String channel : NotificationSetup.bulletinChannels) {
             setUpChannelControl(channel, controlLayout);
         }
+
+        homeButton = findViewById(R.id.notification_settings_activity_home_button);
+        homeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
     }
 
     private void setUpChannelControl(String channel, LinearLayout controlLayout) {

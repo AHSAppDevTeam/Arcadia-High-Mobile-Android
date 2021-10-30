@@ -6,30 +6,49 @@
     android:layout_height="match_parent"
     tools:context=".TermsAndAgreements">
 
-    <TextView
-        android:id="@+id/notification_title"
+    <LinearLayout
+        android:id="@+id/terms_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/heavybold_lightregular"
-        android:padding="@dimen/padding"
-        android:text="@string/terms_and_agreements_title"
-        android:textColor="@color/brightRed"
-        android:textSize="28sp"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:id="@+id/terms_activity_home_button"
+            android:layout_width="@dimen/cornerIconSize"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/padding_x.5"
+            android:background="@drawable/icon_circle"
+            android:foreground="?attr/actionBarItemBackground"
+            android:src="@drawable/activity_navigation_back_arrow"
+            app:tint="@color/black" />
+
+        <TextView
+            android:id="@+id/notification_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/heavybold_lightregular"
+            android:padding="@dimen/padding"
+            android:text="@string/terms_and_agreements_title"
+            android:textColor="@color/brightRed"
+            android:textSize="28sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </LinearLayout>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/notification_title">
+        app:layout_constraintTop_toBottomOf="@+id/terms_header">
 
         <TextView
             android:id="@+id/terms_textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/sfprodisplay_regular"
-            android:padding="@dimen/padding"
-            />
+            android:padding="@dimen/padding" />
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
