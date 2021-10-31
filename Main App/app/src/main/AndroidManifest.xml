@@ -16,7 +16,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ArcadiaHighMobile">
         <activity
-            android:name=".TermsAndAgreements"
+            android:name=".AboutUsActivity"
+            android:exported="true" />
+        <activity
+            android:name=".TermsAndAgreementsActivity"
             android:exported="true" />
         <activity android:name=".CalendarActivity" />
         <activity android:name=".NotificationSettingsActivity" />
@@ -43,7 +46,8 @@
             android:configChanges="orientation|keyboardHidden|screenSize" />
         <activity android:name=".mediaPager.ImageViewActivity" />
         <activity android:name=".CommunityActivity" />
-        <activity android:name=".MainActivity"
+        <activity
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

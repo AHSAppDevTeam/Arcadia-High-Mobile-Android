@@ -16,11 +16,12 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.switchmaterial.SwitchMaterial;
+import com.hsappdev.ahs.AboutUsActivity;
 import com.hsappdev.ahs.CalendarActivity;
 import com.hsappdev.ahs.NotificationSettingsActivity;
 import com.hsappdev.ahs.R;
 import com.hsappdev.ahs.SettingsManager;
-import com.hsappdev.ahs.TermsAndAgreements;
+import com.hsappdev.ahs.TermsAndAgreementsActivity;
 import com.hsappdev.ahs.util.Helper;
 
 public class ProfileFragment extends Fragment {
@@ -79,7 +80,13 @@ public class ProfileFragment extends Fragment {
 
         LinearLayout termsBtn = view.findViewById(R.id.profile_terms_btn);
         termsBtn.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(), TermsAndAgreements.class);
+            Intent intent = new Intent(getActivity(), TermsAndAgreementsActivity.class);
+            startActivity(intent);
+        });
+
+        LinearLayout aboutUsBtn = view.findViewById(R.id.profile_about_us_btn);
+        aboutUsBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), AboutUsActivity.class);
             startActivity(intent);
         });
         return view;

@@ -65,6 +65,7 @@ public class NotificationSettingsActivity extends AppCompatActivity {
         View view = getLayoutInflater().inflate(R.layout.activity_notification_settings_control, null, false);
         TextView label = view.findViewById(R.id.notification_settings_control_text);
         label.setText(channel.replaceAll("_", " "));
+        label.setPadding(36, 0, 0, 0); // Indentation
         SwitchMaterial control = view.findViewById(R.id.notification_settings_control_switch);
         control.setChecked(NotificationSetup.getIfChannelIsEnabled(channel, this));
         control.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
