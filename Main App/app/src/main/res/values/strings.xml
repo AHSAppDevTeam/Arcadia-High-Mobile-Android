@@ -195,6 +195,10 @@ Last updated August 08, 2020
     </string>
     <string name="db_articles_related_articles">relatedArticleIDs</string>
     <string name="about_us"><b>About Us</b></string>
+    <string name="programmers_list"><![CDATA[Jeffrey Aaron Jeyasingh<br/>Xing Liu<br/>Josh McMahon<br/>Richard Wei]]></string>
+    <string name="graphic_designers_list"><![CDATA[Steffi Huang<br/>Arina Miyadi<br/>Kyrene Tam]]></string>
+    <string name="content_editors_list"><![CDATA[Rachel Saw<br/>Jennifer Wong<br/>Kelly Cheng]]></string>
+
 
 
 </resources>
