@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.hsappdev.ahs.OnItemClick;
 import com.hsappdev.ahs.R;
-import com.hsappdev.ahs.UI.saved.SavedRecyclerAdapter;
 import com.hsappdev.ahs.dataTypes.Article;
 import com.hsappdev.ahs.util.Helper;
 

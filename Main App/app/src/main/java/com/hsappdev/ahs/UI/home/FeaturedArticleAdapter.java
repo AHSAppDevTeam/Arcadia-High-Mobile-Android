@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.hsappdev.ahs.OnItemClick;
 import com.hsappdev.ahs.R;
 import com.hsappdev.ahs.cache.ArticleLoaderBackend;
-import com.hsappdev.ahs.cache.LoadableCallback;
 import com.hsappdev.ahs.cache.callbacks.ArticleLoadableCallback;
 import com.hsappdev.ahs.dataTypes.Article;
 import com.hsappdev.ahs.util.ImageUtil;

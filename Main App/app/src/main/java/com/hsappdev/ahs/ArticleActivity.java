@@ -45,10 +45,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hsappdev.ahs.UI.home.ScaleAndFadeTransformer;
 import com.hsappdev.ahs.UI.home.article.RelatedArticleAdapter;
-import com.hsappdev.ahs.UI.home.community.CommunityArticleUnit;
-import com.hsappdev.ahs.UI.saved.SavedRecyclerAdapter;
-import com.hsappdev.ahs.cache.ArticleLoaderBackend;
-import com.hsappdev.ahs.cache.LoadableCallback;
 import com.hsappdev.ahs.dataTypes.Article;
 import com.hsappdev.ahs.dataTypes.CommunitySection;
 import com.hsappdev.ahs.db.DatabaseConstants;
@@ -309,28 +305,6 @@ public class ArticleActivity extends AppCompatActivity implements Adjusting_Text
         relatedArticles.setLayoutManager(layoutManager);
         relatedArticlesAdapter = new RelatedArticleAdapter(relatedArticleIds, this, this);
         relatedArticles.setAdapter(relatedArticlesAdapter);
-
-//        for(String articleId : relatedArticleIds) {
-//            ArticleLoaderBackend.getInstance(getApplication()).getCacheObject(articleId, getResources(), new LoadableCallback<Article>() {
-//                boolean hasLoaded = false;
-//                @Override
-//                public void onLoaded(Article article) {
-//                    if(!hasLoaded) { // limit to one article load only
-//                        Log.d("relatedArticle1", article.getTitle());
-//                        relatedArticlesAdapter.addArticle(article);
-//                    }
-//                    hasLoaded = true;
-//
-//                }
-//
-//                @Override
-//                public boolean isActivityDestroyed() {
-//                    return hasLoaded; // This causes the article loader to only load the article once
-//                }
-//            });
-//        }
-
-
     }
 
     private void incrementViews(String articleID) {

@@ -1,19 +1,16 @@
 package com.hsappdev.ahs.UI.home;
 
 import android.app.Activity;
-import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.hsappdev.ahs.OnItemClick;
 import com.hsappdev.ahs.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MediumArticleAdapter extends MultiArticleAdapter<MediumArticleAdapter.MediumArticleViewHolder>{

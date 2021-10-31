@@ -1,15 +1,10 @@
 package com.hsappdev.ahs.UI.bulletin;
 
 import android.app.Activity;
-import android.app.Application;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
-import android.graphics.BlendMode;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.util.TypedValue;
 import android.view.View;
@@ -17,16 +12,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.content.res.AppCompatResources;
 import androidx.cardview.widget.CardView;
-import androidx.core.graphics.drawable.DrawableCompat;
 
 import com.hsappdev.ahs.R;
 import com.hsappdev.ahs.cache.callbacks.CategoryLoadableCallback;
 import com.hsappdev.ahs.dataTypes.Category;
 import com.hsappdev.ahs.util.ImageUtil;
-
-import java.util.List;
 
 public class BulletinCategoryWidget extends CardView implements CategoryLoadableCallback, View.OnClickListener{
     final private Resources r;

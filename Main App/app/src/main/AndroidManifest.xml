@@ -43,7 +43,8 @@
             android:configChanges="orientation|keyboardHidden|screenSize" />
         <activity android:name=".mediaPager.ImageViewActivity" />
         <activity android:name=".CommunityActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

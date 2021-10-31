@@ -1,10 +1,7 @@
 package com.hsappdev.ahs.dataTypes;
 
-import android.graphics.Color;
 import android.os.Parcel;
 import android.os.Parcelable;
-
-import java.util.ArrayList;
 
 public class CommunitySection implements Parcelable {
     private String categoryId, categoryDisplayName, blurb;

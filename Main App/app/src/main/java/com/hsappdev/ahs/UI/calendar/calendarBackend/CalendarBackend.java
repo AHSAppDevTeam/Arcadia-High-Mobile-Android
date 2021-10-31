@@ -1,40 +1,12 @@
 package com.hsappdev.ahs.UI.calendar.calendarBackend;
 
 import android.content.res.Resources;
-import android.util.Log;
-import android.view.View;
 
-import androidx.annotation.NonNull;
-
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.hsappdev.ahs.R;
-import com.hsappdev.ahs.UI.calendar.DayViewContainer;
-import com.hsappdev.ahs.UI.calendar.MonthHeaderContainer;
 import com.hsappdev.ahs.UI.calendar.newCalendar.ScheduleRenderer;
-import com.hsappdev.ahs.db.DatabaseConstants;
 import com.kizitonwose.calendarview.CalendarView;
-import com.kizitonwose.calendarview.model.CalendarDay;
-import com.kizitonwose.calendarview.model.CalendarMonth;
-import com.kizitonwose.calendarview.model.DayOwner;
-import com.kizitonwose.calendarview.ui.DayBinder;
-import com.kizitonwose.calendarview.ui.MonthHeaderFooterBinder;
 
-import org.jetbrains.annotations.NotNull;
-
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.time.YearMonth;
-import java.time.chrono.ChronoLocalDate;
-import java.time.format.TextStyle;
-import java.time.temporal.WeekFields;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class CalendarBackend {
 

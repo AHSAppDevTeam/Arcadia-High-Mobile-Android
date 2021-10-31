@@ -21,7 +21,6 @@ import com.hsappdev.ahs.ArticleActivity;
 import com.hsappdev.ahs.NotificationActivity;
 import com.hsappdev.ahs.R;
 import com.hsappdev.ahs.cache.ArticleLoaderBackend;
-import com.hsappdev.ahs.cache.LoadableCallback;
 import com.hsappdev.ahs.cache.callbacks.ArticleLoadableCallback;
 import com.hsappdev.ahs.dataTypes.Article;
 import com.hsappdev.ahs.localdb.ArticleRepository;

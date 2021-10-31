@@ -17,8 +17,6 @@ import com.google.android.material.tabs.TabLayoutMediator;
 import com.hsappdev.ahs.OnItemClick;
 import com.hsappdev.ahs.R;
 import com.hsappdev.ahs.cache.CategoryLoaderBackend;
-import com.hsappdev.ahs.cache.LoadableCallback;
-import com.hsappdev.ahs.cache.callbacks.ArticleLoadableCallback;
 import com.hsappdev.ahs.cache.callbacks.CategoryLoadableCallback;
 import com.hsappdev.ahs.dataTypes.Category;
 import com.hsappdev.ahs.util.Helper;

@@ -1,14 +1,12 @@
 package com.hsappdev.ahs;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.text.HtmlCompat;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.text.HtmlCompat;
 
 public class TermsAndAgreements extends AppCompatActivity {
 

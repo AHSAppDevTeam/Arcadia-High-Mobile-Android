@@ -1,7 +1,6 @@
 package com.hsappdev.ahs.UI.home.article;
 
 import android.app.Activity;
-import android.app.Application;
 import android.graphics.PorterDuff;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,10 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.hsappdev.ahs.OnItemClick;
 import com.hsappdev.ahs.R;
-import com.hsappdev.ahs.UI.home.MediumArticleAdapter;
-import com.hsappdev.ahs.UI.home.MultiArticleAdapter;
-import com.hsappdev.ahs.UI.home.SmallArticleAdapter;
-import com.hsappdev.ahs.UI.saved.SavedRecyclerAdapter;
 import com.hsappdev.ahs.cache.ArticleLoaderBackend;
 import com.hsappdev.ahs.cache.LoadableCallback;
 import com.hsappdev.ahs.dataTypes.Article;

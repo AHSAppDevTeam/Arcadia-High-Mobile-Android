@@ -4,16 +4,10 @@ import android.content.Context;
 import android.os.Build;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
-import android.util.Log;
 import android.util.TypedValue;
 import android.widget.TextView;
 
 import androidx.core.text.HtmlCompat;
-
-import com.hsappdev.ahs.R;
-
-import java.time.Instant;
-import java.time.ZoneId;
 
 public class ScreenUtil {
     public static float px_to_sp(float px, Context context) {

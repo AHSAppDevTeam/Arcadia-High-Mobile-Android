@@ -2,8 +2,6 @@ package com.hsappdev.ahs.util;
 
 import android.widget.ImageView;
 
-import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
-
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;

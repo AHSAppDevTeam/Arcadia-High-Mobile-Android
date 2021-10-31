@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.hsappdev.ahs.R;
-import com.hsappdev.ahs.UI.calendar.calendarBackend.CalendarBackend;
 import com.hsappdev.ahs.UI.calendar.calendarBackend.CalendarDayLoadCallback;
 import com.hsappdev.ahs.UI.calendar.calendarBackend.CalendarScheduleLoadCallback;
 import com.hsappdev.ahs.UI.calendar.calendarBackend.Day;
@@ -23,7 +22,6 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.temporal.IsoFields;
 import java.time.temporal.WeekFields;
-import java.util.Locale;
 
 public class DayViewContainer extends ViewContainer implements CalendarDayLoadCallback, CalendarScheduleLoadCallback, View.OnClickListener {
 

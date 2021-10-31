@@ -8,7 +8,6 @@ import android.widget.LinearLayout;
 import android.widget.Space;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.DividerItemDecoration;
 
 import com.hsappdev.ahs.OnItemClick;
 import com.hsappdev.ahs.R;

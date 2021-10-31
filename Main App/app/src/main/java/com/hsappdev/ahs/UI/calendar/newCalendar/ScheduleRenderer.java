@@ -1,6 +1,5 @@
 package com.hsappdev.ahs.UI.calendar.newCalendar;
 
-import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.Gravity;
@@ -15,8 +14,6 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.hsappdev.ahs.R;
 import com.hsappdev.ahs.UI.calendar.calendarBackend.Schedule;
-
-import org.w3c.dom.Text;
 
 public class ScheduleRenderer {
 

@@ -1,40 +1,28 @@
 package com.hsappdev.ahs;
 
+import android.app.Application;
+import android.content.Intent;
+import android.content.res.Resources;
+import android.os.Bundle;
+import android.view.Window;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.lifecycle.Observer;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
-import android.app.Application;
-import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.view.Window;
-import android.widget.TextView;
-import android.widget.Toast;
-
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
-import com.google.firebase.messaging.RemoteMessage;
 import com.hsappdev.ahs.UI.home.OnSectionClicked;
-import com.hsappdev.ahs.cache.ArticleCategoryIdLoader;
 import com.hsappdev.ahs.cache.ArticleLoaderBackend;
 import com.hsappdev.ahs.cache.callbacks.ArticleLoadableCallback;
 import com.hsappdev.ahs.dataTypes.Article;
 import com.hsappdev.ahs.dataTypes.CommunitySection;
-import com.hsappdev.ahs.firebaseMessaging.NotificationSetup;
 import com.hsappdev.ahs.db.DatabaseConstants;
+import com.hsappdev.ahs.firebaseMessaging.NotificationSetup;
 import com.hsappdev.ahs.localdb.ArticleRepository;
-
-import java.util.Arrays;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationCallback, SettingsManager.DayNightCallback, OnItemClick, OnSectionClicked, OnNotificationSectionClicked {
 

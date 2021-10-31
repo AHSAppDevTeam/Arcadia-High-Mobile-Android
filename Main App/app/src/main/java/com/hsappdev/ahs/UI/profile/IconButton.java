@@ -2,27 +2,19 @@ package com.hsappdev.ahs.UI.profile;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.content.res.ResourcesCompat;
-import androidx.core.graphics.drawable.DrawableCompat;
 
 import com.hsappdev.ahs.R;
-import com.hsappdev.ahs.util.ScreenUtil;
-
-import java.util.jar.Attributes;
 
 public class IconButton extends LinearLayout {
 

@@ -1,15 +1,8 @@
 package com.hsappdev.ahs.UI.profile;
 
-import androidx.lifecycle.ViewModelProvider;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,10 +10,13 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+
 import com.google.android.material.switchmaterial.SwitchMaterial;
-import com.hsappdev.ahs.ArticleActivity;
 import com.hsappdev.ahs.CalendarActivity;
-import com.hsappdev.ahs.MainActivity;
 import com.hsappdev.ahs.NotificationSettingsActivity;
 import com.hsappdev.ahs.R;
 import com.hsappdev.ahs.SettingsManager;

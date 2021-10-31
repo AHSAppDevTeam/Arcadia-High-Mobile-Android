@@ -4,8 +4,6 @@ import android.app.Application;
 
 import androidx.lifecycle.LiveData;
 
-import com.hsappdev.ahs.dataTypes.Category;
-import com.hsappdev.ahs.dataTypes.CategoryDAO;
 import com.hsappdev.ahs.dataTypes.CategoryList;
 import com.hsappdev.ahs.dataTypes.CategoryListDAO;
 
