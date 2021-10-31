@@ -27,9 +27,9 @@ public class FeaturedViewHolder extends RecyclerView.ViewHolder implements Categ
     private final TextView sectionTitle;
     private final ViewPager2 featuredPager;
     private final TabLayout featuredTabLayout;
-    private FeaturedArticleAdapter featuredArticleAdapter;
     private final Activity activity;
     private final Resources r;
+    private FeaturedArticleAdapter featuredArticleAdapter;
 
 
     public FeaturedViewHolder(@NonNull View itemView, Activity activity) {
@@ -50,7 +50,7 @@ public class FeaturedViewHolder extends RecyclerView.ViewHolder implements Categ
         CategoryLoaderBackend.getInstance(activity.getApplication()).getCacheObject(categoryTitle, r, this);
     }
 
-    public void setUpPager(){
+    public void setUpPager() {
 
         CompositePageTransformer compositePageTransformer = new CompositePageTransformer();
         //margin determines distance between two pages

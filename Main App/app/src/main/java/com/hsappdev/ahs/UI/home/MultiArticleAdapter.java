@@ -15,14 +15,14 @@ import java.util.List;
 /**
  * An abstraction of the Medium and Small ArticleAdapter to prevent duplicate code
  * because these two adapters are very similar
+ *
  * @param <T> the type of the viewHolder
  */
 public abstract class MultiArticleAdapter<T extends MultiArticleAdapter.MultiArticleViewHolder> extends RecyclerView.Adapter<T> {
+    public static final int numArticles = 2;
     protected List<String> articleIds;
     protected OnItemClick onArticleClick;
     protected Activity activity;
-
-    public static final int numArticles = 2;
 
     public MultiArticleAdapter(List<String> articleIds, OnItemClick onArticleClick, Activity activity) {
         this.articleIds = articleIds;
@@ -36,16 +36,16 @@ public abstract class MultiArticleAdapter<T extends MultiArticleAdapter.MultiArt
         List<String> articlesToAdd = new ArrayList<>();
 
         // if we are not in an odd case
-        if(position < articleIds.size()/ numArticles){
-            for (int index = 0; index< numArticles; index++){
-                articlesToAdd.add(articleIds.get((position)* numArticles +index));
+        if (position < articleIds.size() / numArticles) {
+            for (int index = 0; index < numArticles; index++) {
+                articlesToAdd.add(articleIds.get((position) * numArticles + index));
             }
-        }else{
+        } else {
             // if we are in an odd case
             // then find the # of odd ones
-            int oddOnes = articleIds.size()-(position)* numArticles;
-            for (int index = 0; index<oddOnes; index++){
-                articlesToAdd.add(articleIds.get((position)* numArticles +index));
+            int oddOnes = articleIds.size() - (position) * numArticles;
+            for (int index = 0; index < oddOnes; index++) {
+                articlesToAdd.add(articleIds.get((position) * numArticles + index));
             }
         }
 
@@ -54,13 +54,13 @@ public abstract class MultiArticleAdapter<T extends MultiArticleAdapter.MultiArt
 
     @Override
     public int getItemCount() {
-        if(articleIds.size() == 0){
+        if (articleIds.size() == 0) {
             return 0;
         }
-        if(articleIds.size()% numArticles == 0){
-            return articleIds.size()/ numArticles;
-        }else{
-            return articleIds.size()/ numArticles +1;
+        if (articleIds.size() % numArticles == 0) {
+            return articleIds.size() / numArticles;
+        } else {
+            return articleIds.size() / numArticles + 1;
         }
     }
 
@@ -79,7 +79,7 @@ public abstract class MultiArticleAdapter<T extends MultiArticleAdapter.MultiArt
         notifyDataSetChanged();
     }
 
-    public abstract static class MultiArticleViewHolder extends RecyclerView.ViewHolder{
+    public abstract static class MultiArticleViewHolder extends RecyclerView.ViewHolder {
         final protected Resources r;
 
         final protected OnItemClick onArticleClick;

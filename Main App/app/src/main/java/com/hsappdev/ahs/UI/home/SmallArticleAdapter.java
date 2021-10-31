@@ -14,11 +14,9 @@ import com.hsappdev.ahs.R;
 
 import java.util.List;
 
-public class SmallArticleAdapter extends MultiArticleAdapter<SmallArticleAdapter.SmallArticleViewHolder>{
-    private static final String TAG = "MediumArticleAdapter";
-
-
+public class SmallArticleAdapter extends MultiArticleAdapter<SmallArticleAdapter.SmallArticleViewHolder> {
     public static final int numArticles = 2;
+    private static final String TAG = "MediumArticleAdapter";
 
     public SmallArticleAdapter(List<String> articleIds, OnItemClick onArticleClick, Activity activity) {
         super(articleIds, onArticleClick, activity);
@@ -40,7 +38,7 @@ public class SmallArticleAdapter extends MultiArticleAdapter<SmallArticleAdapter
     }
 
 
-    public static class SmallArticleViewHolder extends MultiArticleAdapter.MultiArticleViewHolder{
+    public static class SmallArticleViewHolder extends MultiArticleAdapter.MultiArticleViewHolder {
         private final LinearLayout linearLayout;
         private final Activity activity;
 
@@ -52,14 +50,14 @@ public class SmallArticleAdapter extends MultiArticleAdapter<SmallArticleAdapter
         }
 
 
-        public void setDetails(List<String> articlesToAdd){
+        public void setDetails(List<String> articlesToAdd) {
             linearLayout.removeAllViews();
 
-            for(int i=0; i<articlesToAdd.size(); i++){
+            for (int i = 0; i < articlesToAdd.size(); i++) {
                 String articleId = articlesToAdd.get(i);
-                SmallArticleUnit smallArticleUnit =  new SmallArticleUnit(itemView.getContext(), articleId, onArticleClick, activity);
+                SmallArticleUnit smallArticleUnit = new SmallArticleUnit(itemView.getContext(), articleId, onArticleClick, activity);
                 linearLayout.addView(smallArticleUnit);
-                if(i%2 ==0) {
+                if (i % 2 == 0) {
                     // add padding
                     Space space = new Space(itemView.getContext());
                     space.setMinimumHeight(r.getDimensionPixelSize(R.dimen.padding));

@@ -26,8 +26,8 @@ import java.util.List;
 public class FeaturedArticleAdapter extends RecyclerView.Adapter<FeaturedArticleAdapter.FeaturedArticleViewHolder> {
     private static final String TAG = "FeaturedArticleAdapter";
     private List<String> articleIds;
-    private OnItemClick onArticleClick;
-    private Activity activity;
+    private final OnItemClick onArticleClick;
+    private final Activity activity;
 
     public FeaturedArticleAdapter(List<String> articleIds, OnItemClick onArticleClick, Activity activity) {
         this.articleIds = articleIds;
@@ -40,16 +40,18 @@ public class FeaturedArticleAdapter extends RecyclerView.Adapter<FeaturedArticle
         return articleIds;
     }
 
-    public void addArticleIds(String articleId) {
-        articleIds.add(articleId);
-        notifyItemInserted(articleIds.size()-1);
-    }
-    public void clearAll() {
-        articleIds.clear();
-        notifyDataSetChanged();
-    }
     public void setArticleIds(List<String> articleIds) {
         this.articleIds = articleIds;
+        notifyDataSetChanged();
+    }
+
+    public void addArticleIds(String articleId) {
+        articleIds.add(articleId);
+        notifyItemInserted(articleIds.size() - 1);
+    }
+
+    public void clearAll() {
+        articleIds.clear();
         notifyDataSetChanged();
     }
 
@@ -78,7 +80,6 @@ public class FeaturedArticleAdapter extends RecyclerView.Adapter<FeaturedArticle
     }
 
     static class FeaturedArticleViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, ArticleLoadableCallback {
-        private Article article;
         final private ConstraintLayout articleLayout;
         final private ImageView articleImage;
         final private Resources r;
@@ -86,8 +87,9 @@ public class FeaturedArticleAdapter extends RecyclerView.Adapter<FeaturedArticle
         final private TextView timeTextView;
         final private TextView categoryTextView;
         final private ImageView indicatorImageView;
-        private OnItemClick onArticleClick;
         final private Activity activity;
+        private Article article;
+        private final OnItemClick onArticleClick;
 
         public FeaturedArticleViewHolder(@NonNull View itemView, OnItemClick onArticleClick, Activity activity) {
             super(itemView);
@@ -103,7 +105,7 @@ public class FeaturedArticleAdapter extends RecyclerView.Adapter<FeaturedArticle
 
         }
 
-        public void setDetails(String articleID){
+        public void setDetails(String articleID) {
             articleLayout.setOnClickListener(this);
             ArticleLoaderBackend.getInstance(activity.getApplication()).getCacheObject(articleID, r, this);
         }
@@ -112,7 +114,7 @@ public class FeaturedArticleAdapter extends RecyclerView.Adapter<FeaturedArticle
         @Override
         public void onClick(View view) {
             //Log.d(TAG, "article click");
-            if(article != null)
+            if (article != null)
                 onArticleClick.onArticleClicked(article);
         }
 
@@ -122,9 +124,9 @@ public class FeaturedArticleAdapter extends RecyclerView.Adapter<FeaturedArticle
             this.article = articleN;
 
             titleTextView.setText(article.getTitle());
-            if(article.getImageURLs().length != 0) { // When there are at least one article, show first image
+            if (article.getImageURLs().length != 0) { // When there are at least one article, show first image
                 ImageUtil.setImageToView(article.getImageURLs()[0], articleImage);
-            } else if(article.getVideoURLs().length != 0){
+            } else if (article.getVideoURLs().length != 0) {
                 ImageUtil.setImageToSmallView(ImageUtil.getYoutubeThumbnail(article.getVideoURLs()[0]), articleImage);
             }
 

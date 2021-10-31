@@ -34,18 +34,18 @@ public class HomeFragment extends Fragment {
 
     private static final String TAG = "HomeFragment";
     private Fragment homeNewsFragment, communityFragment;
-    private boolean isSearchSelected = false;
+    private final boolean isSearchSelected = false;
     private AlertDialog dialog;
     private LinearLayout selectorLinearLayout;
+    private BottomNavigationCallback bottomNavigationViewAdapter;
+    private OnNotificationSectionClicked onNotificationSectionClicked;
+    private OnItemClick onItemClick;
+    private boolean is_nav_bar_up = true;
+    private int news_tab_selected = 0; // 0 for home, 1 for community; int allows for potentially more options in the future
 
     public static HomeFragment newInstance() {
         return new HomeFragment();
     }
-
-    private BottomNavigationCallback bottomNavigationViewAdapter;
-    private OnNotificationSectionClicked onNotificationSectionClicked;
-    private OnItemClick onItemClick;
-
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -60,8 +60,6 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    private boolean is_nav_bar_up = true;
-    private int news_tab_selected = 0; // 0 for home, 1 for community; int allows for potentially more options in the future
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -76,25 +74,24 @@ public class HomeFragment extends Fragment {
 
         selectorLinearLayout = view.findViewById(R.id.home_selector_linear_layout);
 
-                NestedScrollView scrollView = view.findViewById(R.id.home_scrollView);
+        NestedScrollView scrollView = view.findViewById(R.id.home_scrollView);
         final float scrollAnimBuffer = 4;
         scrollView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
             float y = 0;
+
             @Override
             public void onScrollChanged() {
-                if(scrollView.getScrollY() > y + scrollAnimBuffer) // scroll down, 2 is the buffer
+                if (scrollView.getScrollY() > y + scrollAnimBuffer) // scroll down, 2 is the buffer
                 {
-                    if(is_nav_bar_up)
+                    if (is_nav_bar_up)
                         bottomNavigationViewAdapter.slideDown();
                     is_nav_bar_up = false;
-                }
-                else if (scrollView.getScrollY() < y - scrollAnimBuffer)
-                {
-                    if(!is_nav_bar_up)
+                } else if (scrollView.getScrollY() < y - scrollAnimBuffer) {
+                    if (!is_nav_bar_up)
                         bottomNavigationViewAdapter.slideUp();
                     is_nav_bar_up = true;
                 }
-                y= scrollView.getScrollY();
+                y = scrollView.getScrollY();
             }
         });
 

@@ -28,12 +28,12 @@ public class HomeCommunityFragment extends Fragment implements CategoryListLoada
     private View contentView;
     private OnSectionClicked onCommunityClick;
     private Resources r;
+    private Activity hostActivity;
 
     public HomeCommunityFragment() {
 
     }
 
-    private Activity hostActivity;
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
@@ -66,8 +66,8 @@ public class HomeCommunityFragment extends Fragment implements CategoryListLoada
         this.contentView = view;
 
         CategoryListLoaderBackend
-        .getInstance(getActivity().getApplication())
-        .getCacheObject(r.getString(R.string.db_location_community), r, this);
+                .getInstance(getActivity().getApplication())
+                .getCacheObject(r.getString(R.string.db_location_community), r, this);
         return view;
     }
 

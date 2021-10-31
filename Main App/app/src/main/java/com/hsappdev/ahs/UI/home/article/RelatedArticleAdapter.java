@@ -23,9 +23,10 @@ import com.hsappdev.ahs.util.ScreenUtil;
 import java.util.List;
 
 public class RelatedArticleAdapter extends RecyclerView.Adapter<RelatedArticleAdapter.RelatedArticleViewHolder> {
-    private List<String> articleIds;
-    private OnItemClick onArticleClick;
-    private Activity activity;
+    private final List<String> articleIds;
+    private final OnItemClick onArticleClick;
+    private final Activity activity;
+
     public RelatedArticleAdapter(List<String> articleIds, OnItemClick onArticleClick, Activity activity) {
         super();
         this.articleIds = articleIds;
@@ -65,6 +66,7 @@ public class RelatedArticleAdapter extends RecyclerView.Adapter<RelatedArticleAd
         private final TextView categoryTextView;
         private final ImageView indicatorImageView;
         private Article article;
+
         public RelatedArticleViewHolder(@NonNull View itemView, OnItemClick onArticleClick) {
             super(itemView);
 
@@ -88,9 +90,9 @@ public class RelatedArticleAdapter extends RecyclerView.Adapter<RelatedArticleAd
         public void onLoaded(Article article) {
             this.article = article;
             titleTextView.setText(article.getTitle());
-            if(article.getImageURLs().length != 0) { // When there are at least one article, show first image
+            if (article.getImageURLs().length != 0) { // When there are at least one article, show first image
                 ImageUtil.setImageToView(article.getImageURLs()[0], articleImage);
-            } else if(article.getVideoURLs().length != 0){
+            } else if (article.getVideoURLs().length != 0) {
                 ImageUtil.setImageToSmallView(ImageUtil.getYoutubeThumbnail(article.getVideoURLs()[0]), articleImage);
             }
 
@@ -109,7 +111,7 @@ public class RelatedArticleAdapter extends RecyclerView.Adapter<RelatedArticleAd
 
         @Override
         public void onClick(View v) {
-            if(article != null) {
+            if (article != null) {
                 onItemClick.onArticleClicked(article);
             }
         }

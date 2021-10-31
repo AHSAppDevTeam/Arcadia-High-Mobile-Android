@@ -23,17 +23,14 @@ import com.hsappdev.ahs.util.ScreenUtil;
 public class CommunityArticleUnit extends CardView implements ArticleLoadableCallback {
 
     final protected View contentView;
+    final Resources r;
+    final boolean isSmall;
+    final private Activity activity;
     protected Article article;
-
     private TextView title;
     private TextView description;
     private TextView time;
-
     private ImageView image;
-    final private Activity activity;
-    final Resources r;
-
-    final boolean isSmall;
 
     public CommunityArticleUnit(@NonNull Context context, String articleId, OnItemClick onArticleClick, Activity activity, boolean isSmall) {
         super(context);
@@ -54,7 +51,7 @@ public class CommunityArticleUnit extends CardView implements ArticleLoadableCal
         setDetails(articleId);
 
         setOnClickListener(v -> {
-            if(article != null) {
+            if (article != null) {
                 onArticleClick.onArticleClicked(article);
             }
         });
@@ -89,10 +86,8 @@ public class CommunityArticleUnit extends CardView implements ArticleLoadableCal
     }
 
 
-
-
     @Override
-    public  void onLoaded(Article articleN) {
+    public void onLoaded(Article articleN) {
         this.article = articleN;
         updateUI();
     }
@@ -100,7 +95,7 @@ public class CommunityArticleUnit extends CardView implements ArticleLoadableCal
     protected void updateUI() {
         title.setText(article.getTitle());
         ScreenUtil.setTimeToTextView(article.getTimestamp(), time);
-        if(!isSmall) {
+        if (!isSmall) {
             description.setVisibility(View.VISIBLE);
             ScreenUtil.setPlainHTMLStringToTextView(article.getBody(), description);
         } else {
@@ -110,7 +105,7 @@ public class CommunityArticleUnit extends CardView implements ArticleLoadableCal
     }
 
     protected void setImageToView() {
-        if(article.getImageURLs().length > 0) {
+        if (article.getImageURLs().length > 0) {
             ImageUtil.setImageToView(article.getImageURLs()[0], image);
         }
     }

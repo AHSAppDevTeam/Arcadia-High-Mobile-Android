@@ -3,7 +3,7 @@ package com.google.android.youtube.player;
 /**
  * Source:
  * https://gist.github.com/medyo/f226b967213c3b8ec6f6bebb5338a492
- *
+ * <p>
  * This file gives support for androidx fragments
  * (the youtube library does not support this yet)
  */
@@ -27,11 +27,11 @@ public class YouTubePlayerSupportFragmentX extends Fragment implements YouTubePl
     private YouTubePlayer.OnInitializedListener e;
     private boolean f;
 
-    public static YouTubePlayerSupportFragmentX newInstance() {
-        return new YouTubePlayerSupportFragmentX();
+    public YouTubePlayerSupportFragmentX() {
     }
 
-    public YouTubePlayerSupportFragmentX() {
+    public static YouTubePlayerSupportFragmentX newInstance() {
+        return new YouTubePlayerSupportFragmentX();
     }
 
     public void initialize(String var1, YouTubePlayer.OnInitializedListener var2) {
@@ -56,7 +56,7 @@ public class YouTubePlayerSupportFragmentX extends Fragment implements YouTubePl
     }
 
     public View onCreateView(LayoutInflater var1, ViewGroup var2, Bundle var3) {
-        this.c = new YouTubePlayerView(this.getActivity(), (AttributeSet)null, 0, this.a);
+        this.c = new YouTubePlayerView(this.getActivity(), null, 0, this.a);
         this.a();
         return this.c;
     }

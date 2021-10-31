@@ -19,7 +19,7 @@ import com.hsappdev.ahs.util.ScreenUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SavedRecyclerAdapter extends RecyclerView.Adapter<SavedRecyclerAdapter.SavedArticleViewHolder>{
+public class SavedRecyclerAdapter extends RecyclerView.Adapter<SavedRecyclerAdapter.SavedArticleViewHolder> {
 
     private List<Article> savedArticleList = new ArrayList<>();
     private SortedList<Article> articleSortedList;
@@ -31,9 +31,9 @@ public class SavedRecyclerAdapter extends RecyclerView.Adapter<SavedRecyclerAdap
         articleSortedList = new SortedList<>(Article.class, new SortedList.Callback<Article>() {
             @Override
             public int compare(Article o1, Article o2) {
-                if(sortMode == 0) {
+                if (sortMode == 0) {
                     return (int) (o2.getTimestamp() - o1.getTimestamp());
-                } else if(sortMode == 1) {
+                } else if (sortMode == 1) {
                     return (int) -(o2.getTimestamp() - o1.getTimestamp());
                 }
                 return 0;
@@ -90,19 +90,19 @@ public class SavedRecyclerAdapter extends RecyclerView.Adapter<SavedRecyclerAdap
         articleSortedList.replaceAll(savedArticleList);
     }
 
-    public void addArticle(Article article){
+    public void addArticle(Article article) {
         savedArticleList.add(article);
         articleSortedList.add(article);
     }
 
-    public void addArticles(List<Article> articleList){
+    public void addArticles(List<Article> articleList) {
         savedArticleList.addAll(articleList);
         articleSortedList.addAll(articleList);
     }
 
     @Override
     public void onBindViewHolder(@NonNull SavedArticleViewHolder holder, int position) {
-        if(position < articleSortedList.size()) {
+        if (position < articleSortedList.size()) {
             holder.setDetails(articleSortedList.get(position));
         }
     }
@@ -129,7 +129,7 @@ public class SavedRecyclerAdapter extends RecyclerView.Adapter<SavedRecyclerAdap
             this.timeStamp = itemView.findViewById(R.id.notification_article_time);
         }
 
-        public void setDetails(Article article){
+        public void setDetails(Article article) {
             title.setText(article.getTitle());
             Helper.setBoldRegularText(category, article.getCategoryDisplayName(), " Section");
             category.setTextColor(article.getCategoryDisplayColor());

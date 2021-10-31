@@ -33,9 +33,20 @@ public class CategoryViewHolder extends RecyclerView.ViewHolder implements Categ
     private final TabLayout smallTabLayout;
     private final Resources r;
     private final Activity activity;
+    SmallArticleAdapter smallArticleAdapter;
     private OnItemClick onItemClick;
 
-    SmallArticleAdapter smallArticleAdapter;
+    public CategoryViewHolder(@NonNull View itemView, Activity activity) {
+        super(itemView);
+        r = itemView.getContext().getResources();
+
+        smallPager = itemView.findViewById(R.id.home_small_carousel);
+        sectionTitle = itemView.findViewById(R.id.home_news_sectionTitle);
+        categoryLinearLayout = itemView.findViewById(R.id.home_category_linearLayout);
+        smallTabLayout = itemView.findViewById(R.id.small_tab_layout);
+
+        this.activity = activity;
+    }
 
     public void setDetails(String categoryTitle, OnItemClick onArticleClick) {
         onItemClick = onArticleClick;
@@ -49,7 +60,6 @@ public class CategoryViewHolder extends RecyclerView.ViewHolder implements Categ
         //CategoryLoader.getInstance().getCategory(categoryTitle, r, this);
         CategoryLoaderBackend.getInstance(activity.getApplication()).getCacheObject(categoryTitle, r, this);
     }
-
 
     /**
      * Sort articles into the correct categories
@@ -93,10 +103,10 @@ public class CategoryViewHolder extends RecyclerView.ViewHolder implements Categ
         categoryLinearLayout.addView(view);
     }
 
-    private void setUpMediumArticles(List<String> articles, OnItemClick onItemClick){
+    private void setUpMediumArticles(List<String> articles, OnItemClick onItemClick) {
         LinearLayout intermediateLinearLayout = new LinearLayout(categoryLinearLayout.getContext());
 
-        for(String article : articles){
+        for (String article : articles) {
             MediumArticleUnit unit = new MediumArticleUnit(categoryLinearLayout.getContext(), article, onItemClick, R.layout.home_news_medium_article, activity);
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,
@@ -106,7 +116,7 @@ public class CategoryViewHolder extends RecyclerView.ViewHolder implements Categ
             unit.setLayoutParams(params);
             intermediateLinearLayout.addView(unit);
             // Add Divider
-            if(!article.equals(articles.get(articles.size()-1)) || articles.size() == 1) { // if not the last article
+            if (!article.equals(articles.get(articles.size() - 1)) || articles.size() == 1) { // if not the last article
                 Space space = new Space(categoryLinearLayout.getContext());
                 LinearLayout.LayoutParams spaceParams = new LinearLayout.LayoutParams(
                         r.getDimensionPixelSize(R.dimen.padding),
@@ -116,7 +126,7 @@ public class CategoryViewHolder extends RecyclerView.ViewHolder implements Categ
                 intermediateLinearLayout.addView(space);
             }
         }
-        if(articles.size() == 1) { // if there is only one article, add an empty article
+        if (articles.size() == 1) { // if there is only one article, add an empty article
             View unit = new View(categoryLinearLayout.getContext());
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,
@@ -148,19 +158,6 @@ public class CategoryViewHolder extends RecyclerView.ViewHolder implements Categ
 
     public void setUpPager() {
         smallPager.setOffscreenPageLimit(3);
-    }
-
-
-    public CategoryViewHolder(@NonNull View itemView, Activity activity) {
-        super(itemView);
-        r = itemView.getContext().getResources();
-
-        smallPager = itemView.findViewById(R.id.home_small_carousel);
-        sectionTitle = itemView.findViewById(R.id.home_news_sectionTitle);
-        categoryLinearLayout = itemView.findViewById(R.id.home_category_linearLayout);
-        smallTabLayout = itemView.findViewById(R.id.small_tab_layout);
-
-        this.activity = activity;
     }
 
     @Override

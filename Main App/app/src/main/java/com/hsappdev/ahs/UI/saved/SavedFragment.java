@@ -43,14 +43,14 @@ public class SavedFragment extends Fragment {
 
 
     private int sortMode = 0;
-
+    private SavedViewModel model;
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         onArticleClick = (OnItemClick) context;
     }
-    private SavedViewModel model;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -83,7 +83,8 @@ public class SavedFragment extends Fragment {
                                 model.deleteAll();
                                 emptyMsgTextView.setVisibility(View.VISIBLE);
                                 Toast.makeText(getActivity(), "All saved articles cleared", Toast.LENGTH_SHORT).show();
-                            }})
+                            }
+                        })
                         .setNegativeButton(android.R.string.no, null).show();
             }
         });
@@ -107,14 +108,14 @@ public class SavedFragment extends Fragment {
 
         //sortBySpinner.setSelection(0, true);
 
-        int padding = (int) getResources().getDimensionPixelSize(R.dimen.padding);
+        int padding = getResources().getDimensionPixelSize(R.dimen.padding);
         savedRecyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
             @Override
             public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
                 super.getItemOffsets(outRect, view, parent, state);
                 outRect.right = padding;
                 outRect.left = padding;
-                if(parent.getChildAdapterPosition(view) == 0){
+                if (parent.getChildAdapterPosition(view) == 0) {
                     outRect.top = padding;
                 }
                 outRect.bottom = padding;

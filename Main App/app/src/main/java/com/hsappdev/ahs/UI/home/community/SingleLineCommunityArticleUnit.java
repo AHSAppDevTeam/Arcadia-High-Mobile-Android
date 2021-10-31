@@ -18,16 +18,14 @@ import com.hsappdev.ahs.cache.callbacks.ArticleLoadableCallback;
 import com.hsappdev.ahs.dataTypes.Article;
 import com.hsappdev.ahs.util.ScreenUtil;
 
-public class SingleLineCommunityArticleUnit extends CardView implements ArticleLoadableCallback{
+public class SingleLineCommunityArticleUnit extends CardView implements ArticleLoadableCallback {
 
     final protected View contentView;
+    final Resources r;
+    final private Activity activity;
     protected Article article;
-
     private TextView articleTitle;
     private TextView articleTime;
-
-    final private Activity activity;
-    final Resources r;
 
     public SingleLineCommunityArticleUnit(@NonNull Context context, String articleId, OnItemClick onArticleClick, Activity activity) {
         super(context);
@@ -45,7 +43,7 @@ public class SingleLineCommunityArticleUnit extends CardView implements ArticleL
         setDetails(articleId);
 
         setOnClickListener(v -> {
-            if(article != null) {
+            if (article != null) {
                 onArticleClick.onArticleClicked(article);
             }
         });
@@ -78,7 +76,7 @@ public class SingleLineCommunityArticleUnit extends CardView implements ArticleL
     }
 
     @Override
-    public  void onLoaded(Article articleN) {
+    public void onLoaded(Article articleN) {
         this.article = articleN;
         updateUI();
     }

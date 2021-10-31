@@ -26,13 +26,15 @@ public class HomeNewsFragment extends Fragment implements CategoryListLoadableCa
 
     private OnItemClick onArticleClick;
     private NewsRecyclerAdapter adapter;
-
+    private Activity hostActivity;
+    //MainActivity -> HomeFragment (home page) ->
+    // HomeNewsFragment (AUSD news section) get locations and structure , pass into-> RecyclerViewAdapter -> ViewPager2
+    private final ArrayList<String> categoryTitles = new ArrayList<>();
 
     public HomeNewsFragment() {
         // Required empty public constructor
     }
 
-    private Activity hostActivity;
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
@@ -44,9 +46,6 @@ public class HomeNewsFragment extends Fragment implements CategoryListLoadableCa
         hostActivity = (Activity) context;
     }
 
- //MainActivity -> HomeFragment (home page) ->
-    // HomeNewsFragment (AUSD news section) get locations and structure , pass into-> RecyclerViewAdapter -> ViewPager2
-    private ArrayList<String> categoryTitles = new ArrayList<>();
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,7 +61,7 @@ public class HomeNewsFragment extends Fragment implements CategoryListLoadableCa
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.home_news_fragment, container, false);
 
-       adapter = new NewsRecyclerAdapter(new ArrayList<String>(), onArticleClick, getActivity());
+        adapter = new NewsRecyclerAdapter(new ArrayList<String>(), onArticleClick, getActivity());
         RecyclerView recyclerView = view.findViewById(R.id.home_news_recyclerView);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
