@@ -31,10 +31,10 @@
         android:focusable="true"
         android:foreground="?android:attr/selectableItemBackground"
         app:cardCornerRadius="@dimen/padding"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/community_section_name"
-        >
+        app:layout_constraintTop_toBottomOf="@+id/community_section_name">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/home_news_constraintLayout"
@@ -42,8 +42,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/community_section_unit_background"
             android:backgroundTint="?attr/bgColorAccent"
-            android:clipToPadding="false"
-            >
+            android:clipToPadding="false">
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/image_grid"
@@ -59,8 +58,7 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    >
+                    android:layout_height="match_parent">
 
                     <androidx.constraintlayout.widget.Guideline
                         android:id="@+id/guideline3"
@@ -135,10 +133,23 @@
                 android:text="This is a great section"
                 android:textColor="?attr/titleColor"
                 android:textSize="24sp"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/image_grid" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/padding"
+                android:background="@drawable/article_see_more_button_bg"
+                android:text="Click to learn more >"
+                android:textColor="@color/black"
+                android:fontFamily="@font/sfprodisplay_bold"
+                android:paddingVertical="@dimen/padding_x.25"
+                android:paddingHorizontal="@dimen/padding"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/community_section_blurb"
+                app:layout_constraintTop_toBottomOf="@+id/community_section_blurb" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

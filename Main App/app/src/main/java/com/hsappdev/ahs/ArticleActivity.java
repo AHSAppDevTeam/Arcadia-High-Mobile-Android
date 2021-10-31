@@ -76,7 +76,7 @@ public class ArticleActivity extends AppCompatActivity implements Adjusting_Text
     private ViewPager2 mediaViewPager;
     private TabLayout tabLayout;
     private RecyclerView relatedArticles;
-    private Button seeMoreSectionButton;
+    private TextView seeMoreSectionButton;
     private RelatedArticleAdapter relatedArticlesAdapter;
     private YoutubeVideoCallback<YouTubeFragment> youtubeVideoCallback;
 
@@ -253,7 +253,9 @@ public class ArticleActivity extends AppCompatActivity implements Adjusting_Text
             }
         });
 
-        seeMoreSectionButton.setText("See more in " + Helper.getSpanBoldRegularText(article.getCategoryDisplayName(), ""));
+        seeMoreSectionButton.setText("See more in ");
+        seeMoreSectionButton.append(Helper.getSpanBoldRegularText(article.getCategoryDisplayName(), ""));
+        seeMoreSectionButton.setTextColor(article.getCategoryDisplayColor());
         seeMoreSectionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
