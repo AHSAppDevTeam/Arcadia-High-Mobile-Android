@@ -1,7 +1,9 @@
 package com.hsappdev.ahs.UI.notification;
 
 import android.content.res.ColorStateList;
+import android.content.res.Resources;
 import android.graphics.Color;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -142,7 +144,10 @@ public class NotificationRecyclerAdapter extends RecyclerView.Adapter<Notificati
             ScreenUtil.setTimeToTextView(article.getTimestamp(), articleTime);
             articleCategoryIndicator.setColorFilter(article.getCategoryDisplayColor());
             if(article.getIsViewed()==1) {
-                articleHolderView.setBackgroundTintList(ColorStateList.valueOf(Color.LTGRAY));
+                TypedValue backgroundColor = new TypedValue();
+                Resources.Theme theme = articleHolderView.getContext().getTheme();
+                theme.resolveAttribute(R.attr.bgColorAccent, backgroundColor, true);
+                articleHolderView.setBackgroundTintList(ColorStateList.valueOf(backgroundColor.data));
             }
             articleHolderView.setOnClickListener(this);
         }

@@ -73,6 +73,9 @@ public abstract class LoadableCache<T extends LoadableType> {
         ValueEventListener eventListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(!snapshot.exists()){
+                    return;
+                }
                 Log.d(TAG, "onDataChange: firebase load");
 
                 if (article == null) {

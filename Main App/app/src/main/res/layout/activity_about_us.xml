@@ -23,7 +23,7 @@
             android:background="@drawable/icon_circle"
             android:foreground="?attr/actionBarItemBackground"
             android:src="@drawable/activity_navigation_back_arrow"
-            app:tint="@color/black" />
+            app:tint="?attr/titleColor" />
 
         <TextView
             android:id="@+id/about_us_title"

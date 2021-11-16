@@ -1,9 +1,13 @@
 package com.hsappdev.ahs.UI.calendar;
 
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.TextView;
+
+import androidx.annotation.ColorInt;
 
 import com.hsappdev.ahs.R;
 import com.hsappdev.ahs.UI.calendar.calendarBackend.CalendarDayLoadCallback;
@@ -33,6 +37,7 @@ public class DayViewContainer extends ViewContainer implements CalendarDayLoadCa
 
     private Schedule schedule;
     private ScheduleRenderer scheduleRenderer;
+    private CalendarDay calendarDay;
 
 
     public DayViewContainer(@NotNull View view) {
@@ -43,18 +48,29 @@ public class DayViewContainer extends ViewContainer implements CalendarDayLoadCa
     }
 
     public void updateView(CalendarDay calendarDay, ScheduleRenderer scheduleRenderer) {
+        this.calendarDay = calendarDay;
         this.scheduleRenderer = scheduleRenderer;
         date = calendarDay.getDate();
         dayText.setText(Integer.toString(calendarDay.getDay()));
+
+        TypedValue typedValue = new TypedValue();
+        Resources.Theme theme = dayText.getContext().getTheme();
+        theme.resolveAttribute(R.attr.backgroundColor, typedValue, true);
+        dayText.setBackgroundColor(typedValue.data);
+
+        theme.resolveAttribute(R.attr.titleColor, typedValue, true);
+        dayText.setTextColor(typedValue.data);
+
         if(calendarDay.getOwner() == DayOwner.THIS_MONTH){
-            dayText.setTextColor(Color.BLACK);
             if(calendarDay.getDay() == getDayOfMonth()) {
-               dayText.setBackgroundColor(Color.YELLOW);
-            } else {
-                dayText.setBackgroundColor(Color.LTGRAY);
+                if(calendarDay.getDate().atStartOfDay().equals(LocalDate.now().atStartOfDay())) {
+                    dayText.setBackgroundColor(Color.YELLOW);
+                    dayText.setTextColor(Color.BLACK);
+                    if(schedule != null && scheduleRenderer != null)
+                        scheduleRenderer.render(schedule);
+                }
             }
         } else {
-            dayText.setBackgroundColor(Color.LTGRAY);
             dayText.setTextColor(Color.GRAY);
         }
         CalendarBackendNew.getInstance().registerForCallback(getWeekOfYear(), getDayOfWeek(), this);
@@ -92,6 +108,15 @@ public class DayViewContainer extends ViewContainer implements CalendarDayLoadCa
         this.schedule = schedule;
         dayInfo.setBackgroundColor(Color.parseColor(schedule.getColor()));
         dayInfo.setText(schedule.getTitle());
+
+        if(calendarDay.getOwner() == DayOwner.THIS_MONTH){
+            if(calendarDay.getDay() == getDayOfMonth()) {
+                if(calendarDay.getDate().atStartOfDay().equals(LocalDate.now().atStartOfDay())) {
+                    if(scheduleRenderer != null)
+                        scheduleRenderer.render(schedule);
+                }
+            }
+        }
     }
 
     @Override
