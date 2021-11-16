@@ -1,9 +1,13 @@
 package com.hsappdev.ahs.UI.calendar;
 
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.TextView;
+
+import androidx.annotation.ColorInt;
 
 import com.hsappdev.ahs.R;
 import com.hsappdev.ahs.UI.calendar.calendarBackend.CalendarDayLoadCallback;
@@ -46,15 +50,21 @@ public class DayViewContainer extends ViewContainer implements CalendarDayLoadCa
         this.scheduleRenderer = scheduleRenderer;
         date = calendarDay.getDate();
         dayText.setText(Integer.toString(calendarDay.getDay()));
+
+        TypedValue typedValue = new TypedValue();
+        Resources.Theme theme = dayText.getContext().getTheme();
+        theme.resolveAttribute(R.attr.backgroundColor, typedValue, true);
+        dayText.setBackgroundColor(typedValue.data);
+
+        theme.resolveAttribute(R.attr.titleColor, typedValue, true);
+        dayText.setTextColor(typedValue.data);
+
         if(calendarDay.getOwner() == DayOwner.THIS_MONTH){
-            dayText.setTextColor(Color.BLACK);
             if(calendarDay.getDay() == getDayOfMonth()) {
                dayText.setBackgroundColor(Color.YELLOW);
-            } else {
-                dayText.setBackgroundColor(Color.LTGRAY);
+               dayText.setTextColor(Color.BLACK);
             }
         } else {
-            dayText.setBackgroundColor(Color.LTGRAY);
             dayText.setTextColor(Color.GRAY);
         }
         CalendarBackendNew.getInstance().registerForCallback(getWeekOfYear(), getDayOfWeek(), this);
