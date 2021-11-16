@@ -55,7 +55,7 @@
                         app:layout_constraintDimensionRatio="1:1"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/ic_app_logo_clear" />
+                        app:srcCompat="@mipmap/applogoclear" />
 
                     <TextView
                         android:id="@+id/home_title"
