@@ -6,12 +6,12 @@ plugins {
 
 android {
     signingConfigs {
-        releaseSign {
-            storeFile file('C:\\Users\\Jeffrey\\Downloads\\old_keystore')
-            storePassword '180Campus'
-            keyAlias 'ahs'
-            keyPassword '180Campus'
-        }
+//        releaseSign {
+//            storeFile file('C:\\Users\\Jeffrey\\Downloads\\old_keystore')
+//            storePassword '180Campus'
+//            keyAlias 'ahs'
+//            keyPassword '180Campus'
+//        }
 
     }
     compileSdkVersion 31
