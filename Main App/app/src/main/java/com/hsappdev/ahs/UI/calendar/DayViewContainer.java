@@ -61,8 +61,10 @@ public class DayViewContainer extends ViewContainer implements CalendarDayLoadCa
 
         if(calendarDay.getOwner() == DayOwner.THIS_MONTH){
             if(calendarDay.getDay() == getDayOfMonth()) {
-               dayText.setBackgroundColor(Color.YELLOW);
-               dayText.setTextColor(Color.BLACK);
+                if(calendarDay.getDate().atStartOfDay().equals(LocalDate.now().atStartOfDay())) {
+                    dayText.setBackgroundColor(Color.YELLOW);
+                    dayText.setTextColor(Color.BLACK);
+                }
             }
         } else {
             dayText.setTextColor(Color.GRAY);
