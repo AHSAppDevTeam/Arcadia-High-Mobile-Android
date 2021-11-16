@@ -37,6 +37,7 @@ public class DayViewContainer extends ViewContainer implements CalendarDayLoadCa
 
     private Schedule schedule;
     private ScheduleRenderer scheduleRenderer;
+    private CalendarDay calendarDay;
 
 
     public DayViewContainer(@NotNull View view) {
@@ -47,6 +48,7 @@ public class DayViewContainer extends ViewContainer implements CalendarDayLoadCa
     }
 
     public void updateView(CalendarDay calendarDay, ScheduleRenderer scheduleRenderer) {
+        this.calendarDay = calendarDay;
         this.scheduleRenderer = scheduleRenderer;
         date = calendarDay.getDate();
         dayText.setText(Integer.toString(calendarDay.getDay()));
@@ -64,6 +66,8 @@ public class DayViewContainer extends ViewContainer implements CalendarDayLoadCa
                 if(calendarDay.getDate().atStartOfDay().equals(LocalDate.now().atStartOfDay())) {
                     dayText.setBackgroundColor(Color.YELLOW);
                     dayText.setTextColor(Color.BLACK);
+                    if(schedule != null && scheduleRenderer != null)
+                        scheduleRenderer.render(schedule);
                 }
             }
         } else {
@@ -104,6 +108,15 @@ public class DayViewContainer extends ViewContainer implements CalendarDayLoadCa
         this.schedule = schedule;
         dayInfo.setBackgroundColor(Color.parseColor(schedule.getColor()));
         dayInfo.setText(schedule.getTitle());
+
+        if(calendarDay.getOwner() == DayOwner.THIS_MONTH){
+            if(calendarDay.getDay() == getDayOfMonth()) {
+                if(calendarDay.getDate().atStartOfDay().equals(LocalDate.now().atStartOfDay())) {
+                    if(scheduleRenderer != null)
+                        scheduleRenderer.render(schedule);
+                }
+            }
+        }
     }
 
     @Override
