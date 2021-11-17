@@ -49,13 +49,13 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/padding"
+            android:layout_marginVertical="@dimen/padding_x1.5"
             android:orientation="vertical">
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/padding"
+                android:layout_marginHorizontal="@dimen/padding_x1.5"
                 android:elevation="@dimen/shadowElevation"
                 app:cardCornerRadius="@dimen/padding">
 
@@ -71,7 +71,7 @@
                         android:gravity="center"
                         android:paddingVertical="@dimen/padding_x.5"
                         android:text="Programmers"
-                        android:textColor="@color/black"
+                        android:textColor="?attr/titleColor"
                         android:textSize="24sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -85,7 +85,7 @@
                         android:gravity="center"
                         android:paddingBottom="@dimen/padding"
                         android:text="@string/programmers_list"
-                        android:textColor="@color/black"
+                        android:textColor="?attr/titleColor"
                         android:textSize="18sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.0"
@@ -96,12 +96,12 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/padding" />
+                android:layout_height="@dimen/padding_x1.5" />
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/padding"
+                android:layout_marginHorizontal="@dimen/padding_x1.5"
                 android:elevation="@dimen/shadowElevation"
                 app:cardCornerRadius="@dimen/padding">
 
@@ -117,7 +117,7 @@
                         android:gravity="center"
                         android:paddingVertical="@dimen/padding_x.5"
                         android:text="Graphic Designers"
-                        android:textColor="@color/black"
+                        android:textColor="?attr/titleColor"
                         android:textSize="24sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -131,7 +131,7 @@
                         android:gravity="center"
                         android:paddingBottom="@dimen/padding"
                         android:text="@string/graphic_designers_list"
-                        android:textColor="@color/black"
+                        android:textColor="?attr/titleColor"
                         android:textSize="18sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.0"
@@ -141,12 +141,12 @@
             </androidx.cardview.widget.CardView>
             <View
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/padding" />
+                android:layout_height="@dimen/padding_x1.5" />
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/padding"
+                android:layout_marginHorizontal="@dimen/padding_x1.5"
                 android:elevation="@dimen/shadowElevation"
                 app:cardCornerRadius="@dimen/padding">
 
@@ -162,7 +162,7 @@
                         android:gravity="center"
                         android:paddingVertical="@dimen/padding_x.5"
                         android:text="Content Editors"
-                        android:textColor="@color/black"
+                        android:textColor="?attr/titleColor"
                         android:textSize="24sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -176,7 +176,7 @@
                         android:gravity="center"
                         android:paddingBottom="@dimen/padding"
                         android:text="@string/content_editors_list"
-                        android:textColor="@color/black"
+                        android:textColor="?attr/titleColor"
                         android:textSize="18sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.0"
