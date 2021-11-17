@@ -166,8 +166,6 @@
         android:layout_height="wrap_content"
         android:text="@string/profile_options_header"
         android:textSize="28sp"
-        android:paddingStart="@dimen/padding"
-        android:paddingEnd="@dimen/padding"
         android:paddingVertical="@dimen/padding_x.5"
         android:textStyle="bold"
         android:textColor="?attr/titleColor"/>
@@ -232,8 +230,6 @@
             android:layout_height="wrap_content"
             android:text="@string/profile_info_header"
             android:textSize="28sp"
-            android:paddingStart="@dimen/padding"
-            android:paddingEnd="@dimen/padding"
             android:paddingVertical="@dimen/padding_x.5"
             android:textStyle="bold"
             android:textColor="?attr/titleColor"/>
