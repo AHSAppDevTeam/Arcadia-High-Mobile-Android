@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -22,6 +23,9 @@ import com.hsappdev.ahs.NotificationSettingsActivity;
 import com.hsappdev.ahs.R;
 import com.hsappdev.ahs.SettingsManager;
 import com.hsappdev.ahs.TermsAndAgreementsActivity;
+import com.hsappdev.ahs.UI.calendar.calendarBackend.CalendarDayLoadCallback;
+import com.hsappdev.ahs.UI.calendar.calendarBackend.Day;
+import com.hsappdev.ahs.UI.calendar.newCalendar.CalendarBackendNew;
 import com.hsappdev.ahs.util.Helper;
 
 public class ProfileFragment extends Fragment {
@@ -89,6 +93,27 @@ public class ProfileFragment extends Fragment {
             Intent intent = new Intent(getActivity(), AboutUsActivity.class);
             startActivity(intent);
         });
+
+        // Calendar Button
+        CalendarBackendNew calendarBackend = CalendarBackendNew.getInstance();
+        // View findByIds here
+
+        // Callback
+        calendarBackend.registerForCallback(35, 0, new CalendarDayLoadCallback() {
+            @Override
+            public void onCalendarDayLoad(Day requestedDay) {
+//                Button button;
+//                button.setVisibility(View.GONE);
+
+            }
+
+            @Override
+            public int getRequestedDate() {
+                return 0; // Change this to dayNumber (the day of week)
+            }
+        });
+
+
         return view;
     }
 

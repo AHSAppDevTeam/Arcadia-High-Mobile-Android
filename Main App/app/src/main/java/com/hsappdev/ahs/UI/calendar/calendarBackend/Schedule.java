@@ -8,9 +8,9 @@ public class Schedule {
     private String iconURL;
     private String color;
     private String title;
-
-    private List<String> periodIDs = new ArrayList<>();
-    private List<Integer> timestamps = new ArrayList<>();
+    // List of period ids, timestamps
+    private List<String> periodIDs = new ArrayList<>(); // "1", "passing", "2", "lunch"
+    private List<Integer> timestamps = new ArrayList<>(); // minutes from midnight
 
 
     // GETTERS AND SETTERS

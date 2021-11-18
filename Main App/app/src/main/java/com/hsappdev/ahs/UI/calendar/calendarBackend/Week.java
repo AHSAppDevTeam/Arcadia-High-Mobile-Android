@@ -17,6 +17,7 @@ import java.util.List;
 public class Week {
     private String title;
     private String weekId;
+                    // day of week (0=sunday, or 0=monday not sure?)
     private HashMap<Integer, Day> dayList = new HashMap<>();
 
     private List<CalendarDayLoadCallback> callbacks = new ArrayList<>();
