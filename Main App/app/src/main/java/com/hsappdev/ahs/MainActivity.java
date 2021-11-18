@@ -72,6 +72,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationC
 
                 @Override
                 public boolean isActivityDestroyed() {
+                    // return MainActivity.this.isDestroyed();
                     return isFirstTime;
                 }
             });
