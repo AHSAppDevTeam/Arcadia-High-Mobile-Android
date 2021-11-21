@@ -50,8 +50,8 @@
     <string name="settings_file">settings</string>
     <string name="theme_key">themeKey</string>
     <string name="textscalar_key">textKey</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- Rest of the strings used for the layouts -->
     <string name="profile_page_header_text">Your Profile</string>
     <string name="profile_card_default_given_name">Digital ID card</string>
     <string name="profile_card_default_family_name">Tap to sign in</string>

@@ -76,7 +76,7 @@ public class ScreenUtil {
         }
 
         // Plural
-        timeText += (tempTime == 1? "":"s");
+        timeText += ((tempTime == 1 || justNow)? "":"s");
 
         if(!justNow) {
             if (time > timestamp) {
