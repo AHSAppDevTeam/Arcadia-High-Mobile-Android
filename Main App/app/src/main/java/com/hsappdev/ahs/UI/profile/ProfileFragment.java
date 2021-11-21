@@ -1,15 +1,8 @@
 package com.hsappdev.ahs.UI.profile;
 
-import androidx.lifecycle.ViewModelProvider;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,13 +10,18 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+
 import com.google.android.material.switchmaterial.SwitchMaterial;
-import com.hsappdev.ahs.ArticleActivity;
+import com.hsappdev.ahs.AboutUsActivity;
 import com.hsappdev.ahs.CalendarActivity;
-import com.hsappdev.ahs.MainActivity;
 import com.hsappdev.ahs.NotificationSettingsActivity;
 import com.hsappdev.ahs.R;
 import com.hsappdev.ahs.SettingsManager;
+import com.hsappdev.ahs.TermsAndAgreementsActivity;
 import com.hsappdev.ahs.util.Helper;
 
 public class ProfileFragment extends Fragment {
@@ -77,6 +75,18 @@ public class ProfileFragment extends Fragment {
         LinearLayout calendarBtn = view.findViewById(R.id.profile_calendar_btn);
         calendarBtn.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), CalendarActivity.class);
+            startActivity(intent);
+        });
+
+        LinearLayout termsBtn = view.findViewById(R.id.profile_terms_btn);
+        termsBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), TermsAndAgreementsActivity.class);
+            startActivity(intent);
+        });
+
+        LinearLayout aboutUsBtn = view.findViewById(R.id.profile_about_us_btn);
+        aboutUsBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), AboutUsActivity.class);
             startActivity(intent);
         });
         return view;

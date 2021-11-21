@@ -21,7 +21,6 @@ import com.hsappdev.ahs.ArticleActivity;
 import com.hsappdev.ahs.NotificationActivity;
 import com.hsappdev.ahs.R;
 import com.hsappdev.ahs.cache.ArticleLoaderBackend;
-import com.hsappdev.ahs.cache.LoadableCallback;
 import com.hsappdev.ahs.cache.callbacks.ArticleLoadableCallback;
 import com.hsappdev.ahs.dataTypes.Article;
 import com.hsappdev.ahs.localdb.ArticleRepository;
@@ -86,7 +85,7 @@ public class CustomFirebaseMessagingService extends FirebaseMessagingService {
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder =
                 new NotificationCompat.Builder(this, channelId)
-                        .setSmallIcon(R.drawable.profile_schedule_ic)
+                        .setSmallIcon(R.mipmap.applogoclear)
                         .setContentTitle(title)
                         .setContentText(messageBody)
                         .setAutoCancel(true)

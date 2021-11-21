@@ -5,16 +5,16 @@ import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
 import com.hsappdev.ahs.R;
 
-public class TextViewSelector extends androidx.appcompat.widget.AppCompatTextView implements View.OnClickListener{
+public class TextViewSelector extends androidx.appcompat.widget.AppCompatTextView implements View.OnClickListener {
 
     private Drawable active_bg, inactive_bg;
     private int active_textColor, inactive_textColor;
+    private OnSelectionListener listener;
 
     public TextViewSelector(Context context) {
         super(context);
@@ -22,12 +22,12 @@ public class TextViewSelector extends androidx.appcompat.widget.AppCompatTextVie
 
     public TextViewSelector(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        init(context,attrs);
+        init(context, attrs);
     }
 
     public TextViewSelector(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init(context,attrs);
+        init(context, attrs);
     }
 
     private void init(Context context, @Nullable AttributeSet attrs) {
@@ -51,17 +51,15 @@ public class TextViewSelector extends androidx.appcompat.widget.AppCompatTextVie
         setTextColor(selected ? active_textColor : inactive_textColor);
     }
 
-
     @Override
     public void onClick(View view) {
-        if(!isSelected()) {
+        if (!isSelected()) {
             setSelected(true);
-            if(listener != null)
+            if (listener != null)
                 listener.onSelected();
         }
     }
 
-    private OnSelectionListener listener;
     public void setOnSelectedListener(OnSelectionListener listener) {
         this.listener = listener;
     }

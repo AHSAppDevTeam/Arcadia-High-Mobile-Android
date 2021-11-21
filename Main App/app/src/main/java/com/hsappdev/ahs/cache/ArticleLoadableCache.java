@@ -77,8 +77,8 @@ public class ArticleLoadableCache extends LoadableCache<Article> implements Load
             videoURLs.add(videoURL.getValue(String.class));
         }
         boolean featured = true;
-
-        long timestamp = snapshot.child(r.getString(R.string.db_articles_timestamp)).getValue(long.class);
+        Long extractedTimestamp = snapshot.child(r.getString(R.string.db_articles_timestamp)).getValue(long.class);
+        long timestamp = (extractedTimestamp == null) ? 0 : extractedTimestamp;
         article.setArticleID(articleID);
         article.setAuthor(author);
         article.setTitle(title);

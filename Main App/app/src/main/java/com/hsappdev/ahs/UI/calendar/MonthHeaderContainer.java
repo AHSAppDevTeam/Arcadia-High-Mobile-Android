@@ -4,8 +4,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.hsappdev.ahs.R;
-import com.hsappdev.ahs.UI.calendar.calendarBackend.CalendarBackend;
-import com.kizitonwose.calendarview.model.CalendarDay;
 import com.kizitonwose.calendarview.model.CalendarMonth;
 import com.kizitonwose.calendarview.ui.ViewContainer;
 

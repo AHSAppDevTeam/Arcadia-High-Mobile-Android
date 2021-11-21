@@ -17,8 +17,6 @@ import com.google.android.material.tabs.TabLayoutMediator;
 import com.hsappdev.ahs.OnItemClick;
 import com.hsappdev.ahs.R;
 import com.hsappdev.ahs.cache.CategoryLoaderBackend;
-import com.hsappdev.ahs.cache.LoadableCallback;
-import com.hsappdev.ahs.cache.callbacks.ArticleLoadableCallback;
 import com.hsappdev.ahs.cache.callbacks.CategoryLoadableCallback;
 import com.hsappdev.ahs.dataTypes.Category;
 import com.hsappdev.ahs.util.Helper;
@@ -29,9 +27,9 @@ public class FeaturedViewHolder extends RecyclerView.ViewHolder implements Categ
     private final TextView sectionTitle;
     private final ViewPager2 featuredPager;
     private final TabLayout featuredTabLayout;
-    private FeaturedArticleAdapter featuredArticleAdapter;
     private final Activity activity;
     private final Resources r;
+    private FeaturedArticleAdapter featuredArticleAdapter;
 
 
     public FeaturedViewHolder(@NonNull View itemView, Activity activity) {
@@ -52,7 +50,7 @@ public class FeaturedViewHolder extends RecyclerView.ViewHolder implements Categ
         CategoryLoaderBackend.getInstance(activity.getApplication()).getCacheObject(categoryTitle, r, this);
     }
 
-    public void setUpPager(){
+    public void setUpPager() {
 
         CompositePageTransformer compositePageTransformer = new CompositePageTransformer();
         //margin determines distance between two pages

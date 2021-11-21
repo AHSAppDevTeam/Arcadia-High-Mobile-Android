@@ -21,6 +21,10 @@ public abstract class LoaderBackend<T extends LoadableCache<A>, A extends Loadab
     protected abstract void init();
 
     public void getCacheObject(String articleID, Resources r, LoadableCallback<A> callback) {
+        if(articleID == null) {
+            Log.e(TAG, "getCacheObject: ERROR null was passed to loader");
+            return;
+        }
         Log.d(TAG, "getArticle: ask to load");
         // search the cache for the id
         T article = articleCache.get(articleID);

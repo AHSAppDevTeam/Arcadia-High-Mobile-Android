@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.hsappdev.ahs.OnItemClick;
 import com.hsappdev.ahs.R;
-import com.hsappdev.ahs.UI.saved.SavedRecyclerAdapter;
 import com.hsappdev.ahs.dataTypes.Article;
 import com.hsappdev.ahs.util.Helper;
 
@@ -19,11 +18,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SearchRecyclerAdapter extends RecyclerView.Adapter<SearchRecyclerAdapter.SearchArticleViewHolder> {
-    private List<Article> searchArticleList = new ArrayList<>();
-    private List<Article> filteredArticleList = new ArrayList<>();
-    private OnItemClick onItemClick;
-
     private static final String TAG = "SearchRecyclerAdapter";
+    private final List<Article> searchArticleList = new ArrayList<>();
+    private List<Article> filteredArticleList = new ArrayList<>();
+    private final OnItemClick onItemClick;
 
     public SearchRecyclerAdapter(OnItemClick onItemClick) {
         this.onItemClick = onItemClick;
@@ -71,18 +69,18 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<SearchRecyclerAd
                 for (String qWord : qWords) {
                     // Calculate distance
                     int dist;
-                    if(word.length() < qWord.length()) {
+                    if (word.length() < qWord.length()) {
                         dist = Helper.distance(word, qWord);
-                    } else  {
-                        dist = Helper.distance(word.substring(0, qWord.length()-1), qWord);
+                    } else {
+                        dist = Helper.distance(word.substring(0, qWord.length() - 1), qWord);
                     }
-                    if(dist < qWord.length()/2) {
+                    if (dist < qWord.length() / 2) {
                         tempList.add(a);
                         continue articleSearchLoop;
                     }
 
                     // check if contains the word
-                    if(word.contains(qWord) && (qWord.length() > 3 || qWords.length == 1)) {
+                    if (word.contains(qWord) && (qWord.length() > 3 || qWords.length == 1)) {
                         tempList.add(a);
                         continue articleSearchLoop;
                     }

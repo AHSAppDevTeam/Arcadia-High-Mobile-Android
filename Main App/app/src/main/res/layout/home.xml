@@ -21,8 +21,7 @@
                 android:id="@+id/home_title_bar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                >
+                android:orientation="vertical">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/linearLayout"
@@ -31,13 +30,17 @@
                     android:layout_margin="@dimen/padding"
                     android:orientation="vertical">
 
-                    <Button
+                    <ImageView
                         android:id="@+id/home_notification_button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Notif"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:src="@drawable/home_notifications_icon"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintDimensionRatio="h,1:1"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:foreground="?attr/actionBarItemBackground"
+                        android:paddingVertical="@dimen/padding_x.5"/>
 
 
                     <ImageView
@@ -52,7 +55,7 @@
                         app:layout_constraintDimensionRatio="1:1"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@mipmap/logo_full_size" />
+                        app:srcCompat="@mipmap/applogoclear" />
 
                     <TextView
                         android:id="@+id/home_title"
@@ -120,10 +123,10 @@
                         app:selected="true"
                         app:textColorInactive="@color/brightRed" />
 
-                    <Space
+                    <View
                         android:layout_width="0dp"
-                        android:layout_height="1dp"
-                        android:layout_weight="1"></Space>
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"></View>
 
                     <com.hsappdev.ahs.UI.home.TextViewSelector
                         android:id="@+id/home_community_selector"
@@ -150,10 +153,10 @@
                         app:selected="false"
                         app:textColorInactive="@color/teal" />
 
-                    <Space
+                    <View
                         android:layout_width="0dp"
-                        android:layout_height="1dp"
-                        android:layout_weight="1"></Space>
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"></View>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="wrap_content"
@@ -163,12 +166,13 @@
                             android:id="@+id/home_search_selector"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:foreground="?attr/selectableItemBackgroundBorderless"
-                            android:src="@drawable/home_search_icon"
+                            android:foreground="?attr/actionBarItemBackground"
+                            android:src="@drawable/home_search_icon_holder"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintDimensionRatio="1:1"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:tint="@color/brightRed" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </LinearLayout>
             </LinearLayout>

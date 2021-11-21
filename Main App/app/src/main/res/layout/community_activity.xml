@@ -41,36 +41,52 @@
                     android:layout_height="match_parent"
                     android:fontFamily="@font/heavybold_lightregular"
                     android:gravity="center|left"
-                    android:paddingLeft="@dimen/padding"
                     android:text="Local News"
                     android:textColor="@color/white"
                     android:textSize="22sp" />
             </LinearLayout>
-
-            <TextView
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/sfprodisplay_bold"
-                android:paddingLeft="@dimen/padding"
-                android:text="Arcadia, CA"
-                android:textColor="@color/white"
-                android:textSize="32sp"
-                android:textStyle="bold" />
-            <TextView
-                android:paddingLeft="@dimen/padding"
-                android:id="@+id/community_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/mediumbold_lightregular"
-                android:includeFontPadding="false"
-                android:lineSpacingExtra="0dp"
-                android:text="Month "
-                android:textColor="@color/white"
-                android:textSize="24sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/home_title"
-                tools:layout_conversion_absoluteHeight="34dp"
-                tools:layout_conversion_absoluteWidth="86dp" />
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/community_location_icon"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:src="@drawable/community_location_icon"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/white" />
+
+                <TextView
+                    android:id="@+id/community_location_banner"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sfprodisplay_bold"
+                    android:text="Arcadia, CA"
+                    android:textColor="@color/white"
+                    android:textSize="32sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toEndOf="@+id/community_location_icon"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/community_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/mediumbold_lightregular"
+                    android:includeFontPadding="false"
+                    android:lineSpacingExtra="0dp"
+                    android:text="Month "
+                    android:textColor="@color/white"
+                    android:textSize="24sp"
+                    app:layout_constraintStart_toEndOf="@+id/community_location_icon"
+                    app:layout_constraintTop_toBottomOf="@+id/community_location_banner"
+                    tools:layout_conversion_absoluteHeight="34dp"
+                    tools:layout_conversion_absoluteWidth="86dp" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
             <LinearLayout
                 android:id="@+id/community_activity_article_linearLayout"
                 android:layout_width="match_parent"

@@ -4,11 +4,8 @@ import android.app.Application;
 
 import androidx.lifecycle.LiveData;
 
-import com.hsappdev.ahs.dataTypes.Article;
 import com.hsappdev.ahs.dataTypes.Category;
 import com.hsappdev.ahs.dataTypes.CategoryDAO;
-
-import java.util.List;
 
 public class CategoryRepository {
     private CategoryDAO categoryDAO;

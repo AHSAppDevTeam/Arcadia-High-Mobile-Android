@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape
+            android:innerRadiusRatio="2.5"
+            android:shape="ring"
+            android:thickness="2dp"
+            android:useLevel="false">
+            <solid android:color="?attr/titleColor"/>
+        </shape>
+    </item>
+    <item
+        android:bottom="@dimen/padding_x.5"
+        android:drawable="@drawable/home_search_icon"
+        android:left="@dimen/padding_x.5"
+        android:right="@dimen/padding_x.5"
+        android:top="@dimen/padding_x.5" />
+
+</layer-list>

@@ -7,11 +7,9 @@ import android.util.Log;
 import androidx.lifecycle.Observer;
 
 import com.hsappdev.ahs.R;
-import com.hsappdev.ahs.cache.callbacks.CategoryListLoadableCallback;
 import com.hsappdev.ahs.cache.callbacks.CategoryLoadableCallback;
 import com.hsappdev.ahs.dataTypes.Article;
 import com.hsappdev.ahs.dataTypes.Category;
-import com.hsappdev.ahs.dataTypes.CategoryList;
 import com.hsappdev.ahs.localdb.ArticleRepository;
 
 import java.util.List;

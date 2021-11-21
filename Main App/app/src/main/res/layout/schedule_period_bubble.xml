@@ -1,46 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:paddingTop="@dimen/padding"
-    android:paddingHorizontal="@dimen/padding_x.5"
-    >
-<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:elevation="@dimen/shadowElevation"
-    android:background="@drawable/img_frame_large"
-    android:backgroundTint="?attr/bgColor"
-    android:clipToPadding="false"
+    android:paddingHorizontal="@dimen/padding">
 
-    >
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/divider_guide"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent=".25" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/schedule_period_bubble"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginVertical="@dimen/padding"
+        app:cardBackgroundColor="@color/redGradientStart"
+        app:cardCornerRadius="@dimen/padding"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/divider_guide"
+        app:layout_constraintTop_toTopOf="@+id/schedule_period_bubble_time_start">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/schedule_period_bubble_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/sfprodisplay_bold"
+                android:gravity="center"
+                android:text="Period 1"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
 
     <TextView
-        android:id="@+id/schedule_period_bubble_text_header"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/heavybold_lightregular"
-        android:padding="@dimen/padding_x.5"
-        android:text="Loading..."
+        android:id="@+id/schedule_period_bubble_time_start"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/padding_x2"
+        android:gravity="center"
+        android:paddingEnd="@dimen/padding"
+        android:text="Time Start"
         android:textColor="?attr/titleColor"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/divider_guide"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/schedule_period_bubble_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/mediumbold_lightregular"
-        android:padding="@dimen/padding_x.5"
-        android:text="Loading..."
+        android:id="@+id/schedule_period_bubble_time_end"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/padding_x2"
+        android:gravity="center"
+        android:paddingEnd="@dimen/padding"
+        android:text="Time End"
         android:textColor="?attr/titleColor"
-        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        app:layout_constraintEnd_toStartOf="@+id/divider_guide"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

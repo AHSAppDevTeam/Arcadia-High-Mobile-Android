@@ -1,6 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/Jeffrey/Documents/Coding/Android/Arcadia-High-Mobile-Android/Main App/app/src/main/res/drawable/app_logo.xml" value="0.2953125" />
+        <entry key="..\:/Users/Jeffrey/Documents/Coding/Android/Arcadia-High-Mobile-Android/Main App/app/src/main/res/drawable/article_see_more_button_bg.xml" value="0.2833333333333333" />
+        <entry key="..\:/Users/Jeffrey/Documents/Coding/Android/Arcadia-High-Mobile-Android/Main App/app/src/main/res/drawable/home_search_icon_holder.xml" value="0.37864583333333335" />
+        <entry key="..\:/Users/Jeffrey/Documents/Coding/Android/Arcadia-High-Mobile-Android/Main App/app/src/main/res/drawable/navbar_saved_ic.xml" value="0.2833333333333333" />
+        <entry key="..\:/Users/Jeffrey/Documents/Coding/Android/Arcadia-High-Mobile-Android/Main App/app/src/main/res/layout/activity_about_us.xml" value="0.18425925925925926" />
+        <entry key="..\:/Users/Jeffrey/Documents/Coding/Android/Arcadia-High-Mobile-Android/Main App/app/src/main/res/layout/activity_calendar.xml" value="0.2671875" />
+        <entry key="..\:/Users/Jeffrey/Documents/Coding/Android/Arcadia-High-Mobile-Android/Main App/app/src/main/res/layout/activity_main.xml" value="0.3625" />
+        <entry key="..\:/Users/Jeffrey/Documents/Coding/Android/Arcadia-High-Mobile-Android/Main App/app/src/main/res/layout/activity_notification.xml" value="0.3625" />
+        <entry key="..\:/Users/Jeffrey/Documents/Coding/Android/Arcadia-High-Mobile-Android/Main App/app/src/main/res/layout/activity_notification_settings.xml" value="0.2671875" />
+        <entry key="..\:/Users/Jeffrey/Documents/Coding/Android/Arcadia-High-Mobile-Android/Main App/app/src/main/res/layout/activity_terms_and_agreements.xml" value="0.18593693367162015" />
+        <entry key="..\:/Users/Jeffrey/Documents/Coding/Android/Arcadia-High-Mobile-Android/Main App/app/src/main/res/layout/article.xml" value="0.2671875" />
+        <entry key="..\:/Users/Jeffrey/Documents/Coding/Android/Arcadia-High-Mobile-Android/Main App/app/src/main/res/layout/calendar_day_layout.xml" value="0.2713541666666667" />
+        <entry key="..\:/Users/Jeffrey/Documents/Coding/Android/Arcadia-High-Mobile-Android/Main App/app/src/main/res/layout/calendar_month_header_layout.xml" value="0.2713541666666667" />
+        <entry key="..\:/Users/Jeffrey/Documents/Coding/Android/Arcadia-High-Mobile-Android/Main App/app/src/main/res/layout/community_activity.xml" value="0.2671875" />
+        <entry key="..\:/Users/Jeffrey/Documents/Coding/Android/Arcadia-High-Mobile-Android/Main App/app/src/main/res/layout/comunity_activity_article_unit.xml" value="0.2713541666666667" />
+        <entry key="..\:/Users/Jeffrey/Documents/Coding/Android/Arcadia-High-Mobile-Android/Main App/app/src/main/res/layout/home.xml" value="0.33" />
+        <entry key="..\:/Users/Jeffrey/Documents/Coding/Android/Arcadia-High-Mobile-Android/Main App/app/src/main/res/layout/home_community_section.xml" value="0.2713541666666667" />
+        <entry key="..\:/Users/Jeffrey/Documents/Coding/Android/Arcadia-High-Mobile-Android/Main App/app/src/main/res/layout/home_news_small_article.xml" value="0.2713541666666667" />
+        <entry key="..\:/Users/Jeffrey/Documents/Coding/Android/Arcadia-High-Mobile-Android/Main App/app/src/main/res/layout/home_news_small_article_holder.xml" value="0.2713541666666667" />
+        <entry key="..\:/Users/Jeffrey/Documents/Coding/Android/Arcadia-High-Mobile-Android/Main App/app/src/main/res/layout/notification_article_holder.xml" value="0.5538261997405967" />
+        <entry key="..\:/Users/Jeffrey/Documents/Coding/Android/Arcadia-High-Mobile-Android/Main App/app/src/main/res/layout/profile.xml" value="0.26875" />
+        <entry key="..\:/Users/Jeffrey/Documents/Coding/Android/Arcadia-High-Mobile-Android/Main App/app/src/main/res/layout/saved.xml" value="0.3625" />
+        <entry key="..\:/Users/Jeffrey/Documents/Coding/Android/Arcadia-High-Mobile-Android/Main App/app/src/main/res/layout/saved_article_holder.xml" value="0.20260416666666667" />
+        <entry key="..\:/Users/Jeffrey/Documents/Coding/Android/Arcadia-High-Mobile-Android/Main App/app/src/main/res/layout/schedule_period_bubble.xml" value="0.2713541666666667" />
+        <entry key="..\:/Users/Jeffrey/Documents/Coding/Android/Arcadia-High-Mobile-Android/Main App/app/src/main/res/layout/schedule_period_bubble_passing_period.xml" value="0.2713541666666667" />
+        <entry key="..\:/Users/Jeffrey/Documents/Coding/Android/Arcadia-High-Mobile-Android/Main App/app/src/main/res/layout/schedule_title_header.xml" value="0.2671875" />
+        <entry key="..\:/Users/Jeffrey/Documents/Coding/Android/Arcadia-High-Mobile-Android/Main App/app/src/main/res/layout/single_line_community_article_holder.xml" value="0.2671875" />
+        <entry key="..\:/Users/Jeffrey/Documents/Coding/Android/Arcadia-High-Mobile-Android/Main App/app/src/main/res/menu/article_appbar_menu.xml" value="0.20260416666666667" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

@@ -14,7 +14,6 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import com.hsappdev.ahs.OnItemClick;
 import com.hsappdev.ahs.R;
 import com.hsappdev.ahs.cache.ArticleLoaderBackend;
-import com.hsappdev.ahs.cache.LoadableCallback;
 import com.hsappdev.ahs.cache.callbacks.ArticleLoadableCallback;
 import com.hsappdev.ahs.dataTypes.Article;
 import com.hsappdev.ahs.util.ImageUtil;
@@ -22,7 +21,6 @@ import com.hsappdev.ahs.util.ScreenUtil;
 
 public class LargeArticleUnit implements View.OnClickListener, ArticleLoadableCallback {
     private static final String TAG = "LargeArticleUnit";
-    private Article article;
     final private ConstraintLayout articleLayout;
     final private ImageView articleImage;
     final private Resources r;
@@ -30,8 +28,9 @@ public class LargeArticleUnit implements View.OnClickListener, ArticleLoadableCa
     final private TextView timeTextView;
     final private TextView categoryTextView;
     final private ImageView indicatorImageView;
-    private OnItemClick onArticleClick;
     final private Activity activity;
+    private Article article;
+    private final OnItemClick onArticleClick;
 
     public LargeArticleUnit(@NonNull View itemView, OnItemClick onArticleClick, Activity activity) {
         this.r = itemView.getResources();
@@ -46,7 +45,7 @@ public class LargeArticleUnit implements View.OnClickListener, ArticleLoadableCa
 
     }
 
-    public void setDetails(String articleID){
+    public void setDetails(String articleID) {
         articleLayout.setOnClickListener(this);
         ArticleLoaderBackend.getInstance(activity.getApplication()).getCacheObject(articleID, r, this);
     }
@@ -55,7 +54,7 @@ public class LargeArticleUnit implements View.OnClickListener, ArticleLoadableCa
     @Override
     public void onClick(View view) {
         Log.d(TAG, "article click");
-        if(article != null)
+        if (article != null)
             onArticleClick.onArticleClicked(article);
     }
 
@@ -64,9 +63,9 @@ public class LargeArticleUnit implements View.OnClickListener, ArticleLoadableCa
     public void onLoaded(Article articleN) {
         this.article = articleN;
         titleTextView.setText(article.getTitle());
-        if(article.getImageURLs().length != 0) { // When there are at least one article, show first image
+        if (article.getImageURLs().length != 0) { // When there are at least one article, show first image
             ImageUtil.setImageToView(article.getImageURLs()[0], articleImage);
-        } else if(article.getVideoURLs().length != 0){
+        } else if (article.getVideoURLs().length != 0) {
             ImageUtil.setImageToSmallView(ImageUtil.getYoutubeThumbnail(article.getVideoURLs()[0]), articleImage);
         }
 

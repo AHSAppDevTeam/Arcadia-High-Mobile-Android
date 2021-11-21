@@ -4,20 +4,18 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 import com.hsappdev.ahs.R;
 import com.hsappdev.ahs.UI.home.OnSectionClicked;
 import com.hsappdev.ahs.cache.CategoryListLoaderBackend;
-import com.hsappdev.ahs.cache.LoadableCallback;
 import com.hsappdev.ahs.cache.callbacks.CategoryListLoadableCallback;
 import com.hsappdev.ahs.dataTypes.CategoryList;
 
@@ -30,12 +28,12 @@ public class HomeCommunityFragment extends Fragment implements CategoryListLoada
     private View contentView;
     private OnSectionClicked onCommunityClick;
     private Resources r;
+    private Activity hostActivity;
 
     public HomeCommunityFragment() {
 
     }
 
-    private Activity hostActivity;
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
@@ -68,8 +66,8 @@ public class HomeCommunityFragment extends Fragment implements CategoryListLoada
         this.contentView = view;
 
         CategoryListLoaderBackend
-        .getInstance(getActivity().getApplication())
-        .getCacheObject(r.getString(R.string.db_location_community), r, this);
+                .getInstance(getActivity().getApplication())
+                .getCacheObject(r.getString(R.string.db_location_community), r, this);
         return view;
     }
 

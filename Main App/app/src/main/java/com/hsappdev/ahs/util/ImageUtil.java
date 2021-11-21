@@ -2,8 +2,6 @@ package com.hsappdev.ahs.util;
 
 import android.widget.ImageView;
 
-import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
-
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
@@ -26,9 +24,10 @@ public class ImageUtil {
         Glide
                 .with(imageView.getContext())
                 .load(imageUrl)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
                 .centerCrop()
                 .error(R.drawable.img_frame_large)
+                .transition(DrawableTransitionOptions.withCrossFade())
                 .into(imageView);
 
     }

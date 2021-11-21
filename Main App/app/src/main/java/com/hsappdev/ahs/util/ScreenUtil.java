@@ -4,16 +4,10 @@ import android.content.Context;
 import android.os.Build;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
-import android.util.Log;
 import android.util.TypedValue;
 import android.widget.TextView;
 
 import androidx.core.text.HtmlCompat;
-
-import com.hsappdev.ahs.R;
-
-import java.time.Instant;
-import java.time.ZoneId;
 
 public class ScreenUtil {
     public static float px_to_sp(float px, Context context) {
@@ -42,10 +36,10 @@ public class ScreenUtil {
         //Log.d("time", time+"");
         String timeText = "";
 
-        final int second = 1, minute = second*60, hour = minute*60, day = hour*24, week = day*7, month = day*30;
+        final int second = 1, minute = second*60, hour = minute*60, day = hour*24, week = day*7, month = day*30, year = month*12;
 
         // Configurable vars
-        final int justNowInterval = 10; // Threshold for when a time should be considered as "just now"
+        final int justNowInterval = minute*5; // Threshold for when a time should be considered as "just now"
         final String justNowMessage = "Just Now"; // What to display for "just now"
         final String pastMessage = " ago";
         final String futureMessage = " ahead";
@@ -73,13 +67,16 @@ public class ScreenUtil {
         } else if(diff<month) {
             tempTime = (int) Math.floor(diff/week);
             timeText = tempTime + " week";
-        } else {
+        } else if(diff<year) {
             tempTime = (int) Math.floor(diff/month);
             timeText = tempTime + " month";
+        } else {
+            tempTime = (int) Math.floor(diff/year);
+            timeText = tempTime + " year";
         }
 
         // Plural
-        timeText += (tempTime == 1? "":"s");
+        timeText += ((tempTime == 1 || justNow)? "":"s");
 
         if(!justNow) {
             if (time > timestamp) {

@@ -14,25 +14,22 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import com.hsappdev.ahs.OnItemClick;
 import com.hsappdev.ahs.R;
 import com.hsappdev.ahs.cache.ArticleLoaderBackend;
-import com.hsappdev.ahs.cache.LoadableCallback;
 import com.hsappdev.ahs.cache.callbacks.ArticleLoadableCallback;
 import com.hsappdev.ahs.dataTypes.Article;
 import com.hsappdev.ahs.util.ImageUtil;
 import com.hsappdev.ahs.util.ScreenUtil;
 
 public class MediumArticleUnit extends ConstraintLayout implements ArticleLoadableCallback {
-    protected Article article;
+    private static final String TAG = "MediumArticleUnit";
+    final protected View contentView;
     final private ConstraintLayout articleLayout;
     final private ImageView articleImage;
     final private Resources r;
     final private TextView titleTextView;
     final private TextView timeTextView;
-    private OnItemClick onArticleClick;
     final private Activity activity;
-
-    final protected View contentView;
-
-    private static final String TAG = "MediumArticleUnit";
+    protected Article article;
+    private final OnItemClick onArticleClick;
 
     public MediumArticleUnit(@NonNull Context context, String articleId, OnItemClick onItemClick, int layoutID, Activity activity) {
         super(context);

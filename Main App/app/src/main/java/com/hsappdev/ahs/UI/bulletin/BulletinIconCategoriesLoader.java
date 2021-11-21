@@ -1,10 +1,8 @@
 package com.hsappdev.ahs.UI.bulletin;
 
 import android.app.Activity;
-import android.app.Application;
 import android.content.Context;
 import android.content.res.Resources;
-import android.graphics.Color;
 
 import androidx.annotation.NonNull;
 
@@ -16,9 +14,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hsappdev.ahs.R;
 import com.hsappdev.ahs.cache.CategoryLoaderBackend;
-import com.hsappdev.ahs.cache.LoadableCallback;
 import com.hsappdev.ahs.cache.callbacks.CategoryLoadableCallback;
-import com.hsappdev.ahs.dataTypes.Category;
 import com.hsappdev.ahs.db.DatabaseConstants;
 
 import java.util.ArrayList;
