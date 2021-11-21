@@ -6,12 +6,12 @@ plugins {
 
 android {
     signingConfigs {
-//        releaseSign {
-//            storeFile file('C:\\Users\\Jeffrey\\Downloads\\old_keystore')
-//            storePassword '180Campus'
-//            keyAlias 'ahs'
-//            keyPassword '180Campus'
-//        }
+        releaseSign {
+            storeFile file('%USERPROFILE%\\.android\\release.keystore')
+            storePassword '180Campus'
+            keyAlias 'ahs'
+            keyPassword '180Campus'
+        }
 
     }
     compileSdkVersion 31
@@ -25,14 +25,14 @@ android {
         versionName "4.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        //signingConfig signingConfigs.releaseSign
+        signingConfig signingConfigs.releaseSign
     }
 
     buildTypes {
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            //signingConfig signingConfigs.releaseSign
+            signingConfig signingConfigs.releaseSign
         }
     }
     compileOptions {
