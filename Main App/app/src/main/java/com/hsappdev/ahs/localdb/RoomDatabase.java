@@ -2,6 +2,9 @@ package com.hsappdev.ahs.localdb;
 
 
 import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.room.Database;
@@ -25,6 +28,8 @@ import java.util.concurrent.Executors;
 @TypeConverters(Converters.class)
 public abstract class RoomDatabase extends androidx.room.RoomDatabase {
 
+    private static final String TAG = "RoomDatabase";
+
     public abstract ArticleDAO articleDAO();
     public abstract CategoryDAO categoryDAO();
     public abstract CategoryListDAO categoryListDAO();
@@ -40,6 +45,37 @@ public abstract class RoomDatabase extends androidx.room.RoomDatabase {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             RoomDatabase.class,
                             DatabaseConstants.DATABASE_NAME)
+                            .addCallback(
+                                new Callback(){
+                                    @Override
+                                    public void onCreate(@NonNull SupportSQLiteDatabase db) {
+                                        super.onCreate(db);
+                                        // This code is to copy articles from the old app when the user upgrades
+
+                                        // First open up the old saved article db
+                                        SQLiteDatabase oldDatabase = SQLiteDatabase.openDatabase("/data/data/com.hsappdev.ahs/databases/"+Article.OLD_TABLE_NAME, null, 0);
+                                        Cursor cursor = oldDatabase.rawQuery("select * from " + Article.OLD_TABLE_NAME,null);
+
+                                        // Cycle through all entries and add them to the new db
+                                        if (cursor.moveToFirst()) {
+                                            while (!cursor.isAfterLast()) {
+                                                int ID_INDEX = cursor.getColumnIndex("IDS");
+                                                int TITLE_INDEX = cursor.getColumnIndex("TITLE");
+
+                                                String id = cursor.getString(ID_INDEX);
+                                                String title = cursor.getString(TITLE_INDEX);
+
+                                                Log.d(TAG, "onCreate: I FOUND AN ARTICLE IN THE OLD DATABASE " + id + " : " + title);
+
+                                                // TODO: add the article to the new db
+
+                                                cursor.moveToNext();
+                                            }
+                                        }
+
+                                    }
+                                }
+                            )
                             .addMigrations(MIGRATION_2_3)
                             .addMigrations(MIGRATION_3_4)
                             .addMigrations(MIGRATION_4_5)
