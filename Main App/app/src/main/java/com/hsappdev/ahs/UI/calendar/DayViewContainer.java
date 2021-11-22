@@ -33,7 +33,7 @@ public class DayViewContainer extends ViewContainer implements CalendarDayLoadCa
     private static final String TAG = "DayViewContainer";
 
     private TextView dayText;
-    private TextView dayInfo;
+    private TextView dayDots;
     private LocalDate date;
 
     private Schedule schedule;
@@ -44,7 +44,7 @@ public class DayViewContainer extends ViewContainer implements CalendarDayLoadCa
     public DayViewContainer(@NotNull View view) {
         super(view);
         dayText = view.findViewById(R.id.calendarDayText);
-        dayInfo = view.findViewById(R.id.calendarDayInfo);
+        dayDots = view.findViewById(R.id.calendarDayDots);
         view.setOnClickListener(this);
     }
 
@@ -105,8 +105,8 @@ public class DayViewContainer extends ViewContainer implements CalendarDayLoadCa
     @Override
     public void onCalendarScheduleLoad(Schedule schedule) {
         this.schedule = schedule;
-        dayInfo.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(schedule.getColor())));
-        dayInfo.setText(schedule.getTitle());
+        dayDots.setTextColor(ColorStateList.valueOf(Color.parseColor(schedule.getColor())));
+        dayDots.setText(schedule.getDotsString());
 
         if(isToday())
             if(scheduleRenderer != null)
