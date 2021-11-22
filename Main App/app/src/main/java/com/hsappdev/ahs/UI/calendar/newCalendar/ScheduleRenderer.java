@@ -21,7 +21,7 @@ import java.util.List;
 public class ScheduleRenderer {
 
     private static final String TAG = "ScheduleRenderer";
-    private static final int CELL_SCALE_FACTOR = 10;
+    private static final int CELL_SCALE_FACTOR = 8;
 
     private final LinearLayout view;
     public ScheduleRenderer(LinearLayout view) {
