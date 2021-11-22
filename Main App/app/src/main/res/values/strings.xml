@@ -76,6 +76,8 @@
     <string name="medium_article_indicator">Medium article indicator</string>
     <string name="home_title">Arcadia</string>
     <string name="home_default_month">January</string>
+    <string name="home_notification_button">Open notifications</string>
+    <string name="home_search_button">Search article titles</string>
     <string name="logo_description">The Arcadia High Mobile logo: a peacock feather in shades of cardinal and gold.</string>
     <string name="community_title">Community</string>
     <string name="main_title">AUSD News</string>
