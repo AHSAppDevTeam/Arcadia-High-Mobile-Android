@@ -1,5 +1,6 @@
 package com.hsappdev.ahs.UI.calendar;
 
+import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.util.Log;
@@ -104,17 +105,13 @@ public class DayViewContainer extends ViewContainer implements CalendarDayLoadCa
     @Override
     public void onCalendarScheduleLoad(Schedule schedule) {
         this.schedule = schedule;
-        dayInfo.setBackgroundColor(Color.parseColor(schedule.getColor()));
+        dayInfo.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(schedule.getColor())));
         dayInfo.setText(schedule.getTitle());
 
-        if(calendarDay.getOwner() == DayOwner.THIS_MONTH){
-            if(calendarDay.getDay() == getDayOfMonth()) {
-                if(calendarDay.getDate().atStartOfDay().equals(LocalDate.now().atStartOfDay())) {
-                    if(scheduleRenderer != null)
-                        scheduleRenderer.render(schedule);
-                }
-            }
-        }
+        if(isToday())
+            if(scheduleRenderer != null)
+                scheduleRenderer.render(schedule);
+
     }
 
     @Override
