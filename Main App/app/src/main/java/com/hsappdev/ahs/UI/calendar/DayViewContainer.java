@@ -1,5 +1,6 @@
 package com.hsappdev.ahs.UI.calendar;
 
+import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.util.Log;
@@ -27,7 +28,7 @@ import java.time.LocalDate;
 import java.time.temporal.IsoFields;
 import java.time.temporal.WeekFields;
 
-public class DayViewContainer extends ViewContainer implements CalendarDayLoadCallback, CalendarScheduleLoadCallback, View.OnClickListener {
+public class DayViewContainer extends ViewContainer implements CalendarDayLoadCallback, CalendarScheduleLoadCallback, View.OnClickListener, ScheduleRenderer.RemoveSelectedHighlightCallback {
 
     private static final String TAG = "DayViewContainer";
 
@@ -50,6 +51,7 @@ public class DayViewContainer extends ViewContainer implements CalendarDayLoadCa
     public void updateView(CalendarDay calendarDay, ScheduleRenderer scheduleRenderer) {
         this.calendarDay = calendarDay;
         this.scheduleRenderer = scheduleRenderer;
+        scheduleRenderer.registerForRemoveHighlightCallback(this);
         date = calendarDay.getDate();
         dayText.setText(Integer.toString(calendarDay.getDay()));
 
@@ -61,17 +63,14 @@ public class DayViewContainer extends ViewContainer implements CalendarDayLoadCa
         theme.resolveAttribute(R.attr.titleColor, typedValue, true);
         dayText.setTextColor(typedValue.data);
 
-        if(calendarDay.getOwner() == DayOwner.THIS_MONTH){
-            if(calendarDay.getDay() == getDayOfMonth()) {
-                if(calendarDay.getDate().atStartOfDay().equals(LocalDate.now().atStartOfDay())) {
-                    dayText.setBackgroundColor(Color.YELLOW);
-                    dayText.setTextColor(Color.BLACK);
-                    if(schedule != null && scheduleRenderer != null)
-                        scheduleRenderer.render(schedule);
-                }
-            }
-        } else {
+        if(calendarDay.getOwner() != DayOwner.THIS_MONTH){
             dayText.setTextColor(Color.GRAY);
+        }
+        if(isToday()) {
+            dayText.setBackgroundColor(Color.YELLOW);
+            dayText.setTextColor(Color.BLACK);
+            if(schedule != null && scheduleRenderer != null)
+                scheduleRenderer.render(schedule);
         }
         CalendarBackendNew.getInstance().registerForCallback(getWeekOfYear(), getDayOfWeek(), this);
     }
@@ -106,23 +105,49 @@ public class DayViewContainer extends ViewContainer implements CalendarDayLoadCa
     @Override
     public void onCalendarScheduleLoad(Schedule schedule) {
         this.schedule = schedule;
-        dayInfo.setBackgroundColor(Color.parseColor(schedule.getColor()));
+        dayInfo.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(schedule.getColor())));
         dayInfo.setText(schedule.getTitle());
 
-        if(calendarDay.getOwner() == DayOwner.THIS_MONTH){
-            if(calendarDay.getDay() == getDayOfMonth()) {
-                if(calendarDay.getDate().atStartOfDay().equals(LocalDate.now().atStartOfDay())) {
-                    if(scheduleRenderer != null)
-                        scheduleRenderer.render(schedule);
-                }
-            }
-        }
+        if(isToday())
+            if(scheduleRenderer != null)
+                scheduleRenderer.render(schedule);
+
     }
 
     @Override
     public void onClick(View v) {
         if(schedule != null && scheduleRenderer != null) {
             scheduleRenderer.render(schedule);
+            dayText.setBackgroundColor(Color.LTGRAY);
         }
+    }
+
+    @Override
+    public void removeHighlight() {
+        if(isToday()) {
+            dayText.setBackgroundColor(Color.YELLOW);
+            return;
+        }
+
+
+        if(dayText != null) {
+            TypedValue typedValue = new TypedValue();
+            Resources.Theme theme = dayText.getContext().getTheme();
+            theme.resolveAttribute(R.attr.backgroundColor, typedValue, true);
+            dayText.setBackgroundColor(typedValue.data);
+        }
+
+    }
+
+
+    private boolean isToday() {
+        if(calendarDay.getOwner() == DayOwner.THIS_MONTH) {
+            if (calendarDay.getDay() == getDayOfMonth()) {
+                if (calendarDay.getDate().atStartOfDay().equals(LocalDate.now().atStartOfDay())) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

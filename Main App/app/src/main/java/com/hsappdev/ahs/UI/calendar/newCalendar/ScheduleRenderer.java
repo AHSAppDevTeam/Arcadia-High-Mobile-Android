@@ -15,17 +15,33 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import com.hsappdev.ahs.R;
 import com.hsappdev.ahs.UI.calendar.calendarBackend.Schedule;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ScheduleRenderer {
 
     private static final String TAG = "ScheduleRenderer";
-    private static final int CELL_SCALE_FACTOR = 10;
+    private static final int CELL_SCALE_FACTOR = 8;
 
     private final LinearLayout view;
     public ScheduleRenderer(LinearLayout view) {
         this.view = view;
     }
 
+    private Schedule currentScheduleBeingRendered = null;
+
+    private List<RemoveSelectedHighlightCallback> callbackList = new ArrayList<>();
+
+    public void registerForRemoveHighlightCallback(RemoveSelectedHighlightCallback callback) {
+        callbackList.add(callback);
+    }
+
     public void render (Schedule schedule) {
+        currentScheduleBeingRendered = schedule;
+        for (RemoveSelectedHighlightCallback callback :
+                callbackList) {
+            callback.removeHighlight();
+        }
         view.removeAllViews();
         view.setOrientation(LinearLayout.VERTICAL);
 
@@ -85,5 +101,17 @@ public class ScheduleRenderer {
         int cellHeight = timePassed*CELL_SCALE_FACTOR - 30; // 30 is to subtract the extra padding added to center the timestamps
         passingPeriodSpace.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, cellHeight));
         return passingPeriodSpace;
+    }
+
+    public Schedule getCurrentScheduleBeingRendered() {
+        return currentScheduleBeingRendered;
+    }
+
+    public void setCurrentScheduleBeingRendered(Schedule currentScheduleBeingRendered) {
+        this.currentScheduleBeingRendered = currentScheduleBeingRendered;
+    }
+
+    public interface RemoveSelectedHighlightCallback {
+        void removeHighlight();
     }
 }
