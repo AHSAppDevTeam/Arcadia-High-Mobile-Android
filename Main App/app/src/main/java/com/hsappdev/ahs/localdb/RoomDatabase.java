@@ -1,9 +1,13 @@
 package com.hsappdev.ahs.localdb;
 
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
+import android.database.sqlite.SQLiteCantOpenDatabaseException;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -21,6 +25,7 @@ import com.hsappdev.ahs.dataTypes.CategoryList;
 import com.hsappdev.ahs.dataTypes.CategoryListDAO;
 import com.hsappdev.ahs.db.DatabaseConstants;
 
+import java.util.Arrays;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -45,37 +50,83 @@ public abstract class RoomDatabase extends androidx.room.RoomDatabase {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             RoomDatabase.class,
                             DatabaseConstants.DATABASE_NAME)
-                            .addCallback(
-                                new Callback(){
-                                    @Override
-                                    public void onCreate(@NonNull SupportSQLiteDatabase db) {
-                                        super.onCreate(db);
-                                        // This code is to copy articles from the old app when the user upgrades
-
-                                        // First open up the old saved article db
-                                        SQLiteDatabase oldDatabase = SQLiteDatabase.openDatabase("/data/data/com.hsappdev.ahs/databases/"+Article.OLD_TABLE_NAME, null, 0);
-                                        Cursor cursor = oldDatabase.rawQuery("select * from " + Article.OLD_TABLE_NAME,null);
-
-                                        // Cycle through all entries and add them to the new db
-                                        if (cursor.moveToFirst()) {
-                                            while (!cursor.isAfterLast()) {
-                                                int ID_INDEX = cursor.getColumnIndex("IDS");
-                                                int TITLE_INDEX = cursor.getColumnIndex("TITLE");
-
-                                                String id = cursor.getString(ID_INDEX);
-                                                String title = cursor.getString(TITLE_INDEX);
-
-                                                Log.d(TAG, "onCreate: I FOUND AN ARTICLE IN THE OLD DATABASE " + id + " : " + title);
-
-                                                // TODO: add the article to the new db
-
-                                                cursor.moveToNext();
-                                            }
-                                        }
-
-                                    }
-                                }
-                            )
+//                            .addCallback(
+//                                new Callback(){
+//
+//                                    @Override
+//                                    public void onCreate(@NonNull SupportSQLiteDatabase db) {
+//                                        super.onCreate(db);
+//                                        // This code is to copy articles from the old app when the user upgrades
+//
+//                                        // First open up the old saved article db
+//                                        SQLiteDatabase oldDatabase;
+//                                        try {
+//                                            oldDatabase = SQLiteDatabase.openDatabase("/data/data/com.hsappdev.ahs/databases/" + Article.OLD_TABLE_NAME, null, 0);
+//                                        } catch (SQLiteCantOpenDatabaseException e) {
+//                                            // the db does not exist
+//                                            // do nothing
+//                                            return;
+//                                        }
+//                                        Cursor cursor = oldDatabase.rawQuery("select * from " + Article.OLD_TABLE_NAME,null);
+//
+//                                        // Cycle through all entries and add them to the new db
+//                                        db.beginTransaction();
+//                                        int num = 0;
+//                                        if (cursor.moveToFirst()) {
+//                                            while (!cursor.isAfterLast()) {
+//                                                num++;
+//
+//
+//                                                int ID_INDEX = cursor.getColumnIndex("IDS");
+//                                                int TIME_INDEX = cursor.getColumnIndex("TIME");
+//                                                int TITLE_INDEX = cursor.getColumnIndex("TITLE");
+//                                                int AUTHOR_INDEX = cursor.getColumnIndex("AUTHOR");
+//                                                int STORY_INDEX = cursor.getColumnIndex("STORY");
+//                                                int IPATHS_INDEX = cursor.getColumnIndex("IPATHS");
+//                                                int V_IDS_INDEX = cursor.getColumnIndex("V_IDS");
+//                                                int CATEGORY_INDEX = cursor.getColumnIndex("CATEGORY");
+//
+//
+//
+//
+//                                                Log.d(TAG, "onCreate: I FOUND AN ARTICLE IN THE OLD DATABASE " + cursor.getString(ID_INDEX) + " : " + cursor.getString(TITLE_INDEX));
+//
+//                                                // TODO: add the article to the new db
+//                                                ContentValues values = new ContentValues();
+//                                                values.put("ID", num);
+//                                                values.put(Article.ID, cursor.getString(ID_INDEX));
+//                                                values.put(Article.AUTHOR, cursor.getString(AUTHOR_INDEX));
+//                                                values.put(Article.TITLE, cursor.getString(TITLE_INDEX));
+//                                                values.put(Article.BODY, cursor.getString(STORY_INDEX));
+//                                                values.put(Article.IMG_URLS, cursor.getString(IPATHS_INDEX));
+//                                                values.put(Article.VID_URLS, cursor.getString(V_IDS_INDEX));
+//                                                values.put(Article.CAT_DISP_CLR, Color.BLACK);
+//                                                values.put(Article.IS_SAVED, 1); // SQL lite does not support boolean
+//                                                values.put(Article.IS_NOTIFICATION, 0);
+//                                                values.put(Article.IS_VIEWED, 0);
+//                                                values.put(Article.CAT_DISP, "General");
+//                                                values.put(Article.CAT_ID, "General_Info");
+//                                                values.put(Article.TIME, cursor.getLong(TIME_INDEX));
+//
+//                                                try {
+//                                                    long result = db.insert(Article.TABLE_NAME, SQLiteDatabase.CONFLICT_REPLACE, values);
+//                                                    boolean succeeded = (result != -1);
+//                                                    Log.d(TAG, "I FOUND AN ARTICLE IN THE OLD DATABASE AND ADDED IT, DID IT SUCCEED? : " + succeeded);
+//                                                } catch (SQLException e) {
+//                                                    Log.e(TAG, "onCreate: ", e);
+//                                                }
+//
+//
+//                                            }
+//                                        }
+//                                        db.endTransaction();
+//                                        cursor.close();
+//                                        oldDatabase.close();
+//
+//
+//                                    }
+//                                }
+//                            )
                             .addMigrations(MIGRATION_2_3)
                             .addMigrations(MIGRATION_3_4)
                             .addMigrations(MIGRATION_4_5)
