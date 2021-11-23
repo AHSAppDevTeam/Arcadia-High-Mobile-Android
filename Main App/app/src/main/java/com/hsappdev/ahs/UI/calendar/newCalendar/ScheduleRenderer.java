@@ -98,7 +98,8 @@ public class ScheduleRenderer {
         passingPeriodText.setText(text);
         passingPeriodText.setGravity(Gravity.CENTER);
         int timePassed = timestampEnd-timestampStart;
-        int cellHeight = timePassed*CELL_SCALE_FACTOR - 30; // 30 is to subtract the extra padding added to center the timestamps
+        int cellHeight = timePassed*CELL_SCALE_FACTOR;
+//        cellHeight -= 30; // 30 is to subtract the extra padding added to center the timestamps
         passingPeriodSpace.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, cellHeight));
         return passingPeriodSpace;
     }
