@@ -32,6 +32,7 @@ public class DayViewContainer extends ViewContainer implements CalendarDayLoadCa
 
     private static final String TAG = "DayViewContainer";
 
+    private final View dayView;
     private final TextView dayText;
     private final TextView dayDots;
     private LocalDate date;
@@ -43,6 +44,7 @@ public class DayViewContainer extends ViewContainer implements CalendarDayLoadCa
 
     public DayViewContainer(@NotNull View view) {
         super(view);
+        dayView = view;
         dayText = view.findViewById(R.id.calendarDayText);
         dayDots = view.findViewById(R.id.calendarDayDots);
         view.setOnClickListener(this);
@@ -96,19 +98,14 @@ public class DayViewContainer extends ViewContainer implements CalendarDayLoadCa
         dayDots.setTextColor(schedule.getColorInt());
         dayDots.setText(schedule.getDotsString());
 
-        toggleHighlight(false);
-        if(isToday()) {
-            if (scheduleRenderer != null)
-                scheduleRenderer.render(schedule);
-        }
-
+        if(isToday() && scheduleRenderer != null)
+            scheduleRenderer.render(schedule);
     }
 
     @Override
     public void onClick(View view) {
-        if(schedule != null && scheduleRenderer != null) {
+        if(schedule != null && scheduleRenderer != null)
             scheduleRenderer.render(schedule);
-        }
         toggleHighlight(true);
     }
 
@@ -135,13 +132,11 @@ public class DayViewContainer extends ViewContainer implements CalendarDayLoadCa
         int defaultMutedTextColor = Color.GRAY;
 
         if(isToday() || highlight) {
-            dayText.setBackgroundColor(highlightedBackgroundColor);
-            dayDots.setBackgroundColor(highlightedBackgroundColor);
+            dayView.setBackgroundColor(highlightedBackgroundColor);
             dayText.setTextColor(highlightedTextColor);
             dayDots.setTextColor(highlightedTextColor);
         } else {
-            dayText.setBackgroundColor(defaultBackgroundColor);
-            dayDots.setBackgroundColor(defaultBackgroundColor);
+            dayView.setBackgroundColor(defaultBackgroundColor);
             if(calendarDay.getOwner() == DayOwner.THIS_MONTH) {
                 dayText.setTextColor(defaultTextColor);
             } else {
