@@ -106,10 +106,10 @@ public class DayViewContainer extends ViewContainer implements CalendarDayLoadCa
 
     @Override
     public void onClick(View view) {
-        toggleHighlight(true);
         if(schedule != null && scheduleRenderer != null) {
             scheduleRenderer.render(schedule);
         }
+        toggleHighlight(true);
     }
 
     @Override
