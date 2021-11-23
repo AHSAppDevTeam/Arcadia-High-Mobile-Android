@@ -1,5 +1,7 @@
 package com.hsappdev.ahs.UI.calendar.calendarBackend;
 
+import android.graphics.Color;
+
 import androidx.room.util.StringUtil;
 
 import java.util.ArrayList;
@@ -28,8 +30,10 @@ public class Schedule {
         this.iconURL = iconURL;
     }
 
-    public String getColor() {
-        return color;
+    public String getColor() { return color; }
+
+    public int getColorInt() {
+        return Color.parseColor(this.color);
     }
 
     public void setColor(String color) {

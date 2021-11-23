@@ -32,8 +32,8 @@ public class DayViewContainer extends ViewContainer implements CalendarDayLoadCa
 
     private static final String TAG = "DayViewContainer";
 
-    private TextView dayText;
-    private TextView dayDots;
+    private final TextView dayText;
+    private final TextView dayDots;
     private LocalDate date;
 
     private Schedule schedule;
@@ -55,23 +55,11 @@ public class DayViewContainer extends ViewContainer implements CalendarDayLoadCa
         date = calendarDay.getDate();
         dayText.setText(Integer.toString(calendarDay.getDay()));
 
-        TypedValue typedValue = new TypedValue();
-        Resources.Theme theme = dayText.getContext().getTheme();
-        theme.resolveAttribute(R.attr.backgroundColor, typedValue, true);
-        dayText.setBackgroundColor(typedValue.data);
+        if(isToday() && schedule != null && scheduleRenderer != null)
+            scheduleRenderer.render(schedule);
 
-        theme.resolveAttribute(R.attr.titleColor, typedValue, true);
-        dayText.setTextColor(typedValue.data);
+        toggleHighlight(false);
 
-        if(calendarDay.getOwner() != DayOwner.THIS_MONTH){
-            dayText.setTextColor(Color.GRAY);
-        }
-        if(isToday()) {
-            dayText.setBackgroundColor(Color.YELLOW);
-            dayText.setTextColor(Color.BLACK);
-            if(schedule != null && scheduleRenderer != null)
-                scheduleRenderer.render(schedule);
-        }
         CalendarBackendNew.getInstance().registerForCallback(getWeekOfYear(), getDayOfWeek(), this);
     }
 
@@ -105,38 +93,62 @@ public class DayViewContainer extends ViewContainer implements CalendarDayLoadCa
     @Override
     public void onCalendarScheduleLoad(Schedule schedule) {
         this.schedule = schedule;
-        dayDots.setTextColor(ColorStateList.valueOf(Color.parseColor(schedule.getColor())));
+        dayDots.setTextColor(schedule.getColorInt());
         dayDots.setText(schedule.getDotsString());
 
-        if(isToday())
-            if(scheduleRenderer != null)
+        toggleHighlight(false);
+        if(isToday()) {
+            if (scheduleRenderer != null)
                 scheduleRenderer.render(schedule);
+        }
 
     }
 
     @Override
-    public void onClick(View v) {
+    public void onClick(View view) {
+        toggleHighlight(true);
         if(schedule != null && scheduleRenderer != null) {
             scheduleRenderer.render(schedule);
-            dayText.setBackgroundColor(Color.LTGRAY);
         }
     }
 
     @Override
     public void removeHighlight() {
-        if(isToday()) {
-            dayText.setBackgroundColor(Color.YELLOW);
-            return;
+        toggleHighlight(false);
+    }
+
+    public void toggleHighlight(Boolean highlight) {
+        int highlightedBackgroundColor = schedule != null ? schedule.getColorInt() : Color.BLUE;
+        int highlightedTextColor = Color.WHITE;
+
+        TypedValue typedValue = new TypedValue();
+        Resources.Theme theme = dayText.getContext().getTheme();
+
+        theme.resolveAttribute(R.attr.backgroundColor, typedValue, true);
+        int defaultBackgroundColor = typedValue.data;
+
+        theme.resolveAttribute(R.attr.titleColor, typedValue, true);
+        int defaultTextColor = typedValue.data;
+
+        // refactor later for dark theme
+        //theme.resolveAttribute(R.attr.mutedTitleColor, typedValue, true);
+        int defaultMutedTextColor = Color.GRAY;
+
+        if(isToday() || highlight) {
+            dayText.setBackgroundColor(highlightedBackgroundColor);
+            dayDots.setBackgroundColor(highlightedBackgroundColor);
+            dayText.setTextColor(highlightedTextColor);
+            dayDots.setTextColor(highlightedTextColor);
+        } else {
+            dayText.setBackgroundColor(defaultBackgroundColor);
+            dayDots.setBackgroundColor(defaultBackgroundColor);
+            if(calendarDay.getOwner() == DayOwner.THIS_MONTH) {
+                dayText.setTextColor(defaultTextColor);
+            } else {
+                dayText.setTextColor(defaultMutedTextColor);
+            }
+            dayDots.setTextColor(highlightedBackgroundColor);
         }
-
-
-        if(dayText != null) {
-            TypedValue typedValue = new TypedValue();
-            Resources.Theme theme = dayText.getContext().getTheme();
-            theme.resolveAttribute(R.attr.backgroundColor, typedValue, true);
-            dayText.setBackgroundColor(typedValue.data);
-        }
-
     }
 
 
