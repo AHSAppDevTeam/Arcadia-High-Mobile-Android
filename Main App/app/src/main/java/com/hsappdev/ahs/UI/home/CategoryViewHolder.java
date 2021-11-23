@@ -1,6 +1,7 @@
 package com.hsappdev.ahs.UI.home;
 
 import android.app.Activity;
+import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -169,6 +170,7 @@ public class CategoryViewHolder extends RecyclerView.ViewHolder implements Categ
         String regularText = " News";
         Helper.setBoldRegularText(sectionTitle, category.getTitle(), regularText);
         sectionTitle.setTextColor(category.getColor());
+        smallTabLayout.setTabRippleColor(ColorStateList.valueOf(category.getColor()));
     }
 
     @Override

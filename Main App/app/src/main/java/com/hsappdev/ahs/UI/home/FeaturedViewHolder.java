@@ -1,6 +1,7 @@
 package com.hsappdev.ahs.UI.home;
 
 import android.app.Activity;
+import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.util.TypedValue;
 import android.view.View;
@@ -106,6 +107,7 @@ public class FeaturedViewHolder extends RecyclerView.ViewHolder implements Categ
         String regularText = " News";
         Helper.setBoldRegularText(sectionTitle, category.getTitle(), regularText);
         sectionTitle.setTextColor(category.getColor());
+        featuredTabLayout.setTabRippleColor(ColorStateList.valueOf(category.getColor()));
 
         // Set up tab layout
         if (featuredArticleAdapter.getItemCount() > 1) {
