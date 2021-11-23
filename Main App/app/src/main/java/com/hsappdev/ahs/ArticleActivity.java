@@ -2,6 +2,7 @@ package com.hsappdev.ahs;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.content.res.Configuration;
 import android.graphics.Rect;
 import android.os.Bundle;
@@ -253,9 +254,9 @@ public class ArticleActivity extends AppCompatActivity implements Adjusting_Text
             }
         });
 
-        seeMoreSectionButton.setText("See more in ");
+        seeMoreSectionButton.setText(R.string.article_see_more);
         seeMoreSectionButton.append(Helper.getSpanBoldRegularText(article.getCategoryDisplayName(), ""));
-        seeMoreSectionButton.setTextColor(article.getCategoryDisplayColor());
+        seeMoreSectionButton.setBackgroundTintList(ColorStateList.valueOf(article.getCategoryDisplayColor()));
         seeMoreSectionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

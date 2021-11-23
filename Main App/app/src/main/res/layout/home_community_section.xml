@@ -141,14 +141,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="@dimen/padding"
-                android:background="@drawable/article_see_more_button_bg"
-                android:text="Click to learn more >"
-                android:textColor="@color/black"
+                android:layout_marginEnd="@dimen/padding"
                 android:fontFamily="@font/sfprodisplay_bold"
-                android:paddingVertical="@dimen/padding_x.25"
+                android:foreground="@drawable/ic_baseline_arrow_forward_24"
                 android:paddingHorizontal="@dimen/padding"
+                android:paddingVertical="@dimen/padding_x.25"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/community_section_blurb"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/community_section_blurb" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
