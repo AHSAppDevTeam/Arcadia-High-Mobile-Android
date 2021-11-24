@@ -55,7 +55,7 @@ public class ScheduleRenderer {
         for (int i = 0; i < schedule.getTimestamps().size(); i+=2) {
             int timestampStart = schedule.getTimestamps().get(i);
             int timestampEnd = schedule.getTimestamps().get(i+1);
-            int periodNum = Integer.parseInt(schedule.getPeriodIDs().get(i));
+            String periodNum = schedule.getPeriodIDs().get(i);
             view.addView(generateScheduleBubbleView(timestampStart, timestampEnd, periodNum, view, schedule.getColor()));
             if(i+1 < schedule.getPeriodIDs().size()) {
                 int passingPeriodEnd = schedule.getTimestamps().get(i+2);
@@ -72,7 +72,7 @@ public class ScheduleRenderer {
         return String.format("%d:%02d %s", hour, timestampStart%60, AMvsPM);
     }
 
-    private View generateScheduleBubbleView(int timestampStart, int timestampEnd, int periodNum, View view, String color){
+    private View generateScheduleBubbleView(int timestampStart, int timestampEnd, String periodNum, View view, String color){
         LayoutInflater layoutInflater = LayoutInflater.from(view.getContext());
         View bubble = layoutInflater.inflate(R.layout.schedule_period_bubble, null, false);
         TextView timestampTextStart = bubble.findViewById(R.id.schedule_period_bubble_time_start);
@@ -88,8 +88,28 @@ public class ScheduleRenderer {
 
         timestampTextStart.setText(getDisplayTime(timestampStart));
         timestampTextEnd.setText(getDisplayTime(timestampEnd));
-        periodText.setText(String.format("Period %d", periodNum));
+
+        if(isPeriodStringANumber(periodNum)) {
+            periodText.setText(String.format("Period %s", periodNum));
+        } else {
+            periodText.setText(formatPeriodDisplayText(periodNum));
+        }
+
         return bubble;
+    }
+
+    private String formatPeriodDisplayText(String periodNum) {
+        String capitalizeFirstLetter = periodNum.substring(0, 1).toUpperCase() + periodNum.substring(1);
+        return capitalizeFirstLetter.replaceAll(" (?=[0-9]+)", " Period ");
+    }
+
+    private boolean isPeriodStringANumber(String periodNum){
+        try {
+            Integer.parseInt(periodNum);
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
+        return true;
     }
 
     private View generateSchedulePassingPeriodBubbleView(int timestampStart, int timestampEnd, String text, View view){
