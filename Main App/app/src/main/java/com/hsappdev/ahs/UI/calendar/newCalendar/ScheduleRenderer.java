@@ -69,6 +69,7 @@ public class ScheduleRenderer {
         int hour = timestampStart/60;
         String AMvsPM = "AM";
         if(hour > 12) {hour -= 12; AMvsPM = "PM";}
+        if(hour == 12) {AMvsPM = "PM";}
         return String.format("%d:%02d %s", hour, timestampStart%60, AMvsPM);
     }
 
