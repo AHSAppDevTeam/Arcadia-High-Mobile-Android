@@ -201,6 +201,7 @@ Last updated August 08, 2020
     <string name="graphic_designers_list"><![CDATA[Steffi Huang<br/>Arina Miyadi<br/>Kyrene Tam]]></string>
     <string name="content_editors_list"><![CDATA[Rachel Saw<br/>Jennifer Wong<br/>Kelly Cheng]]></string>
     <string name="article_see_more">See more in\ </string>
+    <string name="search_magic_query">about the app dev team</string>
 
 
 </resources>

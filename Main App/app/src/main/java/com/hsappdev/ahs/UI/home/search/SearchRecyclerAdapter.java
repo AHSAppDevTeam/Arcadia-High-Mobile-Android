@@ -1,5 +1,9 @@
 package com.hsappdev.ahs.UI.home.search;
 
+import android.app.Activity;
+import android.app.Application;
+import android.content.Intent;
+import android.content.res.Resources;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +13,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.hsappdev.ahs.AboutUsActivity;
 import com.hsappdev.ahs.OnItemClick;
 import com.hsappdev.ahs.R;
 import com.hsappdev.ahs.dataTypes.Article;
@@ -22,9 +27,11 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<SearchRecyclerAd
     private final List<Article> searchArticleList = new ArrayList<>();
     private List<Article> filteredArticleList = new ArrayList<>();
     private final OnItemClick onItemClick;
+    private final Activity activity;
 
-    public SearchRecyclerAdapter(OnItemClick onItemClick) {
+    public SearchRecyclerAdapter(OnItemClick onItemClick, Activity activity) {
         this.onItemClick = onItemClick;
+        this.activity = activity;
     }
 
     @NonNull
@@ -58,6 +65,8 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<SearchRecyclerAd
             filteredArticleList.clear();
             notifyDataSetChanged();
             return;
+        } else if (query.equals(activity.getResources().getString(R.string.search_magic_query))) {
+            activity.startActivity(new Intent(activity.getApplicationContext(), AboutUsActivity.class));
         }
         List<Article> tempList = new ArrayList<>();
         String[] qWords = query.toLowerCase().split(" ");
