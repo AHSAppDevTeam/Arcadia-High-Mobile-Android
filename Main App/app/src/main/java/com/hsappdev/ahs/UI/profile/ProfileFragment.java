@@ -1,5 +1,6 @@
 package com.hsappdev.ahs.UI.profile;
 
+import android.app.AlarmManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -27,6 +28,11 @@ import com.hsappdev.ahs.UI.calendar.calendarBackend.CalendarDayLoadCallback;
 import com.hsappdev.ahs.UI.calendar.calendarBackend.Day;
 import com.hsappdev.ahs.UI.calendar.newCalendar.CalendarBackendNew;
 import com.hsappdev.ahs.util.Helper;
+
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class ProfileFragment extends Fragment {
     private static final String TAG = "ProfileFragment";
@@ -97,6 +103,28 @@ public class ProfileFragment extends Fragment {
         // Calendar Button
         CalendarBackendNew calendarBackend = CalendarBackendNew.getInstance();
         // View findByIds here
+        TextView schedulePeriod = view.findViewById(R.id.profile_schedule_period);
+        TextView timeRemaining = view.findViewById(R.id.profile_schedule_time_remaining);
+        TextView timeRemainingHeader = view.findViewById(R.id.profile_schedule_time_remaining_header);
+        Date initialTime = Calendar.getInstance().getTime();
+        Timer timer = new Timer();
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                Calendar currentTime = Calendar.getInstance();
+                //get time in hours and minutes(basically 24 hour time format)
+                int hours = currentTime.get(Calendar.HOUR_OF_DAY);
+                int minutes = currentTime.get(Calendar.MINUTE);
+                //convert hours and minutes to total minutes until midnight
+                int currentTotalMinutes = 1440 - (hours * 60 + minutes);
+                //Note: I made this just to test how timer would work when updating the view, it kind've crashes the app whenever i test it so
+                String currentTimeRemaining = Integer.toString(currentTotalMinutes);//test, don't use in final code
+                timeRemaining.setText(currentTimeRemaining);//test, don't use in final code
+                //TODO use currentTotalMinutes and compare with Schedule.periodIDs and Schedule.timestamps to display period and time
+            }
+        };
+
+        timer.schedule(timerTask, initialTime, 1000);
 
         // Callback
         calendarBackend.registerForCallback(35, 0, new CalendarDayLoadCallback() {
@@ -104,7 +132,6 @@ public class ProfileFragment extends Fragment {
             public void onCalendarDayLoad(Day requestedDay) {
 //                Button button;
 //                button.setVisibility(View.GONE);
-
             }
 
             @Override
@@ -128,7 +155,7 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
+            mViewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
     }
 
 }
