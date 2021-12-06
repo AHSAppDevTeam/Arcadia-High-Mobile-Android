@@ -25,10 +25,16 @@ import com.hsappdev.ahs.R;
 import com.hsappdev.ahs.SettingsManager;
 import com.hsappdev.ahs.TermsAndAgreementsActivity;
 import com.hsappdev.ahs.UI.calendar.calendarBackend.CalendarDayLoadCallback;
+import com.hsappdev.ahs.UI.calendar.calendarBackend.CalendarScheduleLoadCallback;
 import com.hsappdev.ahs.UI.calendar.calendarBackend.Day;
+import com.hsappdev.ahs.UI.calendar.calendarBackend.Schedule;
 import com.hsappdev.ahs.UI.calendar.newCalendar.CalendarBackendNew;
 import com.hsappdev.ahs.util.Helper;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.temporal.IsoFields;
+import java.time.temporal.WeekFields;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Timer;
@@ -112,36 +118,112 @@ public class ProfileFragment extends Fragment {
             @Override
             public void run() {
                 Calendar currentTime = Calendar.getInstance();
+                LocalDate localDate = LocalDate.now().minusDays(3); // local date is more accurate for week of year and day of week
                 //get time in hours and minutes(basically 24 hour time format)
                 int hours = currentTime.get(Calendar.HOUR_OF_DAY);
                 int minutes = currentTime.get(Calendar.MINUTE);
-                //convert hours and minutes to total minutes until midnight
-                int currentTotalMinutes = 1440 - (hours * 60 + minutes);
+                //convert hours and minutes to total minutes after midnight
+                int currentTotalMinutes = hours * 60 + minutes;
+
                 //Note: I made this just to test how timer would work when updating the view, it kind've crashes the app whenever i test it so
                 String currentTimeRemaining = Integer.toString(currentTotalMinutes);//test, don't use in final code
-                timeRemaining.setText(currentTimeRemaining);//test, don't use in final code
+
                 //TODO use currentTotalMinutes and compare with Schedule.periodIDs and Schedule.timestamps to display period and time
+
+                // Callback
+                calendarBackend.registerForCallback(getWeekOfYear(localDate), localDate.getDayOfWeek().getValue(), new CalendarDayLoadCallback() {
+                    @Override
+                    public void onCalendarDayLoad(Day requestedDay) {
+                        if(getActivity() == null) {
+                            return;
+                        }
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                // Update view code
+                                // Process the data
+                                if(requestedDay.getScheduleId().equals("weekend")){
+
+                                    schedulePeriod.setText("Weekend");
+                                    timeRemainingHeader.setVisibility(View.GONE);
+                                    timeRemaining.setText("");
+                                } else {
+
+                                    // Load the schedule
+                                    requestedDay.loadSchedule(new CalendarScheduleLoadCallback() {
+                                        @Override
+                                        public void onCalendarScheduleLoad(Schedule schedule) {
+                                            if(!schedule.getTimestamps().isEmpty()) {
+                                                int lastTimestamp = schedule.getTimestamps().get(schedule.getTimestamps().size() - 1);
+                                                int firstTimestamp = schedule.getTimestamps().get(0);
+                                                if (currentTotalMinutes >= lastTimestamp) {
+                                                    // after school
+                                                    schedulePeriod.setText("After School");
+                                                    timeRemainingHeader.setVisibility(View.GONE);
+                                                    timeRemaining.setText("");
+                                                } else if (currentTotalMinutes < firstTimestamp) {
+                                                    // before school
+                                                    schedulePeriod.setText("Before School");
+                                                    timeRemainingHeader.setVisibility(View.GONE);
+                                                    timeRemaining.setText("");
+                                                }
+
+                                                // check where we are at by looping
+                                                for (int i = 0; i < schedule.getTimestamps().size(); i+=2) {
+                                                    int timestampStart = schedule.getTimestamps().get(i);
+                                                    int timestampEnd = schedule.getTimestamps().get(i+1);
+                                                    int periodNum = Integer.parseInt(schedule.getPeriodIDs().get(i));
+                                                    int passingPeriodEnd = timestampEnd;
+                                                    if(i+1 < schedule.getPeriodIDs().size()) {
+                                                        passingPeriodEnd =  schedule.getTimestamps().get(i+2);
+                                                    }
+
+
+                                                        // timestampStart - timestampEnd is a period
+                                                    // timestampEnd - passingPeriodEnd is a passing period
+
+                                                    if(currentTotalMinutes >= timestampStart && currentTotalMinutes < timestampEnd) {
+                                                        // we are in period periodNum
+                                                        schedulePeriod.setText(periodNum + " Period");
+                                                        timeRemainingHeader.setVisibility(View.VISIBLE);
+                                                        timeRemaining.setText((timestampEnd - currentTotalMinutes) + " minutes");
+                                                    } else if(currentTotalMinutes >= timestampEnd && currentTotalMinutes < passingPeriodEnd) {
+                                                        schedulePeriod.setText("Passing");
+                                                        timeRemainingHeader.setVisibility(View.VISIBLE);
+                                                        timeRemaining.setText((passingPeriodEnd - currentTotalMinutes) + " minutes");
+                                                    }
+
+                                                }
+                                            }
+                                        }
+                                    });
+                                }
+
+                            }
+                        });
+                    }
+
+                    @Override
+                    public int getRequestedDate() {
+                        return localDate.getDayOfWeek().getValue(); // Change this to dayNumber (the day of week)
+                    }
+                });
             }
         };
 
         timer.schedule(timerTask, initialTime, 1000);
 
-        // Callback
-        calendarBackend.registerForCallback(35, 0, new CalendarDayLoadCallback() {
-            @Override
-            public void onCalendarDayLoad(Day requestedDay) {
-//                Button button;
-//                button.setVisibility(View.GONE);
-            }
 
-            @Override
-            public int getRequestedDate() {
-                return 0; // Change this to dayNumber (the day of week)
-            }
-        });
 
 
         return view;
+    }
+
+    // Helper
+    private int getWeekOfYear(LocalDate date) {
+        WeekFields weekFields = WeekFields.of(DayOfWeek.MONDAY, 4);
+        Log.d(TAG, "getWeekOfYear: " + LocalDate.now().get(IsoFields.WEEK_OF_WEEK_BASED_YEAR));
+        return date.get(IsoFields.WEEK_OF_WEEK_BASED_YEAR);
     }
 
     private void initProfileCardFragment(View view) {
