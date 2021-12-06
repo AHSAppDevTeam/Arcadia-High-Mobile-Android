@@ -18,7 +18,7 @@ public class Day {
     private static final String TAG = "Day";
 
     private String scheduleId;
-
+            // the schedule for the day
     private Schedule schedule = null;
 
     private List<CalendarScheduleLoadCallback> callbacks = new ArrayList<>();

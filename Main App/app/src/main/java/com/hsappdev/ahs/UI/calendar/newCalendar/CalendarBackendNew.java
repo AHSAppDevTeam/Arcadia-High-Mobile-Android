@@ -34,10 +34,10 @@ public class CalendarBackendNew {
     private static final String TAG = "CalendarBackendNew";
 
     private static CalendarBackendNew calendarBackend;
-    private final CalendarView calendarView;
+    private CalendarView calendarView;
     private ScheduleRenderer scheduleRenderer;
 
-
+            // week of the year (0 = first week of the year), Week object
     private HashMap<Integer, Week> weekIds = new HashMap<>();
 
     public static CalendarBackendNew getInstance(CalendarView calendarView, ScheduleRenderer scheduleRenderer) {
@@ -46,7 +46,14 @@ public class CalendarBackendNew {
     }
 
     public static CalendarBackendNew getInstance() {
+        if(calendarBackend == null) {
+            calendarBackend = new CalendarBackendNew();
+        }
         return calendarBackend;
+    }
+
+    private CalendarBackendNew() {
+        setUp();
     }
 
     private CalendarBackendNew(CalendarView calendarView, ScheduleRenderer scheduleRenderer) {
@@ -55,6 +62,7 @@ public class CalendarBackendNew {
         setUpCalendarLibrary();
         setUp();
     }
+
 
     public void setUp() {
         // populate with empty week objects
