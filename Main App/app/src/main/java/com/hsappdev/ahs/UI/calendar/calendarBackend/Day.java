@@ -44,6 +44,7 @@ public class Day {
                 schedule.setIconURL(snapshot.child("iconURL").getValue(String.class));
                 schedule.setColor(snapshot.child("color").getValue(String.class));
                 schedule.setTitle(snapshot.child("title").getValue(String.class));
+                schedule.setDots(snapshot.hasChild("dots") ? snapshot.child("dots").getValue(int.class) : 0);
 
                 schedule.getTimestamps().clear();
                 for(DataSnapshot ds : snapshot.child("timestamps").getChildren()) {

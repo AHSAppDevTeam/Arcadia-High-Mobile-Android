@@ -14,6 +14,7 @@ import com.hsappdev.ahs.cache.LoadableType;
 @Entity(tableName = ArticleDAO.TABLE_NAME)
 public class Article implements Parcelable, LoadableType {
     public static final String TABLE_NAME = ArticleDAO.TABLE_NAME;
+    public static final String OLD_TABLE_NAME = "saved_table";
 
     @ColumnInfo(name = "ID")
     private int tableID;

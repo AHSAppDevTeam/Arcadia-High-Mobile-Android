@@ -1,5 +1,6 @@
 package com.hsappdev.ahs.UI.calendar;
 
+import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.util.Log;
@@ -27,12 +28,13 @@ import java.time.LocalDate;
 import java.time.temporal.IsoFields;
 import java.time.temporal.WeekFields;
 
-public class DayViewContainer extends ViewContainer implements CalendarDayLoadCallback, CalendarScheduleLoadCallback, View.OnClickListener {
+public class DayViewContainer extends ViewContainer implements CalendarDayLoadCallback, CalendarScheduleLoadCallback, View.OnClickListener, ScheduleRenderer.RemoveSelectedHighlightCallback {
 
     private static final String TAG = "DayViewContainer";
 
-    private TextView dayText;
-    private TextView dayInfo;
+    private final View dayView;
+    private final TextView dayText;
+    private final TextView dayDots;
     private LocalDate date;
 
     private Schedule schedule;
@@ -42,37 +44,24 @@ public class DayViewContainer extends ViewContainer implements CalendarDayLoadCa
 
     public DayViewContainer(@NotNull View view) {
         super(view);
+        dayView = view;
         dayText = view.findViewById(R.id.calendarDayText);
-        dayInfo = view.findViewById(R.id.calendarDayInfo);
+        dayDots = view.findViewById(R.id.calendarDayDots);
         view.setOnClickListener(this);
     }
 
     public void updateView(CalendarDay calendarDay, ScheduleRenderer scheduleRenderer) {
         this.calendarDay = calendarDay;
         this.scheduleRenderer = scheduleRenderer;
+        scheduleRenderer.registerForRemoveHighlightCallback(this);
         date = calendarDay.getDate();
         dayText.setText(Integer.toString(calendarDay.getDay()));
 
-        TypedValue typedValue = new TypedValue();
-        Resources.Theme theme = dayText.getContext().getTheme();
-        theme.resolveAttribute(R.attr.backgroundColor, typedValue, true);
-        dayText.setBackgroundColor(typedValue.data);
+        if(isToday() && schedule != null && scheduleRenderer != null)
+            scheduleRenderer.render(schedule);
 
-        theme.resolveAttribute(R.attr.titleColor, typedValue, true);
-        dayText.setTextColor(typedValue.data);
+        toggleHighlight(false);
 
-        if(calendarDay.getOwner() == DayOwner.THIS_MONTH){
-            if(calendarDay.getDay() == getDayOfMonth()) {
-                if(calendarDay.getDate().atStartOfDay().equals(LocalDate.now().atStartOfDay())) {
-                    dayText.setBackgroundColor(Color.YELLOW);
-                    dayText.setTextColor(Color.BLACK);
-                    if(schedule != null && scheduleRenderer != null)
-                        scheduleRenderer.render(schedule);
-                }
-            }
-        } else {
-            dayText.setTextColor(Color.GRAY);
-        }
         CalendarBackendNew.getInstance().registerForCallback(getWeekOfYear(), getDayOfWeek(), this);
     }
 
@@ -106,23 +95,66 @@ public class DayViewContainer extends ViewContainer implements CalendarDayLoadCa
     @Override
     public void onCalendarScheduleLoad(Schedule schedule) {
         this.schedule = schedule;
-        dayInfo.setBackgroundColor(Color.parseColor(schedule.getColor()));
-        dayInfo.setText(schedule.getTitle());
+        dayDots.setTextColor(schedule.getColorInt());
+        dayDots.setText(schedule.getDotsString());
 
-        if(calendarDay.getOwner() == DayOwner.THIS_MONTH){
-            if(calendarDay.getDay() == getDayOfMonth()) {
-                if(calendarDay.getDate().atStartOfDay().equals(LocalDate.now().atStartOfDay())) {
-                    if(scheduleRenderer != null)
-                        scheduleRenderer.render(schedule);
-                }
-            }
-        }
+        if(isToday() && scheduleRenderer != null)
+            scheduleRenderer.render(schedule);
     }
 
     @Override
-    public void onClick(View v) {
-        if(schedule != null && scheduleRenderer != null) {
+    public void onClick(View view) {
+        if(schedule != null && scheduleRenderer != null)
             scheduleRenderer.render(schedule);
+        toggleHighlight(true);
+    }
+
+    @Override
+    public void removeHighlight() {
+        toggleHighlight(false);
+    }
+
+    public void toggleHighlight(Boolean highlight) {
+        int highlightedBackgroundColor = schedule != null ? schedule.getColorInt() : Color.BLUE;
+        int highlightedTextColor = Color.WHITE;
+
+        TypedValue typedValue = new TypedValue();
+        Resources.Theme theme = dayText.getContext().getTheme();
+
+        theme.resolveAttribute(R.attr.backgroundColor, typedValue, true);
+        int defaultBackgroundColor = typedValue.data;
+
+        theme.resolveAttribute(R.attr.titleColor, typedValue, true);
+        int defaultTextColor = typedValue.data;
+
+        // refactor later for dark theme
+        //theme.resolveAttribute(R.attr.mutedTitleColor, typedValue, true);
+        int defaultMutedTextColor = Color.GRAY;
+
+        if(isToday() || highlight) {
+            dayView.setBackgroundColor(highlightedBackgroundColor);
+            dayText.setTextColor(highlightedTextColor);
+            dayDots.setTextColor(highlightedTextColor);
+        } else {
+            dayView.setBackgroundColor(defaultBackgroundColor);
+            if(calendarDay.getOwner() == DayOwner.THIS_MONTH) {
+                dayText.setTextColor(defaultTextColor);
+            } else {
+                dayText.setTextColor(defaultMutedTextColor);
+            }
+            dayDots.setTextColor(highlightedBackgroundColor);
         }
+    }
+
+
+    private boolean isToday() {
+        if(calendarDay.getOwner() == DayOwner.THIS_MONTH) {
+            if (calendarDay.getDay() == getDayOfMonth()) {
+                if (calendarDay.getDate().atStartOfDay().equals(LocalDate.now().atStartOfDay())) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

@@ -75,7 +75,7 @@ public class BulletinRecyclerAdapter extends RecyclerView.Adapter<BulletinRecycl
     @Override
     public BulletinArticleViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         if(viewType == DEFAULT) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.bulletin_defualt_article_holder, parent, false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.bulletin_default_article_holder, parent, false);
             return new BulletinRecyclerAdapter.BulletinArticleViewHolder(view);
         } else {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.bulletin_up_coming_article_holder, parent, false);

@@ -1,6 +1,11 @@
 package com.hsappdev.ahs.UI.calendar.calendarBackend;
 
+import android.graphics.Color;
+
+import androidx.room.util.StringUtil;
+
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Schedule {
@@ -8,9 +13,11 @@ public class Schedule {
     private String iconURL;
     private String color;
     private String title;
-    // List of period ids, timestamps
-    private List<String> periodIDs = new ArrayList<>(); // "1", "passing", "2", "lunch"
-    private List<Integer> timestamps = new ArrayList<>(); // minutes from midnight
+
+    private int dots;
+
+    private List<String> periodIDs = new ArrayList<>();
+    private List<Integer> timestamps = new ArrayList<>();
 
 
     // GETTERS AND SETTERS
@@ -23,8 +30,10 @@ public class Schedule {
         this.iconURL = iconURL;
     }
 
-    public String getColor() {
-        return color;
+    public String getColor() { return color; }
+
+    public int getColorInt() {
+        return Color.parseColor(this.color);
     }
 
     public void setColor(String color) {
@@ -37,6 +46,26 @@ public class Schedule {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public int getDots() {
+        return dots;
+    }
+
+    public String getDotsString() {
+        if (dots > 0) {
+            StringBuilder out = new StringBuilder(dots);
+            for(int i = 0; i < dots; i++){
+                out.append("●");
+            }
+            return out.toString();
+        } else {
+            return "○";
+        }
+    }
+
+    public void setDots(int dots) {
+        this.dots = dots;
     }
 
     public List<String> getPeriodIDs() {

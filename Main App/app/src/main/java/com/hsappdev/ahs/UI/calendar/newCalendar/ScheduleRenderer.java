@@ -15,17 +15,33 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import com.hsappdev.ahs.R;
 import com.hsappdev.ahs.UI.calendar.calendarBackend.Schedule;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ScheduleRenderer {
 
     private static final String TAG = "ScheduleRenderer";
-    private static final int CELL_SCALE_FACTOR = 10;
+    private static final int CELL_SCALE_FACTOR = 8;
 
     private final LinearLayout view;
     public ScheduleRenderer(LinearLayout view) {
         this.view = view;
     }
 
+    private Schedule currentScheduleBeingRendered = null;
+
+    private List<RemoveSelectedHighlightCallback> callbackList = new ArrayList<>();
+
+    public void registerForRemoveHighlightCallback(RemoveSelectedHighlightCallback callback) {
+        callbackList.add(callback);
+    }
+
     public void render (Schedule schedule) {
+        currentScheduleBeingRendered = schedule;
+        for (RemoveSelectedHighlightCallback callback :
+                callbackList) {
+            callback.removeHighlight();
+        }
         view.removeAllViews();
         view.setOrientation(LinearLayout.VERTICAL);
 
@@ -39,7 +55,7 @@ public class ScheduleRenderer {
         for (int i = 0; i < schedule.getTimestamps().size(); i+=2) {
             int timestampStart = schedule.getTimestamps().get(i);
             int timestampEnd = schedule.getTimestamps().get(i+1);
-            int periodNum = Integer.parseInt(schedule.getPeriodIDs().get(i));
+            String periodNum = schedule.getPeriodIDs().get(i);
             view.addView(generateScheduleBubbleView(timestampStart, timestampEnd, periodNum, view, schedule.getColor()));
             if(i+1 < schedule.getPeriodIDs().size()) {
                 int passingPeriodEnd = schedule.getTimestamps().get(i+2);
@@ -53,10 +69,11 @@ public class ScheduleRenderer {
         int hour = timestampStart/60;
         String AMvsPM = "AM";
         if(hour > 12) {hour -= 12; AMvsPM = "PM";}
+        if(hour == 12) {AMvsPM = "PM";}
         return String.format("%d:%02d %s", hour, timestampStart%60, AMvsPM);
     }
 
-    private View generateScheduleBubbleView(int timestampStart, int timestampEnd, int periodNum, View view, String color){
+    private View generateScheduleBubbleView(int timestampStart, int timestampEnd, String periodNum, View view, String color){
         LayoutInflater layoutInflater = LayoutInflater.from(view.getContext());
         View bubble = layoutInflater.inflate(R.layout.schedule_period_bubble, null, false);
         TextView timestampTextStart = bubble.findViewById(R.id.schedule_period_bubble_time_start);
@@ -72,8 +89,28 @@ public class ScheduleRenderer {
 
         timestampTextStart.setText(getDisplayTime(timestampStart));
         timestampTextEnd.setText(getDisplayTime(timestampEnd));
-        periodText.setText(String.format("Period %d", periodNum));
+
+        if(isPeriodStringANumber(periodNum)) {
+            periodText.setText(String.format("Period %s", periodNum));
+        } else {
+            periodText.setText(formatPeriodDisplayText(periodNum));
+        }
+
         return bubble;
+    }
+
+    private String formatPeriodDisplayText(String periodNum) {
+        String capitalizeFirstLetter = periodNum.substring(0, 1).toUpperCase() + periodNum.substring(1);
+        return capitalizeFirstLetter.replaceAll(" (?=[0-9]+)", " Period ");
+    }
+
+    private boolean isPeriodStringANumber(String periodNum){
+        try {
+            Integer.parseInt(periodNum);
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
+        return true;
     }
 
     private View generateSchedulePassingPeriodBubbleView(int timestampStart, int timestampEnd, String text, View view){
@@ -82,8 +119,21 @@ public class ScheduleRenderer {
         passingPeriodText.setText(text);
         passingPeriodText.setGravity(Gravity.CENTER);
         int timePassed = timestampEnd-timestampStart;
-        int cellHeight = timePassed*CELL_SCALE_FACTOR - 30; // 30 is to subtract the extra padding added to center the timestamps
+        int cellHeight = timePassed*CELL_SCALE_FACTOR;
+//        cellHeight -= 30; // 30 is to subtract the extra padding added to center the timestamps
         passingPeriodSpace.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, cellHeight));
         return passingPeriodSpace;
+    }
+
+    public Schedule getCurrentScheduleBeingRendered() {
+        return currentScheduleBeingRendered;
+    }
+
+    public void setCurrentScheduleBeingRendered(Schedule currentScheduleBeingRendered) {
+        this.currentScheduleBeingRendered = currentScheduleBeingRendered;
+    }
+
+    public interface RemoveSelectedHighlightCallback {
+        void removeHighlight();
     }
 }
