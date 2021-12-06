@@ -118,7 +118,7 @@ public class ProfileFragment extends Fragment {
             @Override
             public void run() {
                 Calendar currentTime = Calendar.getInstance();
-                LocalDate localDate = LocalDate.now().minusDays(3); // local date is more accurate for week of year and day of week
+                LocalDate localDate = LocalDate.now(); // local date is more accurate for week of year and day of week
                 //get time in hours and minutes(basically 24 hour time format)
                 int hours = currentTime.get(Calendar.HOUR_OF_DAY);
                 int minutes = currentTime.get(Calendar.MINUTE);
