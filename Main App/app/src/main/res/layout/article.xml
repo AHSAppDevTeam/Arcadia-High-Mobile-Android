@@ -92,20 +92,21 @@
                 android:textSize="18sp"
                 android:textStyle="normal"
                 android:padding="16dp"/>
+
             <TextView
                 android:id="@+id/article_see_more_section_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="See more in Sports News"
                 android:layout_margin="@dimen/padding"
-                android:gravity="center"
-                android:textColor="@color/black"
-                android:textSize="24sp"
-                android:fontFamily="@font/heavybold_lightregular"
                 android:background="@drawable/article_see_more_button_bg"
-                android:backgroundTint="@color/lightgray"
+                android:backgroundTint="@android:color/darker_gray"
+                android:fontFamily="@font/heavybold_lightregular"
+                android:foreground="?attr/selectableItemBackground"
+                android:gravity="center"
                 android:padding="@dimen/padding_x.5"
-                android:foreground="?attr/selectableItemBackground" />
+                android:text="See more in Sports News"
+                android:textColor="@color/white"
+                android:textSize="24sp" />
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/article_related_articles"
                 android:layout_width="match_parent"

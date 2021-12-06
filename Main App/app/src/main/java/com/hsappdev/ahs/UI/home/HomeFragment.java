@@ -154,7 +154,7 @@ public class HomeFragment extends Fragment {
 
     private void createDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        SearchInterface searchInterface = new SearchInterface(getLayoutInflater(), getActivity().getApplication(), onItemClick);
+        SearchInterface searchInterface = new SearchInterface(getLayoutInflater(), getActivity(), onItemClick);
         builder.setView(searchInterface.getView());
         dialog = builder.create();
         dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
