@@ -297,7 +297,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="0"
                 android:gravity="center"
-                android:text="4.0.0"
+                android:text="@string/app_version"
                 android:paddingRight="@dimen/padding_x.25"
                  />
         </LinearLayout>
