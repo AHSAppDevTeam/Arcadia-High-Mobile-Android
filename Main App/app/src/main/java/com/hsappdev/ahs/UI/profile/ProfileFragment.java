@@ -29,6 +29,7 @@ import com.hsappdev.ahs.UI.calendar.calendarBackend.CalendarScheduleLoadCallback
 import com.hsappdev.ahs.UI.calendar.calendarBackend.Day;
 import com.hsappdev.ahs.UI.calendar.calendarBackend.Schedule;
 import com.hsappdev.ahs.UI.calendar.newCalendar.CalendarBackendNew;
+import com.hsappdev.ahs.UI.calendar.newCalendar.ScheduleRenderer;
 import com.hsappdev.ahs.util.Helper;
 
 import java.time.DayOfWeek;
@@ -120,7 +121,7 @@ public class ProfileFragment extends Fragment {
                 Calendar currentTime = Calendar.getInstance();
                 LocalDate localDate = LocalDate.now(); // local date is more accurate for week of year and day of week
                 //get time in hours and minutes(basically 24 hour time format)
-                int hours = currentTime.get(Calendar.HOUR_OF_DAY);
+                int hours = currentTime.get(Calendar.HOUR_OF_DAY)-3;
                 int minutes = currentTime.get(Calendar.MINUTE);
                 //convert hours and minutes to total minutes after midnight
                 int currentTotalMinutes = hours * 60 + minutes;
@@ -172,7 +173,12 @@ public class ProfileFragment extends Fragment {
                                                 for (int i = 0; i < schedule.getTimestamps().size(); i+=2) {
                                                     int timestampStart = schedule.getTimestamps().get(i);
                                                     int timestampEnd = schedule.getTimestamps().get(i+1);
-                                                    int periodNum = Integer.parseInt(schedule.getPeriodIDs().get(i));
+                                                    String periodNum = "";
+                                                    if(ScheduleRenderer.isPeriodStringANumber(schedule.getPeriodIDs().get(i))) {
+                                                        periodNum = String.format("Period %s", schedule.getPeriodIDs().get(i));
+                                                    } else {
+                                                        periodNum = ScheduleRenderer.formatPeriodDisplayText(schedule.getPeriodIDs().get(i));
+                                                    }
                                                     int passingPeriodEnd = timestampEnd;
                                                     if(i+1 < schedule.getPeriodIDs().size()) {
                                                         passingPeriodEnd =  schedule.getTimestamps().get(i+2);
@@ -184,13 +190,13 @@ public class ProfileFragment extends Fragment {
 
                                                     if(currentTotalMinutes >= timestampStart && currentTotalMinutes < timestampEnd) {
                                                         // we are in period periodNum
-                                                        schedulePeriod.setText(periodNum + " Period");
+                                                        schedulePeriod.setText(periodNum);
                                                         timeRemainingHeader.setVisibility(View.VISIBLE);
-                                                        timeRemaining.setText((timestampEnd - currentTotalMinutes) + " minutes");
+                                                        timeRemaining.setText((timestampEnd - currentTotalMinutes) + " min");
                                                     } else if(currentTotalMinutes >= timestampEnd && currentTotalMinutes < passingPeriodEnd) {
                                                         schedulePeriod.setText("Passing");
                                                         timeRemainingHeader.setVisibility(View.VISIBLE);
-                                                        timeRemaining.setText((passingPeriodEnd - currentTotalMinutes) + " minutes");
+                                                        timeRemaining.setText((passingPeriodEnd - currentTotalMinutes) + " min");
                                                     }
 
                                                 }

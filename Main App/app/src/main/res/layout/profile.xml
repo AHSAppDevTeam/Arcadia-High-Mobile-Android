@@ -98,8 +98,10 @@
                 android:fontFamily="@font/heavybold_lightregular"
                 android:text="@string/profile_period_default_value"
                 android:textColor="@color/white"
-                android:textSize="32sp"
-                android:textStyle="bold" />
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:maxLines="1"
+                android:ellipsize="marquee"/>
 
             <TextView
                 android:id="@+id/profile_schedule_period_header"
@@ -131,8 +133,11 @@
                 android:fontFamily="@font/heavybold_lightregular"
                 android:text="@string/profile_time_remaining_default_value"
                 android:textColor="@color/white"
-                android:textSize="32sp"
-                android:textStyle="bold" />
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:maxLines="1"
+                android:ellipsize="marquee"
+                android:focusable="true"/>
 
             <TextView
                 android:id="@+id/profile_schedule_time_remaining_header"
