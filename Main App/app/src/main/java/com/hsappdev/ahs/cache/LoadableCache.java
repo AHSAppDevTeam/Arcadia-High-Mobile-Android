@@ -82,8 +82,11 @@ public abstract class LoadableCache<T extends LoadableType> {
                     article = getArticleInstance();
 
                 }
-
-                extractFirebaseValuesAndSetToObject(snapshot);
+                try {
+                    extractFirebaseValuesAndSetToObject(snapshot);
+                } catch (Exception e) {
+                    return;
+                }
 
                 if(!postFirebaseLoad()) {
                     finalizeFirebaseLoad();
