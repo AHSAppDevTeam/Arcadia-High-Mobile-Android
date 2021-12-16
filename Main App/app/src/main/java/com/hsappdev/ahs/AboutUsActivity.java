@@ -25,6 +25,9 @@ public class AboutUsActivity extends AppCompatActivity {
         TextView contentEditors = findViewById(R.id.content_editors_list);
         ScreenUtil.setHTMLStringToTextView(getResources().getString(R.string.content_editors_list), contentEditors);
 
+        TextView previousMembers = findViewById(R.id.old_member_list);
+        ScreenUtil.setHTMLStringToTextView(getResources().getString(R.string.previous_members_list), previousMembers);
+
         ImageButton homeButton = findViewById(R.id.about_us_activity_home_button);
         homeButton.setOnClickListener(new View.OnClickListener() {
             @Override
