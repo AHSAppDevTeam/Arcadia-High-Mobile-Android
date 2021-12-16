@@ -121,7 +121,7 @@ public class ProfileFragment extends Fragment {
                 Calendar currentTime = Calendar.getInstance();
                 LocalDate localDate = LocalDate.now(); // local date is more accurate for week of year and day of week
                 //get time in hours and minutes(basically 24 hour time format)
-                int hours = currentTime.get(Calendar.HOUR_OF_DAY)-3;
+                int hours = currentTime.get(Calendar.HOUR_OF_DAY);
                 int minutes = currentTime.get(Calendar.MINUTE);
                 //convert hours and minutes to total minutes after midnight
                 int currentTotalMinutes = hours * 60 + minutes;
