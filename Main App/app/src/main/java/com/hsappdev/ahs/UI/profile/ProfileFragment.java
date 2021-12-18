@@ -179,18 +179,18 @@ public class ProfileFragment extends Fragment {
                                                     }
 
 
-                                                        // timestampStart - timestampEnd is a period
+                                                    // timestampStart - timestampEnd is a period
                                                     // timestampEnd - passingPeriodEnd is a passing period
 
                                                     if(currentTotalMinutes >= timestampStart && currentTotalMinutes < timestampEnd) {
                                                         // we are in period periodNum
                                                         schedulePeriod.setText(periodNum + " Period");
                                                         timeRemainingHeader.setVisibility(View.VISIBLE);
-                                                        timeRemaining.setText((timestampEnd - currentTotalMinutes) + " minutes");
+                                                        timeRemaining.setText((timestampEnd - currentTotalMinutes) + " min");
                                                     } else if(currentTotalMinutes >= timestampEnd && currentTotalMinutes < passingPeriodEnd) {
                                                         schedulePeriod.setText("Passing");
                                                         timeRemainingHeader.setVisibility(View.VISIBLE);
-                                                        timeRemaining.setText((passingPeriodEnd - currentTotalMinutes) + " minutes");
+                                                        timeRemaining.setText((passingPeriodEnd - currentTotalMinutes) + " min");
                                                     }
 
                                                 }
