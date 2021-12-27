@@ -200,8 +200,10 @@ Last updated August 08, 2020
     <string name="programmers_list"><![CDATA[Jeffrey Aaron Jeyasingh<br/>Xing Liu<br/>Josh McMahon<br/>Richard Wei]]></string>
     <string name="graphic_designers_list"><![CDATA[Steffi Huang<br/>Arina Miyadi<br/>Kyrene Tam]]></string>
     <string name="content_editors_list"><![CDATA[Rachel Saw<br/>Jennifer Wong<br/>Kelly Cheng]]></string>
+    <string name="previous_members_list" ><![CDATA[Seongwook Jang<br/>Jason Zhao<br/>Tiger Ma<br/>Albert Yeung<br/>Jessica Chou<br/>Nathan Wong<br/>Paul Lee<br/>Alex Hitti]]></string>
     <string name="article_see_more">See more in\ </string>
     <string name="search_magic_query">about the app dev team</string>
+    <string name="app_version">4.0.1</string>
 
 
 </resources>

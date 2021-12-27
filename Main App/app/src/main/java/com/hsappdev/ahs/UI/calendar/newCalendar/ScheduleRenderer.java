@@ -99,12 +99,12 @@ public class ScheduleRenderer {
         return bubble;
     }
 
-    private String formatPeriodDisplayText(String periodNum) {
+    public static String formatPeriodDisplayText(String periodNum) {
         String capitalizeFirstLetter = periodNum.substring(0, 1).toUpperCase() + periodNum.substring(1);
         return capitalizeFirstLetter.replaceAll(" (?=[0-9]+)", " Period ");
     }
 
-    private boolean isPeriodStringANumber(String periodNum){
+    public static boolean isPeriodStringANumber(String periodNum){
         try {
             Integer.parseInt(periodNum);
         } catch (NumberFormatException nfe) {
