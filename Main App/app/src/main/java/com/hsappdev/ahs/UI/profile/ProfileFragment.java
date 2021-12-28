@@ -185,7 +185,7 @@ public class ProfileFragment extends Fragment {
                                                     }
 
 
-                                                        // timestampStart - timestampEnd is a period
+                                                    // timestampStart - timestampEnd is a period
                                                     // timestampEnd - passingPeriodEnd is a passing period
 
                                                     if(currentTotalMinutes >= timestampStart && currentTotalMinutes < timestampEnd) {

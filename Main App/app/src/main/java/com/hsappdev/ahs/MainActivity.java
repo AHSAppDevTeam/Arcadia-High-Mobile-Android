@@ -4,15 +4,19 @@ import android.app.Application;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.view.View;
 import android.view.Window;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.cardview.widget.CardView;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.hsappdev.ahs.UI.home.OnSectionClicked;
@@ -28,6 +32,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationC
 
     private BottomNavigationView navView;
     private static final String TAG = "MainActivity";
+    private CardView draggableSheetCardView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,6 +107,25 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationC
         }
 
         setUpNotificationIcon();
+
+
+        /////////////// Draggable Card View ////////////////
+        draggableSheetCardView = findViewById(R.id.draggableSheetCardView);
+        BottomSheetBehavior<CardView> bottomSheetBehavior = BottomSheetBehavior.from(draggableSheetCardView);
+        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+        bottomSheetBehavior.addBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(@NonNull View bottomSheet, int newState) {
+
+            }
+
+            @Override
+            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+                // Animate the corners
+                float cardRadius = getResources().getDimensionPixelSize(R.dimen.padding);
+                draggableSheetCardView.setRadius((1f-slideOffset)*cardRadius);
+            }
+        });
 
     }
 
