@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Build;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.util.TypedValue;
 import android.widget.TextView;
 
@@ -18,7 +19,13 @@ public class ScreenUtil {
     }
 
     public static void setHTMLStringToTextView(String html, TextView textView){
-        textView.setText(HtmlCompat.fromHtml(html, HtmlCompat.FROM_HTML_SEPARATOR_LINE_BREAK_PARAGRAPH));
+        String[] lines = html.split("\\n");
+        textView.setText("");
+        for(String line : lines) {
+            Log.d("screenutil", line);
+            textView.append(HtmlCompat.fromHtml(line, HtmlCompat.FROM_HTML_SEPARATOR_LINE_BREAK_PARAGRAPH));
+            textView.append("\n");
+        }
         textView.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
