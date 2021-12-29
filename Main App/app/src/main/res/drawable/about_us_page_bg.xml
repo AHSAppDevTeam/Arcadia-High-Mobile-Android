@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android">
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <gradient
-        android:startColor="@color/redGradientStart"
-        android:endColor="@color/redGradientEnd"
-        android:angle="90"/>
+    <item android:drawable="@drawable/credits_page_bg" />
 
-</shape>
+</layer-list>
