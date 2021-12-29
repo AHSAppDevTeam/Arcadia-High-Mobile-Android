@@ -19,13 +19,10 @@ public class ScreenUtil {
     }
 
     public static void setHTMLStringToTextView(String html, TextView textView){
-        String[] lines = html.split("\\n");
-        textView.setText("");
-        for(String line : lines) {
-            Log.d("screenutil", line);
-            textView.append(HtmlCompat.fromHtml(line, HtmlCompat.FROM_HTML_SEPARATOR_LINE_BREAK_PARAGRAPH));
-            textView.append("\n");
-        }
+        Log.d("ScreenUtil", html);
+        String replaceNewlineWithBreak = html.replaceAll("\\n", "</p><br><p>");
+        Log.d("ScreenUtil", replaceNewlineWithBreak);
+        textView.setText(HtmlCompat.fromHtml(replaceNewlineWithBreak, HtmlCompat.FROM_HTML_SEPARATOR_LINE_BREAK_PARAGRAPH));
         textView.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
