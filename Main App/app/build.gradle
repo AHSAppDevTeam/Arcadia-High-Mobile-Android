@@ -5,15 +5,7 @@ plugins {
 }
 
 android {
-    signingConfigs {
-        releaseSign {
-            storeFile file('C:\\Users\\Jeffrey\\.android\\release.keystore')
-            storePassword '180Campus'
-            keyAlias 'ahs'
-            keyPassword '180Campus'
-        }
-
-    }
+    
     compileSdkVersion 31
     buildToolsVersion "30.0.3"
 
@@ -25,7 +17,6 @@ android {
         versionName "4.0.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        signingConfig signingConfigs.releaseSign
     }
 
     buildTypes {
