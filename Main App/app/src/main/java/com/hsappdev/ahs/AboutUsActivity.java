@@ -1,5 +1,6 @@
 package com.hsappdev.ahs;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -7,6 +8,13 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.hsappdev.ahs.db.DatabaseConstants;
 import com.hsappdev.ahs.util.ScreenUtil;
 
 public class AboutUsActivity extends AppCompatActivity {
@@ -35,5 +43,28 @@ public class AboutUsActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+
+        // example
+
+        DatabaseReference ref = FirebaseDatabase.getInstance(FirebaseApp.getInstance(DatabaseConstants.FIREBASE_REALTIME_DB))
+                .getReference()
+                .child(getString(R.string.db_credits));
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot person : snapshot.getChildren()) {
+                    String name = person.child("name").getValue(String.class);
+                    boolean isRetired = person.child("retired").getValue(Boolean.class);
+                    person.child("url").exists();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
     }
 }
