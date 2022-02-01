@@ -53,11 +53,42 @@ public class AboutUsActivity extends AppCompatActivity {
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String programmers_list = "";
+                String graphic_designers_list = "";
+                String content_editors_list = "";
+                String previous_members_list = "";//use a hashmap?
                 for (DataSnapshot person : snapshot.getChildren()) {
                     String name = person.child("name").getValue(String.class);
                     boolean isRetired = person.child("retired").getValue(Boolean.class);
-                    person.child("url").exists();
+                    String role = person.child("role").getValue(String.class);
+                    boolean hasUrl = person.child("url").exists();
+                    if (isRetired) {
+                        previous_members_list += "<br/>" + name;
+                    }
+                    else {
+                        if (role.equals("programmer")) { //change to actual role
+                            programmers_list += "<br/>" + name; //add the a tag for url
+                        }
+                        if (role.equals("graphic_designer")) { //change to actual role
+                            graphic_designers_list += "<br/>" + name;
+                        }
+                        if (role.equals("content_editor")) { //change to actual role
+                            content_editors_list += "<br/>" + name;
+                        }
+                    }
+
                 }
+                programmers_list = "<![CDATA["+ programmers_list.substring(4) + "]]>";
+                graphic_designers_list = "<![CDATA["+ graphic_designers_list.substring(4) + "]]>";
+                content_editors_list = "<![CDATA["+ content_editors_list.substring(4) + "]]>";
+                previous_members_list = "<![CDATA["+ previous_members_list.substring(4) + "]]>";
+
+                ScreenUtil.setHTMLStringToTextView(programmers_list, programmers);
+                ScreenUtil.setHTMLStringToTextView(graphic_designers_list, graphicDesigners);
+                ScreenUtil.setHTMLStringToTextView(content_editors_list, contentEditors);
+                ScreenUtil.setHTMLStringToTextView(previous_members_list, previousMembers);
+
+
             }
 
             @Override
