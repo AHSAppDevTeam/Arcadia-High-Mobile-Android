@@ -62,26 +62,30 @@ public class AboutUsActivity extends AppCompatActivity {
                     boolean isRetired = person.child("retired").getValue(Boolean.class);
                     String role = person.child("role").getValue(String.class);
                     boolean hasUrl = person.child("url").exists();
+                    String url;
+                    if (hasUrl) {
+                        url = person.child("url").getValue(String.class);
+                    }
                     if (isRetired) {
                         previous_members_list += "<br/>" + name;
                     }
                     else {
-                        if (role.equals("programmer")) { //change to actual role
+                        if (role.contains("programmer")) { //change to actual role
                             programmers_list += "<br/>" + name; //add the a tag for url
                         }
-                        if (role.equals("graphic_designer")) { //change to actual role
+                        if (role.equals("designer")) { //change to actual role
                             graphic_designers_list += "<br/>" + name;
                         }
-                        if (role.equals("content_editor")) { //change to actual role
+                        if (role.equals("editor")) {
                             content_editors_list += "<br/>" + name;
                         }
                     }
 
                 }
-                programmers_list = "<![CDATA["+ programmers_list.substring(4) + "]]>";
-                graphic_designers_list = "<![CDATA["+ graphic_designers_list.substring(4) + "]]>";
-                content_editors_list = "<![CDATA["+ content_editors_list.substring(4) + "]]>";
-                previous_members_list = "<![CDATA["+ previous_members_list.substring(4) + "]]>";
+                programmers_list = "<![CDATA["+ programmers_list.substring(5) + "]]>";
+                graphic_designers_list = "<![CDATA["+ graphic_designers_list.substring(5) + "]]>";
+                content_editors_list = "<![CDATA["+ content_editors_list.substring(5) + "]]>";
+                previous_members_list = "<![CDATA["+ previous_members_list.substring(5) + "]]>";
 
                 ScreenUtil.setHTMLStringToTextView(programmers_list, programmers);
                 ScreenUtil.setHTMLStringToTextView(graphic_designers_list, graphicDesigners);
