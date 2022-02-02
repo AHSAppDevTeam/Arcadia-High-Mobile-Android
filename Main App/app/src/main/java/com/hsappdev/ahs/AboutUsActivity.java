@@ -82,10 +82,10 @@ public class AboutUsActivity extends AppCompatActivity {
                     }
 
                 }
-                programmers_list = "<![CDATA["+ programmers_list.substring(5) + "]]>";
-                graphic_designers_list = "<![CDATA["+ graphic_designers_list.substring(5) + "]]>";
-                content_editors_list = "<![CDATA["+ content_editors_list.substring(5) + "]]>";
-                previous_members_list = "<![CDATA["+ previous_members_list.substring(5) + "]]>";
+                programmers_list = programmers_list.substring(5);
+                graphic_designers_list = graphic_designers_list.substring(5);
+                content_editors_list = content_editors_list.substring(5);
+                previous_members_list = previous_members_list.substring(5);
 
                 ScreenUtil.setHTMLStringToTextView(programmers_list, programmers);
                 ScreenUtil.setHTMLStringToTextView(graphic_designers_list, graphicDesigners);
