@@ -251,7 +251,7 @@
                         android:fontFamily="@font/sfprodisplay_bold"
                         android:gravity="center"
                         android:paddingVertical="@dimen/padding_x.5"
-                        android:text="Previous Members"
+                        android:text="Former Members"
                         android:textColor="?attr/titleColor"
                         android:textSize="24sp"
                         app:layout_constraintEnd_toEndOf="parent"
