@@ -76,7 +76,7 @@ public class AboutUsActivity extends AppCompatActivity {
                     if (hasUrl) {
                         list.append("<a href=\"");
                         list.append(url);
-                        list.append("\" style:\"color:blue;text-decoration:none;\">");
+                        list.append("\" style=\"text-decoration:none\">");
                     }
                     list.append(name);
                     if (hasUrl) {
