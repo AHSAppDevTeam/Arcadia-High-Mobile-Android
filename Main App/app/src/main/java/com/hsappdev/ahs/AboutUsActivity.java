@@ -23,11 +23,12 @@ public class AboutUsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about_us);
-
         TextView programmers = findViewById(R.id.programmers_list);
         TextView graphicDesigners = findViewById(R.id.graphic_designers_list);
         TextView contentEditors = findViewById(R.id.content_editors_list);
         TextView previousMembers = findViewById(R.id.old_member_list);
+        TextView contacts = findViewById(R.id.contacts_list);
+        ScreenUtil.setHTMLStringToTextView(getResources().getString(R.string.contacts_list), contacts);
 
         ImageButton homeButton = findViewById(R.id.about_us_activity_home_button);
         homeButton.setOnClickListener(new View.OnClickListener() {
@@ -76,7 +77,7 @@ public class AboutUsActivity extends AppCompatActivity {
                     if (hasUrl) {
                         list.append("<a href=\"");
                         list.append(url);
-                        list.append("\" style=\"text-decoration:none\">");
+                        list.append("\">");
                     }
                     list.append(name);
                     if (hasUrl) {
