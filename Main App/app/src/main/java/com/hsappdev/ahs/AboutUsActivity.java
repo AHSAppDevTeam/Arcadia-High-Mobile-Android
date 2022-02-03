@@ -37,53 +37,56 @@ public class AboutUsActivity extends AppCompatActivity {
             }
         });
 
-
-        // example
-
         DatabaseReference ref = FirebaseDatabase.getInstance(FirebaseApp.getInstance(DatabaseConstants.FIREBASE_REALTIME_DB))
                 .getReference()
                 .child(getString(R.string.db_credits));
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String programmers_list = "";
-                String graphic_designers_list = "";
-                String content_editors_list = "";
-                String previous_members_list = "";//use a hashmap?
+                StringBuilder programmers_list = new StringBuilder(), graphic_designers_list = new StringBuilder(), content_editors_list = new StringBuilder(), previous_members_list = new StringBuilder();
                 for (DataSnapshot person : snapshot.getChildren()) {
                     String name = person.child("name").getValue(String.class);
                     boolean isRetired = person.child("retired").getValue(Boolean.class);
                     String role = person.child("role").getValue(String.class);
                     boolean hasUrl = person.child("url").exists();
-                    String url;
+                    String url = "";
+                    StringBuilder list;
+
+                    if (isRetired) {
+                        list = previous_members_list;
+                    }
+                    else if (role.contains("programmer")) {
+                        list = programmers_list;
+                    }
+                    else if (role.equals("designer")) {
+                        list = graphic_designers_list;
+                    }
+                    else if (role.equals("editor")) {
+                        list = content_editors_list;
+                    }
+                    else {
+                        list = new StringBuilder();
+                    }
+
                     if (hasUrl) {
                         url = person.child("url").getValue(String.class);
                     }
-                    if (isRetired) {
-                        previous_members_list += "<br/>" + name;
-                    }
-                    else {
-                        if (role.contains("programmer")) { //change to actual role
-                            programmers_list += "<br/>" + name; //add the a tag for url
-                        }
-                        if (role.equals("designer")) { //change to actual role
-                            graphic_designers_list += "<br/>" + name;
-                        }
-                        if (role.equals("editor")) {
-                            content_editors_list += "<br/>" + name;
-                        }
-                    }
 
+                    list.append("<br/>");
+                    if (hasUrl) {
+                        list.append("<a href=\"");
+                        list.append(url);
+                        list.append("\" style:\"color:blue;text-decoration:none;\">");
+                    }
+                    list.append(name);
+                    if (hasUrl) {
+                        list.append("</a>");
+                    }
                 }
-                programmers_list = programmers_list.substring(5);
-                graphic_designers_list = graphic_designers_list.substring(5);
-                content_editors_list = content_editors_list.substring(5);
-                previous_members_list = previous_members_list.substring(5);
-
-                ScreenUtil.setHTMLStringToTextView(programmers_list, programmers);
-                ScreenUtil.setHTMLStringToTextView(graphic_designers_list, graphicDesigners);
-                ScreenUtil.setHTMLStringToTextView(content_editors_list, contentEditors);
-                ScreenUtil.setHTMLStringToTextView(previous_members_list, previousMembers);
+                ScreenUtil.setHTMLStringToTextView(programmers_list.toString().substring(5), programmers);
+                ScreenUtil.setHTMLStringToTextView(graphic_designers_list.toString().substring(5), graphicDesigners);
+                ScreenUtil.setHTMLStringToTextView(content_editors_list.toString().substring(5), contentEditors);
+                ScreenUtil.setHTMLStringToTextView(previous_members_list.toString().substring(5), previousMembers);
 
 
             }
