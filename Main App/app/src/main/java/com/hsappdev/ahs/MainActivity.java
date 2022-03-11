@@ -56,11 +56,13 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationC
                 .setDatabaseUrl(r.getString(R.string.db_url))
                 .build();
 
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+
+
         if(FirebaseApp.getApps(getApplicationContext()).size() == 1) {
             FirebaseApp.initializeApp(getApplicationContext(), options, DatabaseConstants.FIREBASE_REALTIME_DB);
         }
 
-        FirebaseDatabase.getInstance(FirebaseApp.getInstance(DatabaseConstants.FIREBASE_REALTIME_DB)).setPersistenceEnabled(true);
 
         setContentView(R.layout.activity_main);
 
