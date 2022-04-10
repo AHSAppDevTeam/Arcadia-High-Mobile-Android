@@ -6,6 +6,14 @@ plugins {
 
 android {
     
+    signingConfigs {
+        release {
+            storeFile file('C:\\Users\\Jeffrey\\Downloads\\release.keystore')
+            storePassword '180Campus'
+            keyPassword '180Campus'
+            keyAlias 'ahs'
+        }
+    }
     compileSdkVersion 31
     buildToolsVersion "30.0.3"
 
@@ -23,6 +31,7 @@ android {
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
     compileOptions {
