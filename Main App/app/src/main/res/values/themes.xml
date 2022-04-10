@@ -25,6 +25,7 @@
         <item name="navBarIconColor">@color/black50</item>
         <item name="navBarIconColor_active">@color/brickRed50</item>
         <item name="navBarIconColorAccent_active">@color/brickRedAccent</item>
+        <item name="linkColor">@color/lightDarkBlue</item>
     </style>
 
     <style name="ArticleAppBarTitleFont">
