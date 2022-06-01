@@ -2,8 +2,6 @@ package com.hsappdev.ahs;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 

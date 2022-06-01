@@ -1,5 +1,6 @@
 package com.hsappdev.ahs.UI.home.search;
 
+import android.app.Activity;
 import android.app.Application;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,16 +19,16 @@ import com.hsappdev.ahs.localdb.ArticleRepository;
 import java.util.List;
 
 public class SearchInterface {
+    private static final String TAG = "SearchInterface";
     private RecyclerView searchRecycler;
     private SearchRecyclerAdapter searchRecyclerAdapter;
-    private ArticleRepository articleRepository;
-
+    private final ArticleRepository articleRepository;
     private View view;
+    private final Activity activity;
 
-    private static final String TAG = "SearchInterface";
-
-    public SearchInterface(LayoutInflater layoutInflater, Application application, OnItemClick onItemClick) {
-        articleRepository = new ArticleRepository(application);
+    public SearchInterface(LayoutInflater layoutInflater, Activity activity, OnItemClick onItemClick) {
+        this.activity = activity;
+        articleRepository = new ArticleRepository(activity.getApplication());
         articleRepository.getAllArticles().observeForever(new Observer<List<Article>>() {
             @Override
             public void onChanged(List<Article> articleList) {
@@ -38,14 +39,14 @@ public class SearchInterface {
         createView(layoutInflater, onItemClick);
     }
 
-    public void createView(LayoutInflater layoutInflater, OnItemClick onItemClick){
+    public void createView(LayoutInflater layoutInflater, OnItemClick onItemClick) {
         View view = layoutInflater.inflate(R.layout.search_bar_dialog, null, false);
         this.view = view;
         searchRecycler = view.findViewById(R.id.search_recyclerView);
         ArticleSearchView searchView = view.findViewById(R.id.article_searchView);
         searchView.setSearchInterface(this);
 
-        searchRecyclerAdapter = new SearchRecyclerAdapter(onItemClick);
+        searchRecyclerAdapter = new SearchRecyclerAdapter(onItemClick, activity);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(searchRecycler.getContext(), LinearLayoutManager.VERTICAL, false);
         searchRecycler.setLayoutManager(layoutManager);
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(searchRecycler.getContext(),

@@ -1,39 +1,30 @@
 package com.hsappdev.ahs.UI.home;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.core.widget.NestedScrollView;
-
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.ToggleButton;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.widget.NestedScrollView;
+import androidx.fragment.app.Fragment;
 
 import com.hsappdev.ahs.BottomNavigationCallback;
 import com.hsappdev.ahs.OnItemClick;
 import com.hsappdev.ahs.OnNotificationSectionClicked;
+import com.hsappdev.ahs.R;
 import com.hsappdev.ahs.UI.home.community.HomeCommunityFragment;
-import com.hsappdev.ahs.UI.home.search.ArticleSearchView;
 import com.hsappdev.ahs.UI.home.search.SearchInterface;
 import com.hsappdev.ahs.util.Helper;
-import com.hsappdev.ahs.R;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -43,18 +34,18 @@ public class HomeFragment extends Fragment {
 
     private static final String TAG = "HomeFragment";
     private Fragment homeNewsFragment, communityFragment;
-    private boolean isSearchSelected = false;
+    private final boolean isSearchSelected = false;
     private AlertDialog dialog;
     private LinearLayout selectorLinearLayout;
+    private BottomNavigationCallback bottomNavigationViewAdapter;
+    private OnNotificationSectionClicked onNotificationSectionClicked;
+    private OnItemClick onItemClick;
+    private boolean is_nav_bar_up = true;
+    private int news_tab_selected = 0; // 0 for home, 1 for community; int allows for potentially more options in the future
 
     public static HomeFragment newInstance() {
         return new HomeFragment();
     }
-
-    private BottomNavigationCallback bottomNavigationViewAdapter;
-    private OnNotificationSectionClicked onNotificationSectionClicked;
-    private OnItemClick onItemClick;
-
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -69,8 +60,6 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    private boolean is_nav_bar_up = true;
-    private int news_tab_selected = 0; // 0 for home, 1 for community; int allows for potentially more options in the future
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -85,25 +74,24 @@ public class HomeFragment extends Fragment {
 
         selectorLinearLayout = view.findViewById(R.id.home_selector_linear_layout);
 
-                NestedScrollView scrollView = view.findViewById(R.id.home_scrollView);
+        NestedScrollView scrollView = view.findViewById(R.id.home_scrollView);
         final float scrollAnimBuffer = 4;
         scrollView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
             float y = 0;
+
             @Override
             public void onScrollChanged() {
-                if(scrollView.getScrollY() > y + scrollAnimBuffer) // scroll down, 2 is the buffer
+                if (scrollView.getScrollY() > y + scrollAnimBuffer) // scroll down, 2 is the buffer
                 {
-                    if(is_nav_bar_up)
+                    if (is_nav_bar_up)
                         bottomNavigationViewAdapter.slideDown();
                     is_nav_bar_up = false;
-                }
-                else if (scrollView.getScrollY() < y - scrollAnimBuffer)
-                {
-                    if(!is_nav_bar_up)
+                } else if (scrollView.getScrollY() < y - scrollAnimBuffer) {
+                    if (!is_nav_bar_up)
                         bottomNavigationViewAdapter.slideUp();
                     is_nav_bar_up = true;
                 }
-                y= scrollView.getScrollY();
+                y = scrollView.getScrollY();
             }
         });
 
@@ -148,7 +136,7 @@ public class HomeFragment extends Fragment {
 //        });
 
         // Notification Button
-        Button notifButton = view.findViewById(R.id.home_notification_button);
+        ImageView notifButton = view.findViewById(R.id.home_notification_button);
         notifButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -166,10 +154,11 @@ public class HomeFragment extends Fragment {
 
     private void createDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        SearchInterface searchInterface = new SearchInterface(getLayoutInflater(), getActivity().getApplication(), onItemClick);
+        SearchInterface searchInterface = new SearchInterface(getLayoutInflater(), getActivity(), onItemClick);
         builder.setView(searchInterface.getView());
         dialog = builder.create();
         dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        dialog.getWindow().setGravity(Gravity.TOP);
 
     }
 

@@ -9,25 +9,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.lifecycle.Observer;
 
 import com.hsappdev.ahs.OnItemClick;
 import com.hsappdev.ahs.R;
 import com.hsappdev.ahs.cache.ArticleLoaderBackend;
-import com.hsappdev.ahs.cache.LoadableCallback;
 import com.hsappdev.ahs.cache.callbacks.ArticleLoadableCallback;
-import com.hsappdev.ahs.cache_new.ArticleLoaderBackEnd;
-import com.hsappdev.ahs.cache_new.DataLoaderBackEnd;
 import com.hsappdev.ahs.dataTypes.Article;
-import com.hsappdev.ahs.localdb.ArticleRepository;
 import com.hsappdev.ahs.util.ImageUtil;
 import com.hsappdev.ahs.util.ScreenUtil;
 
 public class LargeArticleUnit implements View.OnClickListener, ArticleLoadableCallback {
     private static final String TAG = "LargeArticleUnit";
-    private Article article;
     final private ConstraintLayout articleLayout;
     final private ImageView articleImage;
     final private Resources r;
@@ -35,10 +28,11 @@ public class LargeArticleUnit implements View.OnClickListener, ArticleLoadableCa
     final private TextView timeTextView;
     final private TextView categoryTextView;
     final private ImageView indicatorImageView;
-    private OnItemClick onArticleClick;
-    final private AppCompatActivity activity;
+    final private Activity activity;
+    private Article article;
+    private final OnItemClick onArticleClick;
 
-    public LargeArticleUnit(@NonNull View itemView, OnItemClick onArticleClick, AppCompatActivity activity) {
+    public LargeArticleUnit(@NonNull View itemView, OnItemClick onArticleClick, Activity activity) {
         this.r = itemView.getResources();
         this.articleLayout = itemView.findViewById(R.id.home_news_constraintLayout);
         this.articleImage = itemView.findViewById(R.id.featured_article_image);
@@ -51,36 +45,16 @@ public class LargeArticleUnit implements View.OnClickListener, ArticleLoadableCa
 
     }
 
-    public void setDetails(String articleID){
+    public void setDetails(String articleID) {
         articleLayout.setOnClickListener(this);
-        ArticleLoaderBackEnd loader = new ArticleLoaderBackEnd(articleID,
-                r,new ArticleRepository(activity.getApplication()));
-        loader.getLiveData().observe(activity, new Observer<DataLoaderBackEnd.DataWithSource<Article>>() {
-            @Override
-            public void onChanged(DataLoaderBackEnd.DataWithSource<Article> articleDataWithSource) {
-                article = articleDataWithSource.getData();
-                titleTextView.setText(article.getTitle());
-                if(article.getImageURLs().length != 0) { // When there are at least one article, show first image
-                    ImageUtil.setImageToView(article.getImageURLs()[0], articleImage);
-                } else if(article.getVideoURLs().length != 0){
-                    ImageUtil.setImageToSmallView(ImageUtil.getYoutubeThumbnail(article.getVideoURLs()[0]), articleImage);
-                }
-
-                ScreenUtil.setTimeToTextView(article.getTimestamp(), timeTextView);
-
-                categoryTextView.setText(article.getCategoryDisplayName());
-                categoryTextView.setTextColor(article.getCategoryDisplayColor());
-                indicatorImageView.setColorFilter(article.getCategoryDisplayColor(), PorterDuff.Mode.SRC_OVER);
-            }
-        });
-        /*ArticleLoaderBackend.getInstance(activity.getApplication()).getCacheObject(articleID, r, this);*/
+        ArticleLoaderBackend.getInstance(activity.getApplication()).getCacheObject(articleID, r, this);
     }
 
 
     @Override
     public void onClick(View view) {
         Log.d(TAG, "article click");
-        if(article != null)
+        if (article != null)
             onArticleClick.onArticleClicked(article);
     }
 
@@ -89,9 +63,9 @@ public class LargeArticleUnit implements View.OnClickListener, ArticleLoadableCa
     public void onLoaded(Article articleN) {
         this.article = articleN;
         titleTextView.setText(article.getTitle());
-        if(article.getImageURLs().length != 0) { // When there are at least one article, show first image
+        if (article.getImageURLs().length != 0) { // When there are at least one article, show first image
             ImageUtil.setImageToView(article.getImageURLs()[0], articleImage);
-        } else if(article.getVideoURLs().length != 0){
+        } else if (article.getVideoURLs().length != 0) {
             ImageUtil.setImageToSmallView(ImageUtil.getYoutubeThumbnail(article.getVideoURLs()[0]), articleImage);
         }
 

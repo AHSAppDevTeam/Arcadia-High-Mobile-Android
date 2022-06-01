@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".TermsAndAgreementsActivity">
+
+    <LinearLayout
+        android:id="@+id/terms_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:id="@+id/terms_activity_home_button"
+            android:layout_width="@dimen/cornerIconSize"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/padding_x.5"
+            android:background="@drawable/icon_circle"
+            android:foreground="?attr/actionBarItemBackground"
+            android:src="@drawable/activity_navigation_back_arrow"
+            app:tint="?attr/titleColor" />
+
+        <TextView
+            android:id="@+id/notification_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/heavybold_lightregular"
+            android:padding="@dimen/padding"
+            android:text="@string/terms_and_agreements_title"
+            android:textColor="@color/brightRed"
+            android:textSize="28sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/terms_header">
+
+        <TextView
+            android:id="@+id/terms_textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/sfprodisplay_regular"
+            android:padding="@dimen/padding" />
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

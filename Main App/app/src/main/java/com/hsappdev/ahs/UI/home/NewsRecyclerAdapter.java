@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.hsappdev.ahs.OnItemClick;
@@ -20,12 +19,11 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     private static final int FEATURED = 0;
     private static final int CATEGORY = 1;
+    private final Activity activity;
+    private final ArrayList<String> categoryIDs;
+    private final OnItemClick onArticleClick;
 
-    private ArrayList<String> categoryIDs;
-    private OnItemClick onArticleClick;
-    private final AppCompatActivity activity;
-
-    public NewsRecyclerAdapter(ArrayList<String> categoryTitles, OnItemClick onArticleClick, AppCompatActivity activity) {
+    public NewsRecyclerAdapter(ArrayList<String> categoryTitles, OnItemClick onArticleClick, Activity activity) {
         this.categoryIDs = categoryTitles;
         this.onArticleClick = onArticleClick;
         this.activity = activity;
@@ -45,7 +43,7 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public int getItemViewType(int position) {
-        if(position == 0){
+        if (position == 0) {
             return FEATURED;
         }
         return CATEGORY;
@@ -56,10 +54,10 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         //Log.d(TAG, "holder bind at position " + position +"\tcategory: " + categoryIDs.get(position));
         ((ViewGroup) holder.itemView).setClipChildren(false);
         ((ViewGroup) holder.itemView).setClipToPadding(false);
-        if(holder.getItemViewType() == FEATURED) {
-            ((FeaturedViewHolder)holder).setDetails(categoryIDs.get(position), onArticleClick);
+        if (holder.getItemViewType() == FEATURED) {
+            ((FeaturedViewHolder) holder).setDetails(categoryIDs.get(position), onArticleClick);
         } else {
-            ((CategoryViewHolder)holder).setDetails(categoryIDs.get(position), onArticleClick);
+            ((CategoryViewHolder) holder).setDetails(categoryIDs.get(position), onArticleClick);
         }
     }
 

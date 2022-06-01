@@ -6,6 +6,7 @@ import android.widget.SearchView;
 
 public class ArticleSearchView extends SearchView implements SearchView.OnQueryTextListener {
     private SearchInterface searchInterface;
+
     public ArticleSearchView(Context context) {
         super(context);
         setUp();
@@ -17,8 +18,7 @@ public class ArticleSearchView extends SearchView implements SearchView.OnQueryT
     }
 
 
-
-    public void setUp(){
+    public void setUp() {
         this.setOnQueryTextListener(this);
         this.setIconifiedByDefault(false);
         this.setQueryHint("Search");

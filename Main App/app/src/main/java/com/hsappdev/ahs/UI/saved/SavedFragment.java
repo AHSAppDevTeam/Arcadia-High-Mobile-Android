@@ -3,7 +3,6 @@ package com.hsappdev.ahs.UI.saved;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.Color;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.util.Log;
@@ -43,21 +42,15 @@ public class SavedFragment extends Fragment {
     private Spinner sortBySpinner;
 
 
-    // Sort by options
-    private static final String NEWEST = "Sort by Newest";
-    private static final int NEWEST_ID = 0;
-    private static final String OLDEST = "Sort by Oldest";
-    private static final int OLDEST_ID = 1;
-
     private int sortMode = 0;
-
+    private SavedViewModel model;
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         onArticleClick = (OnItemClick) context;
     }
-    private SavedViewModel model;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -66,9 +59,9 @@ public class SavedFragment extends Fragment {
 
         savedRecyclerView = view.findViewById(R.id.saved_fragment_recycler_view);
         titleTextView = view.findViewById(R.id.saved_fragment_title);
-        clearAllButton = view.findViewById(R.id.saved_fragment_clear_all);
+        clearAllButton = view.findViewById(R.id.notification_clear_all);
         emptyMsgTextView = view.findViewById(R.id.saved_fragment_empty_message);
-        sortBySpinner = view.findViewById(R.id.saved_fragment_sort_by_spinner);
+        sortBySpinner = view.findViewById(R.id.notification_sort_by_spinner);
         setUpRecyclerView();
         initView();
         return view;
@@ -90,11 +83,11 @@ public class SavedFragment extends Fragment {
                                 model.deleteAll();
                                 emptyMsgTextView.setVisibility(View.VISIBLE);
                                 Toast.makeText(getActivity(), "All saved articles cleared", Toast.LENGTH_SHORT).show();
-                            }})
+                            }
+                        })
                         .setNegativeButton(android.R.string.no, null).show();
             }
         });
-        String[] items = new String[]{NEWEST, OLDEST};
         ArrayAdapter adapter = ArrayAdapter.createFromResource(getContext(), R.array.saved_pager_spinner_options, R.layout.default_spinner_layout);
         adapter.setDropDownViewResource(R.layout.default_spinner_layout);
         sortBySpinner.setAdapter(adapter);
@@ -115,14 +108,14 @@ public class SavedFragment extends Fragment {
 
         //sortBySpinner.setSelection(0, true);
 
-        int padding = (int) getResources().getDimensionPixelSize(R.dimen.padding);
+        int padding = getResources().getDimensionPixelSize(R.dimen.padding);
         savedRecyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
             @Override
             public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
                 super.getItemOffsets(outRect, view, parent, state);
                 outRect.right = padding;
                 outRect.left = padding;
-                if(parent.getChildAdapterPosition(view) == 0){
+                if (parent.getChildAdapterPosition(view) == 0) {
                     outRect.top = padding;
                 }
                 outRect.bottom = padding;

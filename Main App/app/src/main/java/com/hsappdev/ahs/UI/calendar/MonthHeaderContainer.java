@@ -4,8 +4,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.hsappdev.ahs.R;
-import com.hsappdev.ahs.UI.calendar.calendarBackend.CalendarBackend;
-import com.kizitonwose.calendarview.model.CalendarDay;
 import com.kizitonwose.calendarview.model.CalendarMonth;
 import com.kizitonwose.calendarview.ui.ViewContainer;
 
@@ -17,10 +15,8 @@ import java.util.Locale;
 public class MonthHeaderContainer extends ViewContainer {
     private TextView monthText;
     private TextView yearText;
-    private CalendarBackend calendarBackend;
-    public MonthHeaderContainer(@NotNull View view, CalendarBackend calendarBackend) {
+    public MonthHeaderContainer(@NotNull View view) {
         super(view);
-        this.calendarBackend = calendarBackend;
         monthText = view.findViewById(R.id.calendarMonthText);
         yearText = view.findViewById(R.id.calendarMonthYearText);
     }

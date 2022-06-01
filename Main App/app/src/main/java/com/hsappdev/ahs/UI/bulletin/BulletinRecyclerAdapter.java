@@ -75,7 +75,7 @@ public class BulletinRecyclerAdapter extends RecyclerView.Adapter<BulletinRecycl
     @Override
     public BulletinArticleViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         if(viewType == DEFAULT) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.bulletin_defualt_article_holder, parent, false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.bulletin_default_article_holder, parent, false);
             return new BulletinRecyclerAdapter.BulletinArticleViewHolder(view);
         } else {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.bulletin_up_coming_article_holder, parent, false);
@@ -113,7 +113,6 @@ public class BulletinRecyclerAdapter extends RecyclerView.Adapter<BulletinRecycl
         public void setDetails(Article article, OnItemClick onArticleClick) {
             super.setDetails(article, onArticleClick);
             number.setText(Integer.toString(getAdapterPosition()+1));
-            number.setTextColor(article.getCategoryDisplayColor());
         }
     }
 
@@ -127,9 +126,9 @@ public class BulletinRecyclerAdapter extends RecyclerView.Adapter<BulletinRecycl
             super(itemView);
 
             this.title = itemView.findViewById(R.id.saved_article_title);
-            this.category = itemView.findViewById(R.id.saved_article_category);
-            this.indicator = itemView.findViewById(R.id.saved_article_indicator);
-            this.timeStamp = itemView.findViewById(R.id.saved_article_time);
+            this.category = itemView.findViewById(R.id.notification_article_category);
+            this.indicator = itemView.findViewById(R.id.notification_article_indicator);
+            this.timeStamp = itemView.findViewById(R.id.notification_article_time);
         }
 
         public void setDetails(Article article, OnItemClick onArticleClick){

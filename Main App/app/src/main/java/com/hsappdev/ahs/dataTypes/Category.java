@@ -1,7 +1,5 @@
 package com.hsappdev.ahs.dataTypes;
 
-import android.widget.ScrollView;
-
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;

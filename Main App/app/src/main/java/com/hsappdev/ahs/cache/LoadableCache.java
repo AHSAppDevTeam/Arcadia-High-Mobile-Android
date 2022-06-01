@@ -16,6 +16,14 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Handles all loading of an article
+ *
+ * In the context of this class:
+ * database = the local room database
+ * firebase = obv. firebase
+ * @param <T>
+ */
 public abstract class LoadableCache<T extends LoadableType> {
 
     private static final String TAG = "LoadableCache";
@@ -41,17 +49,27 @@ public abstract class LoadableCache<T extends LoadableType> {
         startFirebaseLoad();
     }
 
+    /**
+     * Returns a live data reference from room db
+     * @return
+     */
     protected abstract LiveData<T> getDatabaseLiveDataRef();
 
+    /**
+     * Returns a firebase reference from firebase
+     * @return
+     */
     protected abstract DatabaseReference getFirebaseRef();
-
-    //abstract public T getInstance(Resources r, String articleID);
 
     public T getArticle() {
         return article;
     }
 
 
+    /**
+     * Registers a LoadableCallback for this loadable cache
+     * @param newCallback
+     */
     public void registerForCallback(LoadableCallback<T> newCallback) {
         boolean isAlreadyRegistered = false;
         for(LoadableCallback<T> callback : registeredCallbacks){
@@ -70,19 +88,28 @@ public abstract class LoadableCache<T extends LoadableType> {
         }
     }
 
+    /**
+     * Starts loading the article from firebase
+     */
     void startFirebaseLoad() {
         reference = getFirebaseRef();
         ValueEventListener eventListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(!snapshot.exists()){
+                    return;
+                }
                 Log.d(TAG, "onDataChange: firebase load");
 
                 if (article == null) {
                     article = getArticleInstance();
 
                 }
-
-                extractFirebaseValuesAndSetToObject(snapshot);
+                try {
+                    extractFirebaseValuesAndSetToObject(snapshot);
+                } catch (Exception e) {
+                    return;
+                }
 
                 if(!postFirebaseLoad()) {
                     finalizeFirebaseLoad();
@@ -98,8 +125,15 @@ public abstract class LoadableCache<T extends LoadableType> {
         reference.addValueEventListener(eventListener);
     }
 
+    /**
+     * Returns an empty instance of the article
+     * @return
+     */
     protected abstract T getArticleInstance();
 
+    /**
+     * This method update the room db with the new fresh data from firebase
+     */
     protected void finalizeFirebaseLoad() {
         for(LoadableCallback<T> callback : registeredCallbacks) {
             if (!callback.isActivityDestroyed()) {
@@ -120,10 +154,21 @@ public abstract class LoadableCache<T extends LoadableType> {
         }
     }
 
+    /**
+     * Add the current article to room db
+     */
     protected abstract void addCacheToDatabase();
 
+    /**
+     * For any additional firebase loading that needs to be done to complete the article
+     * @return
+     */
     protected abstract boolean postFirebaseLoad();
 
+    /**
+     * Extract values form the data snapshot and input them into the current article
+     * @param snapshot
+     */
     protected abstract void extractFirebaseValuesAndSetToObject(DataSnapshot snapshot);
     /*
                 String author = snapshot.child(r.getString(R.string.db_articles_author)).getValue(String.class);
@@ -152,6 +197,9 @@ public abstract class LoadableCache<T extends LoadableType> {
                 article.setTimestamp(timestamp);
      */
 
+    /**
+     * Handles room db loading
+     */
     void startDataBaseLoad() {
         LiveData<T> liveData = getDatabaseLiveDataRef();
         if(liveData == null) return;
@@ -163,7 +211,6 @@ public abstract class LoadableCache<T extends LoadableType> {
         liveData.observeForever(new Observer<T>() {
             @Override
             public void onChanged(T articleN) {
-                Log.d(ArticleLoadableCache.TAG, "local database load:: " + articleID);
                 if(articleN != null) {
                     isInDatabase = true;
                     if(hasFirebaseLoadFinished){
@@ -186,6 +233,11 @@ public abstract class LoadableCache<T extends LoadableType> {
     }
 
 
+    /**
+     * This method is used to update the article with data from the local room database
+     *
+     * @param newArticle the article that has been loaded from the local database
+     */
     protected abstract void updateArticleWithAdditionalDatabaseData(T newArticle);
     /*
     ex.

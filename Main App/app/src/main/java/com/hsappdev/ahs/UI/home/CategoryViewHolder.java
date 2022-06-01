@@ -1,6 +1,7 @@
 package com.hsappdev.ahs.UI.home;
 
 import android.app.Activity;
+import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,8 +10,6 @@ import android.widget.Space;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -18,17 +17,9 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.hsappdev.ahs.OnItemClick;
 import com.hsappdev.ahs.R;
-import com.hsappdev.ahs.UI.bulletin.CategoryLoadedCallback;
 import com.hsappdev.ahs.cache.CategoryLoaderBackend;
-import com.hsappdev.ahs.cache.LoadableCallback;
-import com.hsappdev.ahs.cache.callbacks.ArticleLoadableCallback;
 import com.hsappdev.ahs.cache.callbacks.CategoryLoadableCallback;
-import com.hsappdev.ahs.cache_new.CategoryLoaderBackEnd;
-import com.hsappdev.ahs.cache_new.DataLoaderBackEnd;
-import com.hsappdev.ahs.dataTypes.Article;
 import com.hsappdev.ahs.dataTypes.Category;
-import com.hsappdev.ahs.localdb.CategoryRepository;
-import com.hsappdev.ahs.localdb.SavedDatabase;
 import com.hsappdev.ahs.util.Helper;
 
 import java.util.ArrayList;
@@ -42,10 +33,21 @@ public class CategoryViewHolder extends RecyclerView.ViewHolder implements Categ
     private final LinearLayout categoryLinearLayout;
     private final TabLayout smallTabLayout;
     private final Resources r;
-    private final AppCompatActivity activity;
+    private final Activity activity;
+    SmallArticleAdapter smallArticleAdapter;
     private OnItemClick onItemClick;
 
-    SmallArticleAdapter smallArticleAdapter;
+    public CategoryViewHolder(@NonNull View itemView, Activity activity) {
+        super(itemView);
+        r = itemView.getContext().getResources();
+
+        smallPager = itemView.findViewById(R.id.home_small_carousel);
+        sectionTitle = itemView.findViewById(R.id.home_news_sectionTitle);
+        categoryLinearLayout = itemView.findViewById(R.id.home_category_linearLayout);
+        smallTabLayout = itemView.findViewById(R.id.small_tab_layout);
+
+        this.activity = activity;
+    }
 
     public void setDetails(String categoryTitle, OnItemClick onArticleClick) {
         onItemClick = onArticleClick;
@@ -56,26 +58,9 @@ public class CategoryViewHolder extends RecyclerView.ViewHolder implements Categ
 
         smallPager.setAdapter(smallArticleAdapter);
 
-
-        CategoryLoaderBackEnd loader = new CategoryLoaderBackEnd(categoryTitle, r, new CategoryRepository(activity.getApplication()));
-        loader.getLiveData().observe(activity, new Observer<DataLoaderBackEnd.DataWithSource<Category>>() {
-            @Override
-            public void onChanged(DataLoaderBackEnd.DataWithSource<Category> categoryDataWithSource) {
-                Category category = categoryDataWithSource.getData();
-                smallArticleAdapter.clearAll();
-                //Log.d(TAG, "onCategoryLoaded: size" + category.getCategoryID() + category.getArticleIds());
-                articleSortingJunction(new ArrayList<>(category.getArticleIds()), category.getTitle(), smallArticleAdapter);
-                // set section title
-                String regularText = " News";
-                Helper.setBoldRegularText(sectionTitle, category.getTitle(), regularText);
-                sectionTitle.setTextColor(category.getColor());
-            }
-        });
-
         //CategoryLoader.getInstance().getCategory(categoryTitle, r, this);
-        /*CategoryLoaderBackend.getInstance(activity.getApplication()).getCacheObject(categoryTitle, r, this);*/
+        CategoryLoaderBackend.getInstance(activity.getApplication()).getCacheObject(categoryTitle, r, this);
     }
-
 
     /**
      * Sort articles into the correct categories
@@ -119,10 +104,10 @@ public class CategoryViewHolder extends RecyclerView.ViewHolder implements Categ
         categoryLinearLayout.addView(view);
     }
 
-    private void setUpMediumArticles(List<String> articles, OnItemClick onItemClick){
+    private void setUpMediumArticles(List<String> articles, OnItemClick onItemClick) {
         LinearLayout intermediateLinearLayout = new LinearLayout(categoryLinearLayout.getContext());
 
-        for(String article : articles){
+        for (String article : articles) {
             MediumArticleUnit unit = new MediumArticleUnit(categoryLinearLayout.getContext(), article, onItemClick, R.layout.home_news_medium_article, activity);
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,
@@ -132,7 +117,7 @@ public class CategoryViewHolder extends RecyclerView.ViewHolder implements Categ
             unit.setLayoutParams(params);
             intermediateLinearLayout.addView(unit);
             // Add Divider
-            if(!article.equals(articles.get(articles.size()-1)) || articles.size() == 1) { // if not the last article
+            if (!article.equals(articles.get(articles.size() - 1)) || articles.size() == 1) { // if not the last article
                 Space space = new Space(categoryLinearLayout.getContext());
                 LinearLayout.LayoutParams spaceParams = new LinearLayout.LayoutParams(
                         r.getDimensionPixelSize(R.dimen.padding),
@@ -142,7 +127,7 @@ public class CategoryViewHolder extends RecyclerView.ViewHolder implements Categ
                 intermediateLinearLayout.addView(space);
             }
         }
-        if(articles.size() == 1) { // if there is only one article, add an empty article
+        if (articles.size() == 1) { // if there is only one article, add an empty article
             View unit = new View(categoryLinearLayout.getContext());
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,
@@ -176,19 +161,6 @@ public class CategoryViewHolder extends RecyclerView.ViewHolder implements Categ
         smallPager.setOffscreenPageLimit(3);
     }
 
-
-    public CategoryViewHolder(@NonNull View itemView, AppCompatActivity activity) {
-        super(itemView);
-        r = itemView.getContext().getResources();
-
-        smallPager = itemView.findViewById(R.id.home_small_carousel);
-        sectionTitle = itemView.findViewById(R.id.home_news_sectionTitle);
-        categoryLinearLayout = itemView.findViewById(R.id.home_category_linearLayout);
-        smallTabLayout = itemView.findViewById(R.id.small_tab_layout);
-
-        this.activity = activity;
-    }
-
     @Override
     public void onLoaded(Category category) {
         smallArticleAdapter.clearAll();
@@ -198,6 +170,7 @@ public class CategoryViewHolder extends RecyclerView.ViewHolder implements Categ
         String regularText = " News";
         Helper.setBoldRegularText(sectionTitle, category.getTitle(), regularText);
         sectionTitle.setTextColor(category.getColor());
+        smallTabLayout.setTabRippleColor(ColorStateList.valueOf(category.getColor()));
     }
 
     @Override

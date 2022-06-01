@@ -2,13 +2,17 @@ package com.hsappdev.ahs;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.content.res.Configuration;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.SeekBar;
@@ -21,6 +25,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.CompositePageTransformer;
 import androidx.viewpager2.widget.MarginPageTransformer;
 import androidx.viewpager2.widget.ViewPager2;
@@ -32,8 +38,17 @@ import com.android.volley.toolbox.Volley;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.hsappdev.ahs.UI.home.ScaleAndFadeTransformer;
+import com.hsappdev.ahs.UI.home.article.RelatedArticleAdapter;
 import com.hsappdev.ahs.dataTypes.Article;
+import com.hsappdev.ahs.dataTypes.CommunitySection;
+import com.hsappdev.ahs.db.DatabaseConstants;
 import com.hsappdev.ahs.localdb.ArticleRepository;
 import com.hsappdev.ahs.mediaPager.ImageVideoAdapter;
 import com.hsappdev.ahs.mediaPager.ImageViewActivity;
@@ -48,24 +63,25 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class ArticleActivity extends AppCompatActivity implements Adjusting_TextView.hello, OnImageClick {
+public class ArticleActivity extends AppCompatActivity implements Adjusting_TextView.hello, OnImageClick, OnItemClick {
 
     private static final String TAG = "ArticleActivity";
 
     public static final String data_KEY = "0";
-    private boolean fontBarIsOpen = false;
-    private final int FONT_BAR_MIN = 18;
-    private final int FONT_BAR_MAX = 54;
 
-    Article article;
+    private Article article;
 
-    PopupWindow fontBarWindow;
-    ViewPager2 mediaViewPager;
-    TabLayout tabLayout;
+    private PopupWindow fontBarWindow;
+    private ViewPager2 mediaViewPager;
+    private TabLayout tabLayout;
+    private RecyclerView relatedArticles;
+    private TextView seeMoreSectionButton;
+    private RelatedArticleAdapter relatedArticlesAdapter;
     private YoutubeVideoCallback<YouTubeFragment> youtubeVideoCallback;
 
-    RequestQueue queue;
+    private RequestQueue queue;
 
 
     private ArrayList<Adjusting_TextView.TextSizeCallback> callbackList = new ArrayList<>();
@@ -85,8 +101,7 @@ public class ArticleActivity extends AppCompatActivity implements Adjusting_Text
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-//                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         articleRepository = new ArticleRepository(getApplication()); // note: should be in a view model
         setContentView(R.layout.article);
 
@@ -170,7 +185,7 @@ public class ArticleActivity extends AppCompatActivity implements Adjusting_Text
             public void onClick(View v) {
                 dismissFontWindow();
                 finish();
-                // overridePendingTransition(R.anim.empty_animation, R.anim.exit_to_right);
+                overridePendingTransition(R.anim.empty_animation, R.anim.exit_to_right);
             }
         });
 
@@ -216,7 +231,80 @@ public class ArticleActivity extends AppCompatActivity implements Adjusting_Text
         articleToolbar.setTitleTextAppearance(this, R.style.ArticleAppBarTitleFont);
         articleToolbar.setTitleTextColor(article.getCategoryDisplayColor());
 
+        relatedArticles = findViewById(R.id.article_related_articles);
+        seeMoreSectionButton = findViewById(R.id.article_see_more_section_button);
+        setUpRelatedArticlesSection();
 
+    }
+
+    private void setUpRelatedArticlesSection() {
+
+        int padding = (int) getResources().getDimension(R.dimen.padding);
+        relatedArticles.addItemDecoration(new RecyclerView.ItemDecoration() {
+            @Override
+            public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
+                super.getItemOffsets(outRect, view, parent, state);
+                outRect.right = padding;
+                outRect.left = padding;
+                if(parent.getChildAdapterPosition(view) == 0){
+                    outRect.top = padding;
+                }
+                outRect.bottom = padding;
+
+            }
+        });
+
+        seeMoreSectionButton.setText(R.string.article_see_more);
+        seeMoreSectionButton.append(Helper.getSpanBoldRegularText(article.getCategoryDisplayName(), ""));
+        seeMoreSectionButton.setBackgroundTintList(ColorStateList.valueOf(article.getCategoryDisplayColor()));
+        seeMoreSectionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CommunitySection communitySection = new CommunitySection(article.getCategoryID(),
+                        article.getCategoryDisplayName(),
+                        article.getCategoryDisplayName(),
+                        article.getCategoryDisplayColor(),
+                        article.isFeatured());
+                Intent intent = new Intent(ArticleActivity.this, CommunityActivity.class);
+                intent.putExtra(CommunityActivity.DATA_KEY, communitySection);
+                startActivity(intent);
+            }
+        });
+        // We need to load related articles from firebase
+        // Related articles constantly change and are not cached for this reason
+        DatabaseReference ref = FirebaseDatabase.getInstance(FirebaseApp.getInstance(DatabaseConstants.FIREBASE_REALTIME_DB)).getReference()
+                .child(getResources().getString(R.string.db_articles))
+                .child(article.getArticleID());
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            boolean hasLoaded = false; // Limit to one load
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(hasLoaded) return;
+                hasLoaded = true;
+                List<String> relatedArticleIds = new ArrayList<>();
+                for (DataSnapshot articleId : snapshot.child(getResources().getString(R.string.db_articles_related_articles)).getChildren()) {
+                    relatedArticleIds.add(articleId.getValue(String.class));
+                    Log.d("relatedArticle", articleId.getValue(String.class));
+                    loadIndividualRelatedArticles(relatedArticleIds);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+
+    }
+
+    private void loadIndividualRelatedArticles(List<String> relatedArticleIds) {
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(relatedArticles.getContext(), LinearLayoutManager.VERTICAL, false);
+        relatedArticles.setLayoutManager(layoutManager);
+        relatedArticlesAdapter = new RelatedArticleAdapter(relatedArticleIds, this, this);
+        relatedArticles.setAdapter(relatedArticlesAdapter);
     }
 
     private void incrementViews(String articleID) {
@@ -308,7 +396,7 @@ public class ArticleActivity extends AppCompatActivity implements Adjusting_Text
         super.onBackPressed();
         dismissFontWindow();
         // Animation on back press
-        // overridePendingTransition(R.anim.empty_animation, R.anim.exit_to_right);
+        overridePendingTransition(R.anim.empty_animation, R.anim.exit_to_right);
     }
 
     public void adjustFontScale(Configuration config, float scale) {
@@ -325,5 +413,14 @@ public class ArticleActivity extends AppCompatActivity implements Adjusting_Text
         Intent intent = new Intent(ArticleActivity.this, ImageViewActivity.class);
         intent.putExtra(ImageViewActivity.IMAGE_URL_KEY, media.getMediaURL());
         startActivity(intent);
+    }
+
+    @Override
+    public void onArticleClicked(Article article) {
+        Intent intent = new Intent(ArticleActivity.this, ArticleActivity.class);
+        intent.putExtra(ArticleActivity.data_KEY, article);
+        startActivity(intent);
+        overridePendingTransition(R.anim.enter_from_right, R.anim.empty_animation);
+
     }
 }

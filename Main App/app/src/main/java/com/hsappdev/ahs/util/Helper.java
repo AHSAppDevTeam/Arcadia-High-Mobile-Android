@@ -9,11 +9,8 @@ import android.text.SpannableStringBuilder;
 import android.text.style.StyleSpan;
 import android.widget.TextView;
 
-import androidx.recyclerview.widget.SortedList;
-
 import com.hsappdev.ahs.MainActivity;
 import com.hsappdev.ahs.R;
-import com.hsappdev.ahs.dataTypes.Article;
 
 public class Helper {
     public static void setBoldRegularText(TextView textView, String boldText, String regularText) {
@@ -22,6 +19,7 @@ public class Helper {
         textView.setText(builder);
         textView.append(regularText);
     }
+
 
     public static SpannableStringBuilder getSpanBoldRegularText(String boldText, String regularText) {
         if(boldText == null) boldText = "";

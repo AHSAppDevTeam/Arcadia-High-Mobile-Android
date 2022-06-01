@@ -1,13 +1,10 @@
 package com.hsappdev.ahs.UI.bulletin;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
-import android.graphics.BlendMode;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.util.TypedValue;
 import android.view.View;
@@ -15,17 +12,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.content.res.AppCompatResources;
 import androidx.cardview.widget.CardView;
-import androidx.core.graphics.drawable.DrawableCompat;
 
 import com.hsappdev.ahs.R;
+import com.hsappdev.ahs.cache.callbacks.CategoryLoadableCallback;
 import com.hsappdev.ahs.dataTypes.Category;
 import com.hsappdev.ahs.util.ImageUtil;
 
-import java.util.List;
-
-public class BulletinCategoryWidget extends CardView implements CategoryLoadedCallback, View.OnClickListener{
+public class BulletinCategoryWidget extends CardView implements CategoryLoadableCallback, View.OnClickListener{
     final private Resources r;
     final private String categoryId;
     private CategoryState categoryState;
@@ -34,16 +28,19 @@ public class BulletinCategoryWidget extends CardView implements CategoryLoadedCa
     final private ImageView bgImageView;
     final private ImageView iconImageView;
 
+    final private Activity activity;
+
 
     final BulletinFragment bulletinFragment;
 
     private boolean isSelected;
 
-    public BulletinCategoryWidget(@NonNull Context context, String categoryId, BulletinFragment bulletinFragment) {
+    public BulletinCategoryWidget(@NonNull Context context, String categoryId, BulletinFragment bulletinFragment, Activity activity) {
         super(context);
         this.r = getResources();
         this.categoryId = categoryId;
         this.bulletinFragment = bulletinFragment;
+        this.activity = activity;
         View view = inflate(context, R.layout.bulletin_category_widget, this);
         labelTextView = view.findViewById(R.id.bulletin_icon_text);
         bgImageView = view.findViewById(R.id.bulletin_icon_bg_imageView);
@@ -55,23 +52,28 @@ public class BulletinCategoryWidget extends CardView implements CategoryLoadedCa
         setCardElevation(10);
         setClickable(true);
         setFocusable(true);
-        setDetails();
+        setDetails(activity);
     }
 
-    private void setDetails() {
+    private void setDetails(Activity activity) {
         setOnClickListener(this);
-        new BulletinIconCategoriesLoader(getContext()).loadCategoryData(categoryId, this);
+        new BulletinIconCategoriesLoader(getContext()).loadCategoryData(categoryId, this, activity);
     }
 
-    @Override
-    public void onCategoryDataLoaded(Category category, List<String> articleIds) {
+
+    public void onLoaded (Category category) {
         categoryState = new CategoryState(category, isSelected);
-        categoryState.setArticleIds(articleIds);
+        categoryState.setArticleIds(category.getArticleIds());
         labelTextView.setText(category.getTitle());
         setBackground();
         ImageUtil.setImageToView(category.getIconURL(), iconImageView);
         bulletinFragment.registerCategory(this.categoryState);
         bulletinFragment.updateView();
+    }
+
+    @Override
+    public boolean isActivityDestroyed() {
+        return activity.isDestroyed();
     }
 
     public void setBackground(){
@@ -106,7 +108,7 @@ public class BulletinCategoryWidget extends CardView implements CategoryLoadedCa
             bgImageView.setBackgroundColor(category.getColor());
 
             //bgImageView.setBackgroundTintBlendMode(BlendMode.MULTIPLY);
-            int p = 8;
+            int p = 4;
             bgImageView.setPadding(p,p,p,p);
             bgImageView.setBackgroundTintList(ColorStateList.valueOf(category.getColor()));
 

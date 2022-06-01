@@ -9,9 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,10 +17,7 @@ import com.hsappdev.ahs.OnItemClick;
 import com.hsappdev.ahs.R;
 import com.hsappdev.ahs.cache.CategoryListLoaderBackend;
 import com.hsappdev.ahs.cache.callbacks.CategoryListLoadableCallback;
-import com.hsappdev.ahs.cache_new.CategoryListLoaderBackEnd;
-import com.hsappdev.ahs.cache_new.DataLoaderBackEnd;
 import com.hsappdev.ahs.dataTypes.CategoryList;
-import com.hsappdev.ahs.localdb.CategoryListRepository;
 
 import java.util.ArrayList;
 
@@ -31,13 +26,15 @@ public class HomeNewsFragment extends Fragment implements CategoryListLoadableCa
 
     private OnItemClick onArticleClick;
     private NewsRecyclerAdapter adapter;
-
+    private Activity hostActivity;
+    //MainActivity -> HomeFragment (home page) ->
+    // HomeNewsFragment (AUSD news section) get locations and structure , pass into-> RecyclerViewAdapter -> ViewPager2
+    private final ArrayList<String> categoryTitles = new ArrayList<>();
 
     public HomeNewsFragment() {
         // Required empty public constructor
     }
 
-    private Activity hostActivity;
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
@@ -49,9 +46,6 @@ public class HomeNewsFragment extends Fragment implements CategoryListLoadableCa
         hostActivity = (Activity) context;
     }
 
- //MainActivity -> HomeFragment (home page) ->
-    // HomeNewsFragment (AUSD news section) get locations and structure , pass into-> RecyclerViewAdapter -> ViewPager2
-    private ArrayList<String> categoryTitles = new ArrayList<>();
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,25 +61,11 @@ public class HomeNewsFragment extends Fragment implements CategoryListLoadableCa
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.home_news_fragment, container, false);
 
-       adapter = new NewsRecyclerAdapter(new ArrayList<String>(), onArticleClick, (AppCompatActivity) getActivity());
+        adapter = new NewsRecyclerAdapter(new ArrayList<String>(), onArticleClick, getActivity());
         RecyclerView recyclerView = view.findViewById(R.id.home_news_recyclerView);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        CategoryListLoaderBackEnd loader = new CategoryListLoaderBackEnd(
-                r.getString(R.string.db_location_ausdNews),
-                r,
-                new CategoryListRepository(getActivity().getApplication()));
-        loader.getLiveData().observe(getViewLifecycleOwner(), new Observer<DataLoaderBackEnd.DataWithSource<CategoryList>>() {
-            @Override
-            public void onChanged(DataLoaderBackEnd.DataWithSource<CategoryList> categoryListDataWithSource) {
-                CategoryList categoryList = categoryListDataWithSource.getData();
-                adapter.clearAll();
-                adapter.addCategoryIDs(categoryList.getCategoryList());
-            }
-        });
-
-        /*CategoryListLoaderBackend.getInstance(getActivity().getApplication()).getCacheObject(r.getString(R.string.db_location_ausdNews), r, this);*/
+        CategoryListLoaderBackend.getInstance(getActivity().getApplication()).getCacheObject(r.getString(R.string.db_location_ausdNews), r, this);
         return view;
     }
 

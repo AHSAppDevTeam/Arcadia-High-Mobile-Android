@@ -1,5 +1,9 @@
 package com.hsappdev.ahs.UI.home.search;
 
+import android.app.Activity;
+import android.app.Application;
+import android.content.Intent;
+import android.content.res.Resources;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,9 +13,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.hsappdev.ahs.AboutUsActivity;
 import com.hsappdev.ahs.OnItemClick;
 import com.hsappdev.ahs.R;
-import com.hsappdev.ahs.UI.saved.SavedRecyclerAdapter;
 import com.hsappdev.ahs.dataTypes.Article;
 import com.hsappdev.ahs.util.Helper;
 
@@ -19,14 +23,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SearchRecyclerAdapter extends RecyclerView.Adapter<SearchRecyclerAdapter.SearchArticleViewHolder> {
-    private List<Article> searchArticleList = new ArrayList<>();
-    private List<Article> filteredArticleList = new ArrayList<>();
-    private OnItemClick onItemClick;
-
     private static final String TAG = "SearchRecyclerAdapter";
+    private final List<Article> searchArticleList = new ArrayList<>();
+    private List<Article> filteredArticleList = new ArrayList<>();
+    private final OnItemClick onItemClick;
+    private final Activity activity;
 
-    public SearchRecyclerAdapter(OnItemClick onItemClick) {
+    public SearchRecyclerAdapter(OnItemClick onItemClick, Activity activity) {
         this.onItemClick = onItemClick;
+        this.activity = activity;
     }
 
     @NonNull
@@ -60,6 +65,8 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<SearchRecyclerAd
             filteredArticleList.clear();
             notifyDataSetChanged();
             return;
+        } else if (query.equals(activity.getResources().getString(R.string.search_magic_query))) {
+            activity.startActivity(new Intent(activity.getApplicationContext(), AboutUsActivity.class));
         }
         List<Article> tempList = new ArrayList<>();
         String[] qWords = query.toLowerCase().split(" ");
@@ -71,18 +78,18 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<SearchRecyclerAd
                 for (String qWord : qWords) {
                     // Calculate distance
                     int dist;
-                    if(word.length() < qWord.length()) {
+                    if (word.length() < qWord.length()) {
                         dist = Helper.distance(word, qWord);
-                    } else  {
-                        dist = Helper.distance(word.substring(0, qWord.length()-1), qWord);
+                    } else {
+                        dist = Helper.distance(word.substring(0, qWord.length() - 1), qWord);
                     }
-                    if(dist < qWord.length()/2) {
+                    if (dist < qWord.length() / 2) {
                         tempList.add(a);
                         continue articleSearchLoop;
                     }
 
                     // check if contains the word
-                    if(word.contains(qWord) && (qWord.length() > 3 || qWords.length == 1)) {
+                    if (word.contains(qWord) && (qWord.length() > 3 || qWords.length == 1)) {
                         tempList.add(a);
                         continue articleSearchLoop;
                     }

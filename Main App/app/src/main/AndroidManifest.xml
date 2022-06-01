@@ -15,12 +15,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ArcadiaHighMobile">
-        <activity android:name=".CalendarActivity"></activity>
+        <activity
+            android:name=".AboutUsActivity"
+            android:exported="true" />
+        <activity
+            android:name=".TermsAndAgreementsActivity"
+            android:exported="true" />
+        <activity android:name=".CalendarActivity" />
         <activity android:name=".NotificationSettingsActivity" />
 
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
-            android:resource="@drawable/ic_launcher_foreground" />
+            android:resource="@mipmap/applogoclear" />
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/black" />
@@ -40,7 +46,9 @@
             android:configChanges="orientation|keyboardHidden|screenSize" />
         <activity android:name=".mediaPager.ImageViewActivity" />
         <activity android:name=".CommunityActivity" />
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -11,9 +11,10 @@
         android:id="@+id/home_news_sectionTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/padding_x.5"
         android:layout_marginHorizontal="@dimen/padding"
+        android:layout_marginBottom="@dimen/padding_x.5"
         android:fontFamily="@font/heavybold_lightregular"
+        android:paddingStart="@dimen/padding_x.5"
         android:text="@string/article_default_category"
         android:textColor="@color/brightRed"
         android:textSize="24sp" />
@@ -23,8 +24,8 @@
         android:id="@+id/home_featured_carousel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingStart="@dimen/padding_x2"
-        android:paddingEnd="@dimen/padding_x2"
+        android:paddingStart="@dimen/padding"
+        android:paddingEnd="@dimen/padding"
         android:clipChildren="false"
         android:clipToPadding="false"/>
     <com.google.android.material.tabs.TabLayout

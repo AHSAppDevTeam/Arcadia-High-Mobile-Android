@@ -1,6 +1,9 @@
-# Arcadia-High-Mobile-Android
-The official source code for Arcadia High Mobile (avaliable on Google Play). Includes source code for the Android version of the app. The purpose of AHS App Dev Team is to drive a culture where students can collaborate to produce application(s) that would revolutionize the way that the community stays connected.
+# Arcadia High Mobile Android
 
-Languages used for Android include - Java
+The official source code for the Android version of the Arcadia High Mobile app.
 
-Contact us at: hsappdev@students.ausd.net
+Available on [Google Play](https://play.google.com/store/apps/details?id=com.hsappdev.ahs&hl=en_US&gl=US).
+
+V4.0 developed in 2021 by Jeffrey Aaron Jeyasingh, Alex Dang, and Xing Liu. 
+
+Contact us at **dev@ahs.app**.

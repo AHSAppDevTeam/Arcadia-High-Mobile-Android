@@ -6,57 +6,84 @@
     android:layout_height="match_parent"
     tools:context=".CalendarActivity">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/textView"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/heavybold_lightregular"
-            android:padding="@dimen/padding"
-            android:text="@string/calendar_section_title"
-            android:textColor="@color/brightRed"
-            android:textSize="28sp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-
-
-        <androidx.constraintlayout.widget.ConstraintLayout
+            app:layout_constraintTop_toTopOf="parent">
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="300dp">
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline5"
-                android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <ImageButton
+                android:id="@+id/calendar_activity_home_button"
+                android:layout_width="@dimen/cornerIconSize"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:background="@drawable/icon_circle"
+                android:foreground="?attr/actionBarItemBackground"
+                android:src="@drawable/activity_navigation_back_arrow"
+                android:layout_marginStart="@dimen/padding_x.5"
+                app:tint="?attr/titleColor" />
+            <TextView
+                android:id="@+id/notification_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/heavybold_lightregular"
+                android:padding="@dimen/padding"
+                android:text="@string/calendar_section_title"
+                android:textColor="@color/brightRed"
+                android:textSize="28sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintGuide_begin="150dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+        </LinearLayout>
 
-            <com.kizitonwose.calendarview.CalendarView
-                android:id="@+id/calendarView"
-                android:layout_width="0dp"
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintGuide_begin="0dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.kizitonwose.calendarview.CalendarView
+                    android:id="@+id/calendarView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:cv_dayViewResource="@layout/calendar_day_layout"
+                    app:cv_monthHeaderResource="@layout/calendar_month_header_layout"
+                    app:cv_orientation="horizontal"
+                    app:cv_scrollMode="paged"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/guideline5"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <LinearLayout
+                android:id="@+id/calendar_schedule_view"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                app:cv_dayViewResource="@layout/calendar_day_layout"
-                app:cv_monthHeaderResource="@layout/calendar_month_header_layout"
-                app:cv_scrollMode="paged"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/guideline5"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </LinearLayout>
+                android:orientation="vertical" />
+        </LinearLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

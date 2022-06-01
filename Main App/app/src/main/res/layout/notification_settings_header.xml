@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/notification_settings_header"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fontFamily="@font/sfprodisplay_medium"
+    android:text="Category"
+    android:textColor="?attr/titleColor"
+    android:textSize="24sp"
+    android:textStyle="bold" />
+

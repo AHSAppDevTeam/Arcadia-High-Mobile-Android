@@ -1,13 +1,13 @@
 package com.hsappdev.ahs.UI.home;
 
+import android.app.Activity;
+import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.CompositePageTransformer;
 import androidx.viewpager2.widget.MarginPageTransformer;
@@ -18,13 +18,8 @@ import com.google.android.material.tabs.TabLayoutMediator;
 import com.hsappdev.ahs.OnItemClick;
 import com.hsappdev.ahs.R;
 import com.hsappdev.ahs.cache.CategoryLoaderBackend;
-import com.hsappdev.ahs.cache.LoadableCallback;
-import com.hsappdev.ahs.cache.callbacks.ArticleLoadableCallback;
 import com.hsappdev.ahs.cache.callbacks.CategoryLoadableCallback;
-import com.hsappdev.ahs.cache_new.CategoryLoaderBackEnd;
-import com.hsappdev.ahs.cache_new.DataLoaderBackEnd;
 import com.hsappdev.ahs.dataTypes.Category;
-import com.hsappdev.ahs.localdb.CategoryRepository;
 import com.hsappdev.ahs.util.Helper;
 
 import java.util.ArrayList;
@@ -33,12 +28,12 @@ public class FeaturedViewHolder extends RecyclerView.ViewHolder implements Categ
     private final TextView sectionTitle;
     private final ViewPager2 featuredPager;
     private final TabLayout featuredTabLayout;
-    private FeaturedArticleAdapter featuredArticleAdapter;
-    private final AppCompatActivity activity;
+    private final Activity activity;
     private final Resources r;
+    private FeaturedArticleAdapter featuredArticleAdapter;
 
 
-    public FeaturedViewHolder(@NonNull View itemView, AppCompatActivity activity) {
+    public FeaturedViewHolder(@NonNull View itemView, Activity activity) {
         super(itemView);
         featuredPager = itemView.findViewById(R.id.home_featured_carousel);
         featuredTabLayout = itemView.findViewById(R.id.featured_tab_layout);
@@ -52,42 +47,11 @@ public class FeaturedViewHolder extends RecyclerView.ViewHolder implements Categ
         featuredArticleAdapter = new FeaturedArticleAdapter(new ArrayList<String>(), onArticleClick, activity);
         featuredPager.setAdapter(featuredArticleAdapter);
 
-        CategoryLoaderBackEnd loader = new CategoryLoaderBackEnd(categoryTitle, r, new CategoryRepository(activity.getApplication()));
-        loader.getLiveData().observe(activity, new Observer<DataLoaderBackEnd.DataWithSource<Category>>() {
-            @Override
-            public void onChanged(DataLoaderBackEnd.DataWithSource<Category> categoryDataWithSource) {
-                Category category = categoryDataWithSource.getData();
-                featuredArticleAdapter.clearAll();
-                /*
-                 * Structure
-                 * > single carousel for all articles
-                 * */
-                featuredArticleAdapter.setArticleIds(category.getArticleIds());
-
-                String regularText = " News";
-                Helper.setBoldRegularText(sectionTitle, category.getTitle(), regularText);
-                sectionTitle.setTextColor(category.getColor());
-
-                // Set up tab layout
-                if (featuredArticleAdapter.getItemCount() > 1) {
-                    featuredTabLayout.setVisibility(View.VISIBLE);
-                    TabLayoutMediator tabLayoutMediator = new TabLayoutMediator(featuredTabLayout, featuredPager, true, new TabLayoutMediator.TabConfigurationStrategy() {
-                        @Override
-                        public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
-                        }
-                    });
-                    tabLayoutMediator.attach();
-                } else {
-                    featuredTabLayout.setVisibility(View.GONE);
-                }
-            }
-        });
-
         //CategoryLoader.getInstance().getCategory(categoryTitle, r, this);
-        //CategoryLoaderBackend.getInstance(activity.getApplication()).getCacheObject(categoryTitle, r, this);
+        CategoryLoaderBackend.getInstance(activity.getApplication()).getCacheObject(categoryTitle, r, this);
     }
 
-    public void setUpPager(){
+    public void setUpPager() {
 
         CompositePageTransformer compositePageTransformer = new CompositePageTransformer();
         //margin determines distance between two pages
@@ -143,6 +107,7 @@ public class FeaturedViewHolder extends RecyclerView.ViewHolder implements Categ
         String regularText = " News";
         Helper.setBoldRegularText(sectionTitle, category.getTitle(), regularText);
         sectionTitle.setTextColor(category.getColor());
+        featuredTabLayout.setTabRippleColor(ColorStateList.valueOf(category.getColor()));
 
         // Set up tab layout
         if (featuredArticleAdapter.getItemCount() > 1) {

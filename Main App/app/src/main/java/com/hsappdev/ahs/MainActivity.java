@@ -1,30 +1,28 @@
 package com.hsappdev.ahs;
 
+import android.app.Application;
+import android.content.Intent;
+import android.content.res.Resources;
+import android.os.Bundle;
+import android.view.Window;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
-import android.content.Intent;
-import android.content.res.Resources;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.Window;
-
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.messaging.RemoteMessage;
 import com.hsappdev.ahs.UI.home.OnSectionClicked;
-import com.hsappdev.ahs.cache.ArticleCategoryIdLoader;
+import com.hsappdev.ahs.cache.ArticleLoaderBackend;
+import com.hsappdev.ahs.cache.callbacks.ArticleLoadableCallback;
 import com.hsappdev.ahs.dataTypes.Article;
 import com.hsappdev.ahs.dataTypes.CommunitySection;
-import com.hsappdev.ahs.firebaseMessaging.NotificationSetup;
 import com.hsappdev.ahs.db.DatabaseConstants;
-
-import java.util.Arrays;
+import com.hsappdev.ahs.firebaseMessaging.NotificationSetup;
+import com.hsappdev.ahs.localdb.ArticleRepository;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationCallback, SettingsManager.DayNightCallback, OnItemClick, OnSectionClicked, OnNotificationSectionClicked {
 
@@ -62,6 +60,18 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationC
         if(FirebaseApp.getApps(getApplicationContext()).size() == 1) {
             FirebaseApp.initializeApp(getApplicationContext(), options, DatabaseConstants.FIREBASE_REALTIME_DB);
         }
+        ArticleRepository articleRepository = new ArticleRepository(this.getApplication());
+        if (getIntent().getExtras() != null) {
+            String articleID = (String) getIntent().getExtras().get("articleID");
+            ArticleLoaderBackend.getInstance((Application) getApplicationContext()).getCacheObject(articleID, getResources(), new ArticleLoadableCallback() {
+                private boolean isFirstTime = false;
+                @Override
+                public void onLoaded(Article article) {
+                    article.setIsNotification(1); // 1 == true
+                    articleRepository.add(article); // To save the notification
+                    onArticleClicked(article);
+                    isFirstTime = true; // used to mimic activity destruction and remove this listener
+                }
 
 
         setContentView(R.layout.activity_main);
@@ -82,11 +92,37 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationC
 
         NotificationSetup.setUp(getResources(), this);
 
-        // FIXME: REMOVE THIS WHEN DEPLOYING THE APP
+        // TODO: REMOVE THIS WHEN DEPLOYING THE APP
         if(BuildConfig.DEBUG) {
             NotificationSetup.subscribe(this, "Drafts");
         }
 
+        setUpNotificationIcon();
+
+    }
+
+    private void setUpNotificationIcon() {
+
+        // First initially setup the notif icon
+        // pretend that all notifs are read
+
+        // TODO: notif button
+
+
+        ArticleRepository articleRepository = new ArticleRepository(getApplication());
+        articleRepository.getAllNotificationArticles().observe(this, articleList -> {
+            boolean isAllRead = true;
+            for (int i = 0; i < articleList.size(); i++) {
+                if(articleList.get(i).getIsViewed() == 0) {
+                    isAllRead = false;
+                }
+            }
+
+            if (!isAllRead) {
+                // show the special icon
+                // TODO: need icons
+            }
+        });
     }
 
     @Override
@@ -107,7 +143,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationC
     // slide the view from its current position to below itself
     @Override
     public void slideDown(){
-//        navView.animate().translationY(navView.getHeight()).setDuration(500);
+        //navView.animate().translationY(navView.getHeight()).setDuration(500);
 //            /*TranslateAnimation animate = new TranslateAnimation(
 //                    0,                 // fromXDelta
 //                    0,                 // toXDelta
@@ -130,7 +166,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationC
         Intent intent = new Intent(MainActivity.this, ArticleActivity.class);
         intent.putExtra(ArticleActivity.data_KEY, article);
         startActivity(intent);
-        // overridePendingTransition(R.anim.enter_from_right, R.anim.empty_animation);
+        overridePendingTransition(R.anim.enter_from_right, R.anim.empty_animation);
     }
 
     @Override
@@ -138,7 +174,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationC
         Intent intent = new Intent(MainActivity.this, CommunityActivity.class);
         intent.putExtra(CommunityActivity.DATA_KEY, communitySection);
         startActivity(intent);
-        // overridePendingTransition(R.anim.enter_from_right, R.anim.empty_animation);
+        overridePendingTransition(R.anim.enter_from_right, R.anim.empty_animation);
     }
 
     @Override

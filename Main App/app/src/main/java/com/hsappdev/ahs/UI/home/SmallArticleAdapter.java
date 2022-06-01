@@ -5,23 +5,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.Space;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DividerItemDecoration;
 
 import com.hsappdev.ahs.OnItemClick;
 import com.hsappdev.ahs.R;
 
 import java.util.List;
 
-public class SmallArticleAdapter extends MultiArticleAdapter<SmallArticleAdapter.SmallArticleViewHolder>{
+public class SmallArticleAdapter extends MultiArticleAdapter<SmallArticleAdapter.SmallArticleViewHolder> {
+    public static final int numArticles = 2;
     private static final String TAG = "MediumArticleAdapter";
 
-
-    public static final int numArticles = 2;
-
-    public SmallArticleAdapter(List<String> articleIds, OnItemClick onArticleClick, AppCompatActivity activity) {
+    public SmallArticleAdapter(List<String> articleIds, OnItemClick onArticleClick, Activity activity) {
         super(articleIds, onArticleClick, activity);
 
     }
@@ -41,11 +38,11 @@ public class SmallArticleAdapter extends MultiArticleAdapter<SmallArticleAdapter
     }
 
 
-    static class SmallArticleViewHolder extends MultiArticleAdapter.MultiArticleViewHolder{
+    public static class SmallArticleViewHolder extends MultiArticleAdapter.MultiArticleViewHolder {
         private final LinearLayout linearLayout;
-        private final AppCompatActivity activity;
+        private final Activity activity;
 
-        public SmallArticleViewHolder(@NonNull View itemView, OnItemClick onArticleClick, AppCompatActivity activity) {
+        public SmallArticleViewHolder(@NonNull View itemView, OnItemClick onArticleClick, Activity activity) {
             super(itemView, onArticleClick);
             this.linearLayout = itemView.findViewById(R.id.home_news_small_article_linear_layout);
             this.activity = activity;
@@ -53,13 +50,19 @@ public class SmallArticleAdapter extends MultiArticleAdapter<SmallArticleAdapter
         }
 
 
-        public void setDetails(List<String> articlesToAdd){
+        public void setDetails(List<String> articlesToAdd) {
             linearLayout.removeAllViews();
 
-            for(int i=0; i<articlesToAdd.size(); i++){
+            for (int i = 0; i < articlesToAdd.size(); i++) {
                 String articleId = articlesToAdd.get(i);
-                SmallArticleUnit smallArticleUnit =  new SmallArticleUnit(itemView.getContext(), articleId, onArticleClick, activity);
+                SmallArticleUnit smallArticleUnit = new SmallArticleUnit(itemView.getContext(), articleId, onArticleClick, activity);
                 linearLayout.addView(smallArticleUnit);
+                if (i % 2 == 0) {
+                    // add padding
+                    Space space = new Space(itemView.getContext());
+                    space.setMinimumHeight(r.getDimensionPixelSize(R.dimen.padding));
+                    linearLayout.addView(space);
+                }
             }
         }
 
