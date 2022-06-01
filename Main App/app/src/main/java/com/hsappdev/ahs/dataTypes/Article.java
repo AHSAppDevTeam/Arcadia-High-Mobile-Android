@@ -11,10 +11,10 @@ import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import com.hsappdev.ahs.cache.LoadableType;
-import com.hsappdev.ahs.newCache.CacheType;
+import com.hsappdev.ahs.newCache.DataType;
 
 @Entity(tableName = ArticleDAO.TABLE_NAME)
-public class Article extends CacheType implements Parcelable, LoadableType {
+public class Article extends DataType implements Parcelable, LoadableType {
     public static final String TABLE_NAME = ArticleDAO.TABLE_NAME;
     public static final String OLD_TABLE_NAME = "saved_table";
 

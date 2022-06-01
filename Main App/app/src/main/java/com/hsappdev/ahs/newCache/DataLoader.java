@@ -4,5 +4,5 @@ import androidx.lifecycle.LiveData;
 
 
 public class DataLoader {
-    public LiveData<CacheType> dataList;
+    public LiveData<DataType> dataList;
 }

@@ -5,14 +5,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.hsappdev.ahs.newCache.CacheType;
+import com.hsappdev.ahs.newCache.DataType;
 
-import java.util.ArrayList;
+import java.util.List;
 
-public class AbstractDataRecyclerView<T extends CacheType> extends RecyclerView.Adapter<AbstractDataViewHolder<T>>{
-    private ArrayList<T> dataIds;
+public class AbstractDataRecyclerView<T extends DataType> extends RecyclerView.Adapter<AbstractDataViewHolder<T>>{
+    private List<T> dataList;
     private int viewId;
 
     public AbstractDataRecyclerView() {
@@ -28,28 +29,37 @@ public class AbstractDataRecyclerView<T extends CacheType> extends RecyclerView.
 
     @Override
     public void onBindViewHolder(@NonNull AbstractDataViewHolder<T> holder, int position) {
-        // TODO: check if needed the below
+        // TODO: check if need the below
         // ((ViewGroup) holder.itemView).setClipChildren(false);
         // ((ViewGroup) holder.itemView).setClipToPadding(false);
 
-        holder.setData(dataIds.get(position));
+        holder.setData(dataList.get(position));
 
     }
 
     @Override
     public int getItemCount() {
-        return dataIds.size();
+        return dataList.size();
+    }
+
+    public void setDataList(List<T> newDataList) {
+        final DataDiffCallback<T> dataDiffCallback = new DataDiffCallback<T>(this.dataList, newDataList);
+        final DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(dataDiffCallback);
+
+        this.dataList.clear();
+        this.dataList.addAll(dataList);
+
+        diffResult.dispatchUpdatesTo(this);
+
+        this.dataList = dataList;
     }
 
     // GETTERS AND SETTERS
 
-    public ArrayList<T> getDataIds() {
-        return dataIds;
+    public List<T> getDataList() {
+        return dataList;
     }
 
-    public void setDataIds(ArrayList<T> dataIds) {
-        this.dataIds = dataIds;
-    }
 
     public int getViewId() {
         return viewId;
