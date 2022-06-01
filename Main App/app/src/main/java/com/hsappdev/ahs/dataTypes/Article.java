@@ -302,4 +302,9 @@ public class Article extends DataType implements Parcelable, LoadableType {
     public void setDataToView(View view) {
         // TODO: implement this
     }
+
+    @Override
+    public void handleOnClick(View view) {
+        // TODO: implement this
+    }
 }

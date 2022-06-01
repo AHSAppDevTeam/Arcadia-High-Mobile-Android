@@ -3,8 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Jeffrey/Documents/GitHub/Arcadia-High-Mobile-Android/Main App/app/src/main/res/drawable/about_us_bg_animated_gradient.xml" value="0.3635" />
+        <entry key="..\:/Users/Jeffrey/Documents/GitHub/Arcadia-High-Mobile-Android/Main App/app/src/main/res/drawable/about_us_bg_animated_gradient_animator.xml" value="0.3635" />
+        <entry key="..\:/Users/Jeffrey/Documents/GitHub/Arcadia-High-Mobile-Android/Main App/app/src/main/res/drawable/about_us_bg_animated_gradient_center.xml" value="0.3635" />
+        <entry key="..\:/Users/Jeffrey/Documents/GitHub/Arcadia-High-Mobile-Android/Main App/app/src/main/res/drawable/about_us_bg_animated_gradient_end.xml" value="0.3635" />
         <entry key="..\:/Users/Jeffrey/Documents/GitHub/Arcadia-High-Mobile-Android/Main App/app/src/main/res/drawable/test_data_loading_board_view.xml" value="0.2935" />
+        <entry key="..\:/Users/Jeffrey/Documents/GitHub/Arcadia-High-Mobile-Android/Main App/app/src/main/res/layout/activity_about_us.xml" value="0.3625" />
         <entry key="..\:/Users/Jeffrey/Documents/GitHub/Arcadia-High-Mobile-Android/Main App/app/src/main/res/layout/activity_test_data_loading.xml" value="0.358695652173913" />
+        <entry key="..\:/Users/Jeffrey/Documents/GitHub/Arcadia-High-Mobile-Android/Main App/app/src/main/res/layout/home_board_category_section.xml" value="0.18541666666666667" />
         <entry key="..\:/Users/Jeffrey/Documents/GitHub/Arcadia-High-Mobile-Android/Main App/app/src/main/res/layout/test_data_loading_board_view.xml" value="0.3625" />
       </map>
     </option>

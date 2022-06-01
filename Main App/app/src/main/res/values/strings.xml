@@ -204,6 +204,8 @@ Last updated August 08, 2020
     <string name="article_see_more">See more in\ </string>
     <string name="search_magic_query">about the app dev team</string>
     <string name="app_version">4.0.1</string>
+    <string name="featured_boards_title_text_bold">Featured</string>
+    <string name="featured_boards_title_text_light">Boards</string>
 
 
 </resources>

@@ -60,6 +60,8 @@ public abstract class DataType {
         isLoading = loading;
     }
 
+    public abstract void handleOnClick(View view);
+
 //    public static int getDisplayResourceViewId() {
 //        return displayResourceViewId;
 //    }

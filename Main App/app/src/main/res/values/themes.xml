@@ -17,6 +17,13 @@
         <item name="android:spotShadowAlpha">.1</item>
 <!--        <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>-->
 
+
+        <!--        PROPER COLORS   -->
+        <item name="headingColor">@color/brickRed</item>
+        <item name="subTitleColor">@color/black</item>
+        <item name="descriptionColor">#ADADAD</item>
+
+
         <item name="titleColor">@color/black</item>
         <item name="bodyTextColor">@color/black</item>
         <item name="authorTextColor">@color/article_author_text</item>

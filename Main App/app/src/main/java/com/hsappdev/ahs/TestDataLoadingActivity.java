@@ -14,12 +14,11 @@ import com.TestDataLoadingViewModel;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.database.FirebaseDatabase;
-import com.hsappdev.ahs.dataTypes.BoardDataType;
+import com.hsappdev.ahs.newDataTypes.BoardDataType;
 import com.hsappdev.ahs.db.DatabaseConstants;
 import com.hsappdev.ahs.ui_new.reusable.recyclerview.AbstractDataRecyclerView;
 
 import java.util.List;
-import java.util.ResourceBundle;
 
 public class TestDataLoadingActivity extends AppCompatActivity {
 
@@ -53,7 +52,7 @@ public class TestDataLoadingActivity extends AppCompatActivity {
 
         // Recycler view stuff
         AbstractDataRecyclerView<BoardDataType> dataRecyclerViewAdapter = new AbstractDataRecyclerView<>();
-        dataRecyclerViewAdapter.setViewId(R.layout.test_data_loading_board_view);
+        dataRecyclerViewAdapter.setViewId(R.layout.home_board_category_section);
         RecyclerView recyclerView = findViewById(R.id.boardsRecyclerView);
 
         recyclerView.setAdapter(dataRecyclerViewAdapter);

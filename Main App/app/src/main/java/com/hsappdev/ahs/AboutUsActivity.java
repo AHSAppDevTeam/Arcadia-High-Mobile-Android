@@ -2,6 +2,7 @@ package com.hsappdev.ahs;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
@@ -15,6 +16,13 @@ public class AboutUsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about_us);
+
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+
+        AnimationDrawable animationDrawable = (AnimationDrawable) findViewById(R.id.about_us_gradient).getBackground();
+        animationDrawable.setEnterFadeDuration(10);
+        animationDrawable.setExitFadeDuration(3000);
+        animationDrawable.start();
 
         TextView programmers = findViewById(R.id.programmers_list);
         ScreenUtil.setHTMLStringToTextView(getResources().getString(R.string.programmers_list), programmers);
