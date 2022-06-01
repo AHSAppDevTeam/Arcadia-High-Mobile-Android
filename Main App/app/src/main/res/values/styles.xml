@@ -11,4 +11,22 @@
     <style name="spinnerStyle" parent="@android:style/Widget.Holo.DropDownItem.Spinner">
         <item name="android:textColor">?attr/titleColor</item>
     </style>
+
+    <style name="appDevTitleStyleBold" parent="">
+        <item name="android:textSize">24sp</item>
+        <item name="android:fontFamily">@font/sfprodisplay_bold</item>
+        <item name="android:textColor">?attr/headingColor</item>
+    </style>
+
+    <style name="appDevTitleStyleLight" parent="">
+        <item name="android:textSize">24sp</item>
+        <item name="android:fontFamily">@font/sfprodisplay_light</item>
+        <item name="android:textColor">?attr/headingColor</item>
+    </style>
+
+<!--    Rounded Image View  -->
+    <style name="roundedImageView" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">8%</item>
+    </style>
 </resources>
