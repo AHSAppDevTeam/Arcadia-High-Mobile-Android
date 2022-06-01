@@ -31,6 +31,7 @@
     <color name="blueGradientStart">#63a8a8</color>
     <color name="blueGradientEnd">#2e8a7d</color>
     <color name="teal">#55a0ae</color>
+    <color name="lightDarkBlue">#3F9DFF</color>
 
     <color name="subtleBlueGradientStart">#70afb4</color>
     <color name="subtleBlueGradientEnd">#167e96</color>

@@ -30,5 +30,6 @@
         <item name="navBarIconColor">@color/white50</item>
         <item name="navBarIconColor_active">@color/white</item>
         <item name="navBarIconColorAccent_active">@color/gray</item>
+        <item name="linkColor">@color/lightDarkBlue</item>
     </style>
 </resources>
