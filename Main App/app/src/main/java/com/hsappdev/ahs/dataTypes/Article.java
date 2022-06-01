@@ -2,6 +2,7 @@ package com.hsappdev.ahs.dataTypes;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
@@ -295,5 +296,10 @@ public class Article extends CacheType implements Parcelable, LoadableType {
     @Override
     public LoadableType getInstance() {
         return new Article();
+    }
+
+    @Override
+    public void setDataToView(View view) {
+        // TODO: implement this
     }
 }

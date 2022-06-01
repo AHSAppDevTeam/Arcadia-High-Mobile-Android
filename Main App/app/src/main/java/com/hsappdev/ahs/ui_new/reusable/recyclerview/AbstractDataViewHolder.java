@@ -5,10 +5,15 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class AbstractDataViewHolder extends RecyclerView.ViewHolder{
+import com.hsappdev.ahs.newCache.CacheType;
+
+public class AbstractDataViewHolder<T extends CacheType> extends RecyclerView.ViewHolder{
     public AbstractDataViewHolder(@NonNull View itemView) {
         super(itemView);
     }
 
 
+    public void setData(T t) {
+        t.setDataToView(itemView);
+    }
 }
