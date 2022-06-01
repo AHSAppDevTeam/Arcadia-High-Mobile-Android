@@ -23,10 +23,10 @@ public abstract class DataType {
 
     // METHODS TO DISPLAY THE DATA
 
-    /**
-     * Resource id (int) for the view to be displayed when used in recycler view
-     */
-    public static final int displayResourceViewId = 0;
+//    /**
+//     * Resource id (int) for the view to be displayed when used in recycler view
+//     */
+//    public static int displayResourceViewId = 0;
 
     /**
      * Set data to the view, using a overridden method
@@ -60,7 +60,11 @@ public abstract class DataType {
         isLoading = loading;
     }
 
-    public static int getDisplayResourceViewId() {
-        return displayResourceViewId;
-    }
+//    public static int getDisplayResourceViewId() {
+//        return displayResourceViewId;
+//    }
+//
+//    public static void setDisplayResourceViewId(int displayResourceViewId) {
+//        DataType.displayResourceViewId = displayResourceViewId;
+//    }
 }

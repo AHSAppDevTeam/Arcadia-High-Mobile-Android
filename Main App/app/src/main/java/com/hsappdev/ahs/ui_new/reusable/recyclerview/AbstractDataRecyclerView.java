@@ -10,10 +10,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.hsappdev.ahs.newCache.DataType;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AbstractDataRecyclerView<T extends DataType> extends RecyclerView.Adapter<AbstractDataViewHolder<T>>{
-    private List<T> dataList;
+    private List<T> dataList = new ArrayList<>();
     private int viewId;
 
     public AbstractDataRecyclerView() {
@@ -47,11 +48,10 @@ public class AbstractDataRecyclerView<T extends DataType> extends RecyclerView.A
         final DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(dataDiffCallback);
 
         this.dataList.clear();
-        this.dataList.addAll(dataList);
+        this.dataList.addAll(newDataList);
 
         diffResult.dispatchUpdatesTo(this);
 
-        this.dataList = dataList;
     }
 
     // GETTERS AND SETTERS
