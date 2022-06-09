@@ -25,7 +25,6 @@ public class BoardDataType extends DataType {
         this.sort = sort;
         this.title = title;
 
-        //setDisplayResourceViewId(R.layout.test_data_loading_board_view);
     }
 
     @Override

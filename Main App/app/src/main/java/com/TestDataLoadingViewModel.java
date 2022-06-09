@@ -13,6 +13,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.hsappdev.ahs.dataTypes.ArticleDataType;
 import com.hsappdev.ahs.newDataTypes.BoardDataType;
 import com.hsappdev.ahs.db.DatabaseConstants;
 
@@ -23,10 +24,12 @@ public class TestDataLoadingViewModel extends ViewModel {
 
     private static final String TAG = "TestDataLoadingViewMode";
 
-    private final MutableLiveData<List<BoardDataType>> articlesMutableLiveData = new MutableLiveData<>();
+    private final MutableLiveData<List<BoardDataType>> boardsMutableLiveData = new MutableLiveData<>();
+
+    private final MutableLiveData<List<ArticleDataType>> articleMutableLiveData = new MutableLiveData<>();
 
     public LiveData<List<BoardDataType>> getArticles() {
-        return articlesMutableLiveData;
+        return boardsMutableLiveData;
     }
 
     public TestDataLoadingViewModel() {
@@ -57,7 +60,7 @@ public class TestDataLoadingViewModel extends ViewModel {
 
                 Log.d(TAG, String.format("List Size: %d", boardsList.size()));
 
-                articlesMutableLiveData.setValue(boardsList);
+                boardsMutableLiveData.setValue(boardsList);
 
             }
 
