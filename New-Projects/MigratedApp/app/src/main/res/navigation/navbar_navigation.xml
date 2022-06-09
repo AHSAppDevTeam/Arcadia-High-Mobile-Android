@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navbar_navigation"
+    app:startDestination="@id/menuHomePage">
+
+    <fragment
+        android:id="@+id/menuHomePage"
+        android:name="com.hsappdev.ahs.HomeFragment"
+        android:label="@string/homeNavbarTitle"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_mapFragment"
+            app:destination="@id/menuMapPage" />
+    </fragment>
+    <fragment
+        android:id="@+id/menuMapPage"
+        android:name="com.hsappdev.ahs.MapFragment"
+        android:label="fragment_map"
+        tools:layout="@layout/fragment_map" >
+        <action
+            android:id="@+id/action_mapFragment_to_scheduleFragment"
+            app:destination="@id/menuSchedulePage" />
+    </fragment>
+    <fragment
+        android:id="@+id/menuSchedulePage"
+        android:name="com.hsappdev.ahs.ScheduleFragment"
+        android:label="fragment_schedule"
+        tools:layout="@layout/fragment_schedule" >
+        <action
+            android:id="@+id/action_scheduleFragment_to_profileFragment"
+            app:destination="@id/menuProfilePage" />
+    </fragment>
+    <fragment
+        android:id="@+id/menuProfilePage"
+        android:name="com.hsappdev.ahs.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
+
+
+</navigation>

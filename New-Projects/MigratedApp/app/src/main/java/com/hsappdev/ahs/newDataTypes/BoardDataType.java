@@ -12,9 +12,9 @@ import java.util.List;
 public class BoardDataType extends DataType {
     public List<String> articleIds;
 
-    public long editTimestamp = 0L;
+    public long editTimestamp;
 
-    public int sort = 0;
+    public int sort;
 
     public String title;
 
@@ -29,9 +29,9 @@ public class BoardDataType extends DataType {
     @Override
     public void setDataToView(View view) {
         // extract the view elements
-        TextView titleTextView = view.findViewById(R.id.board_title_text);
+        // TextView titleTextView = view.findViewById(R.id.board_title_text);
 
-        titleTextView.setText(title);
+        // titleTextView.setText(title);
     }
 
     @Override

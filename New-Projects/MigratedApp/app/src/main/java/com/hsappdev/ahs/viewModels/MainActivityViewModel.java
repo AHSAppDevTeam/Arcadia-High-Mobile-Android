@@ -1,4 +1,4 @@
-package com.example.migratedapp.viewModels;
+package com.hsappdev.ahs.viewModels;
 
 import android.util.Log;
 

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menuHomePage"
+        android:enabled="true"
+        android:icon="@android:drawable/ic_lock_idle_alarm"
+        android:title="@string/homeNavbarTitle"/>
+    <item
+        android:id="@+id/menuMapPage"
+        android:enabled="true"
+        android:icon="@android:drawable/ic_lock_idle_lock"
+        android:title="@string/mapNavbarTitle"/>
+    <item
+        android:id="@+id/menuSchedulePage"
+        android:enabled="true"
+        android:icon="@android:drawable/ic_dialog_alert"
+        android:title="@string/scheduleNavbarTitle"/>
+    <item
+        android:id="@+id/menuProfilePage"
+        android:enabled="true"
+        android:icon="@android:drawable/ic_lock_idle_charging"
+        android:title="@string/profileNavbarTitle"/>
+</menu>

@@ -3,7 +3,6 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-
         <entry key="..\:/Programming/Arcadia-High-Mobile-Android/Main App/app/src/main/res/layout/activity_about_us.xml" value="0.5541666666666667" />
         <entry key="..\:/Users/Jeffrey/Documents/Coding/Android/Arcadia-High-Mobile-Android/Main App/app/src/main/res/drawable/about_us_page_bg.xml" value="0.37864583333333335" />
         <entry key="..\:/Users/Jeffrey/Documents/Coding/Android/Arcadia-High-Mobile-Android/Main App/app/src/main/res/drawable/app_logo.xml" value="0.2953125" />
@@ -37,11 +36,12 @@
         <entry key="..\:/Users/Jeffrey/Documents/Coding/Android/Arcadia-High-Mobile-Android/Main App/app/src/main/res/layout/schedule_title_header.xml" value="0.2671875" />
         <entry key="..\:/Users/Jeffrey/Documents/Coding/Android/Arcadia-High-Mobile-Android/Main App/app/src/main/res/layout/single_line_community_article_holder.xml" value="0.2671875" />
         <entry key="..\:/Users/Jeffrey/Documents/Coding/Android/Arcadia-High-Mobile-Android/Main App/app/src/main/res/menu/article_appbar_menu.xml" value="0.20260416666666667" />
+        <entry key="..\:/Users/Jeffrey/Documents/GitHub/Arcadia-High-Mobile-Android/Main App/app/src/main/res/layout/activity_main.xml" value="0.18541666666666667" />
+        <entry key="..\:/Users/Jeffrey/Documents/GitHub/Arcadia-High-Mobile-Android/Main App/app/src/main/res/menu/navbar_menu.xml" value="0.18541666666666667" />
         <entry key="..\:/Users/flyor/Documents/GitHub/Arcadia-High-Mobile-Android/Main App/app/src/main/res/layout/calendar_day_layout.xml" value="0.12635869565217392" />
         <entry key="..\:/Users/flyor/Documents/GitHub/Arcadia-High-Mobile-Android/Main App/app/src/main/res/layout/calendar_month_header_layout.xml" value="0.12635869565217392" />
         <entry key="..\:/Users/flyor/Documents/GitHub/Arcadia-High-Mobile-Android/Main App/app/src/main/res/layout/schedule_period_bubble_passing_period.xml" value="0.12635869565217392" />
         <entry key="..\:/Users/flyor/Documents/GitHub/Arcadia-High-Mobile-Android/Main App/app/src/main/res/layout/schedule_title_header.xml" value="0.12635869565217392" />
-
       </map>
     </option>
   </component>

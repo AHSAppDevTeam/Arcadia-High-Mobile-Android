@@ -1,3 +1,17 @@
 <resources>
-    <string name="app_name">MigratedApp</string>
+    <string name="app_name">Arcadia High Mobile</string>
+
+    <!-- database stuff -->
+    <string name="db_app_id">1:654225823864:android:79667fc6142c94cbb7758d</string>
+    <string name="db_url">https://ahs-app.firebaseio.com/</string>
+    <string name="db_api_key">AIzaSyBRBGC45zgZd6JtLKDq2nfwDnW5symCwX8</string>
+    <string name="db_name">main</string>
+
+    <!-- navbar titles -->
+    <string name="homeNavbarTitle">Home</string>
+    <string name="mapNavbarTitle">Map</string>
+    <string name="scheduleNavbarTitle">Schedule</string>
+    <string name="profileNavbarTitle">Profile</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
