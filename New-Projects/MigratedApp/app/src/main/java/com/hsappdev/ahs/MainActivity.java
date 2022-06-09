@@ -1,4 +1,4 @@
-package com.example.migratedapp;
+package com.hsappdev.ahs;
 
 import androidx.appcompat.app.AppCompatActivity;
 

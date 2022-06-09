@@ -13,7 +13,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.hsappdev.ahs.dataTypes.ArticleDataType;
+import com.hsappdev.ahs.newDataTypes.ArticleDataType;
 import com.hsappdev.ahs.newDataTypes.BoardDataType;
 import com.hsappdev.ahs.db.DatabaseConstants;
 

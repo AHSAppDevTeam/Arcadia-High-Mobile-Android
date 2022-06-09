@@ -7,7 +7,7 @@ android {
     compileSdk 32
 
     defaultConfig {
-        applicationId "com.example.migratedapp"
+        applicationId "com.hsappdev.ahs"
         minSdk 24
         targetSdk 32
         versionCode 1
