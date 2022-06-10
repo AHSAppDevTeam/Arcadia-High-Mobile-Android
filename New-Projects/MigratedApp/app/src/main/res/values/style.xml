@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--    Rounded Image View  -->
+    <style name="roundedImageView" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">8%</item>
+    </style>
+
+    <!-- textual styles (for different sized headings) -->
+    <style name="appDevTitleStyleBold" parent="">
+        <item name="android:textSize">24sp</item>
+        <item name="android:fontFamily">@font/sfprodisplay_bold</item>
+        <item name="android:textColor">?attr/headingColor</item>
+    </style>
+
+    <style name="appDevTitleStyleLight" parent="">
+        <item name="android:textSize">24sp</item>
+        <item name="android:fontFamily">@font/sfprodisplay_light</item>
+        <item name="android:textColor">?attr/headingColor</item>
+    </style>
+
+</resources>

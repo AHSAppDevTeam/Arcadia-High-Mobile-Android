@@ -29,9 +29,9 @@ public class BoardDataType extends DataType {
     @Override
     public void setDataToView(View view) {
         // extract the view elements
-        // TextView titleTextView = view.findViewById(R.id.board_title_text);
+        TextView titleTextView = view.findViewById(R.id.board_title_text);
 
-        // titleTextView.setText(title);
+        titleTextView.setText(title);
     }
 
     @Override

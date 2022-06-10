@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Spacing between elements -->
+    <dimen name="horizontalMainPadding">32dp</dimen>
+    <dimen name="verticalMainPadding">12dp</dimen>
+
+</resources>

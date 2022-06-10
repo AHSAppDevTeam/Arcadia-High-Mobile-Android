@@ -9,6 +9,7 @@ import androidx.navigation.ui.NavigationUI;
 
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -32,11 +33,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
         r = getResources();
 
         initializeFirebase();
+
+        setContentView(R.layout.activity_main);
+
 
         viewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
 
@@ -60,18 +63,20 @@ public class MainActivity extends AppCompatActivity {
      * Creates a firebase instance with id = DatabaseConstants.FIREBASE_REALTIME_DB
      */
     private void initializeFirebase() {
-        Resources r = getResources();
+
         FirebaseOptions options = new FirebaseOptions.Builder()
                 .setApplicationId(r.getString(R.string.db_app_id))
                 .setApiKey(r.getString(R.string.db_api_key))
                 .setDatabaseUrl(r.getString(R.string.db_url))
                 .build();
 
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-
-
-        if(FirebaseApp.getApps(getApplicationContext()).size() == 1) {
+        try {
             FirebaseApp.initializeApp(getApplicationContext(), options, DatabaseConstants.FIREBASE_REALTIME_DB);
+            FirebaseDatabase.getInstance(FirebaseApp.getInstance(DatabaseConstants.FIREBASE_REALTIME_DB)).setPersistenceEnabled(true);
+
+        }catch (IllegalStateException e) {
+            // db already init
         }
     }
+
 }

@@ -11,6 +11,11 @@
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
-        <!-- Customize your theme here. -->
+
+        <!-- textual colors attr -->
+        <item name="headingColor">@color/brickRed</item>
+        <item name="titleColor">@color/black</item>
+        <item name="subTitleColor">@color/black</item>
+        <item name="descriptionColor">#ADADAD</item>
     </style>
 </resources>
