@@ -16,5 +16,7 @@
     <!-- home page heading titles -->
     <string name="featured_boards_title_text_bold">Featured</string>
     <string name="featured_boards_title_text_light">Boards</string>
+    <string name="home_title">Arcadia</string>
+    <string name="home_default_month">January</string>
 
 </resources>

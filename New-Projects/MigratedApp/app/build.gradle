@@ -41,6 +41,16 @@ dependencies {
     implementation 'com.google.firebase:firebase-crashlytics'
     implementation 'com.google.firebase:firebase-analytics:'
 
+    // Image tools
+    // Glide
+    implementation 'com.github.bumptech.glide:glide:4.13.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.13.0'
+    // Blur lib
+    implementation 'jp.wasabeef:glide-transformations:4.3.0'
+    // Zooming image view
+    // implementation 'com.github.chrisbanes:PhotoView:2.3.0' (hold off for now)
+
+
 
     // Don't update packages randomly unless you really need to
     implementation 'androidx.appcompat:appcompat:1.4.1'

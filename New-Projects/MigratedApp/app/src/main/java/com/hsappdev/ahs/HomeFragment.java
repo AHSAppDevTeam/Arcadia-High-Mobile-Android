@@ -12,12 +12,17 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.hsappdev.ahs.newDataTypes.BoardDataType;
 import com.hsappdev.ahs.ui.reusable.recyclerview.AbstractDataRecyclerView;
+import com.hsappdev.ahs.util.Helper;
 import com.hsappdev.ahs.viewModels.MainActivityViewModel;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -85,7 +90,16 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         setupRecyclerView(view);
+        setupTitleSection(view);
 
         return view;
+    }
+
+    private void setupTitleSection(View view) {
+        // set the correct date
+        TextView homeDate = view.findViewById(R.id.home_date);
+        String month = new SimpleDateFormat("MMMM ", Locale.US).format(Calendar.getInstance().getTimeInMillis()); // note space
+        String day = new SimpleDateFormat("d", Locale.US).format(Calendar.getInstance().getTimeInMillis());
+        Helper.setBoldRegularText(homeDate, month, day);
     }
 }
