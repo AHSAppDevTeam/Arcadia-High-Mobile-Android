@@ -3,6 +3,7 @@ package com.hsappdev.ahs;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -53,11 +54,16 @@ public class ArticleBoardActivity extends AppCompatActivity {
         // recycler view
         // Recycler view stuff
         AbstractDataRecyclerView<ArticleDataType> dataRecyclerViewAdapter = new AbstractDataRecyclerView<>();
-        dataRecyclerViewAdapter.setViewId(R.layout.home_board_category_section);
+        dataRecyclerViewAdapter.setViewId(R.layout.bulletin_article_section);
         RecyclerView recyclerView = findViewById(R.id.articleBoardRecyclerView);
 
         recyclerView.setAdapter(dataRecyclerViewAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
+        recyclerView.setLayoutManager(layoutManager);
+
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
+                layoutManager.getOrientation());
+        recyclerView.addItemDecoration(dividerItemDecoration);
 
 
         viewModel.getArticles().observe(this, new Observer<List<ArticleDataType>>() {
