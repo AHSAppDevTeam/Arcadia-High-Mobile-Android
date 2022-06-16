@@ -7,6 +7,21 @@
     <string name="db_api_key">AIzaSyBRBGC45zgZd6JtLKDq2nfwDnW5symCwX8</string>
     <string name="db_name">ahs-app</string>
 
+    <!-- db stuff (articles) -->
+    <string name="db_articles">articles</string>
+    <string name="db_articles_author">author</string>
+    <string name="db_articles_body">body</string>
+    <string name="db_articles_categoryID">categoryID</string>
+    <string name="db_articles_date">date</string>
+    <string name="db_articles_featured">featured</string>
+    <string name="db_articles_imageURLs">imageURLs</string>
+    <string name="db_articles_videoURLs">videoIDs</string>
+    <string name="db_articles_notified">notified</string>
+    <string name="db_articles_thumbURLs">thumbURLs</string>
+    <string name="db_articles_timestamp">timestamp</string>
+    <string name="db_articles_title">title</string>
+    <string name="db_articles_views">views</string>
+
 
 
     <!-- navbar titles -->

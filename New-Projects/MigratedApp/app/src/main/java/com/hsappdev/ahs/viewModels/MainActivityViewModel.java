@@ -26,7 +26,7 @@ public class MainActivityViewModel extends ViewModel {
 
     private final MutableLiveData<List<BoardDataType>> boardsMutableLiveData = new MutableLiveData<>();
 
-    public LiveData<List<BoardDataType>> getArticles() {
+    public LiveData<List<BoardDataType>> getBoards() {
         return boardsMutableLiveData;
     }
 

@@ -45,7 +45,6 @@ public class HomeFragment extends Fragment {
      *
      * @return A new instance of fragment HomeFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static HomeFragment newInstance() {
         HomeFragment fragment = new HomeFragment();
         return fragment;
@@ -74,7 +73,7 @@ public class HomeFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext(), RecyclerView.VERTICAL, false));
 
 
-        viewModel.getArticles().observe(requireActivity(), new Observer<List<BoardDataType>>() {
+        viewModel.getBoards().observe(requireActivity(), new Observer<List<BoardDataType>>() {
             @Override
             public void onChanged(List<BoardDataType> boardsList) {
                 Log.d(TAG, String.format("List Size: %d", boardsList.size()));

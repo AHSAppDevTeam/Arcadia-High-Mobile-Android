@@ -11,7 +11,7 @@ public abstract class DataType {
     /**
      * Hash of the contents inside this object (to check if contents are the same)
      */
-    public String dataHash;
+    public String dataHash = "";
 
     /**
      * Shows if this article has been loaded yet<br>

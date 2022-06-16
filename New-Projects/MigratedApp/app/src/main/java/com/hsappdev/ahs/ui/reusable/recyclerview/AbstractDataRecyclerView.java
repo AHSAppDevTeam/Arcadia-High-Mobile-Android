@@ -44,6 +44,7 @@ public class AbstractDataRecyclerView<T extends DataType> extends RecyclerView.A
     }
 
     public void setDataList(List<T> newDataList) {
+
         final DataDiffCallback<T> dataDiffCallback = new DataDiffCallback<T>(this.dataList, newDataList);
         final DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(dataDiffCallback);
 
