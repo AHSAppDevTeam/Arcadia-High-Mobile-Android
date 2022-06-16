@@ -10,6 +10,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MigratedApp">
         <activity
+            android:name=".ArticleBoardActivity"
+            android:exported="false" >
+        </activity>
+        <activity
+            android:name=".ArticleActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

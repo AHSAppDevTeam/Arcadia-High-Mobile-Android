@@ -9,6 +9,9 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/profileNavbarTitle" />
+        android:text="@string/profileNavbarTitle"
+        android:paddingHorizontal="@dimen/horizontalMainPadding"
+        android:paddingVertical="@dimen/verticalMainPadding"
+        style="@style/appDevTitleStyleBold"/>
 
 </FrameLayout>

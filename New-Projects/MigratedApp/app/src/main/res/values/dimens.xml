@@ -5,4 +5,8 @@
     <dimen name="horizontalMainPadding">32dp</dimen>
     <dimen name="verticalMainPadding">12dp</dimen>
 
+    <!-- Spacing between text -->
+    <dimen name="adjacentTextSpacing">6dp</dimen>
+
+
 </resources>

@@ -7,6 +7,8 @@
     <string name="db_api_key">AIzaSyBRBGC45zgZd6JtLKDq2nfwDnW5symCwX8</string>
     <string name="db_name">ahs-app</string>
 
+
+
     <!-- navbar titles -->
     <string name="homeNavbarTitle">Home</string>
     <string name="mapNavbarTitle">Map</string>
@@ -18,5 +20,8 @@
     <string name="featured_boards_title_text_light">Boards</string>
     <string name="home_title">Arcadia</string>
     <string name="home_default_month">January</string>
+
+    <!-- article board titles -->
+    <string name="article_boards_title_text_default">Opportunities</string>
 
 </resources>

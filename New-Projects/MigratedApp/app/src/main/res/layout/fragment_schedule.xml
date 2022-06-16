@@ -5,10 +5,12 @@
     android:layout_height="match_parent"
     tools:context=".ScheduleFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/scheduleNavbarTitle" />
+        android:text="@string/scheduleNavbarTitle"
+        android:paddingHorizontal="@dimen/horizontalMainPadding"
+        android:paddingVertical="@dimen/verticalMainPadding"
+        style="@style/appDevTitleStyleBold"/>
 
 </FrameLayout>

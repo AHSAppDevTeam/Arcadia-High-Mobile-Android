@@ -45,10 +45,8 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/sfprodisplay_bold"
                     android:includeFontPadding="false"
-                    android:lineSpacingExtra="0dp"
                     android:text="@string/home_title"
-                    android:textColor="@color/brickRed"
-                    android:textSize="24sp"
+                    style="@style/appDevTitleStyleBold"
                     app:layout_constraintStart_toEndOf="@+id/imageView"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:layout_conversion_absoluteHeight="43dp"
@@ -93,7 +91,18 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                
+                <TextView
+                    android:id="@+id/board_section_title_light"
+                    style="@style/appDevTitleStyleLight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingStart="@dimen/adjacentTextSpacing"
+                    android:text="@string/featured_boards_title_text_light"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
 
             </LinearLayout>
 

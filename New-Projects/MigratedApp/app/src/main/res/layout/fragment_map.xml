@@ -5,10 +5,12 @@
     android:layout_height="match_parent"
     tools:context=".MapFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
+        style="@style/appDevTitleStyleBold"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingHorizontal="@dimen/horizontalMainPadding"
+        android:paddingVertical="@dimen/verticalMainPadding"
         android:text="@string/mapNavbarTitle" />
 
 </FrameLayout>
