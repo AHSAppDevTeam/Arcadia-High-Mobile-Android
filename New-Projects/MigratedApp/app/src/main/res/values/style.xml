@@ -20,4 +20,31 @@
         <item name="android:textColor">?attr/headingColor</item>
     </style>
 
+    <!-- profile page -->
+    <style name="profilePageSettingsLabel" parent="">
+        <item name="android:textSize">17sp</item>
+        <item name="android:fontFamily">@font/sfprodisplay_medium</item>
+        <item name="android:textColor">?attr/subTitleColor</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
+
+    </style>
+
+    <style name="profilePageSettingsDetail" parent="">
+        <item name="android:textSize">17sp</item>
+        <item name="android:fontFamily">@font/sfprodisplay_medium</item>
+        <item name="android:textColor">?attr/descriptionColor</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
+
+    </style>
+
+    <style name="textAppearanceWarn" parent="">
+        <item name="android:textColor">#C84238</item>
+    </style>
+
+    <style name="textAppearanceHighlight" parent="">
+        <item name="android:textColor">#327DEF</item>
+    </style>
+
 </resources>

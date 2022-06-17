@@ -50,6 +50,10 @@ dependencies {
     // Zooming image view
     // implementation 'com.github.chrisbanes:PhotoView:2.3.0' (hold off for now)
 
+    // Google sign in
+    implementation 'com.google.android.gms:play-services-auth:20.2.0'
+
+
 
 
     // Don't update packages randomly unless you really need to

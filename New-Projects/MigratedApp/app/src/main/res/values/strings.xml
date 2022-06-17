@@ -30,13 +30,24 @@
     <string name="scheduleNavbarTitle">Schedule</string>
     <string name="profileNavbarTitle">Profile</string>
 
-    <!-- home page heading titles -->
+    <!-- home page -->
     <string name="featured_boards_title_text_bold">Featured</string>
     <string name="featured_boards_title_text_light">Boards</string>
     <string name="home_title">Arcadia</string>
     <string name="home_default_month">January</string>
 
-    <!-- article board titles -->
+    <!-- article board -->
     <string name="article_boards_title_text_default">Opportunities</string>
+
+    <!-- profile -->
+    <string name="profileNavbarTitleBold">Your</string>
+    <string name="profileNavbarTitleLight">Profile</string>
+    <string name="profile_card_default_given_name">Digital ID card</string>
+    <string name="profile_card_default_family_name">Tap to sign in</string>
+    <string name="profile_card_barcode_description">Student ID barcode</string>
+    <string name="profile_card_pic_description">Profile picture</string>
+    <string name="profile_card_default_photo_url">https://ahs.app/icon.png</string>
+    <string name="profile_card_default_user_id">12345</string>
+
 
 </resources>

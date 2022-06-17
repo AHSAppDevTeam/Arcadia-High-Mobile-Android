@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- general -->
+    <dimen name="shadowElevation">3dp</dimen>
+    <dimen name="cardCornerRadius">16dp</dimen>
     <!-- Spacing between elements -->
     <dimen name="horizontalMainPadding">32dp</dimen>
     <dimen name="verticalMainPadding">12dp</dimen>
+    <dimen name="levelHorizontalPadding">10dp</dimen>
 
     <!-- Spacing between text -->
     <dimen name="adjacentTextSpacing">6dp</dimen>
