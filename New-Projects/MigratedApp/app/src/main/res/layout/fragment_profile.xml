@@ -11,13 +11,14 @@
         style="@style/appDevTitleStyleBold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/horizontalMainPadding"
         android:layout_marginVertical="@dimen/verticalMainPadding"
+        android:layout_marginStart="@dimen/horizontalMainPadding"
         android:text="@string/profileNavbarTitleBold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:id="@+id/textView5"
         style="@style/appDevTitleStyleLight"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -27,173 +28,198 @@
         app:layout_constraintStart_toEndOf="@+id/textView"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingHorizontal="@dimen/horizontalMainPadding"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView">
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/fragment_placeholder" android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:name="com.hsappdev.ahs.ProfileCardFragment"
-            />
-        <com.google.android.material.divider.MaterialDivider
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="@dimen/verticalMainPadding"
-            android:layout_marginHorizontal="@dimen/levelHorizontalPadding"/>
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/horizontalMainPadding">
 
-        <TextView
-            style="@style/appDevTitleStyleBold"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingVertical="@dimen/verticalMainPadding"
-            android:textSize="20sp"
-            android:text="Settings"
-            android:textColor="?attr/titleColor"/>
-
-        <com.google.android.material.divider.MaterialDivider
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/levelHorizontalPadding"/>
-        <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            style="@style/profilePageSettingsLabel"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Dark Mode" />
-
-        <TextView
-            style="@style/profilePageSettingsDetail"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="Disabled"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-        <com.google.android.material.divider.MaterialDivider
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/levelHorizontalPadding"/>
-
-        <!-- Notifications -->
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                style="@style/profilePageSettingsLabel"
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/profile_card_fragment_placeholder"
+                android:name="com.hsappdev.ahs.ProfileCardFragment"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="Notifications" />
+                android:layout_height="0dp"
+                android:layout_weight="1" />
 
-            <ImageView
-                style="@style/profilePageSettingsDetail"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:src="@drawable/ic_settings_continue_btn"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-        <com.google.android.material.divider.MaterialDivider
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/levelHorizontalPadding"/>
-
-        <!-- About Us -->
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                style="@style/profilePageSettingsLabel"
+            <com.google.android.material.divider.MaterialDivider
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="About Us" />
-
-            <ImageView
-                style="@style/profilePageSettingsDetail"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:src="@drawable/ic_settings_continue_btn"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-        <com.google.android.material.divider.MaterialDivider
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/levelHorizontalPadding"/>
-
-        <!-- Terms and Agreements -->
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/levelHorizontalPadding"
+                android:layout_marginVertical="@dimen/verticalMainPadding" />
 
             <TextView
-                style="@style/profilePageSettingsLabel"
+                style="@style/appDevTitleStyleBold"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="Terms &amp; Agreements" />
+                android:layout_height="wrap_content"
+                android:paddingVertical="@dimen/verticalMainPadding"
+                android:text="@string/profile_settings_title"
+                android:textColor="?attr/titleColor"
+                android:textSize="20sp" />
 
-            <ImageView
-                style="@style/profilePageSettingsDetail"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:src="@drawable/ic_settings_continue_btn"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-        <com.google.android.material.divider.MaterialDivider
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/levelHorizontalPadding"/>
-
-        <!-- App Version -->
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
+            <com.google.android.material.divider.MaterialDivider
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="App Version"
-                style="@style/profilePageSettingsLabel"/>
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/levelHorizontalPadding" />
 
-            <TextView
-                style="@style/profilePageSettingsDetail"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="5.0"
-                app:layout_constraintEnd_toEndOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-        <com.google.android.material.divider.MaterialDivider
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/levelHorizontalPadding"/>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/profile_settings_darkmode_label"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="Sign in"
-                style="@style/profilePageSettingsLabel"/>
+                android:layout_height="wrap_content">
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </LinearLayout>
+                <TextView
+                    style="@style/profilePageSettingsLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/profile_settings_dark_mode_title" />
+
+                <TextView
+                    android:id="@+id/profile_settings_darkmode_detail"
+                    style="@style/profilePageSettingsDetail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@string/profile_settings_dark_mode_detail"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/levelHorizontalPadding" />
+
+            <!-- Notifications -->
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/profile_settings_notifications_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    style="@style/profilePageSettingsLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/profile_settings_notifications_title" />
+
+                <ImageView
+                    style="@style/profilePageSettingsDetail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_settings_continue_btn"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/levelHorizontalPadding" />
+
+            <!-- About Us -->
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/profile_settings_aboutus_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    style="@style/profilePageSettingsLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/profile_settings_about_us_title" />
+
+                <ImageView
+                    style="@style/profilePageSettingsDetail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_settings_continue_btn"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/levelHorizontalPadding" />
+
+            <!-- Terms and Agreements -->
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/profile_settings_terms_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    style="@style/profilePageSettingsLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/profile_settings_terms_title" />
+
+                <ImageView
+                    style="@style/profilePageSettingsDetail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_settings_continue_btn"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/levelHorizontalPadding" />
+
+            <!-- App Version -->
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/profile_settings_appversion_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    style="@style/profilePageSettingsLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/profile_settings_app_version_title" />
+
+                <TextView
+                    style="@style/profilePageSettingsDetail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@string/app_version"
+                    app:layout_constraintEnd_toEndOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/levelHorizontalPadding" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/profile_settings_signin_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/profile_settings_signin_detail"
+                    style="@style/profilePageSettingsLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/profile_settings_sign_in_title" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+
+    </ScrollView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

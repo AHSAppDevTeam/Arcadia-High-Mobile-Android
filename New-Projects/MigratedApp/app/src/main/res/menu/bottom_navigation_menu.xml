@@ -3,7 +3,7 @@
     <item
         android:id="@+id/menuHomePage"
         android:enabled="true"
-        android:icon="@android:drawable/ic_lock_idle_alarm"
+        android:icon="@drawable/ic_home_navbar"
         android:title="@string/homeNavbarTitle"/>
     <item
         android:id="@+id/menuMapPage"
@@ -13,11 +13,11 @@
     <item
         android:id="@+id/menuSchedulePage"
         android:enabled="true"
-        android:icon="@android:drawable/ic_dialog_alert"
+        android:icon="@drawable/ic_schedule_navbar"
         android:title="@string/scheduleNavbarTitle"/>
     <item
         android:id="@+id/menuProfilePage"
         android:enabled="true"
-        android:icon="@android:drawable/ic_lock_idle_charging"
+        android:icon="@drawable/ic_profile_navbar"
         android:title="@string/profileNavbarTitle"/>
 </menu>

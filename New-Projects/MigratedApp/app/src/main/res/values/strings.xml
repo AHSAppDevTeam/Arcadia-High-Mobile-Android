@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Arcadia High Mobile</string>
+    <string name="app_version">5.0</string>
+
 
     <!-- database stuff -->
     <string name="db_app_id">1:654225823864:android:79667fc6142c94cbb7758d</string>
@@ -48,6 +50,14 @@
     <string name="profile_card_pic_description">Profile picture</string>
     <string name="profile_card_default_photo_url">https://ahs.app/icon.png</string>
     <string name="profile_card_default_user_id">12345</string>
+    <string name="profile_settings_title">Settings</string>
+    <string name="profile_settings_dark_mode_title">Dark Mode</string>
+    <string name="profile_settings_dark_mode_detail">Disabled</string>
+    <string name="profile_settings_notifications_title">Notifications</string>
+    <string name="profile_settings_about_us_title">About Us</string>
+    <string name="profile_settings_terms_title"><![CDATA[Terms & Agreements]]></string>
+    <string name="profile_settings_app_version_title">App Version</string>
+    <string name="profile_settings_sign_in_title">Sign in</string>
 
 
 </resources>
