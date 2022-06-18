@@ -17,7 +17,9 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:src="@color/gray"
-            app:layout_constraintDimensionRatio="0.9"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="0.921"
             app:layout_constraintEnd_toStartOf="@+id/guideline2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -25,14 +27,17 @@
 
         <TextView
             android:id="@+id/board_title_text"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/horizontalMainPadding"
+            android:layout_marginHorizontal="@dimen/levelHorizontalPadding"
             android:layout_marginVertical="4dp"
             android:fontFamily="@font/sfprodisplay_bold"
             android:text="Board Title"
+            android:maxLines="2"
+            android:ellipsize="end"
             android:textColor="?attr/subTitleColor"
             android:textSize="22sp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/guideline2"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -40,11 +45,12 @@
             android:id="@+id/board_description_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/horizontalMainPadding"
+            android:layout_marginHorizontal="@dimen/levelHorizontalPadding"
             android:fontFamily="@font/sfprodisplay_medium"
             android:text="Board Description"
             android:textColor="?attr/descriptionColor"
             android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/guideline2"
             app:layout_constraintTop_toBottomOf="@+id/board_title_text" />
 
@@ -54,7 +60,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintGuide_percent=".25"
+            app:layout_constraintGuide_percent="0.3"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--TERMS AND AGREEMENTS-->
+
+    <string name="terms"><![CDATA[
+    Privacy Policy: <a href="https://docs.google.com/document/d/1AztAhZUjHgIimrrR0SeqYWZla_kNiwmmDKFanZqZaPA">Privacy Policy/</a>
+    <br/><br/>
+    END USER LICENSE AGREEMENT
+Last updated August 08, 2020
+<br/>
+<br/>Arcadia High Mobile App is licensed to You (End-User) by Arcadia High Mobile, located at 180 Campus Dr, Arcadia, California 91006, United States (hereinafter: Licensor), for use only under the terms of this License Agreement.
+<br/>
+<br/>By downloading the Application from the Android AppStore, and any update thereto (as permitted by this License Agreement), You indicate that You agree to be bound by all of the terms and conditions of this License Agreement, and that You accept this License Agreement.
+<br/>The parties of this License Agreement acknowledge that Android is not a Party to this License Agreement and is not bound by any provisions or obligations with regard to the Application, such as warranty, liability, maintenance and support thereof. Arcadia High Mobile, not Android, is solely responsible for the licensed Application and the content thereof.
+<br/>This License Agreement may not provide for usage rules for the Application that are in conflict with the latest <a href="https://developer.android.com/google/backup/terms.html">App Store Terms of Service</a>. Arcadia High Mobile acknowledges that it had the opportunity to review said terms and this License Agreement is not conflicting with them.
+<br/>All rights not expressly granted to You are reserved.
+<br/>
+<br/>1. THE APPLICATION
+<br/>
+<br/>Arcadia High Mobile App (hereinafter: Application) is a piece of software created to provide school and district news to students and parents through a mobile application - and customized for Android mobile devices. It is used to allow students and parents to have convenient access to school news and resources.
+<br/>The Application is not tailored to comply with industry-specific regulations (Health Insurance Portability and Accountability Act (HIPAA), Federal Information Security Management Act (FISMA), etc.), so if your interactions would be subjected to such laws, you may not use this Application. You may not use the Application in a way that would violate the Gramm-Leach-Bliley Act (GLBA).
+<br/>
+<br/>2. SCOPE OF LICENSE
+<br/>
+<br/>2.1  You are given a non-transferable, non-exclusive, non-sublicensable license to install and use the Licensed Application on any Android-branded Products that You (End-User) own or control and as permitted by the Usage Rules set forth in this section and the App Store Terms of Service, with the exception that such licensed Application may be accessed and used by other accounts associated with You (End-User, The Purchaser) via Family Sharing or volume purchasing.
+<br/>2.2  This license will also govern any updates of the Application provided by Licensor that replace, repair, and/or supplement the first Application, unless a separate license is provided for such update in which case the terms of that new license will govern.
+<br/>2.3  You may not share or make the Application available to third parties (unless to the degree allowed by the Android Terms and Conditions, and with Arcadia High Mobile\'s prior written consent), sell, rent, lend, lease or otherwise redistribute the Application.
+<br/>2.4  You may not reverse engineer, translate, disassemble, integrate, decompile, integrate, remove, modify, combine, create derivative works or updates of, adapt, or attempt to derive the source code of the Application, or any part thereof (except with Arcadia High Mobile\'s prior written consent).
+<br/>2.5  You may not copy (excluding when expressly authorized by this license and the Usage Rules) or alter the Application or portions thereof. You may create and store copies only on devices that You own or control for backup keeping under the terms of this license, the App Store Terms of Service, and any other terms and conditions that apply to the device or software used. You may not remove any intellectual property notices. You acknowledge that no unauthorized third parties may gain access to these copies at any time.
+<br/>2.6  Violations of the obligations mentioned above, as well as the attempt of such infringement, may be subject to prosecution and damages.
+<br/>2.7  Licensor reserves the right to modify the terms and conditions of licensing.
+<br/>2.8  Nothing in this license should be interpreted to restrict third-party terms. When using the Application, You must ensure that You comply with applicable third-party terms and conditions.
+<br/>
+<br/>3. TECHNICAL REQUIREMENTS
+<br/>
+<br/>3.1  The Application requires a firmware version 1.0.0 or higher. Licensor recommends using the latest version of the firmware.
+<br/>3.2  Licensor attempts to keep the Application updated so that it complies with modified/new versions of the firmware and new hardware. You are not granted rights to claim such an update.
+<br/>3.3  You acknowledge that it is Your responsibility to confirm and determine that the app end-user device on which You intend to use the Application satisfies the technical  specifications mentioned above.
+<br/>3.4  Licensor reserves the right to modify the technical specifications as it sees appropriate at any time.
+<br/>
+<br/>4. MAINTENANCE AND SUPPORT
+<br/>
+<br/>4.1  The Licensor is solely responsible for providing any maintenance and support services for this licensed Application. You can reach the Licensor at the email address listed in the App Store Overview for this licensed Application.
+<br/>4.2  Arcadia High Mobile and the End-User acknowledge that Android has no obligation whatsoever to furnish any maintenance and support services with respect to the licensed Application.
+<br/>
+<br/>5. LIABILITY
+<br/>
+<br/>5.1  Licensor\'s responsibility in the case of violation of obligations and tort shall be limited to intent and gross negligence. Only in case of a breach of essential contractual duties (cardinal obligations), Licensor shall also be liable in case of slight negligence. In any case, liability shall be limited to the foreseeable, contractually typical damages. The limitation mentioned above does not apply to injuries to life, limb, or health.
+<br/>5.2  Licensor takes no accountability or responsibility for any damages caused due to a breach of duties according to Section 2 of this Agreement. To avoid data loss, You are required to make use of backup functions of the Application to the extent allowed by applicable third-party terms and conditions of use. You are aware that in case of alterations or manipulations of the Application, You will not have access to licensed Application.
+<br/>
+<br/>6. WARRANTY
+<br/>
+<br/>6.1  Licensor warrants that the Application is free of spyware, trojan horses, viruses, or any other malware at the time of Your download. Licensor warrants that the Application works as described in the user documentation.
+<br/>6.2  No warranty is provided for the Application that is not executable on the device, that has been unauthorizedly modified, handled inappropriately or culpably, combined or installed with inappropriate hardware or software, used with inappropriate accessories, regardless if by Yourself or by third parties, or if there are any other reasons outside of Arcadia High Mobile\'s sphere of influence that affect the executability of the Application.
+<br/>6.3  You are required to inspect the Application immediately after installing it and notify Arcadia High Mobile about issues discovered without delay by e-mail provided in <a href=”https://app.termly.io/dashboard/website/480077/terms-of-service#productclaims”>Product Claims</a>. The defect report will be taken into consideration and further investigated if it has been mailed within a period of ninety (90) days after discovery.
+<br/>6.4  If we confirm that the Application is defective, Arcadia High Mobile reserves a choice to remedy the situation either by means of solving the defect or substitute delivery.
+<br/>6.5  In the event of any failure of the Application to conform to any applicable warranty, You may notify the App-Store-Operator, and Your Application purchase price will be refunded to You. To the maximum extent permitted by applicable law, the App-Store-Operator will have no other warranty obligation whatsoever with respect to the App, and any other losses, claims, damages, liabilities, expenses and costs attributable to any negligence to adhere to any warranty.
+<br/>6.6  If the user is an entrepreneur, any claim based on faults expires after a statutory period of limitation amounting to twelve (12) months after the Application was made available to the user. The statutory periods of limitation given by law apply for users who are consumers.
+<br/>
+<br/>7. PRODUCT CLAIMS
+<br/>
+<br/>Arcadia High Mobile and the End-User acknowledge that Arcadia High Mobile, and not Android, is responsible for addressing any claims of the End-User or any third party relating to the licensed Application or the End-User\'s possession and/or use of that licensed Application, including, but not limited to:
+<br/>(i) product liability claims;
+<br/>(ii) any claim that the licensed Application fails to conform to any applicable legal or regulatory requirement; and
+<br/>(iii) claims arising under consumer protection, privacy, or similar legislation, including in connection with Your Licensed Application\'s use of the HealthKit and HomeKit.
+<br/>
+<br/>8. LEGAL COMPLIANCE
+<br/>
+<br/>You represent and warrant that You are not located in a country that is subject to a U.S. Government embargo, or that has been designated by the U.S. Government as a "terrorist supporting" country; and that You are not listed on any U.S. Government list of prohibited or restricted parties.
+<br/>
+<br/>9. CONTACT INFORMATION
+<br/>
+<br/>For general inquiries, complaints, questions or claims concerning the licensed Application, please contact:
+<br/>
+<br/>Arcadia High App Development Team
+<br/>180 Campus Dr
+<br/>Arcadia, CA 91006
+<br/>United States
+<br/>hsappdev@students.ausd.net
+<br/>
+<br/>10. TERMINATION
+<br/>
+<br/>The license is valid until terminated by Arcadia High Mobile or by You. Your rights under this license will terminate automatically and without notice from Arcadia High Mobile if You fail to adhere to any term(s) of this license. Upon License termination, You shall stop all use of the Application, and destroy all copies, full or partial, of the Application.
+<br/>
+<br/>11. THIRD-PARTY TERMS OF AGREEMENTS AND BENEFICIARY
+<br/>
+<br/>Arcadia High Mobile represents and warrants that Arcadia High Mobile will comply with applicable third-party terms of agreement when using licensed Application.
+<br/>In Accordance with Section 9 of the "Instructions for Minimum Terms of Developer\'s End-User License Agreement," Android and Android\'s subsidiaries shall be third-party beneficiaries of this End User License Agreement and - upon Your acceptance of the terms and conditions of this license agreement, Android will have the right (and will be deemed to have accepted the right) to enforce this End User License Agreement against You as a third-party beneficiary thereof.
+<br/>
+<br/>12. INTELLECTUAL PROPERTY RIGHTS
+<br/>
+<br/>Arcadia High Mobile and the End-User acknowledge that, in the event of any third-party claim that the licensed Application or the End-User\'s possession and use of that licensed Application infringes on the third party\'s intellectual property rights, Arcadia High Mobile, and not Android, will be solely responsible for the investigation, defense, settlement and discharge or any such intellectual property infringement claims.
+<br/>
+<br/>13. APPLICABLE LAW
+<br/>
+<br/>This license agreement is governed by the laws of the State of California excluding its conflicts of law rules.
+<br/>
+<br/>14. MISCELLANEOUS
+<br/>
+<br/>14.1  If any of the terms of this agreement should be or become invalid, the validity of the remaining provisions shall not be affected. Invalid terms will be replaced by valid ones formulated in a way that will achieve the primary purpose.
+<br/>14.2  Collateral agreements, changes and amendments are only valid if laid down in writing. The preceding clause can only be waived in writing.
+    ]]>
+    </string>
+
+</resources>
