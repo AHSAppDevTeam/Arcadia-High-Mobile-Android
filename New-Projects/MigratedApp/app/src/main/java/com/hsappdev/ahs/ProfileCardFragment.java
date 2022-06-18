@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,7 +23,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 import com.hsappdev.ahs.util.BarcodeDrawable;
-import com.hsappdev.ahs.util.ImageUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -47,7 +47,11 @@ public class ProfileCardFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.profile_card_fragment, container, false);
+        View view = inflater.inflate(R.layout.profile_card_fragment_sign_in, container, false);
+
+        // TODO: testing
+        FrameLayout holder = view.findViewById(R.id.profile_card_fragment_content);
+        View newContent = inflater.inflate(R.layout.profile_card_fragment_sign_in, holder, true);
 
 //        // Set vars
 //        givenNameTextView = view.findViewById(R.id.profile_card_given_name_textView);

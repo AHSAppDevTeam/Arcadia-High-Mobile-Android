@@ -59,5 +59,10 @@
     <string name="profile_settings_app_version_title">App Version</string>
     <string name="profile_settings_sign_in_title">Sign in</string>
 
+    <!-- schedule -->
+    <string name="scheduleNavbarTitleBold">Your</string>
+    <string name="scheduleNavbarTitleLight">Schedule</string>
+
+
 
 </resources>

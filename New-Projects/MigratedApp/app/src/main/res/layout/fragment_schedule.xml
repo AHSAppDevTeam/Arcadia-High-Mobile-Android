@@ -1,16 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ScheduleFragment">
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/scheduleNavbarTitle"
-        android:paddingHorizontal="@dimen/horizontalMainPadding"
-        android:paddingVertical="@dimen/verticalMainPadding"
-        style="@style/appDevTitleStyleBold"/>
+        android:id="@+id/textView"
+        style="@style/appDevTitleStyleBold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/verticalMainPadding"
+        android:layout_marginStart="@dimen/horizontalMainPadding"
+        android:text="@string/scheduleNavbarTitleBold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/textView5"
+        style="@style/appDevTitleStyleLight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/verticalMainPadding"
+        android:layout_marginStart="@dimen/adjacentTextSpacing"
+        android:text="@string/scheduleNavbarTitleLight"
+        app:layout_constraintStart_toEndOf="@+id/textView"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+<!--    <com.kizitonwose.calendarview.CalendarView-->
+<!--        android:id="@+id/calendarView"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_weight="1"-->
+<!--        app:cv_dayViewResource="@layout/calendar_day_layout"-->
+<!--        app:cv_monthHeaderResource="@layout/calendar_month_header_layout"-->
+<!--        app:cv_orientation="horizontal"-->
+<!--        app:cv_scrollMode="paged"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/guideline5"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
+
+</androidx.constraintlayout.widget.ConstraintLayout>

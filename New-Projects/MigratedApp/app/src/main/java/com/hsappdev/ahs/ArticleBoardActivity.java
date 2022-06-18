@@ -12,10 +12,8 @@ import android.util.Log;
 import android.widget.TextView;
 
 import com.hsappdev.ahs.newDataTypes.ArticleDataType;
-import com.hsappdev.ahs.newDataTypes.BoardDataType;
 import com.hsappdev.ahs.ui.reusable.recyclerview.AbstractDataRecyclerView;
 import com.hsappdev.ahs.viewModels.ArticleBoardViewModel;
-import com.hsappdev.ahs.viewModels.MainActivityViewModel;
 
 import java.util.ArrayList;
 import java.util.List;

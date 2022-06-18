@@ -17,7 +17,7 @@ import android.widget.TextView;
 import com.hsappdev.ahs.newDataTypes.BoardDataType;
 import com.hsappdev.ahs.ui.reusable.recyclerview.AbstractDataRecyclerView;
 import com.hsappdev.ahs.util.Helper;
-import com.hsappdev.ahs.viewModels.MainActivityViewModel;
+import com.hsappdev.ahs.viewModels.BoardsViewModel;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -33,7 +33,7 @@ public class HomeFragment extends Fragment {
 
     private static final String TAG = "HomeFragment";
 
-    private MainActivityViewModel viewModel;
+    private BoardsViewModel boardsViewModel;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -58,7 +58,9 @@ public class HomeFragment extends Fragment {
         }
 
         // get the view model shared between the classes
-        viewModel = new ViewModelProvider(requireActivity()).get(MainActivityViewModel.class);
+        boardsViewModel = new ViewModelProvider(requireActivity()).get(BoardsViewModel.class);
+
+
 
 
     }
@@ -73,7 +75,7 @@ public class HomeFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext(), RecyclerView.VERTICAL, false));
 
 
-        viewModel.getBoards().observe(requireActivity(), new Observer<List<BoardDataType>>() {
+        boardsViewModel.getBoards().observe(requireActivity(), new Observer<List<BoardDataType>>() {
             @Override
             public void onChanged(List<BoardDataType> boardsList) {
                 Log.d(TAG, String.format("List Size: %d", boardsList.size()));

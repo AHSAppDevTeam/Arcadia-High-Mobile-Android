@@ -20,7 +20,7 @@ import com.hsappdev.ahs.db.DatabaseConstants;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivityViewModel extends ViewModel {
+public class BoardsViewModel extends ViewModel {
 
     private static final String TAG = "TestDataLoadingViewMode";
 
@@ -30,7 +30,7 @@ public class MainActivityViewModel extends ViewModel {
         return boardsMutableLiveData;
     }
 
-    public MainActivityViewModel() {
+    public BoardsViewModel() {
         // start loading data
         startLoadingBoardsData();
 

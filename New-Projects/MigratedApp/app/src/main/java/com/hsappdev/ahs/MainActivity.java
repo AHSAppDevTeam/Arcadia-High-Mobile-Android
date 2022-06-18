@@ -1,6 +1,5 @@
 package com.hsappdev.ahs;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -9,22 +8,22 @@ import androidx.navigation.ui.NavigationUI;
 
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.database.FirebaseDatabase;
 import com.hsappdev.ahs.db.DatabaseConstants;
-import com.hsappdev.ahs.viewModels.MainActivityViewModel;
+import com.hsappdev.ahs.viewModels.BoardsViewModel;
+import com.hsappdev.ahs.viewModels.ScheduleViewModel;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
 
-    private MainActivityViewModel viewModel;
+    private BoardsViewModel boardsViewModel;
+    private ScheduleViewModel scheduleViewModel;
+
     private Resources r;
 
     // Views
@@ -41,7 +40,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-        viewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
+        boardsViewModel = new ViewModelProvider(this).get(BoardsViewModel.class);
+
+        scheduleViewModel = new ViewModelProvider(this).get(ScheduleViewModel.class);
+
 
         handleNavigation();
 
