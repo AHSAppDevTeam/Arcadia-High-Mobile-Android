@@ -32,11 +32,8 @@ public class ScheduleViewModel extends ViewModel {
     private void startLoadingScheduleData() {
         // populate with empty week objects
         // assume 54 weeks
-        for (int i = 1; i <= 52; i++) { // start at 1
+        for (int i = 1; i <= 54; i++) { // start at 1
             weeks.put(i, new WeekData("w"+i));
         }
-
-
-
     }
 }

@@ -62,5 +62,18 @@ public class DayData {
         });
     }
 
+    // GETTERS AND SETTERS
 
+
+    public String getScheduleId() {
+        return scheduleId;
+    }
+
+    public ScheduleData getScheduleCollector() {
+        return scheduleCollector;
+    }
+
+    public MutableLiveData<ScheduleData> getSchedule() {
+        return schedule;
+    }
 }

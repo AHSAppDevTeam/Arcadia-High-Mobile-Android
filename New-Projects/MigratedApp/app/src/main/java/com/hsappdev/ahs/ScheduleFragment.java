@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.hsappdev.ahs.newDataTypes.DayData;
+import com.hsappdev.ahs.newDataTypes.ScheduleData;
 import com.hsappdev.ahs.newDataTypes.WeekData;
 import com.hsappdev.ahs.viewModels.ScheduleViewModel;
 
@@ -50,19 +51,39 @@ public class ScheduleFragment extends Fragment {
         // get the view model shared between the classes
         viewModel = new ViewModelProvider(requireActivity()).get(ScheduleViewModel.class);
 
+        // TODO: testing only
+
         HashMap<Integer, WeekData> weeks = viewModel.getCalendarData();
 
-        for (int i = 1; i <= 52; i++) {
+        for (int i = 1; i <= 54; i++) {
             WeekData week = weeks.get(i);
             if (week != null) {
-                week.getDayList().observe(requireActivity(), new Observer<HashMap<Integer, DayData>>() {
-                    @Override
-                    public void onChanged(HashMap<Integer, DayData> dayData) {
-                        for (int i = 1; i <= 7; i++) {
-                            // Log.d(TAG, );
-                        }
+                for (int j = 0; j < 7; j++) {
+                    int finalI = i;
+                    int finalJ = j;
+
+                    if(week.getDayList().get(j) != null) {
+                        week.getDayList().get(j).observe(requireActivity(), new Observer<DayData>() {
+                            @Override
+                            public void onChanged(DayData dayData) {
+                                String scheduleId = dayData.getScheduleId();
+                                Log.d(TAG, String.format("week: %d, day: %d, : %s", finalI, finalJ, scheduleId));
+
+                                // continue
+                                dayData.getSchedule().observe(requireActivity(), new Observer<ScheduleData>() {
+                                    @Override
+                                    public void onChanged(ScheduleData scheduleData) {
+                                        Log.d(TAG, scheduleData.toString());
+                                    }
+                                });
+                            }
+                        });
+                    } else {
+                        Log.d(TAG, String.format("null at week: %d, day: %d", finalI, finalJ));
+
                     }
-                });
+                }
+
             }
         }
 

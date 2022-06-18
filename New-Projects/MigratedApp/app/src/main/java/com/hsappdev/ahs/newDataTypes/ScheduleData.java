@@ -14,6 +14,18 @@ public class ScheduleData {
     private List<String> periodIDs = new ArrayList<>();
     private List<Integer> timestamps = new ArrayList<>();
 
+    @Override
+    public String toString() {
+        return "ScheduleData{" +
+                "iconURL='" + iconURL + '\'' +
+                ", color='" + color + '\'' +
+                ", title='" + title + '\'' +
+                ", dots=" + dots +
+                ", periodIDs=" + periodIDs +
+                ", timestamps=" + timestamps +
+                '}';
+    }
+
     // GETTERS AND SETTERS
 
     public String getIconURL() {

@@ -12,14 +12,23 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hsappdev.ahs.db.DatabaseConstants;
 
+import java.util.AbstractMap;
 import java.util.HashMap;
 
 public class WeekData {
     private String title;
     private String weekId;
 
-    private HashMap<Integer, DayData> dayListCollector = new HashMap<>();
-    private MutableLiveData<HashMap<Integer, DayData>> dayList = new MutableLiveData<>(); // day of week (0=nothing, or 1=monday)
+    /**
+     * Day of the weeks
+     * index 0 = nothing,
+     * index 1 = monday,
+     * index 2 = tuesday,
+     * index 3 = wednesday
+     * so on...
+     */
+
+    private HashMap<Integer, MutableLiveData<DayData>> dayList = new HashMap<>();
 
     public WeekData(String weekId) {
         this.weekId = weekId;
@@ -32,14 +41,18 @@ public class WeekData {
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(!snapshot.exists()) {
+                    return;
+                }
                 title = snapshot.child("title").getValue(String.class);
                 int dayNum = 0;
                 for(DataSnapshot ds : snapshot.child("scheduleIDs").getChildren()) {
                     String scheduleId = ds.getValue(String.class);
-                    dayListCollector.put(dayNum, new DayData(scheduleId));
+                    MutableLiveData<DayData> dayLiveData = new MutableLiveData<>();
+                    dayLiveData.setValue(new DayData(scheduleId));
+                    dayList.put(dayNum, dayLiveData);
                     dayNum++;
                 }
-                dayList.postValue(dayListCollector);
             }
 
             @Override
@@ -68,7 +81,7 @@ public class WeekData {
         this.weekId = weekId;
     }
 
-    public LiveData<HashMap<Integer, DayData>> getDayList() {
+    public HashMap<Integer, MutableLiveData<DayData>> getDayList() {
         return dayList;
     }
 

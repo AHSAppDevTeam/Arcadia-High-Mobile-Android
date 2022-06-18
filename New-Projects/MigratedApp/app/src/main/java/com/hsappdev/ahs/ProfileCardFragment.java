@@ -47,7 +47,7 @@ public class ProfileCardFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.profile_card_fragment_sign_in, container, false);
+        View view = inflater.inflate(R.layout.profile_card_fragment_base, container, false);
 
         // TODO: testing
         FrameLayout holder = view.findViewById(R.id.profile_card_fragment_content);

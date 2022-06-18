@@ -21,8 +21,12 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+
+        debug {
+
         }
     }
     compileOptions {
@@ -54,7 +58,7 @@ dependencies {
     // Blur lib
     implementation 'jp.wasabeef:glide-transformations:4.3.0'
     // Zooming image view
-    // implementation 'com.github.chrisbanes:PhotoView:2.3.0' (hold off for now)
+    // implementation 'com.github.chrisbanes:PhotoView:2.3.0'
 
     // Google sign in
     implementation 'com.google.android.gms:play-services-auth:20.2.0'
