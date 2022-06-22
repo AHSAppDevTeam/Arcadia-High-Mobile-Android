@@ -4,7 +4,6 @@ buildscript {
 
     repositories {
         google()  // Google's Maven repository
-        jcenter()
         maven { url "https://www.jitpack.io" } // put this before mavenCentral()
         mavenCentral()
     }

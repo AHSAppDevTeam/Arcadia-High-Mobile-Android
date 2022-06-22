@@ -57,14 +57,15 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.13.0'
     // Blur lib
     implementation 'jp.wasabeef:glide-transformations:4.3.0'
-    // Zooming image view
-    // implementation 'com.github.chrisbanes:PhotoView:2.3.0'
 
     // Google sign in
     implementation 'com.google.android.gms:play-services-auth:20.2.0'
 
     // Calendar view
     // implementation 'com.github.kizitonwose:CalendarView:1.0.4'
+
+    // Zooming image view
+    // implementation 'com.github.chrisbanes:PhotoView:2.3.0'
 
 
 
