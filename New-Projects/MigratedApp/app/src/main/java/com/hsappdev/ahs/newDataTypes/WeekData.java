@@ -1,5 +1,7 @@
 package com.hsappdev.ahs.newDataTypes;
 
+import android.content.res.Resources;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -10,6 +12,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.hsappdev.ahs.R;
 import com.hsappdev.ahs.db.DatabaseConstants;
 
 import java.util.AbstractMap;
@@ -30,26 +33,26 @@ public class WeekData {
 
     private HashMap<Integer, MutableLiveData<DayData>> dayList = new HashMap<>();
 
-    public WeekData(String weekId) {
+    public WeekData(String weekId, Resources r) {
         this.weekId = weekId;
-        load();
+        load(r);
     }
 
-    private void load() {
+    private void load(Resources r) {
         DatabaseReference ref = FirebaseDatabase.getInstance(FirebaseApp.getInstance(DatabaseConstants.FIREBASE_REALTIME_DB)).getReference()
-                .child("weeks").child(weekId);
+                .child(r.getString(R.string.db_weeks_id)).child(weekId);
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(!snapshot.exists()) {
                     return;
                 }
-                title = snapshot.child("title").getValue(String.class);
+                title = snapshot.child(r.getString(R.string.db_weeks_title)).getValue(String.class);
                 int dayNum = 0;
-                for(DataSnapshot ds : snapshot.child("scheduleIDs").getChildren()) {
+                for(DataSnapshot ds : snapshot.child(r.getString(R.string.db_weeks_schedule_ids)).getChildren()) {
                     String scheduleId = ds.getValue(String.class);
                     MutableLiveData<DayData> dayLiveData = new MutableLiveData<>();
-                    dayLiveData.setValue(new DayData(scheduleId));
+                    dayLiveData.setValue(new DayData(scheduleId, r));
                     dayList.put(dayNum, dayLiveData);
                     dayNum++;
                 }

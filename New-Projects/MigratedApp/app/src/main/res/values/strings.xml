@@ -25,6 +25,21 @@
     <string name="db_articles_views">views</string>
 
 
+    <!-- db stuff (weeks) -->
+    <string name="db_weeks_id">weeks</string>
+    <string name="db_weeks_title">title</string>
+    <string name="db_weeks_schedule_ids">scheduleIDs</string>
+
+    <!-- db stuff (schedule) -->
+    <string name="db_schedule_id">schedules</string>
+    <string name="db_schedule_icon">iconURL</string>
+    <string name="db_schedule_color">color</string>
+    <string name="db_schedule_title">title</string>
+    <string name="db_schedule_dots">dots</string>
+    <string name="db_schedule_timestamps">timestamps</string>
+    <string name="db_schedule_period_id">periodIDs</string>
+
+
 
     <!-- navbar titles -->
     <string name="homeNavbarTitle">Home</string>

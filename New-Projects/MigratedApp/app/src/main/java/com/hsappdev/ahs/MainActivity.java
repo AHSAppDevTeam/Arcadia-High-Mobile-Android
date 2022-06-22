@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         boardsViewModel = new ViewModelProvider(this).get(BoardsViewModel.class);
 
         scheduleViewModel = new ViewModelProvider(this).get(ScheduleViewModel.class);
-
+        scheduleViewModel.start(getResources());
 
         handleNavigation();
 

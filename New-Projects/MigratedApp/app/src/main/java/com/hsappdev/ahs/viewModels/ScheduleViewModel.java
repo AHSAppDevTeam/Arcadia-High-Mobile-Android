@@ -1,5 +1,6 @@
 package com.hsappdev.ahs.viewModels;
 
+import android.content.res.Resources;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -24,16 +25,19 @@ public class ScheduleViewModel extends ViewModel {
     }
 
     public ScheduleViewModel() {
-        // start loading data
-        startLoadingScheduleData();
+
 
     }
 
-    private void startLoadingScheduleData() {
+    public void start(Resources r) {
+        startLoadingScheduleData(r);
+    }
+
+    private void startLoadingScheduleData(Resources r) {
         // populate with empty week objects
         // assume 54 weeks
         for (int i = 1; i <= 54; i++) { // start at 1
-            weeks.put(i, new WeekData("w"+i));
+            weeks.put(i, new WeekData("w"+i, r));
         }
     }
 }
