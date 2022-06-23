@@ -1,6 +1,7 @@
 package com.hsappdev.ahs;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -11,11 +12,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
+import com.hsappdev.ahs.db.ArticleRepository;
 import com.hsappdev.ahs.newDataTypes.ArticleDataType;
 import com.hsappdev.ahs.ui.reusable.recyclerview.AbstractDataRecyclerView;
 import com.hsappdev.ahs.viewModels.ArticleBoardViewModel;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class ArticleBoardActivity extends AppCompatActivity {
@@ -68,6 +71,9 @@ public class ArticleBoardActivity extends AppCompatActivity {
             @Override
             public void onChanged(List<ArticleDataType> boardsList) {
                 Log.d(TAG, String.format("List Size: %d", boardsList.size()));
+                ArticleRepository articleRepository = new ArticleRepository(getApplication());
+                articleRepository.addOrUpdate(boardsList.toArray(new ArticleDataType[0]));
+
                 dataRecyclerViewAdapter.setDataList(boardsList);
             }
         });

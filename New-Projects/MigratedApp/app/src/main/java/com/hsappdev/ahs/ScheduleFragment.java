@@ -3,6 +3,7 @@ package com.hsappdev.ahs;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -11,12 +12,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.hsappdev.ahs.db.ArticleRepository;
+import com.hsappdev.ahs.newDataTypes.ArticleDataType;
 import com.hsappdev.ahs.newDataTypes.DayData;
 import com.hsappdev.ahs.newDataTypes.ScheduleData;
 import com.hsappdev.ahs.newDataTypes.WeekData;
 import com.hsappdev.ahs.viewModels.ScheduleViewModel;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -52,6 +58,17 @@ public class ScheduleFragment extends Fragment {
         viewModel = new ViewModelProvider(requireActivity()).get(ScheduleViewModel.class);
 
         // TODO: testing only
+
+        ArticleRepository articleRepository = new ArticleRepository(requireActivity().getApplication());
+        LiveData<List<ArticleDataType>> liveArticle = articleRepository.getAllArticles();
+
+        liveArticle.observe(requireActivity(), new Observer<List<ArticleDataType>>() {
+            @Override
+            public void onChanged(List<ArticleDataType> articleDataTypes) {
+                String text = Arrays.toString(articleDataTypes.toArray(new ArticleDataType[0]));
+                Log.d(TAG, "onChanged: " + text);
+            }
+        });
 
         HashMap<Integer, WeekData> weeks = viewModel.getCalendarData();
 
