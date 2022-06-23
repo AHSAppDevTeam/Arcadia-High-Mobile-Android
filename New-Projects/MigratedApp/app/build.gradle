@@ -42,6 +42,12 @@ dependencies {
 
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
 
+    // Room database
+    def room_version = "2.4.2"
+
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
+
 
     // Import the Firebase BoM
     implementation platform('com.google.firebase:firebase-bom:30.1.0')

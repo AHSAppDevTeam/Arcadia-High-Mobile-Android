@@ -6,39 +6,83 @@ import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
 
 import com.hsappdev.ahs.R;
+import com.hsappdev.ahs.db.ArticleDAO;
 import com.hsappdev.ahs.newCache.DataType;
 
 import java.util.Arrays;
 
+@Entity(tableName = ArticleDAO.TABLE_NAME)
 public class ArticleDataType extends DataType implements Parcelable {
 
+    @ColumnInfo(name = "ID")
+    private int tableID;
+    public int getTableID() {
+        return tableID;
+    }
+    public void setTableID(int tableID) {
+        this.tableID = tableID;
+    }
+
+    public static final String ID = "IDS";
+    @PrimaryKey
+    @ColumnInfo(name = ID)
+    @NonNull
     private String articleID;
 
+    public static final String AUTHOR = "AUTHOR";
+    @ColumnInfo(name = AUTHOR)
     private String author;
 
+    public static final String TITLE = "TITLE";
+    @ColumnInfo(name = TITLE)
     private String title;
 
+    public static final String BODY = "BODY";
+    @ColumnInfo(name = BODY)
     private String body;
 
+    public static final String CAT_ID = "CAT_ID";
+    @ColumnInfo(name = CAT_ID)
     private String categoryID;
 
+    public static final String CAT_DISP = "CAT_DISP";
+    @ColumnInfo(name = CAT_DISP)
     private String categoryDisplayName;
 
+    public static final String CAT_DISP_CLR = "CAT_DISP_CLR";
+    @ColumnInfo(name = CAT_DISP_CLR)
     private int categoryDisplayColor;
 
+    public static final String IMG_URLS = "IMG_URLS";
+    @ColumnInfo(name = IMG_URLS)
     private String[] imageURLs;
 
+    public static final String VID_URLS = "VID_URLS";
+    @ColumnInfo(name = VID_URLS)
     private String[] videoURLs;
 
+    public static final String TIME = "TIME";
+    @ColumnInfo(name = TIME)
     long timestamp;
 
+    public static final String IS_SAVED = "IS_SAVED";
+    @ColumnInfo(name = IS_SAVED)
     int isSaved;
 
+    public static final String IS_NOTIFICATION = "IS_NOTIFICATION";
+    @ColumnInfo(name = IS_NOTIFICATION)
     int isNotification;
 
+    public static final String IS_VIEWED = "IS_VIEWED";
+    @ColumnInfo(name = IS_VIEWED)
     int isViewed;
+
 
 
     public ArticleDataType(){
