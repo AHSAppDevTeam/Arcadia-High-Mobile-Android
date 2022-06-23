@@ -11,7 +11,7 @@ import com.hsappdev.ahs.newDataTypes.ArticleDataType;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {ArticleDataType.class}, version = 1, exportSchema = false)
+@Database(entities = {ArticleDataType.class}, version = 2, exportSchema = false)
 @TypeConverters(Converters.class)
 public abstract class RoomDatabase extends androidx.room.RoomDatabase {
 
@@ -30,6 +30,7 @@ public abstract class RoomDatabase extends androidx.room.RoomDatabase {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             RoomDatabase.class,
                             DatabaseConstants.DATABASE_NAME)
+                            .fallbackToDestructiveMigrationFrom(1, 2)
                             .build();
                 }
             }
