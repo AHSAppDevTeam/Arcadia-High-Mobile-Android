@@ -1,5 +1,7 @@
 package com.hsappdev.ahs.newDataTypes;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.view.View;
 import android.widget.TextView;
 
@@ -8,7 +10,9 @@ import androidx.annotation.NonNull;
 import com.hsappdev.ahs.R;
 import com.hsappdev.ahs.newCache.DataType;
 
-public class ArticleDataType extends DataType {
+import java.util.Arrays;
+
+public class ArticleDataType extends DataType implements Parcelable {
 
     private String articleID;
 
@@ -29,6 +33,46 @@ public class ArticleDataType extends DataType {
     private String[] videoURLs;
 
     long timestamp;
+
+    int isSaved;
+
+    int isNotification;
+
+    int isViewed;
+
+
+    public ArticleDataType(){
+
+    }
+
+    public static final Creator<ArticleDataType> CREATOR = new Creator<ArticleDataType>() {
+        @Override
+        public ArticleDataType createFromParcel(Parcel in) {
+            return new ArticleDataType(in);
+        }
+
+        @Override
+        public ArticleDataType[] newArray(int size) {
+            return new ArticleDataType[size];
+        }
+    };
+
+    protected ArticleDataType(Parcel in) {
+        articleID = in.readString();
+        author = in.readString();
+        title = in.readString();
+        body = in.readString();
+        categoryID = in.readString();
+        categoryDisplayName = in.readString();
+        categoryDisplayColor = in.readInt();
+        imageURLs = in.createStringArray();
+        videoURLs = in.createStringArray();
+        timestamp = in.readLong();
+        isSaved = in.readInt();
+        isNotification = in.readInt();
+        isViewed = in.readInt();
+        in.readParcelable(ClassLoader.getSystemClassLoader());
+    }
 
     @Override
     public void setDataToView(View view) {
@@ -125,17 +169,68 @@ public class ArticleDataType extends DataType {
         this.timestamp = timestamp;
     }
 
-    @NonNull
+    public int getIsSaved() {
+        return isSaved;
+    }
+
+    public void setIsSaved(int isSaved) {
+        this.isSaved = isSaved;
+    }
+
+    public int getIsNotification() {
+        return isNotification;
+    }
+
+    public void setIsNotification(int isNotification) {
+        this.isNotification = isNotification;
+    }
+
+    public int getIsViewed() {
+        return isViewed;
+    }
+
+    public void setIsViewed(int isViewed) {
+        this.isViewed = isViewed;
+    }
+
     @Override
     public String toString() {
-        return  "articleID: \t" + articleID + "\n" +
-                "author: \t" + title + "\n" +
-                "title: \t" + title + "\n" +
-                "body: \t" + body + "\n" +
-                "category: \t" + categoryID + "\n" +
-                "categoryDisplayName: \t" + categoryDisplayName + "\n" +
-                "imageURLs: \t" + ((imageURLs.length > 0) ? imageURLs[0] : "N/A") + "\n" +
-                "timestamp: \t" + timestamp + "\n" +
-                "color: \t" + categoryDisplayColor + "\n";
+        return "ArticleDataType{" +
+                "articleID='" + articleID + '\'' +
+                ", author='" + author + '\'' +
+                ", title='" + title + '\'' +
+                ", body='" + body + '\'' +
+                ", categoryID='" + categoryID + '\'' +
+                ", categoryDisplayName='" + categoryDisplayName + '\'' +
+                ", categoryDisplayColor=" + categoryDisplayColor +
+                ", imageURLs=" + Arrays.toString(imageURLs) +
+                ", videoURLs=" + Arrays.toString(videoURLs) +
+                ", timestamp=" + timestamp +
+                ", isSaved=" + isSaved +
+                ", isNotification=" + isNotification +
+                ", isViewed=" + isViewed +
+                '}';
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(articleID);
+        parcel.writeString(author);
+        parcel.writeString(title);
+        parcel.writeString(body);
+        parcel.writeString(categoryID);
+        parcel.writeString(categoryDisplayName);
+        parcel.writeInt(categoryDisplayColor);
+        parcel.writeStringArray(imageURLs);
+        parcel.writeStringArray(videoURLs);
+        parcel.writeLong(timestamp);
+        parcel.writeInt(isSaved);
+        parcel.writeInt(isNotification);
+        parcel.writeInt(isViewed);
     }
 }
