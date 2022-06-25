@@ -6,4 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".nfcTest.NfcTestActivity">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="NFC Test"
+        style="@style/appDevTitleStyleBold"
+        android:paddingVertical="@dimen/verticalMainPadding"
+        android:paddingHorizontal="@dimen/horizontalMainPadding"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
