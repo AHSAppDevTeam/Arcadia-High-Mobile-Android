@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.hsappdev.ahs">
 
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -10,9 +12,32 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MigratedApp">
         <activity
+            android:name=".nfcTest.NfcTestActivity"
+            android:exported="false" />
+        <activity
+            android:name=".NotifActivity"
+            android:exported="false" />
+
+        <service
+            android:name=".notifs.FirebaseNotifService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service> <!-- default fallback values for firebase notifications -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@mipmap/ic_launcher" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/brickRed" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="@string/default_notification_channel_id" />
+
+        <activity
             android:name=".ArticleBoardActivity"
-            android:exported="false" >
-        </activity>
+            android:exported="false" />
         <activity
             android:name=".ArticleActivity"
             android:exported="false" />

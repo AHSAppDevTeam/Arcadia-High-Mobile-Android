@@ -40,7 +40,6 @@
     <string name="db_schedule_period_id">periodIDs</string>
 
 
-
     <!-- navbar titles -->
     <string name="homeNavbarTitle">Home</string>
     <string name="mapNavbarTitle">Map</string>
@@ -78,6 +77,13 @@
     <string name="scheduleNavbarTitleBold">Your</string>
     <string name="scheduleNavbarTitleLight">Schedule</string>
 
+    <!-- notif -->
+    <string name="default_notification_channel_id">Arcadia High Mobile Notifications</string>
+    <string name="notification_rationale_text">Allow notifications?</string>
+    <string name="notification_rationale_text_title">Notifications</string>
+
+    <!-- misc -->
+    <string name="dev_status">i\'ve watched those eyes light up with a smile</string>
 
 
 </resources>
