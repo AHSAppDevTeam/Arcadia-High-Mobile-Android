@@ -6,6 +6,14 @@ plugins {
 
 android {
     
+    signingConfigs {
+        release {
+            storeFile file('C:\\Users\\Jeffrey\\Downloads\\release.keystore')
+            storePassword '180Campus'
+            keyPassword '180Campus'
+            keyAlias 'ahs'
+        }
+    }
     compileSdkVersion 31
     buildToolsVersion "30.0.3"
 
@@ -13,8 +21,8 @@ android {
         applicationId "com.hsappdev.ahs"
         minSdkVersion 24
         targetSdkVersion 31
-        versionCode 15
-        versionName "4.0.1"
+        versionCode 16
+        versionName "4.0.2"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -23,6 +31,8 @@ android {
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+
         }
     }
     compileOptions {

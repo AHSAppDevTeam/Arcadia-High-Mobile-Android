@@ -54,44 +54,41 @@ public class AboutUsActivity extends AppCompatActivity {
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                StringBuilder programmers_list = new StringBuilder(), graphic_designers_list = new StringBuilder(), content_editors_list = new StringBuilder(), previous_members_list = new StringBuilder();
+                String programmers_list = "", graphic_designers_list = "", content_editors_list = "", previous_members_list = "";
                 for (DataSnapshot person : snapshot.getChildren()) {
                     String name = person.child("name").getValue(String.class);
                     boolean isRetired = person.child("retired").getValue(Boolean.class);
                     String role = person.child("role").getValue(String.class);
                     boolean hasUrl = person.child("url").exists();
                     String url = "";
-                    StringBuilder list;
-
-                    if (isRetired) {
-                        list = previous_members_list;
-                    }
-                    else if (role.contains("programmer")) {
-                        list = programmers_list;
-                    }
-                    else if (role.equals("designer")) {
-                        list = graphic_designers_list;
-                    }
-                    else if (role.equals("editor")) {
-                        list = content_editors_list;
-                    }
-                    else {
-                        list = new StringBuilder();
-                    }
+                    String list = "";
 
                     if (hasUrl) {
                         url = person.child("url").getValue(String.class);
                     }
 
-                    list.append("<br/>");
+                    list += ("<br/>");
                     if (hasUrl) {
                         list.append("<a href=\"");
                         list.append(url);
                         list.append("\">");
                     }
-                    list.append(name);
+                    list += (name);
                     if (hasUrl) {
-                        list.append("</a>");
+                        list += ("</a>");
+                    }
+
+                    if (isRetired) {
+                        previous_members_list += list;
+                    }
+                    else if (role.contains("programmer")) {
+                        programmers_list += list;
+                    }
+                    else if (role.equals("designer")) {
+                        graphic_designers_list += list;
+                    }
+                    else if (role.equals("editor")) {
+                        content_editors_list += list;
                     }
                 }
                 ScreenUtil.setHTMLStringToTextView(programmers_list.toString().substring(5), programmers);
