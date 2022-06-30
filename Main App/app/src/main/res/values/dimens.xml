@@ -29,4 +29,10 @@
     <dimen name="padding_x4">60dp</dimen>
     <dimen name="padding_x5">75dp</dimen>
     <dimen name="articleElevation">5dp</dimen>
+
+
+<!--    NEW -->
+    <dimen name="horizontalMainPadding">32dp</dimen>
+    <dimen name="verticalMainPadding">12dp</dimen>
+
 </resources>

@@ -2,6 +2,7 @@ package com.hsappdev.ahs.dataTypes;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
@@ -10,9 +11,10 @@ import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import com.hsappdev.ahs.cache.LoadableType;
+import com.hsappdev.ahs.newCache.DataType;
 
 @Entity(tableName = ArticleDAO.TABLE_NAME)
-public class Article implements Parcelable, LoadableType {
+public class Article extends DataType implements Parcelable, LoadableType {
     public static final String TABLE_NAME = ArticleDAO.TABLE_NAME;
     public static final String OLD_TABLE_NAME = "saved_table";
 
@@ -294,5 +296,15 @@ public class Article implements Parcelable, LoadableType {
     @Override
     public LoadableType getInstance() {
         return new Article();
+    }
+
+    @Override
+    public void setDataToView(View view) {
+        // TODO: implement this
+    }
+
+    @Override
+    public void handleOnClick(View view) {
+        // TODO: implement this
     }
 }

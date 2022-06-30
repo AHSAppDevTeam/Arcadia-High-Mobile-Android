@@ -40,9 +40,10 @@
     </LinearLayout>
 
     <ScrollView
+        android:id="@+id/about_us_gradient"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@drawable/about_us_page_bg"
+        android:background="@drawable/about_us_bg_animated_gradient_animator"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/terms_header">
 
