@@ -21,10 +21,17 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.hsappdev.ahs.R;
+import com.hsappdev.ahs.util.HashUtil;
 
+import org.msgpack.core.MessageBufferPacker;
+import org.msgpack.core.MessagePack;
+
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 
 public class NfcTestActivity extends AppCompatActivity {
@@ -36,7 +43,6 @@ public class NfcTestActivity extends AppCompatActivity {
     private NfcAdapter nfcAdapter;
 
     private PendingIntent pendingIntent;
-    // private String[][] techListsArray;
 
 
     @Override
@@ -49,34 +55,19 @@ public class NfcTestActivity extends AppCompatActivity {
                 PendingIntent.FLAG_MUTABLE);
 
         IntentFilter ndef = new IntentFilter(NfcAdapter.ACTION_TAG_DISCOVERED);
-//        try {
-//            ndef.addDataType("*/*");    /* Handles all MIME based dispatches.
-//                                       You should specify only the ones that you need. */
-//        }
-//        catch (IntentFilter.MalformedMimeTypeException e) {
-//            throw new RuntimeException("fail", e);
-//        }
-
         intentFiltersArray = new IntentFilter[]{ndef,};
-        // techListsArray = new String[][] { new String[] { Ndef.class.getName() } };
-
-
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
-
-
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        Log.d(TAG, "onPause");
         nfcAdapter.disableForegroundDispatch(this);
 
     }
 
     public void onResume() {
         super.onResume();
-        Log.d(TAG, "onResume");
         nfcAdapter.enableForegroundDispatch(this, pendingIntent, intentFiltersArray, null);
     }
 
@@ -102,13 +93,30 @@ public class NfcTestActivity extends AppCompatActivity {
                         Log.d(TAG, "Connecting...");
                         ndef.connect();
                         Log.d(TAG, "Connected");
-                        if(ndef.isWritable()) {
-                            NdefRecord uriRecord = new NdefRecord(
-                                    NdefRecord.TNF_ABSOLUTE_URI ,
-                                    "https://developer.android.com/index.html".getBytes(Charset.forName("US-ASCII")),
-                                    new byte[0], new byte[0]);
-                            ndef.writeNdefMessage(new NdefMessage(uriRecord));
+                        if (ndef.isWritable()) {
+
+                            MessageBufferPacker packer = MessagePack.newDefaultBufferPacker();
+                            packer.packInt(39073);
+                            byte[] serializedData = packer.toByteArray();
+                            byte[] password = getResources().getString(R.string.super_secret_nfc_salt).getBytes(StandardCharsets.US_ASCII);
+
+                            byte[] hash = HashUtil.getSha256Hash(serializedData, password);
+
+
+                            NdefRecord ndefRecordHash = NdefRecord.createExternal("com.hsappdev.ahs", "nfc_id_card_hash", hash);
+                            NdefRecord ndefRecordData = NdefRecord.createExternal("com.hsappdev.ahs", "nfc_id_card_data", serializedData);
+
+                            NdefMessage ndefMessage = new NdefMessage(ndefRecordHash, ndefRecordData);
+
+                            // TODO: 6/30/2022 remove this, just testing
+                            if(Arrays.equals(HashUtil.getSha256Hash(serializedData, "(this is the salt) mmm hash browns".getBytes(StandardCharsets.US_ASCII)), hash)){
+                                Log.d(TAG, "Data confirmed!");
+                            }
+
+                            ndef.writeNdefMessage(ndefMessage);
+
                             Log.d(TAG, "Data sent!");
+                            Toast.makeText(this, "Data sent!", Toast.LENGTH_SHORT).show();
                         } else {
                             Log.d(TAG, "Not writable!");
                         }
@@ -126,42 +134,10 @@ public class NfcTestActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(this, "Could not connect!", Toast.LENGTH_SHORT).show();
                 }
-
-//                if () {
-//                    //writeTag here
-//
-//                    String message = (wr.getStatus() == 1 ? "Success: " : "Failed: ") + wr.getMessage();
-//                    Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
-//                } else {
-//                    Toast.makeText(this, "This tag is not writable", Toast.LENGTH_SHORT).show();
-//                }
             }
-
-
-//            if(supportedTechs(tag.getTechList())) {
-//
-//            }
-
-
-        /*
-        if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(intent.getAction())) {
-            Log.d(TAG, "newIntent1");
-
-            Parcelable[] rawMessages =
-                    intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
-            if (rawMessages != null) {
-                NdefMessage[] messages = new NdefMessage[rawMessages.length];
-                for (int i = 0; i < rawMessages.length; i++) {
-                    messages[i] = (NdefMessage) rawMessages[i];
-                    for (NdefRecord record : messages[i].getRecords()) {
-                        String msg = new String(record.getPayload());
-                        Log.d(TAG, msg);
-                    }
-
-                }
-            }
-         */
         }
 
+
     }
+
 }

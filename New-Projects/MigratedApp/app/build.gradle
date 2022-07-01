@@ -73,6 +73,9 @@ dependencies {
     // Zooming image view
     implementation 'com.github.chrisbanes:PhotoView:2.3.0'
 
+    // Message Pack
+    implementation 'org.msgpack:msgpack-core:0.9.3'
+
 
 
 
