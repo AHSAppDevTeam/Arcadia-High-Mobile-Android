@@ -16,7 +16,7 @@ public class HashUtil {
         try {
             MessageDigest digest = null;
             try {
-                digest = MessageDigest.getInstance("SHA-256");
+                digest = MessageDigest.getInstance("SHA-512");
             } catch (NoSuchAlgorithmException e1) {
                 e1.printStackTrace();
             }
