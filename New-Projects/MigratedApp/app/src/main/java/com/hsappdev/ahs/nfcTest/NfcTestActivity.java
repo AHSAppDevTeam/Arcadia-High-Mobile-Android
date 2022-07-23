@@ -65,6 +65,30 @@ public class NfcTestActivity extends AppCompatActivity {
 
         Log.d(TAG, "HASH: " + log);
 
+        MessageBufferPacker packer = MessagePack.newDefaultBufferPacker();
+
+        byte[] serializedData = packer.toByteArray();
+        byte[] password = getResources().getString(R.string.super_secret_nfc_salt).getBytes(StandardCharsets.US_ASCII);
+
+        byte[] hash = HashUtil.getSha256Hash(serializedData, password);
+
+
+        NdefRecord ndefRecordHash = NdefRecord.createExternal("ahs", "nfc_h", hash);
+        NdefRecord ndefRecordData = NdefRecord.createExternal("ahs", "nfc_d", serializedData);
+
+        NdefMessage ndefMessage = new NdefMessage(ndefRecordHash, ndefRecordData);
+
+
+        unsigned = new int[ndefMessage.toByteArray().length];
+        for (int i = 0; i < ndefMessage.toByteArray().length; i++) {
+            unsigned[i] = ndefMessage.toByteArray()[i] & 0xFF;
+        }
+
+        log = Arrays.toString(unsigned).replaceAll(",", "");
+
+
+        Log.d(TAG, "HASH REAL: " + log);
+
 
         signed = "(this is the salt) mmm hash browns".getBytes(StandardCharsets.US_ASCII);
 
@@ -132,7 +156,7 @@ public class NfcTestActivity extends AppCompatActivity {
                         NdefMessage ndefMessage = new NdefMessage(ndefRecordHash, ndefRecordData);
 
 
-                        int[] unsigned = new int[hash.length];
+                        int[] unsigned = new int[ndefRecordHash.toByteArray().length];
                         for (int i = 0; i < hash.length; i++) {
                             unsigned[i] = hash[i] & 0xFF;
                         }
