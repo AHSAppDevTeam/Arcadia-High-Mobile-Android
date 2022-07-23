@@ -54,6 +54,29 @@ public class NfcTestActivity extends AppCompatActivity {
                 this, 0, new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP),
                 PendingIntent.FLAG_MUTABLE);
 
+        byte[] signed = HashUtil.getSha256Hash(new byte[] {73, 105, 73, 105}, new byte[0]);
+
+        int[] unsigned = new int[signed.length];
+        for (int i = 0; i < signed.length; i++) {
+            unsigned[i] = signed[i] & 0xFF;
+        }
+
+        String log = Arrays.toString(unsigned);
+
+        Log.d(TAG, "HASH: " + log);
+
+
+        signed = "(this is the salt) mmm hash browns".getBytes(StandardCharsets.US_ASCII);
+
+        unsigned = new int[signed.length];
+        for (int i = 0; i < signed.length; i++) {
+            unsigned[i] = signed[i] & 0xFF;
+        }
+
+        log = Arrays.toString(unsigned);
+
+        Log.d(TAG, "SALT: " + log);
+
         IntentFilter ndef = new IntentFilter(NfcAdapter.ACTION_TAG_DISCOVERED);
         intentFiltersArray = new IntentFilter[]{ndef,};
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
@@ -62,13 +85,15 @@ public class NfcTestActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        nfcAdapter.disableForegroundDispatch(this);
+        if(nfcAdapter != null)
+            nfcAdapter.disableForegroundDispatch(this);
 
     }
 
     public void onResume() {
         super.onResume();
-        nfcAdapter.enableForegroundDispatch(this, pendingIntent, intentFiltersArray, null);
+        if(nfcAdapter != null)
+            nfcAdapter.enableForegroundDispatch(this, pendingIntent, intentFiltersArray, null);
     }
 
     @Override
@@ -86,32 +111,46 @@ public class NfcTestActivity extends AppCompatActivity {
 
             if (Arrays.asList(tag.getTechList()).contains(Ndef.class.getName())) {
                 Ndef ndef = Ndef.get(tag);
+                Log.d(TAG, "maxSize Tag: " + ndef.getMaxSize());
+
 
                 if (ndef != null) {
                     // tag is for sure ndef
                     try {
+                        MessageBufferPacker packer = MessagePack.newDefaultBufferPacker();
+                        packer.packInt(39073);
+
+                        byte[] serializedData = packer.toByteArray();
+                        byte[] password = getResources().getString(R.string.super_secret_nfc_salt).getBytes(StandardCharsets.US_ASCII);
+
+                        byte[] hash = HashUtil.getSha256Hash(serializedData, password);
+
+
+                        NdefRecord ndefRecordHash = NdefRecord.createExternal("ahs", "nfc_h", hash);
+                        NdefRecord ndefRecordData = NdefRecord.createExternal("ahs", "nfc_d", serializedData);
+
+                        NdefMessage ndefMessage = new NdefMessage(ndefRecordHash, ndefRecordData);
+
+
+                        int[] unsigned = new int[hash.length];
+                        for (int i = 0; i < hash.length; i++) {
+                            unsigned[i] = hash[i] & 0xFF;
+                        }
+
+                        String log = Arrays.toString(unsigned);
+
+                        Log.d(TAG, "HASH REAL: " + log);
+
+                        // TODO: 6/30/2022 remove this, just testing
+                        if(Arrays.equals(HashUtil.getSha256Hash(serializedData, "(this is the salt) mmm hash browns".getBytes(StandardCharsets.US_ASCII)), hash)){
+                            Log.d(TAG, "Data confirmed!");
+                        }
+
                         Log.d(TAG, "Connecting...");
                         ndef.connect();
                         Log.d(TAG, "Connected");
                         if (ndef.isWritable()) {
-
-                            MessageBufferPacker packer = MessagePack.newDefaultBufferPacker();
-                            packer.packInt(39073);
-                            byte[] serializedData = packer.toByteArray();
-                            byte[] password = getResources().getString(R.string.super_secret_nfc_salt).getBytes(StandardCharsets.US_ASCII);
-
-                            byte[] hash = HashUtil.getSha256Hash(serializedData, password);
-
-
-                            NdefRecord ndefRecordHash = NdefRecord.createExternal("com.hsappdev.ahs", "nfc_id_card_hash", hash);
-                            NdefRecord ndefRecordData = NdefRecord.createExternal("com.hsappdev.ahs", "nfc_id_card_data", serializedData);
-
-                            NdefMessage ndefMessage = new NdefMessage(ndefRecordHash, ndefRecordData);
-
-                            // TODO: 6/30/2022 remove this, just testing
-                            if(Arrays.equals(HashUtil.getSha256Hash(serializedData, "(this is the salt) mmm hash browns".getBytes(StandardCharsets.US_ASCII)), hash)){
-                                Log.d(TAG, "Data confirmed!");
-                            }
+                            Log.d(TAG, "maxSize Tag1: " + ndefMessage.getByteArrayLength());
 
                             ndef.writeNdefMessage(ndefMessage);
 
