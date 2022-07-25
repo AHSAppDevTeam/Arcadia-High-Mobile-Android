@@ -150,14 +150,14 @@ public class NfcTestActivity extends AppCompatActivity {
                         byte[] hash = HashUtil.getSha256Hash(serializedData, password);
 
 
-                        NdefRecord ndefRecordHash = NdefRecord.createExternal("ahs", "nfc_h", hash);
-                        NdefRecord ndefRecordData = NdefRecord.createExternal("ahs", "nfc_d", serializedData);
+                        NdefRecord ndefRecordHash = NdefRecord.createExternal("a", "h", Arrays.copyOfRange(hash, 0, 16));
+                        NdefRecord ndefRecordData = NdefRecord.createExternal("a", "d", serializedData);
 
                         NdefMessage ndefMessage = new NdefMessage(ndefRecordHash, ndefRecordData);
 
 
-                        int[] unsigned = new int[ndefRecordHash.toByteArray().length];
-                        for (int i = 0; i < hash.length; i++) {
+                        int[] unsigned = new int[16];
+                        for (int i = 0; i < 16; i++) {
                             unsigned[i] = hash[i] & 0xFF;
                         }
 
