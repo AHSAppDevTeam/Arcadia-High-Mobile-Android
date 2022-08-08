@@ -69,9 +69,9 @@ public class AboutUsActivity extends AppCompatActivity {
 
                     list += ("<br/>");
                     if (hasUrl) {
-                        list.append("<a href=\"");
-                        list.append(url);
-                        list.append("\">");
+                        list+=("<a href=\"");
+                        list+=(url);
+                        list+=("\">");
                     }
                     list += (name);
                     if (hasUrl) {
