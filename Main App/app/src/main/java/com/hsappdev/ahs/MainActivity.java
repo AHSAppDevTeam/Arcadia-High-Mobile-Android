@@ -15,6 +15,7 @@ import androidx.navigation.ui.NavigationUI;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
+import com.google.firebase.database.FirebaseDatabase;
 import com.hsappdev.ahs.UI.home.OnSectionClicked;
 import com.hsappdev.ahs.cache.ArticleLoaderBackend;
 import com.hsappdev.ahs.cache.callbacks.ArticleLoadableCallback;
@@ -54,6 +55,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationC
                 .setDatabaseUrl(r.getString(R.string.db_url))
                 .build();
 
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+
+
         if(FirebaseApp.getApps(getApplicationContext()).size() == 1) {
             FirebaseApp.initializeApp(getApplicationContext(), options, DatabaseConstants.FIREBASE_REALTIME_DB);
         }
@@ -61,22 +65,23 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationC
         if (getIntent().getExtras() != null) {
             String articleID = (String) getIntent().getExtras().get("articleID");
             ArticleLoaderBackend.getInstance((Application) getApplicationContext()).getCacheObject(articleID, getResources(), new ArticleLoadableCallback() {
-                private boolean isFirstTime = false;
-                @Override
-                public void onLoaded(Article article) {
-                    article.setIsNotification(1); // 1 == true
-                    articleRepository.add(article); // To save the notification
-                    onArticleClicked(article);
-                    isFirstTime = true; // used to mimic activity destruction and remove this listener
-                }
+                        private boolean isFirstTime = false;
+
+                        @Override
+                        public void onLoaded(Article article) {
+                            article.setIsNotification(1); // 1 == true
+                            articleRepository.add(article); // To save the notification
+                            onArticleClicked(article);
+                            isFirstTime = true; // used to mimic activity destruction and remove this listener
+                        }
 
                 @Override
                 public boolean isActivityDestroyed() {
-                    // return MainActivity.this.isDestroyed();
-                    return isFirstTime;
+                    return false;
                 }
             });
         }
+
 
         setContentView(R.layout.activity_main);
 

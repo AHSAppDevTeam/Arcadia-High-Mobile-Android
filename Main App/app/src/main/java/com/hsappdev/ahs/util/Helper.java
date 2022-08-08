@@ -22,6 +22,7 @@ public class Helper {
 
 
     public static SpannableStringBuilder getSpanBoldRegularText(String boldText, String regularText) {
+        if(boldText == null) boldText = "";
         SpannableStringBuilder builder = new SpannableStringBuilder(boldText);
         builder.setSpan(new StyleSpan(Typeface.BOLD),0,boldText.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
         return builder.append(regularText);

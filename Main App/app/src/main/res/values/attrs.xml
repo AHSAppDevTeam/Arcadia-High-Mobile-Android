@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+<!--    NEW -->
+    <attr name = "headingColor" value = "color"/>
     <attr name = "titleColor" value = "color"/>
+    <attr name = "subTitleColor" value = "color"/>
+    <attr name = "descriptionColor" value = "color"/>
+
+<!--    OLD -->
     <attr name = "bodyTextColor" value = "color"/>
     <attr name = "authorTextColor" value = "color"/>
     <attr name = "bgColor" value="color"/>
@@ -8,6 +14,7 @@
     <attr name = "navBarIconColor" value="color"/>
     <attr name = "navBarIconColor_active" value="color"/>
     <attr name = "navBarIconColorAccent_active" value="color"/>
+    <attr name="linkColor" value="color"/>
 
     <declare-styleable name="TextViewSelector">
         <attr name="android:background"/>

@@ -197,13 +197,16 @@ Last updated August 08, 2020
     </string>
     <string name="db_articles_related_articles">relatedArticleIDs</string>
     <string name="about_us"><b>About Us</b></string>
-    <string name="programmers_list"><![CDATA[Jeffrey Aaron Jeyasingh<br/>Xing Liu<br/>Josh McMahon<br/>Richard Wei]]></string>
-    <string name="graphic_designers_list"><![CDATA[Steffi Huang<br/>Arina Miyadi<br/>Kyrene Tam]]></string>
-    <string name="content_editors_list"><![CDATA[Rachel Saw<br/>Jennifer Wong<br/>Kelly Cheng]]></string>
-    <string name="previous_members_list" ><![CDATA[Seongwook Jang<br/>Jason Zhao<br/>Tiger Ma<br/>Albert Yeung<br/>Jessica Chou<br/>Nathan Wong<br/>Paul Lee<br/>Alex Hitti]]></string>
+
+    <string name="contacts_list"><![CDATA[<a href="mailto:articles@ahs.app">articles@ahs.app</a><br/><a href="mailto:dev@ahs.app">dev@ahs.app</a><br/><a href="mailto:editors@ahs.app">editors@ahs.app</a><br/><a href="mailto:bugs@ahs.app">bugs@ahs.app</a>]]></string>
     <string name="article_see_more">See more in\ </string>
     <string name="search_magic_query">about the app dev team</string>
     <string name="app_version">4.0.1</string>
+    <string name="db_credits">credits</string>
+
+    <string name="featured_boards_title_text_bold">Featured</string>
+    <string name="featured_boards_title_text_light">Boards</string>
+
 
 
 </resources>

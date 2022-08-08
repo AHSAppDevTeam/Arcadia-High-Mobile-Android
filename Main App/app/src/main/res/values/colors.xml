@@ -21,7 +21,7 @@
 
     <color name="brightRed">#c22b2b</color>
 
-    <color name="brickRed">#a21313</color>
+    <color name="brickRed">#C84238</color>
     <color name="brickRed50">#7fa21313</color>
     <color name="brickRedAccent">#7febd9d9</color>
 
@@ -31,6 +31,7 @@
     <color name="blueGradientStart">#63a8a8</color>
     <color name="blueGradientEnd">#2e8a7d</color>
     <color name="teal">#55a0ae</color>
+    <color name="lightDarkBlue">#3F9DFF</color>
 
     <color name="subtleBlueGradientStart">#70afb4</color>
     <color name="subtleBlueGradientEnd">#167e96</color>
@@ -42,6 +43,11 @@
     <color name="community_activity_start_gradient_color">#5fa4a9</color>
     <color name="community_activity_article_image_default_img_color">#d3bdbd</color>
     <color name="bulletin_up_coming_standard_color">#d8853d</color>
+
+<!--    About Us Gradient -->
+    <color name="aboutUsGradientStart">#FF1D3E</color>
+    <color name="aboutUsGradientCenter">#0084FC</color>
+    <color name="aboutUsGradientEnd">#FF43A6</color>
 
 
 </resources>
