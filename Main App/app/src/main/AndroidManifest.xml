@@ -16,13 +16,21 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ArcadiaHighMobile">
         <activity
-            android:name=".TestDataLoadingActivity"
-            android:exported="true" >
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
+            android:name=".NfcCardActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Transparent">
+             <intent-filter>
+             <action android:name="android.intent.action.MAIN" />
 
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
+
+             <category android:name="android.intent.category.LAUNCHER" />
+             </intent-filter>
+        </activity>
+        <activity
+            android:name=".TestDataLoadingActivity"
+            android:exported="true">
+
+
         </activity>
         <activity
             android:name=".AboutUsActivity"
@@ -58,11 +66,11 @@
         <activity
             android:name=".MainActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
         </activity>
     </application>
 
