@@ -18,7 +18,8 @@
         <activity
             android:name=".NfcCardActivity"
             android:exported="true"
-            android:theme="@style/Theme.Transparent">
+            android:theme="@style/Theme.Transparent"
+            >
              <intent-filter>
              <action android:name="android.intent.action.MAIN" />
 
