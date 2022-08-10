@@ -1,8 +1,5 @@
 package com.hsappdev.ahs.nfcTest;
 
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -11,14 +8,11 @@ import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
 import android.nfc.tech.Ndef;
-import android.nfc.tech.NdefFormatable;
-import android.nfc.tech.NfcA;
-import android.nfc.tech.NfcF;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.util.Log;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.hsappdev.ahs.R;
 import com.hsappdev.ahs.util.HashUtil;
@@ -26,12 +20,8 @@ import com.hsappdev.ahs.util.HashUtil;
 import org.msgpack.core.MessageBufferPacker;
 import org.msgpack.core.MessagePack;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 
 public class NfcTestActivity extends AppCompatActivity {
@@ -49,6 +39,11 @@ public class NfcTestActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nfc_test);
+
+
+        onNfcIntent(getIntent());
+
+
 
         pendingIntent = PendingIntent.getActivity(
                 this, 0, new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP),
@@ -123,9 +118,15 @@ public class NfcTestActivity extends AppCompatActivity {
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
+        onNfcIntent(intent);
+
+
+    }
+
+    private void onNfcIntent(Intent intent) {
         Log.d(TAG, "Tag detected: " + intent.getAction());
 
-        if (NfcAdapter.ACTION_TAG_DISCOVERED.equals(intent.getAction())) {
+        if (NfcAdapter.ACTION_TAG_DISCOVERED.equals(intent.getAction()) || NfcAdapter.ACTION_NDEF_DISCOVERED.equals(intent.getAction())) {
 
             Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
 
@@ -199,8 +200,6 @@ public class NfcTestActivity extends AppCompatActivity {
                 }
             }
         }
-
-
     }
 
 }

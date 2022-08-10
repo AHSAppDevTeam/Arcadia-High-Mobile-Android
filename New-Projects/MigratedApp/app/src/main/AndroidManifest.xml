@@ -24,12 +24,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
-<!--            <intent-filter>-->
-<!--                <action android:name="android.nfc.action.NDEF_DISCOVERED"/>-->
-<!--                <category android:name="android.intent.category.DEFAULT"/>-->
-<!--&lt;!&ndash;                <data android:scheme="https"&ndash;&gt;-->
-<!--&lt;!&ndash;                    android:host="ahs.app"/>&ndash;&gt;-->
-<!--            </intent-filter>-->
+            <intent-filter>
+                <action android:name="android.nfc.action.NDEF_DISCOVERED"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:scheme="https"
+                    android:host="get.ahs.app"/>
+            </intent-filter>
 
             <intent-filter>
                 <action android:name="android.nfc.action.TAG_DISCOVERED"/>
