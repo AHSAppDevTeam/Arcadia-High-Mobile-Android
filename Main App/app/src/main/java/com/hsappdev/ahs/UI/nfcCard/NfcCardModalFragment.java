@@ -6,6 +6,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,6 +20,9 @@ public class NfcCardModalFragment extends BottomSheetDialogFragment {
 
     public static final String TAG = "NfcCardModalFragment";
     private ProfileCardFragment profileCardFragment;
+
+    private TextView userMessage;
+    private ImageView nfcStatus;
 
     public NfcCardModalFragment() {
 
@@ -43,6 +48,11 @@ public class NfcCardModalFragment extends BottomSheetDialogFragment {
 
         profileCardFragment = new ProfileCardFragment();
 
+        userMessage = view.findViewById(R.id.nfc_card_modal_message);
+        userMessage.setText("Sending Student ID...");
+
+        nfcStatus = view.findViewById(R.id.nfc_card_status_icon);
+        nfcStatus.setVisibility(View.INVISIBLE);
 
         getChildFragmentManager().beginTransaction()
                 .replace(R.id.profileCardFragmentHolder, profileCardFragment)
@@ -52,4 +62,15 @@ public class NfcCardModalFragment extends BottomSheetDialogFragment {
     }
 
 
+    public void onNfcSuccess() {
+        userMessage.setText("Student ID Sent!");
+        nfcStatus.setVisibility(View.VISIBLE);
+        nfcStatus.setImageDrawable(getResources().getDrawable(R.drawable.ic_nfc_check_circle));
+    }
+
+    public void onNfcFail() {
+        userMessage.setText("Failed to send ID, try reopening the app");
+        nfcStatus.setVisibility(View.VISIBLE);
+        nfcStatus.setImageDrawable(getResources().getDrawable(R.drawable.ic_nfc_error));
+    }
 }

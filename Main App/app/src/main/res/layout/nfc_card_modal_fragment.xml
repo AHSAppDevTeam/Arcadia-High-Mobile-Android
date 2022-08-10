@@ -23,14 +23,28 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/verticalMainPadding">
+
             <TextView
                 style="@style/appDevTitleStyleBold"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="@dimen/horizontalMainPadding"
                 android:paddingTop="@dimen/verticalMainPadding"
+                android:layout_weight="1"
                 android:text="Digital ID Card"
                 android:textColor="@color/brickRed" />
+                <ImageView
+                    android:layout_width="64dp"
+                    android:paddingVertical="@dimen/levelHorizontalPadding"
+                    android:layout_height="match_parent"
+                    android:layout_marginHorizontal="@dimen/horizontalMainPadding"
+                    android:src="@mipmap/applogoclear"/>
+            </LinearLayout>
 
             <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/profileCardFragmentHolder"
@@ -51,6 +65,7 @@
             app:layout_constraintDimensionRatio="2:1">
 
             <TextView
+                android:id="@+id/nfc_card_modal_message"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/sfprodisplay_regular"
@@ -63,7 +78,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-                android:id="@+id/imageView2"
+                android:id="@+id/nfc_card_status_icon"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:padding="@dimen/padding_x4"
@@ -72,7 +87,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:tint="@color/green_checkmark" />
+                />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

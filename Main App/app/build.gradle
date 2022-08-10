@@ -67,6 +67,10 @@ dependencies {
     apply plugin: 'com.google.firebase.crashlytics'
 
 
+    // Libs for NFC
+    implementation 'org.msgpack:msgpack-core:0.9.3'
+
+
     // Room components
     implementation "androidx.room:room-runtime:$rootProject.roomVersion"
     annotationProcessor "androidx.room:room-compiler:$rootProject.roomVersion"
