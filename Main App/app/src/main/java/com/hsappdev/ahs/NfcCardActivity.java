@@ -14,8 +14,6 @@ import com.nfc.NfcHandlerActivity;
 
 public class NfcCardActivity extends NfcHandlerActivity {
 
-    private ProfileCardFragment profileCardFragment;
-
     private NfcCardModalFragment modalBottomSheet;
 
 
@@ -32,13 +30,11 @@ public class NfcCardActivity extends NfcHandlerActivity {
 
     @Override
     public void onNfcFail() {
-        Toast.makeText(this, "bad", Toast.LENGTH_LONG).show();
         modalBottomSheet.onNfcFail();
     }
 
     @Override
     public void onNfcSuccess() {
-        Toast.makeText(this, "good", Toast.LENGTH_SHORT).show();
         modalBottomSheet.onNfcSuccess();
 
     }
