@@ -8,7 +8,7 @@ android {
     
     signingConfigs {
         release {
-            storeFile file('C:\\Users\\Jeffrey\\Downloads\\release.keystore')
+            storeFile "${System.properties['user.home']}${File.separator}Downloads${File.separator}release.keystore" as File
             storePassword '180Campus'
             keyPassword '180Campus'
             keyAlias 'ahs'
@@ -35,6 +35,12 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
 
+        }
+
+        debugCompile {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
     compileOptions {

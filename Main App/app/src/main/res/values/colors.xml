@@ -48,6 +48,7 @@
     <color name="aboutUsGradientStart">#FF1D3E</color>
     <color name="aboutUsGradientCenter">#0084FC</color>
     <color name="aboutUsGradientEnd">#FF43A6</color>
+    <color name="green_checkmark">#4CAF50</color>
 
 
 </resources>
