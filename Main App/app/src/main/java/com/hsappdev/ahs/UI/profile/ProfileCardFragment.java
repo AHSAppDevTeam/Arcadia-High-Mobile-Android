@@ -10,8 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,7 +24,6 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 import com.hsappdev.ahs.R;
 import com.hsappdev.ahs.util.BarcodeDrawable;
-import com.hsappdev.ahs.util.ImageUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -37,10 +35,10 @@ public class ProfileCardFragment extends Fragment {
     private static final String photoUrlID = "PHOTO_URL_ID";
 
 
-    private TextView givenNameTextView;
-    private TextView familyNameTextView;
-    private ImageView barcodeImage;
-    private ImageView accountImage;
+//    private TextView givenNameTextView;
+//    private TextView familyNameTextView;
+//    private ImageView barcodeImage;
+//    private ImageView accountImage;
 
     private GoogleSignInClient gsClient;
     private static final int RC_SIGN_IN = 8888;
@@ -50,12 +48,17 @@ public class ProfileCardFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.profile_card_fragment, container, false);
-        // Set vars
-        givenNameTextView = view.findViewById(R.id.profile_card_given_name_textView);
-        familyNameTextView = view.findViewById(R.id.profile_card_family_name_textView);
-        barcodeImage = view.findViewById(R.id.profile_card_barcode_img);
-        accountImage = view.findViewById(R.id.profile_card_photo_img);
+        View view = inflater.inflate(R.layout.profile_card_fragment_base, container, false);
+
+        // TODO: testing
+        FrameLayout holder = view.findViewById(R.id.profile_card_fragment_content);
+        View newContent = inflater.inflate(R.layout.profile_card_fragment_sign_in, holder, true);
+
+//        // Set vars
+//        givenNameTextView = view.findViewById(R.id.profile_card_given_name_textView);
+//        familyNameTextView = view.findViewById(R.id.profile_card_family_name_textView);
+//        barcodeImage = view.findViewById(R.id.profile_card_barcode_img);
+//        accountImage = view.findViewById(R.id.profile_card_photo_img);
 
         // Google OAuth
         // Configure sign-in to request the user's ID, email address, and basic
@@ -64,7 +67,7 @@ public class ProfileCardFragment extends Fragment {
                 .requestEmail()
                 //.setHostedDomain("students.ausd.net")
                 .build();
-        
+
         // Build a GoogleSignInClient with the options specified by gso.
         Context context = getActivity();
         gsClient = GoogleSignIn.getClient(context, gsOptions);
@@ -72,16 +75,16 @@ public class ProfileCardFragment extends Fragment {
         gsSignedIn = account != null;
         if(gsSignedIn) setDetails(account);
 
-        view.setOnClickListener(v -> {
-            if(gsSignedIn) {
-                gsClient.signOut();
-                gsSignedIn = false;
-                setDetails();
-            } else {
-                Intent signInIntent = gsClient.getSignInIntent();
-                startActivityForResult(signInIntent, RC_SIGN_IN);
-            }
-        });
+//        view.setOnClickListener(v -> {
+//            if(gsSignedIn) {
+//                gsClient.signOut();
+//                gsSignedIn = false;
+//                setDetails();
+//            } else {
+//                Intent signInIntent = gsClient.getSignInIntent();
+//                startActivityForResult(signInIntent, RC_SIGN_IN);
+//            }
+//        });
 
 
         return view;
@@ -138,11 +141,11 @@ public class ProfileCardFragment extends Fragment {
     }
 
     public void setGivenName(String givenName) {
-        givenNameTextView.setText(givenName);
+        // givenNameTextView.setText(givenName);
     }
 
     public void setFamilyName(String familyName) {
-        familyNameTextView.setText(familyName);
+        // familyNameTextView.setText(familyName);
     }
 
     public void setPhotoUrl(String photoUrl) {
@@ -150,12 +153,12 @@ public class ProfileCardFragment extends Fragment {
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString(photoUrlID, photoUrl);
         editor.apply();
-        ImageUtil.setCircleImageToView(photoUrl, accountImage);
+        // ImageUtil.setCircleImageToView(photoUrl, accountImage);
     }
 
     public void setUserId(String userId) {
         barcodeCanvas.setUserId(Integer.parseInt(userId));
-        barcodeImage.setImageDrawable(null); // Clear canvas
-        barcodeImage.setImageDrawable(barcodeCanvas);
+        // barcodeImage.setImageDrawable(null); // Clear canvas
+        // barcodeImage.setImageDrawable(barcodeCanvas);
     }
 }

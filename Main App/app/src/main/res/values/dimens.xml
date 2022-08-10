@@ -17,6 +17,8 @@
 
     <dimen name="cornerIconSize">48dp</dimen>
 
+    <dimen name="cardCornerRadius">16dp</dimen>
+
     <dimen name="profile_card_accountImage_borderWidth">-7.5dp</dimen>
     <dimen name="profile_card_accountImage_borderWidthx2">16dp</dimen>
 
@@ -34,5 +36,6 @@
 <!--    NEW -->
     <dimen name="horizontalMainPadding">32dp</dimen>
     <dimen name="verticalMainPadding">12dp</dimen>
+    <dimen name="levelHorizontalPadding">10dp</dimen>
 
 </resources>
