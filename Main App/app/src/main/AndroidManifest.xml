@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.hsappdev.ahs">
 
+    <uses-permission android:name="android.permission.VIBRATE"/>
+
     <queries>
         <intent>
             <action android:name="com.google.android.youtube.api.service.START" />

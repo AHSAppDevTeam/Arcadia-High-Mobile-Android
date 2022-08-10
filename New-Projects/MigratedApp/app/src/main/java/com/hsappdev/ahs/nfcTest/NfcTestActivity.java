@@ -1,6 +1,7 @@
 package com.hsappdev.ahs.nfcTest;
 
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.nfc.NdefMessage;
@@ -8,7 +9,10 @@ import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
 import android.nfc.tech.Ndef;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -178,7 +182,14 @@ public class NfcTestActivity extends AppCompatActivity {
                             Log.d(TAG, "maxSize Tag1: " + ndefMessage.getByteArrayLength());
 
                             ndef.writeNdefMessage(ndefMessage);
-
+                            Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                            // Vibrate for 500 milliseconds
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                v.vibrate(VibrationEffect.createOneShot(250, VibrationEffect.DEFAULT_AMPLITUDE));
+                            } else {
+                                //deprecated in API 26
+                                v.vibrate(250);
+                            }
                             Log.d(TAG, "Data sent!");
                             Toast.makeText(this, "Data sent!", Toast.LENGTH_SHORT).show();
                         } else {
