@@ -34,6 +34,10 @@ public class NfcCardModalFragment extends BottomSheetDialogFragment {
 
     }
 
+    public NfcCardModalFragment(int nfcStatusCode) {
+        this.nfcStatusCode = nfcStatusCode;
+    }
+
     @Override
     public void onDismiss(@NonNull DialogInterface dialog) {
         super.onDismiss(dialog);

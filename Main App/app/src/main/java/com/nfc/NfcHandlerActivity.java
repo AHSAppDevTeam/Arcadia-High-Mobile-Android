@@ -30,6 +30,8 @@ import java.util.Arrays;
  */
 public abstract class NfcHandlerActivity extends AppCompatActivity implements NfcResultHandler {
 
+    protected int nfcStatusCode = 0; // 0  nothing, 1 good, -1 bad
+
     private static final String TAG = "NfcHandlerActivity";
 
     private PendingIntent pendingIntent;
@@ -125,17 +127,21 @@ public abstract class NfcHandlerActivity extends AppCompatActivity implements Nf
                         Log.d(TAG, "Connected");
                         if (ndef.isWritable()) {
                             ndef.writeNdefMessage(ndefMessage);
+                            nfcStatusCode = 1;
                             onNfcSuccess();
                         } else {
                             Log.d(TAG, "Not writable!");
+                            nfcStatusCode = -1;
                             onNfcFail();
                         }
                         ndef.close();
                     } catch (Exception e) {
                         // tag failed to write
+                        nfcStatusCode = -1;
                         onNfcFail();
                     }
                 } else {
+                    nfcStatusCode = -1;
                     onNfcFail();
                 }
             }
