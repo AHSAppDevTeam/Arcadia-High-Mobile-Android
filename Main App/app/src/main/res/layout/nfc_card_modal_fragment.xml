@@ -71,7 +71,7 @@
                 android:fontFamily="@font/sfprodisplay_regular"
                 android:gravity="center"
                 android:padding="@dimen/verticalMainPadding"
-                android:text="Place your phone over the reader."
+                android:text="Student ID"
                 android:textSize="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

@@ -22,20 +22,29 @@ public class NfcCardActivity extends NfcHandlerActivity {
         super.onCreate(savedInstanceState);
         // setContentView(R.layout.activity_nfc_card);
 
-        modalBottomSheet = new NfcCardModalFragment();
+        modalBottomSheet = new NfcCardModalFragment(nfcStatusCode);
         modalBottomSheet.show(getSupportFragmentManager(), NfcCardModalFragment.TAG);
+
+        if(nfcStatusCode == 1) {
+            modalBottomSheet.onNfcSuccess();
+        } else if (nfcStatusCode == -1) {
+            modalBottomSheet.onNfcFail();
+        }
 
 
     }
 
     @Override
     public void onNfcFail() {
-        modalBottomSheet.onNfcFail();
+        if(modalBottomSheet != null) {
+            modalBottomSheet.onNfcFail();
+        }
     }
 
     @Override
     public void onNfcSuccess() {
-        modalBottomSheet.onNfcSuccess();
-
+        if(modalBottomSheet != null) {
+            modalBottomSheet.onNfcSuccess();
+        }
     }
 }
