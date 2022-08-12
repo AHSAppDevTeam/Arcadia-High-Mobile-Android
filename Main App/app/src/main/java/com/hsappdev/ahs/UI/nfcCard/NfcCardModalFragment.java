@@ -57,8 +57,12 @@ public class NfcCardModalFragment extends BottomSheetDialogFragment {
                 .replace(R.id.profileCardFragmentHolder, profileCardFragment)
                 .commit();
 
+        Log.d(TAG, "View: " + view.toString());
+        Log.d(TAG, "TextviewB: " + userMessage);
+
         userMessage = view.findViewById(R.id.nfc_card_modal_message);
         userMessage.setText("Place your phone over the reader.");
+        Log.d(TAG, "TextviewA: " + userMessage);
 
         nfcStatus = view.findViewById(R.id.nfc_card_status_icon);
         nfcStatus.setVisibility(View.INVISIBLE);
@@ -87,6 +91,7 @@ public class NfcCardModalFragment extends BottomSheetDialogFragment {
     }
 
     private void renderFail(){
+        Log.d(TAG, "TextviewC: " + userMessage);
         userMessage.setText("Failed to send ID, try reopening the app");
         nfcStatus.setVisibility(View.VISIBLE);
         nfcStatus.setImageDrawable(getResources().getDrawable(R.drawable.ic_nfc_error));
@@ -94,6 +99,7 @@ public class NfcCardModalFragment extends BottomSheetDialogFragment {
     }
 
     private void renderSuccess(){
+        Log.d(TAG, "TextviewC: " + userMessage);
         userMessage.setText("Student ID Sent!");
         nfcStatus.setVisibility(View.VISIBLE);
         nfcStatus.setImageDrawable(getResources().getDrawable(R.drawable.ic_nfc_check_circle));
