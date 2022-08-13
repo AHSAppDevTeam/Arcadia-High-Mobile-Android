@@ -56,7 +56,7 @@ public class NfcCardModalFragment extends BottomSheetDialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.nfc_card_modal_fragment, container, false);
 
-        profileCardFragment = new ProfileCardFragment();
+        profileCardFragment = new ProfileCardFragment(false);
         getChildFragmentManager().beginTransaction()
                 .replace(R.id.profileCardFragmentHolder, profileCardFragment)
                 .commit();

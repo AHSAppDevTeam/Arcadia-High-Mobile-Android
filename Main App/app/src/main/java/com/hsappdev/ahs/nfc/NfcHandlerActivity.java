@@ -4,6 +4,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
@@ -18,8 +19,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.hsappdev.ahs.R;
 import com.hsappdev.ahs.util.HashUtil;
 
-import org.msgpack.core.MessageBufferPacker;
-import org.msgpack.core.MessagePack;
 
 import java.util.Arrays;
 
@@ -27,6 +26,10 @@ import java.util.Arrays;
  * An activity that contains nfc features built-in
  */
 public abstract class NfcHandlerActivity extends AppCompatActivity implements NfcResultHandler {
+
+    public static final String SHARED_PREF_ID = "NFC_DATA";
+
+    public static final String SHARED_PREF_ID_DATA_KEY = "ID_NUMBER";
 
     protected int nfcStatusCode = 0; // 0  nothing, 1 good, -1 bad
 
@@ -38,6 +41,8 @@ public abstract class NfcHandlerActivity extends AppCompatActivity implements Nf
 
     private NfcAdapter nfcAdapter;
     private boolean isNfcSupported = false;
+    private boolean isUserSignedIn = false;
+
 
     /**
      * Make sure to call super when overriding
@@ -88,6 +93,8 @@ public abstract class NfcHandlerActivity extends AppCompatActivity implements Nf
 
     private void handleIntent(Intent intent) {
         if (NfcAdapter.ACTION_TAG_DISCOVERED.equals(intent.getAction()) || NfcAdapter.ACTION_NDEF_DISCOVERED.equals(intent.getAction())) {
+            if(!isUserSignedIn()) return;
+
             Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
             if (Arrays.asList(tag.getTechList()).contains(Ndef.class.getName())) { // ensure NDEF
                 Ndef ndef = Ndef.get(tag);
@@ -95,10 +102,8 @@ public abstract class NfcHandlerActivity extends AppCompatActivity implements Nf
                 if (ndef != null) {
                     // tag is for sure ndef
                     try {
-//                        MessageBufferPacker packer = MessagePack.newDefaultBufferPacker();
-//                        packer.packInt(39073);
 
-                        int idNumber = 39073;
+                        int idNumber = readNfcId();
 
                         byte[] serializedData = new byte[3];
 
@@ -144,6 +149,21 @@ public abstract class NfcHandlerActivity extends AppCompatActivity implements Nf
                 }
             }
         }
+    }
+
+    public int  readNfcId(){
+        // store the userID in SharedPref
+        Context context = this;
+        SharedPreferences sharedPref = context.getSharedPreferences(NfcHandlerActivity.SHARED_PREF_ID, Context.MODE_PRIVATE);
+        int userID = sharedPref.getInt(NfcHandlerActivity.SHARED_PREF_ID_DATA_KEY, -1);
+        isUserSignedIn = userID != -1;
+        return userID;
+
+    }
+
+    public boolean isUserSignedIn() {
+        readNfcId(); // keep data fresh
+        return isUserSignedIn;
     }
 
     public boolean isNfcSupported() {

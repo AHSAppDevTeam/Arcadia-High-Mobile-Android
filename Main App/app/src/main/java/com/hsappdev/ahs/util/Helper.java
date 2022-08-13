@@ -56,6 +56,15 @@ public class Helper {
         return costs[b.length()];
     }
 
+    public static boolean isStringAnInteger(String i) {
+        try{
+            Integer.parseInt(i);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
     public static boolean isFirstTimeAppLoad(MainActivity mainActivity, Resources r) {
         SharedPreferences sharedPref = mainActivity.getPreferences(Context.MODE_PRIVATE);
         boolean firstTime = sharedPref.getBoolean(r.getString(R.string.isFirstTimeAppLoad), true);

@@ -32,7 +32,7 @@
         android:fontFamily="@font/mediumbold_lightregular"
         android:text="@string/profile_card_default_family_name"
         android:textColor="@color/white"
-        android:textSize="24sp"
+        android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/profile_card_photo_img"
         app:layout_constraintStart_toStartOf="parent"
@@ -42,17 +42,13 @@
         android:id="@+id/profile_card_barcode_img"
         android:layout_width="176dp"
         android:layout_height="68dp"
-        android:layout_marginStart="@dimen/padding_x2"
         android:layout_marginTop="30dp"
-        android:layout_marginBottom="@dimen/padding_x2"
-        android:background="@drawable/profile_card_barcode_bg"
         android:contentDescription="@string/profile_card_barcode_description"
         android:padding="10dp"
-        android:src="@drawable/profile_card_barcode_stripes"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:src="@drawable/ic_nfc_reader_scan"
+        app:layout_constraintBottom_toTopOf="@+id/profile_card_email_warning"
         app:layout_constraintDimensionRatio="3"
-        app:layout_constraintEnd_toStartOf="@+id/profile_card_photo_img"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/profile_card_family_name_textView" />
 
@@ -71,4 +67,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@mipmap/ic_launcher" />
+
+    <TextView
+        android:id="@+id/profile_card_email_warning"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:visibility="invisible"
+        android:paddingVertical="16dp"
+        android:text="⚠️ Login with your student email\n to use the ID card."
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

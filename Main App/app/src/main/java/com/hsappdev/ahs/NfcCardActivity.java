@@ -13,7 +13,6 @@ public class NfcCardActivity extends NfcHandlerActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // setContentView(R.layout.activity_nfc_card);
 
         modalBottomSheet = new NfcCardModalFragment(nfcStatusCode);
         modalBottomSheet.show(getSupportFragmentManager(), NfcCardModalFragment.TAG);
