@@ -1,4 +1,4 @@
-package com.nfc;
+package com.hsappdev.ahs.nfc;
 
 import android.app.PendingIntent;
 import android.content.Context;
@@ -12,7 +12,6 @@ import android.nfc.Tag;
 import android.nfc.tech.Ndef;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -22,7 +21,6 @@ import com.hsappdev.ahs.util.HashUtil;
 import org.msgpack.core.MessageBufferPacker;
 import org.msgpack.core.MessagePack;
 
-import java.io.IOException;
 import java.util.Arrays;
 
 /**

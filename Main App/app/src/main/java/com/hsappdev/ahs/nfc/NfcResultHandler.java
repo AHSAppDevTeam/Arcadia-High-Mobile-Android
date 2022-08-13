@@ -1,4 +1,4 @@
-package com.nfc;
+package com.hsappdev.ahs.nfc;
 
 public interface NfcResultHandler {
     void onNfcFail();
