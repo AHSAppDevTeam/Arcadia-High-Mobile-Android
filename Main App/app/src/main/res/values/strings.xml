@@ -206,6 +206,7 @@ Last updated August 08, 2020
 
     <string name="featured_boards_title_text_bold">Featured</string>
     <string name="featured_boards_title_text_light">Boards</string>
+    <string name="profile_card_default_redirect">Go Your Profile to sign in</string>
 
 
 </resources>

@@ -40,14 +40,14 @@
 
     <ImageView
         android:id="@+id/profile_card_barcode_img"
-        android:layout_width="176dp"
-        android:layout_height="68dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:layout_marginTop="30dp"
         android:contentDescription="@string/profile_card_barcode_description"
         android:padding="10dp"
         android:src="@drawable/ic_nfc_reader_scan"
         app:layout_constraintBottom_toTopOf="@+id/profile_card_email_warning"
-        app:layout_constraintDimensionRatio="3"
+        app:layout_constraintDimensionRatio="4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/profile_card_family_name_textView" />

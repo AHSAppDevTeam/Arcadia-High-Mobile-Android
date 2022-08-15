@@ -71,6 +71,9 @@ public class ProfileCardFragment extends Fragment {
         warningTextView = view.findViewById(R.id.profile_card_email_warning);
         accountImage = view.findViewById(R.id.profile_card_photo_img);
 
+        // reset card always
+        setDetails();
+
         // Google OAuth
         // Configure sign-in to request the user's ID, email address, and basic
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
@@ -146,9 +149,16 @@ public class ProfileCardFragment extends Fragment {
     }
     public void setDetails() {
         Resources res = getResources();
+        if(isEditable)
         setDetails(
                 res.getString(R.string.profile_card_default_given_name),
                 res.getString(R.string.profile_card_default_family_name),
+                res.getString(R.string.profile_card_default_photo_url),
+                res.getString(R.string.profile_card_default_user_id)
+        );
+        else setDetails(
+                res.getString(R.string.profile_card_default_given_name),
+                "",
                 res.getString(R.string.profile_card_default_photo_url),
                 res.getString(R.string.profile_card_default_user_id)
         );
@@ -198,9 +208,9 @@ public class ProfileCardFragment extends Fragment {
         // show warning
         warningTextView.setVisibility(View.VISIBLE);
         if (isEditable){
-            warningTextView.setText("⚠️ Login with your student email39073\n to use the ID card.");
+            warningTextView.setText("⚠️ Login with your student email\n to use the ID card.");
         } else {
-            warningTextView.setText("⚠️ Go to Your Profile to login.");
+            warningTextView.setText("⚠️ Go to Your Profile to sign in");
         }
         storeUserId(-1); // aka no user id
     }
