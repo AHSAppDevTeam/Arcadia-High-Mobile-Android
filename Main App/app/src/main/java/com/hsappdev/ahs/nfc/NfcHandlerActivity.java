@@ -105,6 +105,8 @@ public abstract class NfcHandlerActivity extends AppCompatActivity implements Nf
 
                         int idNumber = readNfcId();
 
+                        if(!isUserSignedIn) return; // additional safeguard
+
                         byte[] serializedData = new byte[3];
 
                         // create serializedData

@@ -47,6 +47,7 @@ public class ProfileCardFragment extends Fragment {
     private ImageView accountImage;
 
     private boolean isEditable = true;
+    private boolean isSupported = false;
 
     private GoogleSignInClient gsClient;
     private static final int RC_SIGN_IN = 8888;
@@ -57,8 +58,9 @@ public class ProfileCardFragment extends Fragment {
     public ProfileCardFragment() {
     }
 
-    public ProfileCardFragment(boolean isEditable) {
+    public ProfileCardFragment(boolean isEditable, boolean isSupported) {
         this.isEditable = isEditable;
+        this.isSupported = isSupported;
     }
 
     @Override
@@ -206,11 +208,16 @@ public class ProfileCardFragment extends Fragment {
 
     public void setUserId() {
         // show warning
+
         warningTextView.setVisibility(View.VISIBLE);
-        if (isEditable){
-            warningTextView.setText("⚠️ Login with your student email\n to use the ID card.");
+        if(!isSupported){
+            warningTextView.setText("⚠️ NFC is not supported");
         } else {
-            warningTextView.setText("⚠️ Go to Your Profile to sign in");
+            if (isEditable) {
+                warningTextView.setText("⚠️ Login with your student email\n to use the ID card.");
+            } else {
+                warningTextView.setText("⚠️ Go to Your Profile to sign in");
+            }
         }
         storeUserId(-1); // aka no user id
     }
