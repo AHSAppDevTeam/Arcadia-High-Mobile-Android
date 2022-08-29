@@ -191,11 +191,6 @@ public class ProfileCardFragment extends Fragment {
             userIdInt = Integer.parseInt(userId);
         }
         storeUserId(userIdInt);
-
-
-//        barcodeCanvas.setUserId(Integer.parseInt(userId));
-//         barcodeImage.setImageDrawable(null); // Clear canvas
-//         barcodeImage.setImageDrawable(barcodeCanvas);
     }
 
     private void storeUserId(int userIdInt) {
