@@ -117,7 +117,7 @@ public class NfcCardModalFragment extends BottomSheetDialogFragment {
     private void vibratePhone(){
         if(getActivity() != null) {
             Vibrator v = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
-            // Vibrate for 500 milliseconds
+            // Vibrate for 250 milliseconds
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 v.vibrate(VibrationEffect.createOneShot(250, VibrationEffect.DEFAULT_AMPLITUDE));
             } else {

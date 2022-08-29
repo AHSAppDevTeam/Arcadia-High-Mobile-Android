@@ -185,6 +185,7 @@ public class ProfileCardFragment extends Fragment {
 
     public void setUserId(String userId) {
         warningTextView.setVisibility(View.INVISIBLE);
+        setUserId();
         int userIdInt = -1;
         if(Helper.isStringAnInteger(userId)) {
             userIdInt = Integer.parseInt(userId);
