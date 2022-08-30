@@ -3,6 +3,8 @@ package com.hsappdev.ahs.UI.profile;
 import android.app.AlarmManager;
 import android.content.Context;
 import android.content.Intent;
+import android.nfc.NfcAdapter;
+import android.nfc.NfcManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -233,7 +235,14 @@ public class ProfileFragment extends Fragment {
     }
 
     private void initProfileCardFragment(View view) {
-        profileCardFragment = new ProfileCardFragment();
+        boolean isNfcSupported = false;
+        NfcManager manager = (NfcManager) getActivity().getApplicationContext().getSystemService(Context.NFC_SERVICE);
+        NfcAdapter adapter = manager.getDefaultAdapter();
+        if (adapter != null && adapter.isEnabled()) {
+            // adapter exists and is enabled.
+            isNfcSupported = true;
+        }
+        profileCardFragment = new ProfileCardFragment(true, isNfcSupported);
 
         getActivity().getSupportFragmentManager().beginTransaction()
                 .replace(R.id.profileCardFragmentHolder, profileCardFragment)

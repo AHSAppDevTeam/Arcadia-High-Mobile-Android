@@ -55,8 +55,8 @@ public class ProfileCardFragment extends Fragment {
 
     private final BarcodeDrawable barcodeCanvas = new BarcodeDrawable();
 
-    public ProfileCardFragment() {
-    }
+//    public ProfileCardFragment() {
+//    }
 
     public ProfileCardFragment(boolean isEditable, boolean isSupported) {
         this.isEditable = isEditable;
@@ -185,7 +185,9 @@ public class ProfileCardFragment extends Fragment {
 
     public void setUserId(String userId) {
         warningTextView.setVisibility(View.INVISIBLE);
-        setUserId();
+        if(!isSupported) {
+            setUserId();
+        }
         int userIdInt = -1;
         if(Helper.isStringAnInteger(userId)) {
             userIdInt = Integer.parseInt(userId);
