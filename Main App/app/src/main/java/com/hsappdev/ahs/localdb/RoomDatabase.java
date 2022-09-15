@@ -29,7 +29,7 @@ import java.util.Arrays;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {Article.class, Category.class, CategoryList.class}, version = 7, exportSchema = false)
+@Database(entities = {Article.class, Category.class, CategoryList.class}, version = 8, exportSchema = false)
 @TypeConverters(Converters.class)
 public abstract class RoomDatabase extends androidx.room.RoomDatabase {
 
