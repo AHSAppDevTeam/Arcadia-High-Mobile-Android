@@ -20,6 +20,7 @@ import com.hsappdev.ahs.R;
 import com.hsappdev.ahs.util.HashUtil;
 
 
+import java.io.IOException;
 import java.util.Arrays;
 
 /**
@@ -65,7 +66,7 @@ public abstract class NfcHandlerActivity extends AppCompatActivity implements Nf
                 this, 0, new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP),
                 PendingIntent.FLAG_MUTABLE);
 
-        IntentFilter ndef = new IntentFilter(NfcAdapter.ACTION_TAG_DISCOVERED);
+        IntentFilter ndef = new IntentFilter(NfcAdapter.ACTION_NDEF_DISCOVERED);
         intentFiltersArray = new IntentFilter[]{ndef,};
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
 
@@ -74,15 +75,15 @@ public abstract class NfcHandlerActivity extends AppCompatActivity implements Nf
     @Override
     protected void onPause() {
         super.onPause();
-        if(nfcAdapter != null && isNfcSupported)
-            nfcAdapter.disableForegroundDispatch(this);
+//        if(nfcAdapter != null && isNfcSupported)
+//            nfcAdapter.disableForegroundDispatch(this);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        if(nfcAdapter != null && isNfcSupported)
-            nfcAdapter.enableForegroundDispatch(this, pendingIntent, intentFiltersArray, null);
+        //if(nfcAdapter != null && isNfcSupported)
+        //    nfcAdapter.enableForegroundDispatch(this, pendingIntent, intentFiltersArray, null);
     }
 
     @Override
@@ -92,6 +93,7 @@ public abstract class NfcHandlerActivity extends AppCompatActivity implements Nf
     }
 
     private void handleIntent(Intent intent) {
+        // nfcAdapter.disableForegroundDispatch(this);
         if (NfcAdapter.ACTION_TAG_DISCOVERED.equals(intent.getAction()) || NfcAdapter.ACTION_NDEF_DISCOVERED.equals(intent.getAction())) {
             if(!isUserSignedIn()) return;
 
@@ -139,11 +141,17 @@ public abstract class NfcHandlerActivity extends AppCompatActivity implements Nf
                             nfcStatusCode = -1;
                             onNfcFail();
                         }
-                        ndef.close();
                     } catch (Exception e) {
+                        e.printStackTrace();
                         // tag failed to write
                         nfcStatusCode = -1;
                         onNfcFail();
+                        try {
+                            ndef.close();
+                        } catch (IOException ex) {
+                            Log.d(TAG, "Failed to close NDEF resources!");
+
+                        }
                     }
                 } else {
                     nfcStatusCode = -1;

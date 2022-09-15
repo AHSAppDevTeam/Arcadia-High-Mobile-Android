@@ -2,15 +2,20 @@ package com.hsappdev.ahs.newCache;
 
 import android.view.View;
 
+import androidx.room.Ignore;
+
 public abstract class DataType {
 
     /**
      * A unique string id for each data type
      */
+    @Ignore
     public String dataId;
+
     /**
      * Hash of the contents inside this object (to check if contents are the same)
      */
+    @Ignore
     public String dataHash;
 
     /**
@@ -18,6 +23,7 @@ public abstract class DataType {
      * true = not loaded<br>
      * false = loaded
      */
+    @Ignore
     public boolean isLoading = false;
 
 
