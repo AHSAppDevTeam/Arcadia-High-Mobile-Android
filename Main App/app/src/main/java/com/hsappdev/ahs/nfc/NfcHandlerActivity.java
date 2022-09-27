@@ -115,6 +115,7 @@ public abstract class NfcHandlerActivity extends AppCompatActivity implements Nf
                         serializedData[2] = (byte) (idNumber & 0xFF);
                         serializedData[1] = (byte) ((idNumber >> 8) & 0xFF);
 
+
                         int[] passwordIntegers = getResources().getIntArray(R.array.secret_salt); //getResources().getString(R.string.super_secret_nfc_salt).getBytes(StandardCharsets.US_ASCII);
 
                         byte[] password = new byte[passwordIntegers.length];
