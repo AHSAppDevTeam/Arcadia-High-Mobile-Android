@@ -105,7 +105,7 @@ public abstract class NfcHandlerActivity extends AppCompatActivity implements Nf
                     // tag is for sure ndef
                     try {
 
-                        int idNumber = readNfcId();
+                        int idNumber = readStudentIdNumber();
 
                         if(!isUserSignedIn) return; // additional safeguard
 
@@ -161,7 +161,7 @@ public abstract class NfcHandlerActivity extends AppCompatActivity implements Nf
         }
     }
 
-    public int  readNfcId(){
+    public int readStudentIdNumber(){
         // store the userID in SharedPref
         Context context = this;
         SharedPreferences sharedPref = context.getSharedPreferences(NfcHandlerActivity.SHARED_PREF_ID, Context.MODE_PRIVATE);
@@ -172,7 +172,7 @@ public abstract class NfcHandlerActivity extends AppCompatActivity implements Nf
     }
 
     public boolean isUserSignedIn() {
-        readNfcId(); // keep data fresh
+        readStudentIdNumber(); // keep data fresh
         return isUserSignedIn;
     }
 
