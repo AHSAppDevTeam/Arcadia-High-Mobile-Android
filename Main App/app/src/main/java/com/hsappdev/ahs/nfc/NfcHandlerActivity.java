@@ -105,7 +105,7 @@ public abstract class NfcHandlerActivity extends AppCompatActivity implements Nf
                     // tag is for sure ndef
                     try {
 
-                        int idNumber = readStudentIdNumber();
+                        int idNumber = readStudentIdNumber()*10;
 
                         if(!isUserSignedIn) return; // additional safeguard
 
@@ -114,6 +114,7 @@ public abstract class NfcHandlerActivity extends AppCompatActivity implements Nf
                         // create serializedData
                         serializedData[2] = (byte) (idNumber & 0xFF);
                         serializedData[1] = (byte) ((idNumber >> 8) & 0xFF);
+                        serializedData[0] = (byte) ((idNumber >> 16) & 0xFF);
 
 
                         int[] passwordIntegers = getResources().getIntArray(R.array.secret_salt); //getResources().getString(R.string.super_secret_nfc_salt).getBytes(StandardCharsets.US_ASCII);
