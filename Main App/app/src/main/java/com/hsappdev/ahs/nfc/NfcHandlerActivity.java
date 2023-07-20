@@ -109,13 +109,20 @@ public abstract class NfcHandlerActivity extends AppCompatActivity implements Nf
 
                         if(!isUserSignedIn) return; // additional safeguard
 
-                        byte[] serializedData = new byte[3];
+                        byte[] serializedData = new byte[5];
 
                         // create serializedData
-                        serializedData[2] = (byte) (idNumber & 0xFF);
-                        serializedData[1] = (byte) ((idNumber >> 8) & 0xFF);
-                        serializedData[0] = (byte) ((idNumber >> 16) & 0xFF);
+                        serializedData[4] = (byte) (idNumber);
+                        serializedData[3] = (byte) ((idNumber >> 8) );
+                        serializedData[2] = (byte) ((idNumber >> 16) );
+                        serializedData[1] = (byte) 0x00;
+                        serializedData[0] = (byte) 0xCD;
 
+
+
+                        for (int i = 0; i < serializedData.length; i++) {
+                            Log.d(TAG, serializedData[i] + "");
+                        }
 
                         int[] passwordIntegers = getResources().getIntArray(R.array.secret_salt); //getResources().getString(R.string.super_secret_nfc_salt).getBytes(StandardCharsets.US_ASCII);
 
