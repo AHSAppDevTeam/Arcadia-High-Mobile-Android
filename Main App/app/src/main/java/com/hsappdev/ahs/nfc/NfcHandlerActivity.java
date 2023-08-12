@@ -42,6 +42,7 @@ public abstract class NfcHandlerActivity extends AppCompatActivity implements Nf
 
     private NfcAdapter nfcAdapter;
     private boolean isNfcSupported = false;
+    private boolean isNfcEnabled = false;
     private boolean isUserSignedIn = false;
 
 
@@ -57,9 +58,12 @@ public abstract class NfcHandlerActivity extends AppCompatActivity implements Nf
         // check for nfc support
         NfcManager manager = (NfcManager) getApplicationContext().getSystemService(Context.NFC_SERVICE);
         NfcAdapter adapter = manager.getDefaultAdapter();
-        if (adapter != null && adapter.isEnabled()) {
+        if (adapter != null) {
             // supports NFC
             isNfcSupported = true;
+            if(adapter.isEnabled()) {
+                isNfcEnabled = true;
+            }
         }
 
         pendingIntent = PendingIntent.getActivity(
@@ -105,7 +109,7 @@ public abstract class NfcHandlerActivity extends AppCompatActivity implements Nf
                     // tag is for sure ndef
                     try {
 
-                        int idNumber = readStudentIdNumber()*10;
+                        int idNumber = readStudentIdNumber();
 
                         if(!isUserSignedIn) return; // additional safeguard
 
@@ -187,5 +191,9 @@ public abstract class NfcHandlerActivity extends AppCompatActivity implements Nf
 
     public boolean isNfcSupported() {
         return isNfcSupported;
+    }
+
+    protected boolean isNfcEnabled() {
+        return isNfcEnabled;
     }
 }

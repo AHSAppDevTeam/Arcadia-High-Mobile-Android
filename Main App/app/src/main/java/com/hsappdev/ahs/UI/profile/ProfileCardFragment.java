@@ -1,6 +1,8 @@
 package com.hsappdev.ahs.UI.profile;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
@@ -13,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -48,6 +51,8 @@ public class ProfileCardFragment extends Fragment {
 
     private boolean isEditable = true;
     private boolean isSupported = false;
+    private boolean isEnabled = false;
+
 
     private GoogleSignInClient gsClient;
     private static final int RC_SIGN_IN = 8888;
@@ -58,9 +63,10 @@ public class ProfileCardFragment extends Fragment {
 //    public ProfileCardFragment() {
 //    }
 
-    public ProfileCardFragment(boolean isEditable, boolean isSupported) {
+    public ProfileCardFragment(boolean isEditable, boolean isSupported, boolean isEnabled) {
         this.isEditable = isEditable;
         this.isSupported = isSupported;
+        this.isEnabled = isEnabled;
     }
 
     @Override
@@ -98,8 +104,29 @@ public class ProfileCardFragment extends Fragment {
                     gsSignedIn = false;
                     setDetails();
                 } else {
-                    Intent signInIntent = gsClient.getSignInIntent();
-                    startActivityForResult(signInIntent, RC_SIGN_IN);
+                    // check if NFC supported
+
+                    if(!isSupported || !isEnabled){
+                        String title;
+                        String body;
+
+                        if(isSupported) { // aka, NFC not enabled
+                            title = "NFC Not Enabled";
+                            body = "Enable NFC in Settings to use the virtual ID card. Then restart the app.";
+                        } else {
+                            title = "NFC Not Supported";
+                            body = "Your device does not support the virtual ID card.";
+                        }
+
+                        new AlertDialog.Builder(getActivity())
+                                .setTitle(title)
+                                .setIcon(R.drawable.ic_app_logo_clear)
+                                .setMessage(body)
+                                .setPositiveButton(android.R.string.ok, null).show();
+                    } else {
+                        Intent signInIntent = gsClient.getSignInIntent();
+                        startActivityForResult(signInIntent, RC_SIGN_IN);
+                    }
                 }
         });
 
@@ -209,12 +236,15 @@ public class ProfileCardFragment extends Fragment {
 
         warningTextView.setVisibility(View.VISIBLE);
         if(!isSupported){
-            warningTextView.setText("⚠️ NFC is not supported");
-        } else {
+            warningTextView.setText("⚠️ NFC is not supported on this device");
+        } else if (!isEnabled){
+            warningTextView.setText("⚠️ NFC has been disabled in settings");
+        }
+        else {
             if (isEditable) {
                 warningTextView.setText("⚠️ Login with your student email\n to use the ID card.");
             } else {
-                warningTextView.setText("⚠️ Go to Your Profile to sign in");
+                warningTextView.setText("⚠️ Go to Your Profile \non the app to sign in");
             }
         }
         storeUserId(-1); // aka no user id

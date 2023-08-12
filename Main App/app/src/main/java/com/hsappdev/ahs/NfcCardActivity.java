@@ -14,7 +14,7 @@ public class NfcCardActivity extends NfcHandlerActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        modalBottomSheet = new NfcCardModalFragment(nfcStatusCode, isNfcSupported());
+        modalBottomSheet = new NfcCardModalFragment(nfcStatusCode, isNfcSupported(), isNfcEnabled());
         modalBottomSheet.show(getSupportFragmentManager(), NfcCardModalFragment.TAG);
 
         if(nfcStatusCode == 1) {

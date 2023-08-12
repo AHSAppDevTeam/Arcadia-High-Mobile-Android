@@ -29,6 +29,7 @@ public class NfcCardModalFragment extends BottomSheetDialogFragment {
     private ImageView nfcStatus;
 
     private boolean isNfcSupported;
+    private boolean isNfcEnabled;
 
     private int nfcStatusCode = 0; // 0  nothing, 1 good, -1 bad
 
@@ -37,9 +38,10 @@ public class NfcCardModalFragment extends BottomSheetDialogFragment {
 
     }
 
-    public NfcCardModalFragment(int nfcStatusCode, boolean isNfcSupported) {
+    public NfcCardModalFragment(int nfcStatusCode, boolean isNfcSupported, boolean isNfcEnabled) {
         this.nfcStatusCode = nfcStatusCode;
         this.isNfcSupported = isNfcSupported;
+        this.isNfcEnabled = isNfcEnabled;
     }
 
     @Override
@@ -60,7 +62,7 @@ public class NfcCardModalFragment extends BottomSheetDialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.nfc_card_modal_fragment, container, false);
 
-        profileCardFragment = new ProfileCardFragment(false, isNfcSupported);
+        profileCardFragment = new ProfileCardFragment(false, isNfcSupported, isNfcEnabled);
         getChildFragmentManager().beginTransaction()
                 .replace(R.id.profileCardFragmentHolder, profileCardFragment)
                 .commit();

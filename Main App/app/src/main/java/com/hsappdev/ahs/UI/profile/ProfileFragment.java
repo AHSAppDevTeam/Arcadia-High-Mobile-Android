@@ -236,13 +236,17 @@ public class ProfileFragment extends Fragment {
 
     private void initProfileCardFragment(View view) {
         boolean isNfcSupported = false;
+        boolean isNfcEnabled = false;
         NfcManager manager = (NfcManager) getActivity().getApplicationContext().getSystemService(Context.NFC_SERVICE);
         NfcAdapter adapter = manager.getDefaultAdapter();
-        if (adapter != null && adapter.isEnabled()) {
-            // adapter exists and is enabled.
+        if (adapter != null) {
+            // supports NFC
             isNfcSupported = true;
+            if(adapter.isEnabled()) {
+                isNfcEnabled = true;
+            }
         }
-        profileCardFragment = new ProfileCardFragment(true, isNfcSupported);
+        profileCardFragment = new ProfileCardFragment(true, isNfcSupported, isNfcEnabled);
 
         getActivity().getSupportFragmentManager().beginTransaction()
                 .replace(R.id.profileCardFragmentHolder, profileCardFragment)
