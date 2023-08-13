@@ -243,9 +243,10 @@ public class ProfileCardFragment extends Fragment {
         else {
             if (isEditable) {
                 warningTextView.setText("⚠️ Login with your student email\n to use the ID card.");
-            } else {
-                warningTextView.setText("⚠️ Go to Your Profile \non the app to sign in");
             }
+//            else {
+//                warningTextView.setText("⚠️ Go to Your Profile \non the app to sign in");
+//            }
         }
         storeUserId(-1); // aka no user id
     }

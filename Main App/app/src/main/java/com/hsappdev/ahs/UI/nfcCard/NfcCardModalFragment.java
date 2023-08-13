@@ -30,6 +30,7 @@ public class NfcCardModalFragment extends BottomSheetDialogFragment {
 
     private boolean isNfcSupported;
     private boolean isNfcEnabled;
+    private boolean isUserSignedIn;
 
     private int nfcStatusCode = 0; // 0  nothing, 1 good, -1 bad
 
@@ -38,10 +39,11 @@ public class NfcCardModalFragment extends BottomSheetDialogFragment {
 
     }
 
-    public NfcCardModalFragment(int nfcStatusCode, boolean isNfcSupported, boolean isNfcEnabled) {
+    public NfcCardModalFragment(int nfcStatusCode, boolean isNfcSupported, boolean isNfcEnabled, boolean isUserSignedIn) {
         this.nfcStatusCode = nfcStatusCode;
         this.isNfcSupported = isNfcSupported;
         this.isNfcEnabled = isNfcEnabled;
+        this.isUserSignedIn = isUserSignedIn;
     }
 
     @Override
@@ -80,6 +82,8 @@ public class NfcCardModalFragment extends BottomSheetDialogFragment {
         if(nfcStatusCode == 1) renderSuccess();
         if(nfcStatusCode == -1) renderFail();
 
+        if(!isUserSignedIn) renderUserNotSignedIn();
+
 
         return view;
     }
@@ -103,6 +107,14 @@ public class NfcCardModalFragment extends BottomSheetDialogFragment {
     private void renderFail(){
         Log.d(TAG, "TextviewC: " + userMessage);
         userMessage.setText("Failed to send ID, try reopening the app");
+        nfcStatus.setVisibility(View.VISIBLE);
+        nfcStatus.setImageDrawable(getResources().getDrawable(R.drawable.ic_nfc_error));
+        vibratePhone();
+    }
+
+    private void renderUserNotSignedIn() {
+        Log.d(TAG, "TextviewC: " + userMessage);
+        userMessage.setText("Sign in with your student account instead.");
         nfcStatus.setVisibility(View.VISIBLE);
         nfcStatus.setImageDrawable(getResources().getDrawable(R.drawable.ic_nfc_error));
         vibratePhone();
