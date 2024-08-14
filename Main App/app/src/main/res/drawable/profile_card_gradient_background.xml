@@ -6,6 +6,7 @@
                 android:startColor="#DB4D73"
                 android:endColor="#FAB25D"
                 android:angle="45" />
+            <corners android:radius="@dimen/profile_standard_radius"/>
         </shape>
     </item>
 </layer-list>

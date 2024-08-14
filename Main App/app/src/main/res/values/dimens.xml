@@ -23,7 +23,7 @@
     <dimen name="profile_card_accountImage_borderWidthx2">16dp</dimen>
 
     <dimen name="profile_card_accountImage_padding">7.5dp</dimen>
-    <dimen name="profile_standard_radius">10dp</dimen>
+    <dimen name="profile_standard_radius">16dp</dimen>
     <dimen name="profile_barcode_radius">5dp</dimen>
     <dimen name="profile_photo_radius">100dp</dimen>
     <dimen name="paddxng_x3">45dp</dimen>

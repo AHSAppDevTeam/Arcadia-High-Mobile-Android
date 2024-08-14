@@ -226,7 +226,12 @@ public class ProfileCardFragment extends Fragment {
     }
 
     public void setUserId(String userId) {
-        warningTextView.setVisibility(View.INVISIBLE);
+        if (isEditable) {
+            warningTextView.setVisibility(View.VISIBLE);
+            warningTextView.setText("Hold phone next to scanner");
+        } else {
+            warningTextView.setVisibility(View.INVISIBLE);
+        }
         if(!isSupported) {
             setUserId();
         }

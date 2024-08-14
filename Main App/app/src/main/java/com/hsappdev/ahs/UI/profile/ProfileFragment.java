@@ -128,8 +128,10 @@ public class ProfileFragment extends Fragment {
                 //convert hours and minutes to total minutes after midnight
                 int currentTotalMinutes = hours * 60 + minutes;
 
+                Log.d(TAG, "run:  currentTotalMinutes" + currentTotalMinutes);
+
                 //Note: I made this just to test how timer would work when updating the view, it kind've crashes the app whenever i test it so
-                String currentTimeRemaining = Integer.toString(currentTotalMinutes);//test, don't use in final code
+                String currentTimeRemaining = Integer.toString(currentTotalMinutes); //test, don't use in final code
 
                 //TODO use currentTotalMinutes and compare with Schedule.periodIDs and Schedule.timestamps to display period and time
 
@@ -158,6 +160,8 @@ public class ProfileFragment extends Fragment {
                                         public void onCalendarScheduleLoad(Schedule schedule) {
                                             if(!schedule.getTimestamps().isEmpty()) {
                                                 int lastTimestamp = schedule.getTimestamps().get(schedule.getTimestamps().size() - 1);
+                                                Log.d(TAG, "onCalendarScheduleLoad: last time" + lastTimestamp);
+
                                                 int firstTimestamp = schedule.getTimestamps().get(0);
                                                 if (currentTotalMinutes >= lastTimestamp) {
                                                     // after school
@@ -174,7 +178,12 @@ public class ProfileFragment extends Fragment {
                                                 // check where we are at by looping
                                                 for (int i = 0; i < schedule.getTimestamps().size(); i+=2) {
                                                     int timestampStart = schedule.getTimestamps().get(i);
+                                                    if(!(i+1 < schedule.getTimestamps().size())) return; // additional safety if values are missing
+
+
                                                     int timestampEnd = schedule.getTimestamps().get(i+1);
+                                                    Log.d(TAG, "onCalendarScheduleLoad: start" + timestampStart);
+                                                    Log.d(TAG, "onCalendarScheduleLoad: end" + timestampEnd);
                                                     String periodNum = "";
                                                     if(ScheduleRenderer.isPeriodStringANumber(schedule.getPeriodIDs().get(i))) {
                                                         periodNum = String.format("Period %s", schedule.getPeriodIDs().get(i));
