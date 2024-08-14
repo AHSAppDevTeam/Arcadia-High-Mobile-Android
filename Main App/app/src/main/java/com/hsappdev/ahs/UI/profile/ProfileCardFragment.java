@@ -99,10 +99,25 @@ public class ProfileCardFragment extends Fragment {
 
         if(isEditable) view.setOnClickListener(v -> {
                 if (gsSignedIn) {
-//                Don't sign out user ever
-                    gsClient.signOut();
-                    gsSignedIn = false;
-                    setDetails();
+                    // Ask if they want to sign out
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            // User taps OK button.
+                            gsClient.signOut();
+                            gsSignedIn = false;
+                            setDetails();
+                        }
+                    });
+                    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            // User cancels the dialog.
+
+                        }
+                    });
+                    AlertDialog dialog = builder.create();
+                    dialog.setTitle("Sign out?");
+                    dialog.show();
                 } else {
                     // check if NFC supported
 

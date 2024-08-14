@@ -57,10 +57,10 @@
     <string name="profile_card_default_family_name">Tap to sign in</string>
     <string name="profile_card_barcode_description">Student ID barcode</string>
     <string name="profile_card_pic_description">Profile picture</string>
-    <string name="profile_time_remaining_default_value">30 min</string>
+    <string name="profile_time_remaining_default_value">No School</string>
     <string name="profile_time_remaining_default_header">Time Remaining</string>
     <string name="profile_period_default_header">Period</string>
-    <string name="profile_period_default_value">2nd</string>
+    <string name="profile_period_default_value"></string>
     <string name="profile_options_header">Options</string>
     <string name="profile_info_header">Info</string>
     <string name="firebaseFunctionsIncrementView">https://us-central1-arcadia-high-mobile.cloudfunctions.net/incrementView</string>
@@ -201,7 +201,7 @@ Last updated August 08, 2020
     <string name="contacts_list"><![CDATA[<a href="mailto:articles@ahs.app">articles@ahs.app</a><br/><a href="mailto:dev@ahs.app">dev@ahs.app</a><br/><a href="mailto:editors@ahs.app">editors@ahs.app</a><br/><a href="mailto:bugs@ahs.app">bugs@ahs.app</a>]]></string>
     <string name="article_see_more">See more in\ </string>
     <string name="search_magic_query">about the app dev team</string>
-    <string name="app_version">4.0.5</string>
+    <string name="app_version">4.2</string>
     <string name="db_credits">credits</string>
 
     <string name="featured_boards_title_text_bold">Featured</string>
