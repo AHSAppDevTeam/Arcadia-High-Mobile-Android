@@ -17,6 +17,7 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.database.FirebaseDatabase;
 import com.hsappdev.ahs.UI.home.OnSectionClicked;
+import com.hsappdev.ahs.UI.lunchMenu.LunchMenuActivity;
 import com.hsappdev.ahs.cache.ArticleLoaderBackend;
 import com.hsappdev.ahs.cache.callbacks.ArticleLoadableCallback;
 import com.hsappdev.ahs.dataTypes.Article;
@@ -25,7 +26,7 @@ import com.hsappdev.ahs.db.DatabaseConstants;
 import com.hsappdev.ahs.firebaseMessaging.NotificationSetup;
 import com.hsappdev.ahs.localdb.ArticleRepository;
 
-public class MainActivity extends AppCompatActivity implements BottomNavigationCallback, SettingsManager.DayNightCallback, OnItemClick, OnSectionClicked, OnNotificationSectionClicked {
+public class MainActivity extends AppCompatActivity implements BottomNavigationCallback, SettingsManager.DayNightCallback, OnItemClick, OnSectionClicked, OnNotificationSectionClicked, OnLunchSectionClicked {
 
     private BottomNavigationView navView;
     private static final String TAG = "MainActivity";
@@ -189,6 +190,12 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationC
     @Override
     public void onNotificationSectionClicked() {
         Intent intent = new Intent(MainActivity.this, NotificationActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onLunchSectionClicked() {
+        Intent intent = new Intent(MainActivity.this, LunchMenuActivity.class);
         startActivity(intent);
     }
 

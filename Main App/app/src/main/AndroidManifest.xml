@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.hsappdev.ahs"
-    android:screenOrientation="portrait"
-    >
+    android:screenOrientation="portrait">
 
     <queries>
         <intent>
@@ -21,36 +20,40 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ArcadiaHighMobile">
         <activity
+            android:name=".UI.lunchMenu.LunchMenuActivity"
+            android:exported="false" />
+        <activity
             android:name=".NfcCardActivity"
-            android:exported="true"
             android:excludeFromRecents="true"
+            android:exported="true"
             android:noHistory="true"
-            android:theme="@style/Theme.Transparent"
-            >
+            android:theme="@style/Theme.Transparent">
             <intent-filter>
-                <action android:name="android.nfc.action.NDEF_DISCOVERED"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-                <data android:scheme="https"
-                    android:host="get.ahs.app"/>
+                <action android:name="android.nfc.action.NDEF_DISCOVERED" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data
+                    android:host="get.ahs.app"
+                    android:scheme="https" />
             </intent-filter>
 
-<!--            <intent-filter>-->
-<!--                <action android:name="android.nfc.action.TAG_DISCOVERED"/>-->
-<!--            </intent-filter>-->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.nfc.action.TAG_DISCOVERED"/> -->
+            <!-- </intent-filter> -->
 
-<!--            <intent-filter>-->
-<!--                <action android:name="android.nfc.action.TECH_DISCOVERED"/>-->
-<!--            </intent-filter>-->
 
-<!--            <meta-data android:name="android.nfc.action.TECH_DISCOVERED"-->
-<!--                android:resource="@xml/nfc_tech_requirements" />-->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.nfc.action.TECH_DISCOVERED"/> -->
+            <!-- </intent-filter> -->
+
+
+            <!-- <meta-data android:name="android.nfc.action.TECH_DISCOVERED" -->
+            <!-- android:resource="@xml/nfc_tech_requirements" /> -->
         </activity>
         <activity
             android:name=".TestDataLoadingActivity"
-            android:exported="true">
-
-
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name=".AboutUsActivity"
             android:exported="true" />

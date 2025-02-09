@@ -1,13 +1,16 @@
 package com.hsappdev.ahs.UI.home;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -20,10 +23,12 @@ import androidx.fragment.app.Fragment;
 
 import com.hsappdev.ahs.BottomNavigationCallback;
 import com.hsappdev.ahs.OnItemClick;
+import com.hsappdev.ahs.OnLunchSectionClicked;
 import com.hsappdev.ahs.OnNotificationSectionClicked;
 import com.hsappdev.ahs.R;
 import com.hsappdev.ahs.UI.home.community.HomeCommunityFragment;
 import com.hsappdev.ahs.UI.home.search.SearchInterface;
+import com.hsappdev.ahs.UI.lunchMenu.LunchMenuActivity;
 import com.hsappdev.ahs.util.Helper;
 
 import java.text.SimpleDateFormat;
@@ -39,6 +44,7 @@ public class HomeFragment extends Fragment {
     private LinearLayout selectorLinearLayout;
     private BottomNavigationCallback bottomNavigationViewAdapter;
     private OnNotificationSectionClicked onNotificationSectionClicked;
+    private OnLunchSectionClicked onLunchSectionClicked;
     private OnItemClick onItemClick;
     private boolean is_nav_bar_up = true;
     private int news_tab_selected = 0; // 0 for home, 1 for community; int allows for potentially more options in the future
@@ -53,6 +59,7 @@ public class HomeFragment extends Fragment {
         try {
             bottomNavigationViewAdapter = (BottomNavigationCallback) context;
             onNotificationSectionClicked = (OnNotificationSectionClicked) context;
+            onLunchSectionClicked = (OnLunchSectionClicked) context;
             onItemClick = (OnItemClick) context;
 
         } catch (ClassCastException e) {
@@ -71,6 +78,8 @@ public class HomeFragment extends Fragment {
                 .add(R.id.home_news_fragment_holder, communityFragment)
                 .hide(communityFragment)
                 .commit();
+
+
 
         selectorLinearLayout = view.findViewById(R.id.home_selector_linear_layout);
 
@@ -148,6 +157,15 @@ public class HomeFragment extends Fragment {
         String month = new SimpleDateFormat("MMMM ", Locale.US).format(Calendar.getInstance().getTimeInMillis()); // note space
         String day = new SimpleDateFormat("d", Locale.US).format(Calendar.getInstance().getTimeInMillis());
         Helper.setBoldRegularText(dateText, month, day);
+
+        // handle lunch button
+        Button lunchMenuButton = view.findViewById(R.id.lunchMenuButton);
+        lunchMenuButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onLunchSectionClicked.onLunchSectionClicked();
+            }
+        });
 
         return view;
     }
